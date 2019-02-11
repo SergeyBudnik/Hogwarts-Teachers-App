@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        android:id="@+id/monitoringLessonsHeaderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Мониторинг"
+        app:leftIcon="@drawable/ic_menu"
+        app:rightIcon="@drawable/ic_filter"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView_
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:monitoring_item="monitoring_lessons"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+        android:id="@+id/monitoringLessonsMenuLayoutView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/monitoringLessonsListView"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/app_size_1"
+            android:clipToPadding="true"
+            android:dividerHeight="0dp"
+            android:divider="@null"/>
+
+    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+
+</LinearLayout>

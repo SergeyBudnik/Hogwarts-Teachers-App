@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.bdev.hengschoolteacher">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustResize"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name=".ui.activities.StartActivity_" android:screenOrientation="sensorPortrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.activities.profile.ProfileLessonsActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.profile.ProfilePaymentActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.profile.ProfileAccountActivity_" android:screenOrientation="sensorPortrait"/>
+
+        <activity android:name=".ui.activities.students.StudentsListActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.students.StudentsGroupsListActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.students.StudentsStatisticsActivity_" android:screenOrientation="sensorPortrait"/>
+
+        <activity android:name=".ui.activities.teachers.TeachersListActivity_" android:screenOrientation="sensorPortrait"/>
+
+        <activity android:name=".ui.activities.monitoring.MonitoringLessonsActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringSalariesActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringPaymentsActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringStudentPaymentActivity_" android:screenOrientation="sensorPortrait"/>
+
+        <activity android:name=".ui.activities.student.StudentPaymentActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.student.StudentCallActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.student.StudentInformationActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.student.StudentStatisticsActivity_" android:screenOrientation="sensorPortrait"/>
+
+        <activity android:name=".ui.activities.lesson.LessonActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.lesson.LessonStatusActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.lesson.LessonStudentAttendanceActivity_" android:screenOrientation="sensorPortrait"/>
+
+        <activity android:name=".ui.activities.actions.ActionsEventsListActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.actions.ActionsUsersRequestsListActivity_" android:screenOrientation="sensorPortrait"/>
+
+        <activity android:name=".ui.activities.LoginActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.LoadingActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.ReloginActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.TeacherActivity_" android:screenOrientation="sensorPortrait"/>
+    </application>
+
+</manifest>

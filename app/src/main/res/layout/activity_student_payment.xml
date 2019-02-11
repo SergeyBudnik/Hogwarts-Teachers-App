@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    
+    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        android:id="@+id/lessonPaymentHeaderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Студент. Оплата"
+        app:leftIcon="@drawable/ic_arrow_left"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/studentPaymentNameView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_1"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"
+                android:paddingTop="@dimen/app_size_1"
+                android:paddingBottom="@dimen/app_size_1"
+                android:paddingStart="@dimen/app_size_2"
+                android:paddingEnd="@dimen/app_size_2"
+                android:textColor="@color/info"
+                android:textSize="@dimen/font_large"
+                android:background="@drawable/layout_row"
+                android:backgroundTint="@color/inverted_transparent"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_2"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:layout_marginEnd="@dimen/app_size_2">
+
+                <EditText
+                    android:id="@+id/studentPaymentAmountView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/app_size_1"
+                    android:paddingBottom="@dimen/app_size_1"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:hint="Введите сумму"
+                    android:textColor="@color/success"
+                    android:textColorHint="@color/faded"
+                    android:textSize="@dimen/font_large"
+                    android:background="@drawable/layout_edit_text"/>
+
+                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/app_size_1_5"
+                    android:gravity="center"
+                    android:text="₽"
+                    android:textColor="@color/inverted"
+                    android:textSize="@dimen/font_large"/>
+
+            </RelativeLayout>
+
+            <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+                android:id="@+id/studentPaymentAddPaymentView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_1"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:layout_marginEnd="@dimen/app_size_2"
+                app:button_style="primary_style"
+                app:button_text="Добавить"/>
+
+            <ListView
+                android:id="@+id/studentPaymentItemsListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_2"
+                android:paddingStart="@dimen/app_size_1"
+                android:paddingEnd="@dimen/app_size_1"
+                android:divider="@null"
+                android:dividerHeight="@dimen/app_size_0_5"/>
+
+        </LinearLayout>
+
+    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+
+</LinearLayout>

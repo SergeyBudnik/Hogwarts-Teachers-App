@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/app_size_0_5"
+    android:paddingBottom="@dimen/app_size_1"
+    android:paddingStart="@dimen/app_size_2"
+    android:paddingEnd="@dimen/app_size_2">
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:id="@+id/studentAttendancesMonthView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Декабрь"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/inverted"
+        app:app_font="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_0_5"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:text="Оплачено:"
+            android:textSize="@dimen/font_large"
+            android:textColor="@color/inverted"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/paymentView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_0_5"
+            android:textSize="@dimen/font_large"
+            android:textColor="@color/success"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_0_5"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:text="Стоимость:"
+            android:textSize="@dimen/font_large"
+            android:textColor="@color/inverted"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_0_5"
+            android:text="?"
+            android:textSize="@dimen/font_large"
+            android:textColor="@color/error"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_1">
+
+        <ImageView
+            android:id="@+id/studentAttendance0View"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:src="@drawable/ic_user_filled"
+            android:tint="@color/success"/>
+
+        <ImageView
+            android:id="@+id/studentAttendance1View"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:src="@drawable/ic_user_filled"
+            android:tint="@color/error"/>
+
+        <ImageView
+            android:id="@+id/studentAttendance2View"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:src="@drawable/ic_user_filled"
+            android:tint="@color/success"/>
+
+        <ImageView
+            android:id="@+id/studentAttendance3View"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:src="@drawable/ic_user_filled"
+            android:tint="@color/error"/>
+
+        <ImageView
+            android:id="@+id/studentAttendance4View"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:src="@drawable/ic_user_filled"
+            android:tint="@color/success"/>
+
+        <ImageView
+            android:id="@+id/studentAttendance5View"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:src="@drawable/ic_user_filled"
+            android:tint="@color/success"/>
+
+        <ImageView
+            android:id="@+id/studentAttendance6View"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:src="@drawable/ic_user_filled"
+            android:tint="@color/warning"/>
+
+        <ImageView
+            android:id="@+id/studentAttendance7View"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:src="@drawable/ic_user_filled"
+            android:tint="@color/success"/>
+
+        <ImageView
+            android:id="@+id/studentAttendance8View"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:src="@drawable/ic_user_linear"/>
+
+        <ImageView
+            android:id="@+id/studentAttendance9View"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:src="@drawable/ic_user_linear"/>
+
+    </LinearLayout>
+
+</LinearLayout>

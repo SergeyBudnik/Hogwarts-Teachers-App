@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/app_size_4">
+
+    <ImageView
+        android:id="@+id/leftActionButtonView"
+        android:layout_width="@dimen/app_size_5"
+        android:layout_height="@dimen/app_size_5"
+        android:paddingStart="@dimen/app_size_2"
+        android:paddingEnd="@dimen/app_size_1_5"
+        android:tint="@color/inverted"/>
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:id="@+id/titleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/leftActionButtonView"
+        android:layout_centerVertical="true"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/inverted"
+        app:app_font="bold"/>
+
+    <ImageView
+        android:id="@+id/rightActionButtonView"
+        android:layout_width="@dimen/app_size_5"
+        android:layout_height="@dimen/app_size_5"
+        android:layout_alignParentEnd="true"
+        android:paddingStart="@dimen/app_size_1_5"
+        android:paddingEnd="@dimen/app_size_2"
+        android:tint="@color/inverted"/>
+
+</RelativeLayout>

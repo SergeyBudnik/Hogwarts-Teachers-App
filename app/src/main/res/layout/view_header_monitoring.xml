@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="3">
+
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+        android:id="@+id/monitoringHeaderLessonsView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:header_title="Занятия"
+        app:header_active="true"/>
+
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+        android:id="@+id/monitoringHeaderSalariesView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:header_title="Зарплаты"
+        app:header_active="false"/>
+
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+        android:id="@+id/monitoringHeaderPaymentsView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:header_title="Оплата"
+        app:header_active="false"/>
+
+</LinearLayout>

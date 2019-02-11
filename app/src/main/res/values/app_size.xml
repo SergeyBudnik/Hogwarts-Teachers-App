@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_size_0_25">3dp</dimen>
+    <dimen name="app_size_0_5">6dp</dimen>
+    <dimen name="app_size_0_75">9dp</dimen>
+    <dimen name="app_size_1">12dp</dimen>
+    <dimen name="app_size_1_5">18dp</dimen>
+    <dimen name="app_size_2">24dp</dimen>
+    <dimen name="app_size_3">36dp</dimen>
+    <dimen name="app_size_4">48dp</dimen>
+    <dimen name="app_size_5">60dp</dimen>
+    <dimen name="app_size_6">72dp</dimen>
+    <dimen name="app_size_10">120dp</dimen>
+    <dimen name="app_size_15">180dp</dimen>
+    <dimen name="app_size_19">228dp</dimen>
+    <dimen name="app_size_20">240dp</dimen>
+</resources>

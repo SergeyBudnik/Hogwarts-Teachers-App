@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="2">
+
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+        android:id="@+id/studentInformationView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:header_title="Информация"
+        android:layout_weight="1"/>
+
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+        android:id="@+id/studentPaymentView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:header_title="Посещаемость"
+        android:layout_weight="1"/>
+
+</LinearLayout>

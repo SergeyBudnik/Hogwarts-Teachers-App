@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        android:id="@+id/teacherHeaderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Преподаватель"
+        app:leftIcon="@drawable/ic_arrow_left"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/teacherNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_1"
+                android:layout_marginBottom="@dimen/app_size_1"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:layout_marginEnd="@dimen/app_size_2"
+                android:textColor="@color/inverted"
+                android:textSize="@dimen/font_large"
+                app:app_font="bold"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:layout_marginBottom="@dimen/app_size_0_5"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:layout_marginEnd="@dimen/app_size_2">
+
+                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Зарплата:"
+                    android:textSize="@dimen/font_large"
+                    android:textColor="@color/inverted"/>
+
+                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                    android:id="@+id/teacherIncomeView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="@dimen/font_large"
+                    android:textColor="@color/error"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:layout_marginBottom="@dimen/app_size_0_5"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:layout_marginEnd="@dimen/app_size_2">
+
+                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Доход:"
+                    android:textSize="@dimen/font_large"
+                    android:textColor="@color/inverted"/>
+
+                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                    android:id="@+id/teacherOutcomeView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="-"
+                    android:textSize="@dimen/font_large"
+                    android:textColor="@color/success"/>
+
+            </RelativeLayout>
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:text="Телефоны:"
+                android:textSize="@dimen/font_large"
+                android:textColor="@color/inverted"/>
+
+            <LinearLayout
+                android:id="@+id/teacherPhonesContainerView"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_1"/>
+
+        </LinearLayout>
+
+    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+
+</LinearLayout>

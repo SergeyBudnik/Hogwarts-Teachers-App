@@ -1,0 +1,16 @@
+package com.bdev.hengschoolteacher.rest
+
+import com.bdev.hengschoolteacher.data.school.student.Student
+import com.bdev.hengschoolteacher.rest.configuration.RestConfiguration
+import com.bdev.hengschoolteacher.rest.converters.JsonConverter
+import org.androidannotations.rest.spring.annotations.Get
+import org.androidannotations.rest.spring.annotations.RequiresHeader
+import org.androidannotations.rest.spring.annotations.Rest
+import org.androidannotations.rest.spring.api.RestClientHeaders
+
+@Rest(rootUrl = RestConfiguration.ROOT_URL, converters = [JsonConverter::class])
+interface StudentsRest : RestClientHeaders {
+    @Get("/students")
+    @RequiresHeader(RestConfiguration.HEADER_AUTHORIZATION)
+    fun getAllStudents(): List<Student>
+}

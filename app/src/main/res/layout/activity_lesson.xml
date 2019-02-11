@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout_background"
+    android:fitsSystemWindows="true">
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        android:id="@+id/lessonHeaderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Занятие"
+        app:leftIcon="@drawable/ic_arrow_left"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonInfoView_
+                android:id="@+id/lessonTimeView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_1"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"/>
+
+            <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
+                android:id="@+id/lessonTeacherInfoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"/>
+
+            <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+                android:id="@+id/lessonMarkStatusView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_1"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"
+                app:button_text="Отметить статус занятия"
+                app:button_style="primary_style"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/app_size_0_5">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/studentsContainerView"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/app_size_1"
+                        android:layout_marginEnd="@dimen/app_size_1">
+
+                    </LinearLayout>
+
+                </ScrollView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+
+</LinearLayout>

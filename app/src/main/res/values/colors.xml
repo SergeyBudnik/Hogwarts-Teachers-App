@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00ffffff</color>
+
+    <color name="colorPrimary">@color/primary</color>
+    <color name="colorPrimaryDark">@color/primary_dark</color>
+    <color name="colorAccent">@color/action</color>
+
+    <color name="primary">#1e69e8</color>
+    <color name="primary_semi_dark">#27394d</color>
+    <color name="primary_dark">#1a2634</color>
+    <color name="info">#b3d8c7</color>
+    <color name="inverted">#ffffff</color>
+    <color name="inverted_transparent">#11ffffff</color>
+    <color name="faded">#aaaaaa</color>
+    <color name="action">#4fccf8</color>
+    <color name="action_transparent">#114fccf8</color>
+    <color name="error">#e74753</color>
+    <color name="warning">#e7ba47</color>
+    <color name="success">#64e747</color>
+</resources>

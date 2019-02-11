@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    
+    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        android:id="@+id/lessonAttendanceHeaderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Занятие. Посещаемость"
+        app:leftIcon="@drawable/ic_arrow_left"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonInfoView_
+                android:id="@+id/lessonStudentAttendanceLessonTimeView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_1"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"/>
+
+            <com.bdev.hengschoolteacher.ui.views.app.student.StudentInfoView_
+                android:id="@+id/lessonStudentAttendanceStudentInfoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"/>
+
+            <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
+                android:id="@+id/lessonStudentAttendanceTeacherInfoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"/>
+
+            <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView_
+                android:id="@+id/studentAttendanceVisitButtonView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_1"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"/>
+
+            <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView_
+                android:id="@+id/studentAttendanceValidSkipButtonView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"/>
+
+            <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView_
+                android:id="@+id/studentAttendanceInvalidSkipButtonView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"/>
+
+        </LinearLayout>
+
+    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+
+</LinearLayout>

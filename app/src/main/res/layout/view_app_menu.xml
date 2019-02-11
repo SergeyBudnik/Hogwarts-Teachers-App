@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="@dimen/app_size_19"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="@dimen/app_size_1"
+    android:paddingTop="@dimen/app_size_2"
+    android:paddingBottom="@dimen/app_size_2">
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:id="@+id/teacherNameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/app_size_2"
+        android:layout_marginEnd="@dimen/app_size_2"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/inverted"
+        app:app_font="bold"/>
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:id="@+id/teacherLoginView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_0_5"
+        android:layout_marginStart="@dimen/app_size_2"
+        android:layout_marginEnd="@dimen/app_size_2"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/faded"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView_
+        android:id="@+id/menuItemMyProfileView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_1"
+        app:menuItemIcon="@drawable/ic_menu"
+        app:menuItemName="Мой профиль"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView_
+        android:id="@+id/menuItemStudentsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_0_5"
+        app:menuItemIcon="@drawable/ic_menu"
+        app:menuItemName="Студенты"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView_
+        android:id="@+id/menuItemTeachersView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_0_5"
+        app:menuItemIcon="@drawable/ic_menu"
+        app:menuItemName="Учителя"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView_
+        android:id="@+id/menuItemMonitoringView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_0_5"
+        app:menuItemIcon="@drawable/ic_menu"
+        app:menuItemName="Мониторинг"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView_
+        android:id="@+id/menuItemActionsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_0_5"
+        app:menuItemIcon="@drawable/ic_menu"
+        app:menuItemName="Обзвон"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/app_size_2"
+            android:layout_marginEnd="@dimen/app_size_2">
+
+            <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+                android:id="@+id/refreshButtonView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/app_size_1"
+                app:button_text="Обновить"
+                app:button_style="default_style"/>
+
+            <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+                android:id="@+id/menuLogOutView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/app_size_1"
+                app:button_text="Выйти"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/app_size_0_5"
+                    android:text="Версия:"
+                    android:textSize="@dimen/font_large"
+                    android:textColor="@color/faded"/>
+
+                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                    android:id="@+id/versionView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_large"
+                    android:textColor="@color/inverted"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/menuUpdateAppView"
+                        android:layout_width="@dimen/app_size_4"
+                        android:layout_height="@dimen/app_size_4"
+                        android:layout_alignParentEnd="true"
+                        android:padding="@dimen/app_size_1"
+                        android:src="@drawable/ic_download"
+                        android:tint="@color/action"
+                        android:contentDescription="@string/img_content_description"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

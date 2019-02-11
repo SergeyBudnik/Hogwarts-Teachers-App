@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            android:id="@+id/studentsHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title=""
+            app:leftIcon="@drawable/ic_menu"/>
+
+        <RelativeLayout
+            android:layout_width="@dimen/app_size_20"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/app_size_2"
+            android:layout_centerVertical="true">
+
+            <EditText
+                android:id="@+id/studentsListSearchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/app_size_0_5"
+                android:paddingBottom="@dimen/app_size_0_5"
+                android:paddingStart="@dimen/app_size_1"
+                android:paddingEnd="@dimen/app_size_1"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/app_size_3"
+                android:inputType="text"
+                android:hint="Поиск ученика"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/inverted"
+                android:textColorHint="@color/faded"
+                android:background="@drawable/layout_header_edit_text"/>
+
+            <ImageView
+                android:layout_width="@dimen/app_size_1_5"
+                android:layout_height="@dimen/app_size_1_5"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_search"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <com.bdev.hengschoolteacher.ui.views.app.students.StudentsHeaderView_
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:students_item="students_list"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+        android:id="@+id/studentsMenuLayoutView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/studentsListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/app_size_1"
+            android:paddingBottom="@dimen/app_size_1"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:dividerHeight="@dimen/app_size_0_5"/>
+
+    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+
+</LinearLayout>

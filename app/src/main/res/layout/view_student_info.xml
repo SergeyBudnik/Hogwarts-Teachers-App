@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/app_size_1"
+    android:paddingBottom="@dimen/app_size_1"
+    android:paddingStart="@dimen/app_size_2"
+    android:paddingEnd="@dimen/app_size_2"
+    android:background="@drawable/layout_row"
+    android:backgroundTint="@color/inverted_transparent">
+
+    <ImageView
+        android:layout_width="@dimen/app_size_1_5"
+        android:layout_height="@dimen/app_size_1_5"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/app_size_1"
+        android:src="@drawable/ic_user_filled"
+        android:tint="@color/info"
+        android:importantForAccessibility="no"/>
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:id="@+id/studentInfoNameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/info"
+        android:textSize="@dimen/font_large"/>
+
+</LinearLayout>

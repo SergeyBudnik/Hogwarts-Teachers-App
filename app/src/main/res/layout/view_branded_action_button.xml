@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/app_size_1"
+    android:paddingBottom="@dimen/app_size_1"
+    android:paddingStart="@dimen/app_size_2"
+    android:paddingEnd="@dimen/app_size_2"
+    android:background="@drawable/layout_row"
+    android:backgroundTint="@color/action_transparent">
+
+    <RelativeLayout
+        android:layout_width="@dimen/app_size_1_5"
+        android:layout_height="@dimen/app_size_1_5"
+        android:layout_marginEnd="@dimen/app_size_1"
+        android:layout_gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/brandedActionButtonProgressView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_spinner"
+            android:visibility="gone"
+            android:importantForAccessibility="no"/>
+
+        <ImageView
+            android:id="@+id/brandedActionButtonIconView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:importantForAccessibility="no"/>
+
+    </RelativeLayout>
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:id="@+id/brandedActionButtonTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/inverted"
+        app:app_font="regular"/>
+
+</LinearLayout>

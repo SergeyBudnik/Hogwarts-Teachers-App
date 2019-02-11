@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        android:id="@+id/teachersHeaderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Учителя"
+        app:leftIcon="@drawable/ic_menu"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.teachers.TeachersHeaderView_
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:teachers_item="teachers_list"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+        android:id="@+id/teachersMenuLayoutView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/teachersListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/app_size_1"
+            android:paddingBottom="@dimen/app_size_1"
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1"
+            android:clipToPadding="true"
+            android:divider="@null"
+            android:dividerHeight="@dimen/app_size_0_5"/>
+
+    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+
+</LinearLayout>

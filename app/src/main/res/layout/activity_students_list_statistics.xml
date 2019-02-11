@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        android:id="@+id/studentsStatisticsHeaderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Студенты"
+        app:leftIcon="@drawable/ic_menu"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.students.StudentsHeaderView_
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:students_item="students_statistics"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+        android:id="@+id/studentsStatisticsMenuLayoutView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_1"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:layout_marginEnd="@dimen/app_size_2">
+
+                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Всего студентов:"
+                    android:textColor="@color/inverted"
+                    android:textSize="@dimen/font_large"/>
+
+                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                    android:id="@+id/studentsListStatisticsAmountOfStudentsView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/inverted"
+                    android:textSize="@dimen/font_large"
+                    app:app_font="bold"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+
+</LinearLayout>

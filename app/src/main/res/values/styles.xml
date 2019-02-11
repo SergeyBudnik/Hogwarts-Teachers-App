@@ -1,0 +1,107 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowBackground">@drawable/layout_background</item>
+    </style>
+
+    <declare-styleable name="CommonFontableTextView">
+        <attr name="app_font" format="enum">
+            <enum name="regular" value="1"/>
+            <enum name="light" value="2"/>
+            <enum name="bold" value="3"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="BrandedButtonView">
+        <attr name="button_text" format="string"/>
+        <attr name="button_style" format="enum">
+            <enum name="primary_style" value="1"/>
+            <enum name="default_style" value="2"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="BrandedSecondaryHeaderItem">
+        <attr name="header_title" format="string"/>
+        <attr name="header_active" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="AppHeaderView">
+        <attr name="title" format="string"/>
+        <attr name="leftIcon" format="reference"/>
+        <attr name="rightIcon" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="AppMenuRowView">
+        <attr name="menuItemName" format="string"/>
+        <attr name="menuItemIcon" format="reference"/>
+    </declare-styleable>
+
+    <!-- Attendance -->
+
+    <declare-styleable name="StudentAttendanceButtonItemView">
+        <attr name="attendanceButtonTitle" format="string"/>
+    </declare-styleable>
+
+    <!-- Lessons -->
+
+    <declare-styleable name="LessonsHeaderView">
+        <attr name="lessons_item" format="enum">
+            <enum name="my_lessons" value="1"/>
+            <enum name="all_lessons" value="2"/>
+        </attr>
+    </declare-styleable>
+
+    <!-- Student -->
+
+    <declare-styleable name="StudentHeaderView">
+        <attr name="student_item" format="enum">
+            <enum name="student_information" value="1"/>
+            <enum name="student_payment" value="2"/>
+        </attr>
+    </declare-styleable>
+
+    <!-- Profile -->
+
+    <declare-styleable name="ProfileHeaderView">
+        <attr name="profile_item" format="enum">
+            <enum name="profile_lessons" value="1"/>
+            <enum name="profile_payment" value="2"/>
+            <enum name="profile_account" value="3"/>
+        </attr>
+    </declare-styleable>
+
+    <!-- Students -->
+
+    <declare-styleable name="StudentsHeaderView">
+        <attr name="students_item" format="enum">
+            <enum name="students_list" value="1"/>
+            <enum name="students_groups" value="2"/>
+            <enum name="students_statistics" value="3"/>
+        </attr>
+    </declare-styleable>
+
+    <!-- Teachers -->
+
+    <declare-styleable name="TeachersHeaderView">
+        <attr name="teachers_item" format="enum">
+            <enum name="teachers_list" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <!-- Monitoring -->
+
+    <declare-styleable name="MonitoringHeaderView">
+        <attr name="monitoring_item" format="enum">
+            <enum name="monitoring_lessons" value="1"/>
+            <enum name="monitoring_salaries" value="2"/>
+            <enum name="monitoring_payments" value="3"/>
+        </attr>
+    </declare-styleable>
+
+</resources>

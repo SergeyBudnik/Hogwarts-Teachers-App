@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="t_07_00">07:00</string>
+    <string name="t_07_30">07:30</string>
+    <string name="t_08_00">08:00</string>
+    <string name="t_08_30">08:30</string>
+    <string name="t_09_00">09:00</string>
+    <string name="t_09_30">09:30</string>
+    <string name="t_10_00">10:00</string>
+    <string name="t_10_30">10:30</string>
+    <string name="t_11_00">11:00</string>
+    <string name="t_11_30">11:30</string>
+    <string name="t_12_00">12:00</string>
+    <string name="t_12_30">12:30</string>
+    <string name="t_13_00">13:00</string>
+    <string name="t_13_30">13:30</string>
+    <string name="t_14_00">14:00</string>
+    <string name="t_14_30">14:30</string>
+    <string name="t_15_00">15:00</string>
+    <string name="t_15_30">15:30</string>
+    <string name="t_16_00">16:00</string>
+    <string name="t_16_30">16:30</string>
+    <string name="t_17_00">17:00</string>
+    <string name="t_17_30">17:30</string>
+    <string name="t_18_00">18:00</string>
+    <string name="t_18_30">18:30</string>
+    <string name="t_19_00">19:00</string>
+    <string name="t_19_30">19:30</string>
+    <string name="t_20_00">20:00</string>
+    <string name="t_20_30">20:30</string>
+    <string name="t_21_00">21:00</string>
+    <string name="t_21_30">21:30</string>
+
+    <string name="monday_short">Пн</string>
+    <string name="tuesday_short">Вт</string>
+    <string name="wednesday_short">Ср</string>
+    <string name="thursday_short">Чт</string>
+    <string name="friday_short">Пт</string>
+    <string name="saturday_short">Сб</string>
+    <string name="sunday_short">Вс</string>
+
+    <string name="january">Январь</string>
+    <string name="february">Февраль</string>
+    <string name="march">Март</string>
+    <string name="april">Апрель</string>
+    <string name="may">Май</string>
+    <string name="june">Июнь</string>
+    <string name="july">Июль</string>
+    <string name="august">Август</string>
+    <string name="september">Сентябрь</string>
+    <string name="october">Октябрь</string>
+    <string name="november">Ноябрь</string>
+    <string name="december">Декабрь</string>
+</resources>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/app_size_0_25"
+    android:paddingBottom="@dimen/app_size_0_25"
+    android:paddingStart="@dimen/app_size_1"
+    android:paddingEnd="@dimen/app_size_1">
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:id="@+id/profilePaymentItemDayView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_0_5"
+        android:layout_marginStart="@dimen/app_size_1"
+        android:layout_marginEnd="@dimen/app_size_1"
+        android:layout_marginBottom="@dimen/app_size_1"
+        android:textColor="@color/inverted"
+        android:textSize="@dimen/font_large"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="9"
+        android:paddingTop="@dimen/app_size_1"
+        android:paddingBottom="@dimen/app_size_1"
+        android:paddingStart="@dimen/app_size_2"
+        android:paddingEnd="@dimen/app_size_2"
+        android:background="@drawable/layout_row"
+        android:backgroundTint="@color/inverted_transparent">
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/profilePaymentItemTypeView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/faded"
+            android:textSize="@dimen/font_large"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/profilePaymentItemTimeView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textColor="@color/inverted"
+            android:textSize="@dimen/font_large"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/profilePaymentItemAmountView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="end"
+            android:textColor="@color/info"
+            android:textSize="@dimen/font_large"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
