@@ -221,6 +221,6 @@ open class MonitoringLessonsActivity : BaseActivity() {
     }
 
     private fun getFilterColor(): Int {
-        return resources.getColor(if (filterEnabled) { R.color.action } else { R.color.inverted })
+        return resources.getColor(if (filterEnabled) { R.color.fill_text_action_link } else { R.color.fill_text_base })
     }
 }

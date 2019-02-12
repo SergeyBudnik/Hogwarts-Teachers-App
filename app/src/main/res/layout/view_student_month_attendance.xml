@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="Декабрь"
         android:textSize="@dimen/font_large"
-        android:textColor="@color/inverted"
+        android:textColor="@color/fill_text_base"
         app:app_font="bold"/>
 
     <LinearLayout
@@ -30,7 +30,7 @@
             android:layout_marginEnd="@dimen/app_size_1"
             android:text="Оплачено:"
             android:textSize="@dimen/font_large"
-            android:textColor="@color/inverted"/>
+            android:textColor="@color/fill_text_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:id="@+id/paymentView"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_size_0_5"
             android:textSize="@dimen/font_large"
-            android:textColor="@color/success"/>
+            android:textColor="@color/fill_text_positive"/>
 
     </LinearLayout>
 
@@ -53,7 +53,7 @@
             android:layout_marginEnd="@dimen/app_size_1"
             android:text="Стоимость:"
             android:textSize="@dimen/font_large"
-            android:textColor="@color/inverted"/>
+            android:textColor="@color/fill_text_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
             android:layout_marginTop="@dimen/app_size_0_5"
             android:text="?"
             android:textSize="@dimen/font_large"
-            android:textColor="@color/error"/>
+            android:textColor="@color/fill_text_negative"/>
 
     </LinearLayout>
 
@@ -77,7 +77,7 @@
             android:layout_height="@dimen/app_size_1_5"
             android:layout_marginEnd="@dimen/app_size_1"
             android:src="@drawable/ic_user_filled"
-            android:tint="@color/success"/>
+            android:tint="@color/fill_text_positive"/>
 
         <ImageView
             android:id="@+id/studentAttendance1View"
@@ -85,7 +85,7 @@
             android:layout_height="@dimen/app_size_1_5"
             android:layout_marginEnd="@dimen/app_size_1"
             android:src="@drawable/ic_user_filled"
-            android:tint="@color/error"/>
+            android:tint="@color/fill_text_negative"/>
 
         <ImageView
             android:id="@+id/studentAttendance2View"
@@ -93,7 +93,7 @@
             android:layout_height="@dimen/app_size_1_5"
             android:layout_marginEnd="@dimen/app_size_1"
             android:src="@drawable/ic_user_filled"
-            android:tint="@color/success"/>
+            android:tint="@color/fill_text_positive"/>
 
         <ImageView
             android:id="@+id/studentAttendance3View"
@@ -101,7 +101,7 @@
             android:layout_height="@dimen/app_size_1_5"
             android:layout_marginEnd="@dimen/app_size_1"
             android:src="@drawable/ic_user_filled"
-            android:tint="@color/error"/>
+            android:tint="@color/fill_text_negative"/>
 
         <ImageView
             android:id="@+id/studentAttendance4View"
@@ -109,7 +109,7 @@
             android:layout_height="@dimen/app_size_1_5"
             android:layout_marginEnd="@dimen/app_size_1"
             android:src="@drawable/ic_user_filled"
-            android:tint="@color/success"/>
+            android:tint="@color/fill_text_positive"/>
 
         <ImageView
             android:id="@+id/studentAttendance5View"
@@ -117,7 +117,7 @@
             android:layout_height="@dimen/app_size_1_5"
             android:layout_marginEnd="@dimen/app_size_1"
             android:src="@drawable/ic_user_filled"
-            android:tint="@color/success"/>
+            android:tint="@color/fill_text_positive"/>
 
         <ImageView
             android:id="@+id/studentAttendance6View"
@@ -125,7 +125,7 @@
             android:layout_height="@dimen/app_size_1_5"
             android:layout_marginEnd="@dimen/app_size_1"
             android:src="@drawable/ic_user_filled"
-            android:tint="@color/warning"/>
+            android:tint="@color/fill_text_warning"/>
 
         <ImageView
             android:id="@+id/studentAttendance7View"
@@ -133,7 +133,7 @@
             android:layout_height="@dimen/app_size_1_5"
             android:layout_marginEnd="@dimen/app_size_1"
             android:src="@drawable/ic_user_filled"
-            android:tint="@color/success"/>
+            android:tint="@color/fill_text_positive"/>
 
         <ImageView
             android:id="@+id/studentAttendance8View"

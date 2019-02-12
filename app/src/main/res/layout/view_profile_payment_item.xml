@@ -17,7 +17,7 @@
         android:layout_marginStart="@dimen/app_size_1"
         android:layout_marginEnd="@dimen/app_size_1"
         android:layout_marginBottom="@dimen/app_size_1"
-        android:textColor="@color/inverted"
+        android:textColor="@color/fill_text_base"
         android:textSize="@dimen/font_large"/>
 
     <LinearLayout
@@ -30,14 +30,14 @@
         android:paddingStart="@dimen/app_size_2"
         android:paddingEnd="@dimen/app_size_2"
         android:background="@drawable/layout_row"
-        android:backgroundTint="@color/inverted_transparent">
+        android:backgroundTint="@color/alt_contrast_light">
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:id="@+id/profilePaymentItemTypeView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:textColor="@color/faded"
+            android:textColor="@color/fill_text_light"
             android:textSize="@dimen/font_large"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="center"
-            android:textColor="@color/inverted"
+            android:textColor="@color/fill_text_base"
             android:textSize="@dimen/font_large"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="end"
-            android:textColor="@color/info"
+            android:textColor="@color/fill_text_accent"
             android:textSize="@dimen/font_large"/>
 
 

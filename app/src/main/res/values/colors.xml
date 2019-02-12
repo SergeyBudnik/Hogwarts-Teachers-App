@@ -2,20 +2,62 @@
 <resources>
     <color name="transparent">#00ffffff</color>
 
-    <color name="colorPrimary">@color/primary</color>
-    <color name="colorPrimaryDark">@color/primary_dark</color>
-    <color name="colorAccent">@color/action</color>
+    <!-- Background of elements -->
+    
+    <color name="fill_contrast_strong">#2b3848</color>
+    <color name="fill_contrast_medium">#222e3d</color>
+    <color name="fill_contrast_base">#1a2633</color>
+    <color name="fill_contrast_light">#121c29</color>
+    <color name="fill_contrast_subtle">#09121f</color>
 
-    <color name="primary">#1e69e8</color>
-    <color name="primary_semi_dark">#27394d</color>
-    <color name="primary_dark">#1a2634</color>
-    <color name="info">#b3d8c7</color>
-    <color name="inverted">#ffffff</color>
-    <color name="inverted_transparent">#11ffffff</color>
-    <color name="faded">#aaaaaa</color>
-    <color name="action">#4fccf8</color>
-    <color name="action_transparent">#114fccf8</color>
-    <color name="error">#e74753</color>
-    <color name="warning">#e7ba47</color>
-    <color name="success">#64e747</color>
+    <color name="fill_accent_strong">#1966e5</color>
+    <color name="fill_accent_medium">#1d5dc7</color>
+    <color name="fill_accent_base">#2155a8</color>
+    <color name="fill_accent_light">#234b88</color>
+    <color name="fill_accent_subtle">#1f4172</color>
+
+    <!-- Semi-transparent shade -->
+
+    <color name="alt_contrast_strong">#ebf0f5</color>
+    <color name="alt_contrast_medium">#99c5d7e6</color>
+    <color name="alt_contrast_base">#33c5d7e6</color>
+    <color name="alt_contrast_light">#1ac5d7e6</color>
+    <color name="alt_contrast_subtle">#0dc5d7e6</color>
+
+    <color name="alt_accent_strong">#992183ff</color>
+    <color name="alt_accent_medium">#802183ff</color>
+    <color name="alt_accent_base">#662183ff</color>
+    <color name="alt_accent_light">#4c2183ff</color>
+    <color name="alt_accent_subtle">#332183ff</color>
+
+    <!-- Status -->
+
+    <color name="status_error_strong">#be0e0e</color>
+    <color name="status_error_medium">#a10b0b</color>
+    <color name="status_error_base">#840808</color>
+    <color name="status_error_light">#760707</color>
+    <color name="status_error_subtle">#670606</color>
+
+    <color name="status_info_strong">#1296ac</color>
+    <color name="status_info_medium">#138397</color>
+    <color name="status_info_base">#147285</color>
+    <color name="status_info_light">#156374</color>
+    <color name="status_info_subtle">#165666</color>
+
+    <!-- Text -->
+
+    <color name="fill_text_base">#ffffff</color>
+    <color name="fill_text_light">#99ffffff</color>
+    <color name="fill_text_subtle">#66ffffff</color>
+    <color name="fill_text_negative">#ff6666</color>
+    <color name="fill_text_warning">#ffaa00</color>
+    <color name="fill_text_positive">#23c423</color>
+    <color name="fill_text_action_link">#45cbfd</color>
+    <color name="fill_text_accent">#9bcefd</color>
+
+    <!-- Android colors -->
+
+    <color name="colorPrimary">@color/fill_accent_strong</color>
+    <color name="colorPrimaryDark">@color/fill_contrast_strong</color>
+    <color name="colorAccent">@color/fill_accent_base</color>
 </resources>

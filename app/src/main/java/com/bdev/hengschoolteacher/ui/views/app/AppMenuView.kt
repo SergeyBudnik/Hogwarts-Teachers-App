@@ -49,17 +49,20 @@ open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayou
     }
 
     fun setCurrentItem(isCurrent: Boolean) {
-        val color = if (isCurrent) { R.color.action } else { R.color.inverted }
+        val textColor = if (isCurrent) { R.color.fill_text_base } else { R.color.fill_text_action_link }
+        val backgroundColor = if (isCurrent) { R.color.alt_contrast_light } else { R.color.transparent }
 
-        menuItemIconView.setColorFilter(context.resources.getColor(color), PorterDuff.Mode.SRC_IN)
-        menuItemNameView.setTextColor(context.resources.getColor(color))
+        menuItemView.setBackgroundColor(context.resources.getColor(backgroundColor))
+
+        menuItemIconView.setColorFilter(context.resources.getColor(textColor), PorterDuff.Mode.SRC_IN)
+        menuItemNameView.setTextColor(context.resources.getColor(textColor))
     }
 }
 
 @EViewGroup(R.layout.view_app_menu)
 open class AppMenuView : LinearLayout {
     enum class Item {
-        MY_PROFILE, STUDENTS, TEACHERS, MONITORING
+        MY_PROFILE, STUDENTS, TEACHERS, MONITORING, ACTIONS
     }
 
     @Bean
@@ -113,6 +116,7 @@ open class AppMenuView : LinearLayout {
         menuItemStudentsView.setCurrentItem(item == Item.STUDENTS)
         menuItemTeachersView.setCurrentItem(item == Item.TEACHERS)
         menuItemMonitoringView.setCurrentItem(item == Item.MONITORING)
+        menuItemActionsView.setCurrentItem(item == Item.ACTIONS)
     }
 
     private fun goToPage(target: Class<out BaseActivity>) {

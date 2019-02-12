@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/app_size_2"
     android:paddingRight="@dimen/app_size_2"
     android:background="@drawable/layout_row"
-    android:backgroundTint="@color/inverted_transparent">
+    android:backgroundTint="@color/alt_contrast_light">
 
     <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonRowView_
         android:id="@+id/myLessonRowView"

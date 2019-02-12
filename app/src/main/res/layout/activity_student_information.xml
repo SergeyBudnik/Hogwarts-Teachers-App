@@ -40,7 +40,7 @@
                 android:paddingTop="@dimen/app_size_0_5"
                 android:paddingBottom="@dimen/app_size_0_5"
                 android:background="@drawable/layout_row"
-                android:backgroundTint="@color/inverted_transparent">
+                android:backgroundTint="@color/alt_contrast_light">
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                     android:id="@+id/studentNameView"
@@ -50,7 +50,7 @@
                     android:layout_marginStart="@dimen/app_size_2"
                     android:layout_marginEnd="@dimen/app_size_2"
                     android:textSize="@dimen/font_large"
-                    android:textColor="@color/info"/>
+                    android:textColor="@color/fill_text_accent"/>
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -66,7 +66,7 @@
                         android:layout_marginEnd="@dimen/app_size_0_5"
                         android:padding="@dimen/app_size_1"
                         android:src="@drawable/ic_phone"
-                        android:tint="@color/inverted"
+                        android:tint="@color/fill_text_base"
                         android:importantForAccessibility="no"/>
 
                     <ImageView
@@ -76,7 +76,7 @@
                         android:layout_marginEnd="@dimen/app_size_0_5"
                         android:padding="@dimen/app_size_1"
                         android:src="@drawable/ic_payment"
-                        android:tint="@color/inverted"
+                        android:tint="@color/fill_text_base"
                         android:importantForAccessibility="no"/>
 
                 </LinearLayout>

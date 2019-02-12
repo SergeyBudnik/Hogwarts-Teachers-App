@@ -14,7 +14,7 @@
     android:paddingEnd="@dimen/app_size_1"
     android:weightSum="5"
     android:background="@drawable/layout_row"
-    android:backgroundTint="@color/inverted_transparent">
+    android:backgroundTint="@color/alt_contrast_light">
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
         android:id="@+id/monitoringStudentPaymentItemMonthView"
@@ -23,7 +23,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textSize="@dimen/font_normal"
-        android:textColor="@color/info"/>
+        android:textColor="@color/fill_text_accent"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/error"/>
+            android:textColor="@color/fill_text_negative"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
             android:layout_marginEnd="@dimen/app_size_0_25"
             android:text="+"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/inverted"/>
+            android:textColor="@color/fill_text_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:id="@+id/monitoringStudentPaymentItemPayableLessonsAmountView"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/success"/>
+            android:textColor="@color/fill_text_positive"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
             android:layout_marginEnd="@dimen/app_size_0_25"
             android:text="+"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/inverted"/>
+            android:textColor="@color/fill_text_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:id="@+id/monitoringStudentPaymentItemLeftLessonsAmountView"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/inverted"/>
+            android:textColor="@color/fill_text_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
             android:layout_marginEnd="@dimen/app_size_0_25"
             android:text="="
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/inverted"/>
+            android:textColor="@color/fill_text_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:id="@+id/monitoringStudentPaymentItemTotalLessonsAmountView"
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/info"/>
+            android:textColor="@color/fill_text_accent"/>
 
     </LinearLayout>
 
@@ -106,7 +106,7 @@
             android:gravity="center"
             android:text="5000"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/inverted"/>
+            android:textColor="@color/fill_text_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:layout_width="wrap_content"
@@ -115,7 +115,7 @@
             android:layout_marginEnd="@dimen/app_size_0_25"
             android:text="-"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/inverted"/>
+            android:textColor="@color/fill_text_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:id="@+id/monitoringStudentPaymentItemPayedPriceView"
@@ -124,7 +124,7 @@
             android:gravity="center"
             android:text="3000"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/success"/>
+            android:textColor="@color/fill_text_positive"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
             android:layout_marginEnd="@dimen/app_size_0_25"
             android:text="="
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/inverted"/>
+            android:textColor="@color/fill_text_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:id="@+id/monitoringStudentPaymentItemDeptPriceView"
@@ -142,7 +142,7 @@
             android:gravity="center"
             android:text="2000"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/error"/>
+            android:textColor="@color/fill_text_negative"/>
 
     </LinearLayout>
 

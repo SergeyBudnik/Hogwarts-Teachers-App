@@ -31,7 +31,7 @@
                 android:layout_marginBottom="@dimen/app_size_1"
                 android:layout_marginStart="@dimen/app_size_2"
                 android:layout_marginEnd="@dimen/app_size_2"
-                android:textColor="@color/inverted"
+                android:textColor="@color/fill_text_base"
                 android:textSize="@dimen/font_large"
                 app:app_font="bold"/>
 
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:text="Зарплата:"
                     android:textSize="@dimen/font_large"
-                    android:textColor="@color/inverted"/>
+                    android:textColor="@color/fill_text_base"/>
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                     android:id="@+id/teacherIncomeView"
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:textSize="@dimen/font_large"
-                    android:textColor="@color/error"/>
+                    android:textColor="@color/fill_text_negative"/>
 
             </RelativeLayout>
 
@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:text="Доход:"
                     android:textSize="@dimen/font_large"
-                    android:textColor="@color/inverted"/>
+                    android:textColor="@color/fill_text_base"/>
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                     android:id="@+id/teacherOutcomeView"
@@ -82,7 +82,7 @@
                     android:layout_alignParentEnd="true"
                     android:text="-"
                     android:textSize="@dimen/font_large"
-                    android:textColor="@color/success"/>
+                    android:textColor="@color/fill_text_positive"/>
 
             </RelativeLayout>
 
@@ -93,13 +93,15 @@
                 android:layout_marginStart="@dimen/app_size_2"
                 android:text="Телефоны:"
                 android:textSize="@dimen/font_large"
-                android:textColor="@color/inverted"/>
+                android:textColor="@color/fill_text_base"/>
 
             <LinearLayout
                 android:id="@+id/teacherPhonesContainerView"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="@dimen/app_size_1"
+                android:paddingEnd="@dimen/app_size_1"
                 android:layout_marginTop="@dimen/app_size_1"/>
 
         </LinearLayout>

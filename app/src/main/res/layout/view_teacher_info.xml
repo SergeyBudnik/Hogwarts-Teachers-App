@@ -9,7 +9,7 @@
     android:paddingEnd="@dimen/app_size_2"
     android:paddingBottom="@dimen/app_size_1"
     android:background="@drawable/layout_row"
-    android:backgroundTint="@color/inverted_transparent">
+    android:backgroundTint="@color/alt_contrast_light">
 
     <ImageView
         android:layout_width="@dimen/app_size_1_5"
@@ -17,7 +17,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="@dimen/app_size_1"
         android:src="@drawable/ic_teacher"
-        android:tint="@color/info"
+        android:tint="@color/fill_text_accent"
         android:importantForAccessibility="no"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textColor="@color/info"
+        android:textColor="@color/fill_text_accent"
         android:textSize="@dimen/font_large"/>
 
 </LinearLayout>

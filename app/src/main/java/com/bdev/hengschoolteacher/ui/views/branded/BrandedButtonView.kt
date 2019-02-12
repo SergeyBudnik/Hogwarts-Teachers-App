@@ -17,8 +17,8 @@ open class BrandedButtonView(context: Context, attrs: AttributeSet) : RelativeLa
             val backgroundColorId: Int,
             val textColorId: Int
     ) {
-        PRIMARY(1, R.drawable.layout_button_filled, R.color.primary, R.color.inverted),
-        DEFAULT(2, R.drawable.layout_button_linear, R.color.action, R.color.action);
+        PRIMARY(1, R.drawable.layout_button_filled, R.color.fill_accent_strong, R.color.fill_text_base),
+        DEFAULT(2, R.drawable.layout_button_linear, R.color.fill_text_action_link, R.color.fill_text_action_link);
 
         companion object {
             fun findById(id: Int): Style? {

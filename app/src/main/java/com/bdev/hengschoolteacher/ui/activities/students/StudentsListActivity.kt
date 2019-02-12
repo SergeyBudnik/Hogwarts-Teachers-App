@@ -2,7 +2,6 @@ package com.bdev.hengschoolteacher.ui.activities.students
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity_
-import com.bdev.hengschoolteacher.ui.adapters.TextChangeAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_students_list.*
@@ -91,7 +89,9 @@ open class StudentsListActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        studentsHeaderView.setLeftButtonAction { studentsMenuLayoutView.openMenu() }
+        studentsHeaderView
+                .setLeftButtonAction { studentsMenuLayoutView.openMenu() }
+                .setRightButtonAction { studentsListHeaderSearchView.show() }
 
         studentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.STUDENTS)
 
@@ -107,11 +107,9 @@ open class StudentsListActivity : BaseActivity() {
                     .go()
         }
 
-        studentsListSearchView.addTextChangedListener(object: TextChangeAdapter() {
-            override fun onTextChanged(value: String) {
-                studentsListAdapter.setFilter(value)
-                studentsListAdapter.notifyDataSetChanged()
-            }
-        })
+        studentsListHeaderSearchView.addOnTextChangeListener {
+            studentsListAdapter.setFilter(it)
+            studentsListAdapter.notifyDataSetChanged()
+        }
     }
 }

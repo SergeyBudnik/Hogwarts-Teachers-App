@@ -19,7 +19,6 @@ import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import kotlinx.android.synthetic.main.view_lesson_row.view.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
-import java.util.*
 
 @EViewGroup(R.layout.view_lesson_row)
 open class LessonRowView : LinearLayout {
@@ -61,13 +60,13 @@ open class LessonRowView : LinearLayout {
         }
 
         val color = if (student == null) {
-            R.color.inverted
+            R.color.fill_text_base
         } else {
             when (attendanceType) {
-                null -> R.color.inverted
-                StudentAttendance.Type.VISITED -> R.color.success
-                StudentAttendance.Type.VALID_SKIP -> R.color.warning
-                StudentAttendance.Type.INVALID_SKIP -> R.color.error
+                null -> R.color.fill_text_base
+                StudentAttendance.Type.VISITED -> R.color.fill_text_positive
+                StudentAttendance.Type.VALID_SKIP -> R.color.fill_text_warning
+                StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_negative
             }
         }
 
@@ -93,12 +92,12 @@ open class LessonRowView : LinearLayout {
 
         val colorId = if (isLessonFinished) {
             if (isLessonFilled && isLessonMarked) {
-                R.color.success
+                R.color.fill_text_positive
             } else {
-                R.color.error
+                R.color.fill_text_negative
             }
         } else {
-            R.color.warning
+            R.color.fill_text_warning
         }
 
         lessonRowStatusView.setImageDrawable(resources.getDrawable(iconId))

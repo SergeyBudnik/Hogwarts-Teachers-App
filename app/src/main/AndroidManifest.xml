@@ -51,6 +51,8 @@
         <activity android:name=".ui.activities.actions.ActionsEventsListActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.actions.ActionsUsersRequestsListActivity_" android:screenOrientation="sensorPortrait"/>
 
+        <activity android:name=".ui.activities.user_request.UserRequestActivity_" android:screenOrientation="sensorPortrait"/>
+
         <activity android:name=".ui.activities.LoginActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.LoadingActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.ReloginActivity_" android:screenOrientation="sensorPortrait"/>

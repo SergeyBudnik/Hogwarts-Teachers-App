@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.TeachersPaymentService
 import com.bdev.hengschoolteacher.service.TeachersService
-import com.bdev.hengschoolteacher.ui.views.app.student.StudentPhoneItemView_
+import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView_
 import kotlinx.android.synthetic.main.activity_teacher.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -38,7 +38,7 @@ open class TeacherActivity : BaseActivity() {
         teacherPhonesContainerView.removeAllViews()
 
         teacher.phones.forEach { phone ->
-            teacherPhonesContainerView.addView(StudentPhoneItemView_.build(this).bind(phone))
+            teacherPhonesContainerView.addView(BrandedPhoneView_.build(this).bind(phone))
         }
 
         teacherIncomeView.text = "-${teachersPaymentService.getIncome(teacherId)} Р"

@@ -8,7 +8,7 @@
     android:paddingStart="@dimen/app_size_2"
     android:paddingEnd="@dimen/app_size_2"
     android:background="@drawable/layout_row"
-    android:backgroundTint="@color/inverted_transparent">
+    android:backgroundTint="@color/alt_contrast_light">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -20,14 +20,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/app_size_1"
-            android:textColor="@color/inverted"
+            android:textColor="@color/fill_text_base"
             android:textSize="@dimen/font_very_large"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:id="@+id/lessonInfoDateView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/inverted"
+            android:textColor="@color/fill_text_base"
             android:textSize="@dimen/font_very_large"/>
 
     </LinearLayout>
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/app_size_0_5"
-            android:textColor="@color/faded"
+            android:textColor="@color/fill_text_light"
             android:textSize="@dimen/font_large" />
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -50,14 +50,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/app_size_0_5"
             android:text="-"
-            android:textColor="@color/faded"
+            android:textColor="@color/fill_text_light"
             android:textSize="@dimen/font_large"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:id="@+id/lessonInfoFinishTimeView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/faded"
+            android:textColor="@color/fill_text_light"
             android:textSize="@dimen/font_large"/>
 
     </LinearLayout>

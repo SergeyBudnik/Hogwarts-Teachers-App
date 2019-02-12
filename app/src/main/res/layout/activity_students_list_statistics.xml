@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Всего студентов:"
-                    android:textColor="@color/inverted"
+                    android:textColor="@color/fill_text_base"
                     android:textSize="@dimen/font_large"/>
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:textColor="@color/inverted"
+                    android:textColor="@color/fill_text_base"
                     android:textSize="@dimen/font_large"
                     app:app_font="bold"/>
 

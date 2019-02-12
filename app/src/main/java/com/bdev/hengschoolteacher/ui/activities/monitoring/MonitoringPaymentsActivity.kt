@@ -5,18 +5,21 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.adapters.BaseItemsAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_monitoring_payments.*
 import kotlinx.android.synthetic.main.view_monitoring_payments_item.view.*
-import org.androidannotations.annotations.*
+import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.Bean
+import org.androidannotations.annotations.EActivity
+import org.androidannotations.annotations.EViewGroup
 
 @EViewGroup(R.layout.view_monitoring_payments_item)
 open class MonitoringPaymentsItemView : RelativeLayout {
@@ -30,17 +33,10 @@ open class MonitoringPaymentsItemView : RelativeLayout {
     }
 }
 
-@EBean
-open class MonitoringPaymentsListAdapter : BaseAdapter() {
-    @RootContext
-    lateinit var context: Context
-
-    private var students: List<Student> = emptyList()
-
-    fun setItems(students: List<Student>) {
-        this.students = students.sortedBy { it.name }
-    }
-
+open class MonitoringPaymentsListAdapter(
+        context: Context,
+        students: List<Student>
+) : BaseItemsAdapter<Student>(context, students.sortedBy { it.name }) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
         val v = if (convertView == null) {
             MonitoringPaymentsItemView_.build(context)
@@ -52,18 +48,6 @@ open class MonitoringPaymentsListAdapter : BaseAdapter() {
 
         return v
     }
-
-    override fun getItem(position: Int): Student {
-        return students[position]
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getCount(): Int {
-        return students.size
-    }
 }
 
 @SuppressLint("Registered")
@@ -72,20 +56,18 @@ open class MonitoringPaymentsActivity : BaseActivity() {
     @Bean
     lateinit var studentsService: StudentsService
 
-    @Bean
-    lateinit var monitoringPaymentsListAdapter: MonitoringPaymentsListAdapter
-
     @AfterViews
     fun init() {
-        monitoringPaymentsHeaderView.setLeftButtonAction { monitoringPaymentsMenuLayoutView.openMenu() }
+        monitoringPaymentsHeaderView
+                .setLeftButtonAction { monitoringPaymentsMenuLayoutView.openMenu() }
 
         monitoringPaymentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
-        monitoringPaymentsListAdapter.setItems(studentsService.getAllStudents())
+        val adapter = MonitoringPaymentsListAdapter(this, studentsService.getAllStudents())
 
-        monitoringPaymentsListView.adapter = monitoringPaymentsListAdapter
+        monitoringPaymentsListView.adapter = adapter
         monitoringPaymentsListView.setOnItemClickListener { _, _, position, _ ->
-            val student = monitoringPaymentsListAdapter.getItem(position)
+            val student = adapter.getItem(position)
 
             redirect(this)
                     .to(MonitoringStudentPaymentActivity_::class.java)

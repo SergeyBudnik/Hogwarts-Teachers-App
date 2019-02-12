@@ -35,10 +35,10 @@
                 android:paddingBottom="@dimen/app_size_1"
                 android:paddingStart="@dimen/app_size_2"
                 android:paddingEnd="@dimen/app_size_2"
-                android:textColor="@color/info"
+                android:textColor="@color/fill_text_accent"
                 android:textSize="@dimen/font_large"
                 android:background="@drawable/layout_row"
-                android:backgroundTint="@color/inverted_transparent"/>
+                android:backgroundTint="@color/alt_contrast_light"/>
 
             <LinearLayout
                 android:id="@+id/studentCallPhonesLayoutView"

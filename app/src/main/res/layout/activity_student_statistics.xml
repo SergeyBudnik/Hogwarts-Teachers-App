@@ -38,7 +38,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/inverted_transparent"/>
+                android:background="@color/alt_contrast_light"/>
 
             <LinearLayout
                 android:orientation="vertical"
@@ -57,7 +57,7 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="@dimen/app_size_0_5"
                     android:layout_marginBottom="@dimen/app_size_0_5"
-                    android:background="@color/inverted_transparent"/>
+                    android:background="@color/alt_contrast_light"/>
 
                 <com.bdev.hengschoolteacher.ui.activities.student.StudentMonthAttendanceView_
                     android:id="@+id/previousMonthAttendanceView"
@@ -69,7 +69,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/inverted_transparent"/>
+                android:background="@color/alt_contrast_light"/>
 
         </LinearLayout>
 

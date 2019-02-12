@@ -17,4 +17,8 @@ open class UsersRequestsService {
     fun getUsersRequests(): List<UserRequest> {
         return usersRequestsDao.getUsersRequests()
     }
+
+    fun getUserRequest(id: Long): UserRequest? {
+        return usersRequestsDao.getUsersRequests().find { it.id == id }
+    }
 }

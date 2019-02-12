@@ -32,20 +32,14 @@ open class BrandedSecondaryHeaderItem(context: Context, attrs: AttributeSet) : L
     }
 
     fun setActive(active: Boolean) {
-        brandedSecondaryHeaderLayout.setBackgroundColor(resources.getColor(if (active) {
-            R.color.transparent
-        } else {
-            R.color.transparent
-        }))
-
         titleView.setTextColor(resources.getColor(if (active) {
-            R.color.inverted
+            R.color.fill_text_base
         } else {
-            R.color.action
+            R.color.fill_text_action_link
         }))
 
         activeMarkView.setBackgroundColor(resources.getColor(if (active) {
-            R.color.inverted
+            R.color.fill_text_base
         } else {
             R.color.transparent
         }))

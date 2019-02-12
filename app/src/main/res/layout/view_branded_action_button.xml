@@ -10,7 +10,7 @@
     android:paddingStart="@dimen/app_size_2"
     android:paddingEnd="@dimen/app_size_2"
     android:background="@drawable/layout_row"
-    android:backgroundTint="@color/action_transparent">
+    android:backgroundTint="@color/alt_contrast_light">
 
     <RelativeLayout
         android:layout_width="@dimen/app_size_1_5"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:textSize="@dimen/font_large"
-        android:textColor="@color/inverted"
+        android:textColor="@color/fill_text_base"
         app:app_font="regular"/>
 
 </LinearLayout>

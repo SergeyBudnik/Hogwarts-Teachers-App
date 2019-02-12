@@ -2,10 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/menuItemView"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/inverted_transparent"
     android:paddingTop="@dimen/app_size_1"
     android:paddingBottom="@dimen/app_size_1"
     android:paddingStart="@dimen/app_size_2"
@@ -17,7 +17,8 @@
         android:layout_height="@dimen/app_size_1_5"
         android:layout_marginEnd="@dimen/app_size_1"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_menu"/>
+        android:src="@drawable/ic_menu"
+        android:importantForAccessibility="no"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
         android:id="@+id/menuItemNameView"
@@ -25,8 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:textSize="@dimen/font_large"
-        android:textColor="@color/inverted"
-        android:text="Мой профиль"
+        android:textColor="@color/fill_text_base"
         app:app_font="bold"/>
 
 </LinearLayout>

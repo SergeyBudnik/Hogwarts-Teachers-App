@@ -12,13 +12,13 @@
     android:paddingStart="@dimen/app_size_2"
     android:paddingEnd="@dimen/app_size_2"
     android:background="@drawable/layout_row"
-    android:backgroundTint="@color/inverted_transparent">
+    android:backgroundTint="@color/alt_contrast_light">
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
         android:id="@+id/monitoringPaymentsItemNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_large"
-        android:textColor="@color/inverted"/>
+        android:textColor="@color/fill_text_base"/>
 
 </RelativeLayout>

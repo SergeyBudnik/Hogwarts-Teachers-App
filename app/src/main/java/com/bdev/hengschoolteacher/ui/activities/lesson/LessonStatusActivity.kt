@@ -59,7 +59,7 @@ open class LessonStatusActivity : BaseActivity() {
                 status?.type,
                 LessonStatus.Type.FINISHED,
                 "Проведено",
-                R.color.success
+                R.color.fill_text_positive
         )
 
         initButton(
@@ -68,7 +68,7 @@ open class LessonStatusActivity : BaseActivity() {
                 status?.type,
                 LessonStatus.Type.CANCELED,
                 "Отменено",
-                R.color.error
+                R.color.fill_text_negative
         )
     }
 
@@ -85,7 +85,7 @@ open class LessonStatusActivity : BaseActivity() {
         if (actualStatus != null) {
             buttonView.setButtonIcon(
                     R.drawable.ic_ok,
-                    if (actualStatus == buttonStatus) { buttonColorId } else { R.color.faded }
+                    if (actualStatus == buttonStatus) { buttonColorId } else { R.color.fill_text_light }
             )
         }
 

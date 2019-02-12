@@ -15,41 +15,17 @@
             android:id="@+id/studentsHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title=""
-            app:leftIcon="@drawable/ic_menu"/>
+            app:title="Студенты"
+            app:leftIcon="@drawable/ic_menu"
+            app:rightIcon="@drawable/ic_search"/>
 
-        <RelativeLayout
-            android:layout_width="@dimen/app_size_20"
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedHeaderSearchView_
+            android:id="@+id/studentsListHeaderSearchView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/app_size_2"
-            android:layout_centerVertical="true">
-
-            <EditText
-                android:id="@+id/studentsListSearchView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/app_size_0_5"
-                android:paddingBottom="@dimen/app_size_0_5"
-                android:paddingStart="@dimen/app_size_1"
-                android:paddingEnd="@dimen/app_size_1"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/app_size_3"
-                android:inputType="text"
-                android:hint="Поиск ученика"
-                android:textSize="@dimen/font_normal"
-                android:textColor="@color/inverted"
-                android:textColorHint="@color/faded"
-                android:background="@drawable/layout_header_edit_text"/>
-
-            <ImageView
-                android:layout_width="@dimen/app_size_1_5"
-                android:layout_height="@dimen/app_size_1_5"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_search"/>
-
-        </RelativeLayout>
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1"
+            android:background="@color/fill_contrast_medium"/>
 
     </RelativeLayout>
 

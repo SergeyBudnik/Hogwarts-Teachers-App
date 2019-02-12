@@ -7,13 +7,13 @@
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/app_size_1"
     android:paddingBottom="@dimen/app_size_1"
-    android:paddingLeft="@dimen/app_size_2"
-    android:paddingRight="@dimen/app_size_2"
+    android:paddingStart="@dimen/app_size_2"
+    android:paddingEnd="@dimen/app_size_2"
     android:layout_marginTop="@dimen/app_size_0_5"
     android:layout_marginStart="@dimen/app_size_1"
     android:layout_marginEnd="@dimen/app_size_1"
     android:background="@drawable/layout_row"
-    android:backgroundTint="@color/inverted_transparent">
+    android:backgroundTint="@color/alt_contrast_light">
 
     <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonRowView_
         android:id="@+id/allLessonRowView"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/app_size_1"
         android:textSize="@dimen/font_normal"
-        android:textColor="@color/inverted"
+        android:textColor="@color/fill_text_base"
         app:app_font="regular"/>
 
 </LinearLayout>
