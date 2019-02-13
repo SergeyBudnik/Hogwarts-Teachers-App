@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:id="@+id/brandedEditTextLabelView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/app_size_1"
+        android:textColor="@color/fill_text_base"
+        android:textSize="@dimen/font_large"/>
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableEditTextView
+        android:id="@+id/brandedEditTextControlView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_0_5"
+        android:paddingTop="@dimen/app_size_1"
+        android:paddingBottom="@dimen/app_size_1"
+        android:paddingStart="@dimen/app_size_1"
+        android:paddingEnd="@dimen/app_size_1"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/fill_text_base"
+        android:textColorHint="@color/fill_text_light"
+        android:background="@drawable/layout_row"
+        android:backgroundTint="@color/fill_contrast_medium"/>
+
+</LinearLayout>

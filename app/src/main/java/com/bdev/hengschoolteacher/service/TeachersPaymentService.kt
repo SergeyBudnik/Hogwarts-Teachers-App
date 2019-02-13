@@ -63,7 +63,7 @@ open class TeachersPaymentService {
 
         val passedLessons = lessons
                 .asSequence()
-                .map { it.second }
+                .map { it.lesson }
                 .filter {
                     val lessonStatus = lessonStatusService.getLessonStatus(it.id, lessonsService.getLessonStartTime(it.id))
 

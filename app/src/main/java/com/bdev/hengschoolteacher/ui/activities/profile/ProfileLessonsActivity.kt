@@ -9,8 +9,8 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.group.Group
+import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.data.school.group.Lesson
-import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.teacher.Teacher
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
@@ -44,12 +44,14 @@ open class ProfileLessonsItemView : RelativeLayout {
     lateinit var studentsAttendancesService: StudentsAttendancesService
     @Bean
     lateinit var lessonsService: LessonsService
+    @Bean
+    lateinit var studentsService: StudentsService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(group: Group, lesson: Lesson, students: List<Student>): ProfileLessonsItemView {
-        profileLessonsItemView.bind(group, lesson, students)
+    fun bind(group: Group, lesson: Lesson): ProfileLessonsItemView {
+        profileLessonsItemView.bind(group, lesson, studentsService.getGroupStudents(group.id))
 
         setOnClickListener {
             redirect(context as BaseActivity)
@@ -102,7 +104,7 @@ open class ProfileLessonsActivity : BaseActivity() {
         }
     }
 
-    private fun initLessonsList(lessons: Map<DayOfWeek, List<Pair<Group, Lesson>>>) {
+    private fun initLessonsList(lessons: Map<DayOfWeek, List<GroupAndLesson>>) {
         profileLessonsContentView.removeAllViews()
 
         DayOfWeek.values().forEach { dayOfWeek ->
@@ -113,9 +115,7 @@ open class ProfileLessonsActivity : BaseActivity() {
 
                 dayLessons.forEach { lessonAndGroup ->
                     val view = ProfileLessonsItemView_.build(this).bind(
-                            lessonAndGroup.first,
-                            lessonAndGroup.second,
-                            studentsService.getGroupStudents(lessonAndGroup.first.id)
+                            lessonAndGroup.group, lessonAndGroup.lesson
                     )
 
                     profileLessonsContentView.addView(view)

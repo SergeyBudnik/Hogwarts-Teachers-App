@@ -92,9 +92,6 @@ open class StudentPaymentActivity : BaseActivity() {
     @Bean
     lateinit var studentPaymentsListAdapter: StudentPaymentsListAdapter
 
-    @Bean
-    lateinit var keyboardUtils: KeyboardUtils
-
     @Extra(EXTRA_STUDENT_ID)
     @JvmField
     var studentId: Long = 0
@@ -114,7 +111,7 @@ open class StudentPaymentActivity : BaseActivity() {
     }
 
     private fun addPayment(student: Student) {
-        keyboardUtils.hideKeyboard()
+        KeyboardUtils.hideKeyboard(this)
 
         val amount = studentPaymentAmountView.text.toString().toLong()
         val lessonStartTime = Date().time

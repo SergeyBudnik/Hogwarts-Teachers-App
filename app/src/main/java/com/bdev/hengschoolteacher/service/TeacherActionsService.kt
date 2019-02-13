@@ -22,7 +22,7 @@ open class TeacherActionsService {
         val teacherLessons = lessonsService.getTeacherLessons(teacherId)
 
         for (dayOfWeek in DayOfWeek.values()) {
-            val allDayTeacherLessons = (teacherLessons[dayOfWeek] ?: emptyList()).map { it.second }
+            val allDayTeacherLessons = (teacherLessons[dayOfWeek] ?: emptyList()).map { it.lesson }
             val passedDayTeacherLessons = getPassedTeacherDayLessons(allDayTeacherLessons)
 
             var previousLesson: Lesson? = null

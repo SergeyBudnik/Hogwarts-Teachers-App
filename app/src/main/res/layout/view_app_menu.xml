@@ -16,7 +16,7 @@
         android:layout_marginStart="@dimen/app_size_2"
         android:layout_marginEnd="@dimen/app_size_2"
         android:textSize="@dimen/font_large"
-        android:textColor="@color/fill_text_base"
+        android:textColor="@color/fill_text_accent"
         app:app_font="bold"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -78,8 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/app_size_1"
-            android:layout_marginEnd="@dimen/app_size_1">
+            android:layout_marginStart="@dimen/app_size_2">
 
             <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                 android:id="@+id/refreshButtonView"
@@ -87,17 +86,9 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/app_size_1"
                 android:paddingBottom="@dimen/app_size_1"
-                android:gravity="center"
                 android:text="Обновить данные"
                 android:textColor="@color/fill_text_action_link"
                 android:textSize="@dimen/font_large"/>
-
-            <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
-                android:id="@+id/menuLogOutView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_0_25"
-                app:button_text="Выйти"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

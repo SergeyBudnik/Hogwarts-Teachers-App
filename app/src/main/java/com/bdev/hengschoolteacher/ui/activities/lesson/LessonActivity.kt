@@ -15,9 +15,7 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.*
-import com.bdev.hengschoolteacher.ui.activities.student.StudentPaymentActivity
-import com.bdev.hengschoolteacher.ui.activities.student.StudentCallActivity_
-import com.bdev.hengschoolteacher.ui.activities.student.StudentPaymentActivity_
+import com.bdev.hengschoolteacher.ui.activities.student.*
 import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
 import kotlinx.android.synthetic.main.activity_lesson.*
@@ -38,6 +36,14 @@ open class LessonStudentItemView : RelativeLayout {
         bindAttendance(student, group, lesson)
         bindCall(student)
         bindPayment(student)
+
+        setOnClickListener {
+            redirect(context as BaseActivity)
+                    .to(StudentInformationActivity_::class.java)
+                    .withExtra(StudentInformationActivity.EXTRA_STUDENT_ID, student.id)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
+        }
 
         return this
     }

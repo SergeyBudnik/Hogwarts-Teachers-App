@@ -5,6 +5,10 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.TeachersService
+import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.TeacherActivity
+import com.bdev.hengschoolteacher.ui.activities.TeacherActivity_
+import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
 import kotlinx.android.synthetic.main.view_teacher_info.view.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
@@ -20,5 +24,13 @@ open class TeacherInfoView : LinearLayout {
 
     fun bind(teacherId: Long) {
         teacherInfoNameView.text = teachersService.getTeacherById(teacherId)?.name ?: throw RuntimeException()
+
+        setOnClickListener {
+            redirect(context as BaseActivity)
+                    .to(TeacherActivity_::class.java)
+                    .withExtra(TeacherActivity.EXTRA_TEACHER_ID, teacherId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
+        }
     }
 }

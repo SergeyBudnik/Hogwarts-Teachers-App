@@ -13,6 +13,7 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.service.StudentsAttendancesService
+import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.utils.TimeUtils
@@ -25,6 +26,9 @@ import java.lang.RuntimeException
 open class MonitoringStudentPaymentItemView : RelativeLayout {
     @Bean
     lateinit var lessonsService: LessonsService
+
+    @Bean
+    lateinit var studentsPaymentsService: StudentsPaymentsService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -46,6 +50,12 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
         monitoringStudentPaymentItemNonPayableLessonsAmountView.text = "$payableLessonsAmount"
         monitoringStudentPaymentItemLeftLessonsAmountView.text = "$leftLessonsAmount"
         monitoringStudentPaymentItemTotalLessonsAmountView.text = "$totalLessonsAmount"
+
+        val monthPayments = studentsPaymentsService.getMonthPayments(student, month)
+
+        monitoringStudentPaymentItemTotalPriceAmountView.text = "${700 * payableLessonsAmount}"
+        monitoringStudentPaymentItemPayedPriceView.text = "$monthPayments"
+        monitoringStudentPaymentItemDeptPriceView.text = "${700 * payableLessonsAmount - monthPayments}"
     }
 
     private fun getLessonsAmount(attendances: List<StudentAttendance>, month: Int): Int {
@@ -123,6 +133,8 @@ open class MonitoringStudentPaymentActivity : BaseActivity() {
     lateinit var lessonsService: LessonsService
     @Bean
     lateinit var studentsService: StudentsService
+    @Bean
+    lateinit var studentsPaymentsService: StudentsPaymentsService
 
     @Bean
     lateinit var monitoringStudentPaymentListAdapter: MonitoringStudentPaymentListAdapter
@@ -136,6 +148,8 @@ open class MonitoringStudentPaymentActivity : BaseActivity() {
         val allAttendances = studentsAttendancesService.getAllAttendances(studentId)
         val allPayableAttendances = allAttendances.filter { it.type != StudentAttendance.Type.VALID_SKIP }
         val allNonPayableAttendances = allAttendances.filter { it.type == StudentAttendance.Type.VALID_SKIP }
+
+        monitoringStudentPaymentDeptView.text = "${allPayableAttendances.size * 700L - studentsPaymentsService.getPayments(studentId).fold(0L) { amount, value -> amount + value.amount }}"
 
         monitoringStudentPaymentListAdapter.bind(
                 studentsService.getStudent(studentId) ?: throw RuntimeException(),

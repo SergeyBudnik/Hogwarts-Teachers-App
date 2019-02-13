@@ -24,17 +24,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.bdev.hengschoolteacher.ui.views.app.dev.InDevelopmentView_
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/profileAccountNameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/app_size_10"/>
+                android:layout_marginTop="@dimen/app_size_1"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"
+                android:textColor="@color/fill_text_accent"
+                android:textSize="@dimen/font_large"
+                app:app_font="bold"/>
 
-        </RelativeLayout>
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/profileAccountLoginView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginBottom="@dimen/app_size_1"
+                android:textColor="@color/fill_text_light"
+                android:textSize="@dimen/font_large"/>
+
+            <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_1"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"
+                app:button_text="Изменить пароль"
+                app:button_style="default_style"/>
+
+            <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+                android:id="@+id/profileAccountLogoutView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_1"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"
+                app:button_text="Выйти"
+                app:button_style="primary_style"/>
+
+        </LinearLayout>
 
     </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
 

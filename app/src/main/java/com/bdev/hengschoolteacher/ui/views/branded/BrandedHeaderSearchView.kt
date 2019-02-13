@@ -5,7 +5,9 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.TextChangeAdapter
+import com.bdev.hengschoolteacher.ui.utils.KeyboardUtils
 import kotlinx.android.synthetic.main.view_branded_header_search.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup
@@ -23,6 +25,14 @@ open class BrandedHeaderSearchView : RelativeLayout {
             brandedHeaderSearchView.text.clear()
 
             visibility = View.GONE
+
+            KeyboardUtils.hideKeyboard(context as BaseActivity)
+        }
+
+        brandedHeaderSearchView.setOnFocusChangeListener { _, focus ->
+            if (focus) {
+                KeyboardUtils.showKeyboard(context as BaseActivity)
+            }
         }
     }
 

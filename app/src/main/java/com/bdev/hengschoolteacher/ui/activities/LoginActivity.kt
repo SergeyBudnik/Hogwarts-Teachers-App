@@ -25,8 +25,8 @@ open class LoginActivity : BaseActivity() {
     }
 
     private fun doLogin() {
-        val login = loginLoginView.text.toString()
-        val password = loginPasswordView.text.toString()
+        val login = loginLoginView.getText()
+        val password = loginPasswordView.getText()
 
         authAsyncService.login(AuthCredentials(login, password))
                 .onSuccess { runOnUiThread { onLoginSuccessful() } }

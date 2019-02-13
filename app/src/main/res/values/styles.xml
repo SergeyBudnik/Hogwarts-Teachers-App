@@ -18,11 +18,29 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="CommonFontableEditTextView">
+        <attr name="app_edit_text_font" format="enum">
+            <enum name="regular" value="1"/>
+            <enum name="light" value="2"/>
+            <enum name="bold" value="3"/>
+        </attr>
+    </declare-styleable>
+
+
     <declare-styleable name="BrandedButtonView">
         <attr name="button_text" format="string"/>
         <attr name="button_style" format="enum">
             <enum name="primary_style" value="1"/>
             <enum name="default_style" value="2"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="BrandedEditTextView">
+        <attr name="branded_edit_text_label" format="string"/>
+        <attr name="branded_edit_text_hint" format="string"/>
+        <attr name="branded_edit_text_type" format="enum">
+            <enum name="branded_edit_text_type_text" value="1"/>
+            <enum name="branded_edit_text_type_password" value="2"/>
         </attr>
     </declare-styleable>
 

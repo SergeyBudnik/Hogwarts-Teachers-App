@@ -94,8 +94,6 @@ open class AppMenuView : LinearLayout {
 
         refreshButtonView.setOnClickListener { goToPage(LoadingActivity_::class.java) }
 
-        menuLogOutView.setOnClickListener { logOut() }
-
         versionView.text = VersionUtils().getVersion()
 
         menuUpdateAppView.setOnClickListener {
@@ -123,14 +121,6 @@ open class AppMenuView : LinearLayout {
         redirect(context as BaseActivity)
                 .to(target)
                 .withAnim(0, 0)
-                .goAndCloseCurrent()
-    }
-
-    private fun logOut() {
-        authService.clearAuthInfo()
-
-        redirect(context as BaseActivity)
-                .to(LoginActivity_::class.java)
                 .goAndCloseCurrent()
     }
 }

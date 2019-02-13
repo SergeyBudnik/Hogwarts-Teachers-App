@@ -56,7 +56,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_size_2"
-            app:button_text="Перезапустить"/>
+            app:button_text="Перезапустить"
+            app:button_style="primary_style"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/loadingFailedContinueView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_0_5"
+            android:paddingTop="@dimen/app_size_0_5"
+            android:paddingBottom="@dimen/app_size_0_5"
+            android:gravity="center"
+            android:text="Использовать сохраненные данные"
+            android:textColor="@color/fill_text_action_link"
+            android:textSize="@dimen/font_normal"/>
 
     </LinearLayout>
 

@@ -27,6 +27,7 @@ open class LoadingActivity : BaseActivity() {
         doLoading()
 
         loadingFailedRestartView.setOnClickListener { doLoading() }
+        loadingFailedContinueView.setOnClickListener { doRedirect() }
     }
 
     private fun doLoading() {
@@ -36,12 +37,12 @@ open class LoadingActivity : BaseActivity() {
         loadingFailedView.visibility = View.GONE
 
         schoolDataAsyncService.load()
-                .onSuccess { runOnUiThread { onLoadingSuccess() } }
+                .onSuccess { runOnUiThread { doRedirect() } }
                 .onAuthFail { runOnUiThread { onLoadingAuthFailure() } }
                 .onOtherFail { runOnUiThread { onLoadingOtherFailure() } }
     }
 
-    private fun onLoadingSuccess() {
+    private fun doRedirect() {
         redirect(this)
                 .to(ProfileLessonsActivity_::class.java)
                 .goAndCloseCurrent()

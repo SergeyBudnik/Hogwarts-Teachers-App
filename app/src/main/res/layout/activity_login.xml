@@ -3,53 +3,66 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_1"
+        android:layout_marginBottom="@dimen/app_size_1"
+        android:layout_marginStart="@dimen/app_size_1"
+        android:layout_marginEnd="@dimen/app_size_1">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="@dimen/app_size_3"
+            android:layout_height="@dimen/app_size_3"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:src="@mipmap/ic_launcher_round"
+            app:riv_corner_radius="@dimen/app_size_1_5"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Hogwarts Teacher"
+            android:textColor="@color/fill_text_base"
+            android:textSize="@dimen/font_large"
+            app:app_font="regular"/>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:padding="@dimen/app_size_2">
+        android:padding="@dimen/app_size_1">
 
-        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_size_1"
-            android:text="@string/login_login_label"
-            android:textSize="@dimen/font_large"
-            android:textColor="@color/fill_text_base"
-            app:app_font="regular"/>
-
-        <EditText
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
             android:id="@+id/loginLoginView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_size_0_5"
-            android:hint="@string/login_login_placeholder"
-            android:inputType="text"/>
+            app:branded_edit_text_label="Логин:"
+            app:branded_edit_text_hint="Введите логин"
+            app:branded_edit_text_type="branded_edit_text_type_text"/>
 
-        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_size_1"
-            android:text="@string/login_password_label"
-            android:textSize="@dimen/font_large"
-            android:textColor="@color/fill_text_base"
-            app:app_font="regular"/>
-
-        <EditText
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
             android:id="@+id/loginPasswordView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/login_password_placeholder"
-            android:inputType="textPassword"/>
+            android:layout_marginTop="@dimen/app_size_1"
+            app:branded_edit_text_label="Пароль:"
+            app:branded_edit_text_hint="Введите пароль"
+            app:branded_edit_text_type="branded_edit_text_type_password"/>
 
         <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
             android:id="@+id/loginDoLoginView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_size_1"
+            android:layout_marginTop="@dimen/app_size_1_5"
             app:button_text="@string/login_do_login"/>
 
     </LinearLayout>

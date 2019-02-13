@@ -31,60 +31,9 @@
                 android:layout_marginBottom="@dimen/app_size_1"
                 android:layout_marginStart="@dimen/app_size_2"
                 android:layout_marginEnd="@dimen/app_size_2"
-                android:textColor="@color/fill_text_base"
+                android:textColor="@color/fill_text_accent"
                 android:textSize="@dimen/font_large"
                 app:app_font="bold"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_0_5"
-                android:layout_marginBottom="@dimen/app_size_0_5"
-                android:layout_marginStart="@dimen/app_size_2"
-                android:layout_marginEnd="@dimen/app_size_2">
-
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Зарплата:"
-                    android:textSize="@dimen/font_large"
-                    android:textColor="@color/fill_text_base"/>
-
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:id="@+id/teacherIncomeView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:textSize="@dimen/font_large"
-                    android:textColor="@color/fill_text_negative"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_0_5"
-                android:layout_marginBottom="@dimen/app_size_0_5"
-                android:layout_marginStart="@dimen/app_size_2"
-                android:layout_marginEnd="@dimen/app_size_2">
-
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Доход:"
-                    android:textSize="@dimen/font_large"
-                    android:textColor="@color/fill_text_base"/>
-
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:id="@+id/teacherOutcomeView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="-"
-                    android:textSize="@dimen/font_large"
-                    android:textColor="@color/fill_text_positive"/>
-
-            </RelativeLayout>
 
             <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                 android:layout_width="wrap_content"
