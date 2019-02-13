@@ -74,18 +74,7 @@ open class MonitoringLessonsListAdapter(context: Context) : BaseWeekItemsListAda
     }
 
     override fun getElementComparator(): Comparator<GroupAndLesson> {
-        return Comparator { i1, i2 ->
-            val daysComparision = i1.lesson.day.compareTo(i2.lesson.day)
-            val startTimeComparision = i1.lesson.startTime.order.compareTo(i2.lesson.startTime.order)
-            val finishTimeComparision = i1.lesson.finishTime.order.compareTo(i2.lesson.finishTime.order)
-
-            return@Comparator when {
-                daysComparision != 0 -> daysComparision
-                startTimeComparision != 0 -> startTimeComparision
-                finishTimeComparision != 0 -> finishTimeComparision
-                else -> 0
-            }
-        }
+        return GroupAndLesson.getComparator()
     }
 }
 
@@ -129,23 +118,15 @@ open class MonitoringLessonsActivity : BaseActivity() {
 
     private fun initLessonsList() {
         val lessons = lessonsService.getAllLessons()
+                .filter {
+                    val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson)
 
-        val result = ArrayList<GroupAndLesson>()
-
-        for (day in lessons.keys) {
-            val dayLessons = lessons[day] ?: emptyList()
-
-            result.addAll(dayLessons
-                    .filter {
-                        val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson)
-
-                        !filterEnabled || attendanceFilled
-                    })
-        }
+                    !filterEnabled || attendanceFilled
+                }
 
         val adapter = MonitoringLessonsListAdapter(this)
 
-        adapter.setItems(result)
+        adapter.setItems(lessons)
 
         monitoringLessonsListView.adapter = adapter
     }

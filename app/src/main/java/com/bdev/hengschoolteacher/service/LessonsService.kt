@@ -1,14 +1,14 @@
 package com.bdev.hengschoolteacher.service
 
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
-import com.bdev.hengschoolteacher.data.school.group.Group
-import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.Time
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
+import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import java.util.*
+import kotlin.collections.ArrayList
 
 @EBean
 open class LessonsService {
@@ -27,42 +27,24 @@ open class LessonsService {
         return null
     }
 
-    fun getAllLessons(): Map<DayOfWeek, List<GroupAndLesson>> {
+    fun getAllLessons(): List<GroupAndLesson> {
         return getLessonsByCondition { true }
     }
 
-    fun getLessonGroup(lessonId: Long) : Group? {
-        return groupsService
-                .getGroups()
-                .find { group -> group.lessons.asSequence().map { lesson -> lesson.id }.contains(lessonId) }
-    }
-
-    fun getTeacherLessons(teacherId: Long): Map<DayOfWeek, List<GroupAndLesson>> {
+    fun getTeacherLessons(teacherId: Long): List<GroupAndLesson> {
         return getLessonsByCondition { it.teacherId == teacherId }
     }
 
-    private fun getLessonsByCondition(condition: (Lesson) -> Boolean): Map<DayOfWeek, List<GroupAndLesson>> {
-        val lessons = HashMap<DayOfWeek, MutableList<GroupAndLesson>>()
-
-        DayOfWeek.values().forEach { lessons[it] = ArrayList() }
-
-        val dayLessons: (DayOfWeek) -> MutableList<GroupAndLesson> = { lessons[it] ?: throw RuntimeException() }
+    private fun getLessonsByCondition(condition: (Lesson) -> Boolean): List<GroupAndLesson> {
+        val lessons = ArrayList<GroupAndLesson>()
 
         groupsService
                 .getGroups()
                 .forEach { group ->
                     group.lessons
                             .filter(condition)
-                            .forEach { lesson -> dayLessons.invoke(lesson.day).add(GroupAndLesson(group, lesson)) }
+                            .forEach { lesson -> lessons.add(GroupAndLesson(group, lesson)) }
                 }
-
-        DayOfWeek.values().forEach {
-            lessons[it] = dayLessons
-                    .invoke(it)
-                    .asSequence()
-                    .sortedBy { lesson -> lesson.lesson.startTime.order }
-                    .toMutableList()
-        }
 
         return lessons
     }

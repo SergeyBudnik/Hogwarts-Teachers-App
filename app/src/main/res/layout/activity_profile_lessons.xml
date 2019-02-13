@@ -24,21 +24,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/profileLessonsContentView"
-                android:orientation="vertical"
+            <ListView
+                android:id="@+id/profileLessonsListView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/app_size_1"
-                android:layout_marginEnd="@dimen/app_size_1">
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/app_size_1"
+                android:clipToPadding="false"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
 
-            </LinearLayout>
-
-        </ScrollView>
+        </LinearLayout>
 
     </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
 

@@ -18,7 +18,7 @@ abstract class BaseWeekItemsListAdapter<T>(
 
         val result = ArrayList<Pair<DayOfWeek, T?>>()
 
-        var currentDay = DayOfWeek.MONDAY
+        var currentDay: DayOfWeek? = null
 
         for (item in rawSortedItems) {
             val itemDay = getElementDayOfWeek(item)
@@ -42,11 +42,15 @@ abstract class BaseWeekItemsListAdapter<T>(
         val element = item.second
 
         return if (element == null) {
-            if (convertView == null || convertView !is ListDayItemView_) {
+            val view = if (convertView == null || convertView !is ListDayItemView_) {
                 ListDayItemView_.build(context)
             } else {
                 convertView
             }.bind(day)
+
+            view.setOnClickListener(null)
+
+            view
         } else {
             getElementView(element, convertView)
         }
