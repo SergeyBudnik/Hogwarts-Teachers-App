@@ -3,6 +3,8 @@ package com.bdev.hengschoolteacher.ui.views.app
 import android.content.Context
 import android.graphics.PorterDuff
 import android.util.AttributeSet
+import android.view.View
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import kotlinx.android.synthetic.main.view_app_header.view.*
@@ -13,15 +15,17 @@ import org.androidannotations.annotations.EViewGroup
 open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
     private val title: String
     private val leftIconId: Int
-    private val rightIconId: Int
+    private val firstRightIconId: Int
+    private val secondRightIconId: Int
 
     init {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.AppHeaderView, 0, 0)
 
         try {
-            title = ta.getString(R.styleable.AppHeaderView_title)
+            title = ta.getString(R.styleable.AppHeaderView_title) ?: ""
             leftIconId = ta.getResourceId(R.styleable.AppHeaderView_leftIcon, -1)
-            rightIconId = ta.getResourceId(R.styleable.AppHeaderView_rightIcon, -1)
+            firstRightIconId = ta.getResourceId(R.styleable.AppHeaderView_firstRightIcon, -1)
+            secondRightIconId = ta.getResourceId(R.styleable.AppHeaderView_secondRightIcon, -1)
         } finally {
             ta.recycle()
         }
@@ -31,8 +35,17 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
     fun init() {
         titleView.text = title
 
-        if (leftIconId != -1) { leftActionButtonView.setImageDrawable(context.getDrawable(leftIconId)) }
-        if (rightIconId != -1) { rightActionButtonView.setImageDrawable(context.getDrawable(rightIconId)) }
+        setActionButton(leftActionButtonView, leftIconId)
+        setActionButton(firstRightActionButtonView, firstRightIconId)
+        setActionButton(secondRightActionButtonView, secondRightIconId)
+    }
+
+    private fun setActionButton(actionButtonView: ImageView, drawableId: Int) {
+        actionButtonView.visibility = if (drawableId != -1) { View.VISIBLE } else { View.GONE }
+
+        if (drawableId != -1) {
+            actionButtonView.setImageDrawable(context.getDrawable(drawableId))
+        }
     }
 
     fun setLeftButtonAction(action: () -> Unit): AppHeaderView {
@@ -47,14 +60,26 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
         return this
     }
 
-    fun setRightButtonAction(action: () -> Unit): AppHeaderView {
-        rightActionButtonView.setOnClickListener { action.invoke() }
+    fun setFirstRightButtonAction(action: () -> Unit): AppHeaderView {
+        firstRightActionButtonView.setOnClickListener { action.invoke() }
 
         return this
     }
 
-    fun setRightButtonColor(color: Int): AppHeaderView {
-        rightActionButtonView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+    fun setFirstRightButtonColor(color: Int): AppHeaderView {
+        firstRightActionButtonView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+
+        return this
+    }
+
+    fun setSecondRightButtonAction(action: () -> Unit): AppHeaderView {
+        secondRightActionButtonView.setOnClickListener { action.invoke() }
+
+        return this
+    }
+
+    fun setSecondRightButtonColor(color: Int): AppHeaderView {
+        secondRightActionButtonView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
         return this
     }

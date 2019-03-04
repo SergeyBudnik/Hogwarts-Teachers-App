@@ -12,11 +12,11 @@ open class LessonsAttendancesService {
     @Bean
     lateinit var studentsAttendancesService: StudentsAttendancesService
 
-    fun isLessonAttendanceFilled(group: Group, lesson: Lesson): Boolean {
+    fun isLessonAttendanceFilled(group: Group, lesson: Lesson, weekIndex: Int): Boolean {
         return studentsService
                 .getGroupStudents(group.id)
                 .asSequence()
-                .map { studentsAttendancesService.getAttendance(lesson.id, it.id) }
+                .map { studentsAttendancesService.getAttendance(lesson.id, it.id, weekIndex) }
                 .filter { it != null }
                 .any()
     }

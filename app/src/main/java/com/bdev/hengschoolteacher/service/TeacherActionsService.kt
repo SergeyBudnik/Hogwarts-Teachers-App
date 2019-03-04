@@ -16,14 +16,14 @@ open class TeacherActionsService {
     @Bean
     lateinit var lessonStatusService: LessonStatusService
 
-    fun getTeacherActions(teacherId: Long): List<TeacherAction> {
+    fun getTeacherActions(teacherId: Long, weekIndex: Int): List<TeacherAction> {
         val teacherActions = ArrayList<TeacherAction>()
 
         val teacherLessons = lessonsService.getTeacherLessons(teacherId)
 
         for (dayOfWeek in DayOfWeek.values()) {
             val allDayTeacherLessons = teacherLessons.map { it.lesson }.filter { it.day == dayOfWeek }
-            val passedDayTeacherLessons = getPassedTeacherDayLessons(allDayTeacherLessons)
+            val passedDayTeacherLessons = getPassedTeacherDayLessons(allDayTeacherLessons, weekIndex)
 
             var previousLesson: Lesson? = null
 
@@ -51,11 +51,11 @@ open class TeacherActionsService {
         return teacherActions
     }
 
-    private fun getPassedTeacherDayLessons(allTeacherDayLessons: List<Lesson>): List<Lesson> {
+    private fun getPassedTeacherDayLessons(allTeacherDayLessons: List<Lesson>, weekIndex: Int): List<Lesson> {
         return allTeacherDayLessons
                 .asSequence()
                 .filter {
-                    val lessonStartTime = lessonsService.getLessonStartTime(it.id)
+                    val lessonStartTime = lessonsService.getLessonStartTime(it.id, weekIndex)
                     val lessonStatus = lessonStatusService.getLessonStatus(it.id, lessonStartTime)
 
                     lessonStatus?.type == LessonStatus.Type.FINISHED

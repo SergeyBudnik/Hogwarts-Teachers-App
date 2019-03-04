@@ -69,7 +69,7 @@ open class LessonStudentItemView : RelativeLayout {
     }
 
     private fun bindAttendance(student: Student, group: Group, lesson: Lesson) {
-        val attendanceType = studentsAttendanceService.getAttendance(lesson.id, student.id)
+        val attendanceType = studentsAttendanceService.getAttendance(lesson.id, student.id, 0)
 
         val colorId = when (attendanceType) {
             null -> R.color.fill_text_base
@@ -140,7 +140,7 @@ open class LessonActivity : BaseActivity() {
         val group = groupsService.getGroup(groupId) ?: throw RuntimeException()
         val lesson = group.lessons.find { it.id == lessonId } ?: throw RuntimeException()
         val students = studentsService.getGroupStudents(groupId)
-        val lessonStatus = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId))
+        val lessonStatus = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId, 0))
 
         lessonTimeView.bind(lesson)
         lessonTeacherInfoView.bind(lesson.teacherId)

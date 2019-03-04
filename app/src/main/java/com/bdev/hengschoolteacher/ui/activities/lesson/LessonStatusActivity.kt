@@ -51,7 +51,7 @@ open class LessonStatusActivity : BaseActivity() {
     }
 
     private fun initButtons() {
-        val status = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId))
+        val status = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId, 0))
 
         initButton(
                 lessonStatusPassedView,
@@ -101,7 +101,7 @@ open class LessonStatusActivity : BaseActivity() {
                     null,
                     lessonId,
                     buttonStatus,
-                    lessonsService.getLessonStartTime(lessonId),
+                    lessonsService.getLessonStartTime(lessonId, 0),
                     Date().time
             ))
                     .onSuccess { runOnUiThread {

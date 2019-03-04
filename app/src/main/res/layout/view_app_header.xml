@@ -24,13 +24,38 @@
         android:textColor="@color/fill_text_base"
         app:app_font="bold"/>
 
-    <ImageView
-        android:id="@+id/rightActionButtonView"
-        android:layout_width="@dimen/app_size_5"
-        android:layout_height="@dimen/app_size_5"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:paddingStart="@dimen/app_size_1_5"
-        android:paddingEnd="@dimen/app_size_2"
-        android:tint="@color/fill_text_base"/>
+        android:layout_marginEnd="@dimen/app_size_1">
+
+        <ImageView
+            android:id="@+id/firstRightActionButtonView"
+            android:layout_width="@dimen/app_size_3_5"
+            android:layout_height="@dimen/app_size_3_5"
+            android:paddingTop="@dimen/app_size_1"
+            android:paddingBottom="@dimen/app_size_1"
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1"
+            android:tint="@color/fill_text_base"
+            android:visibility="gone"
+            android:importantForAccessibility="no"/>
+
+        <ImageView
+            android:id="@+id/secondRightActionButtonView"
+            android:layout_width="@dimen/app_size_3_5"
+            android:layout_height="@dimen/app_size_3_5"
+            android:paddingTop="@dimen/app_size_1"
+            android:paddingBottom="@dimen/app_size_1"
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1"
+            android:tint="@color/fill_text_base"
+            android:visibility="gone"
+            android:importantForAccessibility="no"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

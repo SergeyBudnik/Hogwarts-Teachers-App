@@ -23,14 +23,14 @@ buildscript {
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.bdev.hengschoolteacher"
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 8
-        versionName "1.6.1"
+        targetSdkVersion 28
+        versionCode 9
+        versionName "1.7.0"
         multiDexEnabled true
     }
 

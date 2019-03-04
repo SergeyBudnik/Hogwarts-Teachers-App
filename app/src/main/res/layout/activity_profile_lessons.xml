@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Профиль"
-        app:leftIcon="@drawable/ic_menu"/>
+        app:leftIcon="@drawable/ic_menu"
+        app:firstRightIcon="@drawable/ic_filter"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView_
         android:layout_width="match_parent"
@@ -24,21 +25,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <com.bdev.hengschoolteacher.ui.views.app.date.WeekSelectionBarView_
+                android:id="@+id/profileLessonsWeekSelectionBarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"/>
 
             <ListView
                 android:id="@+id/profileLessonsListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@id/profileLessonsWeekSelectionBarView"
                 android:paddingBottom="@dimen/app_size_1"
                 android:clipToPadding="false"
                 android:divider="@null"
                 android:dividerHeight="0dp"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
 

@@ -26,6 +26,7 @@ import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
 import org.androidannotations.annotations.EViewGroup
+import com.bdev.hengschoolteacher.ui.utils.ListUtils
 
 @EViewGroup(R.layout.view_item_profile_lessons)
 open class ProfileLessonsItemView : RelativeLayout {
@@ -88,8 +89,12 @@ open class ProfileLessonsActivity : BaseActivity() {
     lateinit var teachersService: TeachersService
     @Bean
     lateinit var userPreferencesService: UserPreferencesService
+    @Bean
+    lateinit var lessonsAttendancesService: LessonsAttendancesService
 
     private lateinit var me: Teacher
+
+    private var filterEnabled = true
 
     @AfterViews
     fun init() {
@@ -97,10 +102,17 @@ open class ProfileLessonsActivity : BaseActivity() {
 
         me = teachersService.getTeacherByLogin(login) ?: throw RuntimeException()
 
-        profileLessonsHeaderView.setLeftButtonAction { profileLessonsMenuLayoutView.openMenu() }
+        profileLessonsHeaderView
+                .setLeftButtonAction { profileLessonsMenuLayoutView.openMenu() }
+                .setFirstRightButtonAction { toggleFilter() }
+                .setFirstRightButtonColor(getFilterColor())
+
         profileLessonsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
 
-        initLessonsList()
+        profileLessonsWeekSelectionBarView.setOnWeekChangedListener { startTime, finishTime ->
+            initLessonsList()
+        }
+        profileLessonsWeekSelectionBarView.init()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -112,10 +124,27 @@ open class ProfileLessonsActivity : BaseActivity() {
     }
 
     private fun initLessonsList() {
+        val listState = ListUtils.getListScrollState(profileLessonsListView)
+
         val adapter = ProfileLessonsListAdapter(this)
 
-        adapter.setItems(lessonsService.getTeacherLessons(me.id))
+        adapter.setItems(lessonsService.getTeacherLessons(me.id).filter {
+            !filterEnabled || !lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson, 0)
+        })
 
         profileLessonsListView.adapter = adapter
+        profileLessonsListView.setSelectionFromTop(listState.first, listState.second)
+    }
+
+    private fun toggleFilter() {
+        filterEnabled = !filterEnabled
+
+        profileLessonsHeaderView.setFirstRightButtonColor(getFilterColor())
+
+        initLessonsList()
+    }
+
+    private fun getFilterColor(): Int {
+        return resources.getColor(if (filterEnabled) { R.color.fill_text_action_link } else { R.color.fill_text_base })
     }
 }

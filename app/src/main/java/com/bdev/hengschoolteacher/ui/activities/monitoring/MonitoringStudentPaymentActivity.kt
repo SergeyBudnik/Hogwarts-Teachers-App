@@ -145,7 +145,9 @@ open class MonitoringStudentPaymentActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        val allAttendances = studentsAttendancesService.getAllAttendances(studentId)
+        monitoringStudentPaymentHeaderView.setFirstRightButtonAction { doFinish() }
+
+        val allAttendances = studentsAttendancesService.getAllStudentAttendances(studentId)
         val allPayableAttendances = allAttendances.filter { it.type != StudentAttendance.Type.VALID_SKIP }
         val allNonPayableAttendances = allAttendances.filter { it.type == StudentAttendance.Type.VALID_SKIP }
 
@@ -158,5 +160,14 @@ open class MonitoringStudentPaymentActivity : BaseActivity() {
         )
 
         monitoringStudentPaymentListView.adapter = monitoringStudentPaymentListAdapter
+    }
+
+    override fun onBackPressed() {
+        doFinish()
+    }
+
+    private fun doFinish() {
+        finish()
+        overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
     }
 }

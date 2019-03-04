@@ -62,7 +62,7 @@ open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayou
 @EViewGroup(R.layout.view_app_menu)
 open class AppMenuView : LinearLayout {
     enum class Item {
-        MY_PROFILE, STUDENTS, TEACHERS, MONITORING, ACTIONS
+        MY_PROFILE, STUDENTS, TEACHERS, MONITORING, ACTIONS, NONE
     }
 
     @Bean
@@ -107,6 +107,8 @@ open class AppMenuView : LinearLayout {
                 activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
             }
         }
+
+        setItemSelected(Item.NONE)
     }
 
     fun setItemSelected(item: Item) {

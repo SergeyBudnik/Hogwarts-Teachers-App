@@ -6,6 +6,7 @@
     <dimen name="app_size_1">12dp</dimen>
     <dimen name="app_size_1_5">18dp</dimen>
     <dimen name="app_size_2">24dp</dimen>
+    <dimen name="app_size_2_5">30dp</dimen>
     <dimen name="app_size_3">36dp</dimen>
     <dimen name="app_size_3_5">42dp</dimen>
     <dimen name="app_size_4">48dp</dimen>

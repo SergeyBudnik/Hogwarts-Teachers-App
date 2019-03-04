@@ -2,6 +2,7 @@ package com.bdev.hengschoolteacher.service
 
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.Time
+import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.utils.TimeUtils
@@ -14,6 +15,8 @@ import kotlin.collections.ArrayList
 open class LessonsService {
     @Bean
     lateinit var groupsService: GroupsService
+    @Bean
+    lateinit var studentsService: StudentsService
 
     fun getLesson(lessonId: Long): Lesson? {
         for (group in groupsService.getGroups()) {
@@ -28,21 +31,27 @@ open class LessonsService {
     }
 
     fun getAllLessons(): List<GroupAndLesson> {
-        return getLessonsByCondition { true }
+        return getLessonsByCondition { _, _ -> true }
     }
 
     fun getTeacherLessons(teacherId: Long): List<GroupAndLesson> {
-        return getLessonsByCondition { it.teacherId == teacherId }
+        return getLessonsByCondition { _, lesson -> lesson.teacherId == teacherId }
     }
 
-    private fun getLessonsByCondition(condition: (Lesson) -> Boolean): List<GroupAndLesson> {
+    fun getStudentLessons(studentId: Long): List<GroupAndLesson> {
+        val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
+
+        return getLessonsByCondition { group, _ -> student.groupIds.contains(group.id) }
+    }
+
+    private fun getLessonsByCondition(condition: (Group, Lesson) -> Boolean): List<GroupAndLesson> {
         val lessons = ArrayList<GroupAndLesson>()
 
         groupsService
                 .getGroups()
                 .forEach { group ->
                     group.lessons
-                            .filter(condition)
+                            .filter { lesson -> condition.invoke(group, lesson) }
                             .forEach { lesson -> lessons.add(GroupAndLesson(group, lesson)) }
                 }
 
@@ -81,25 +90,26 @@ open class LessonsService {
         return lessonsAmount
     }
 
-    fun isLessonFinished(lesson: Lesson): Boolean {
-        return Date(getLessonFinishTime(lesson.id)).before(Date())
+    fun isLessonFinished(lesson: Lesson, weekIndex: Int): Boolean {
+        return Date(getLessonFinishTime(lesson.id, weekIndex)).before(Date())
     }
 
-    fun getLessonStartTime(lessonId: Long): Long {
+    fun getLessonStartTime(lessonId: Long, weekIndex: Int): Long {
         val lesson = getLesson(lessonId) ?: throw RuntimeException()
 
-        return getLessonTime(lesson.day, lesson.startTime)
+        return getLessonTime(lesson.day, lesson.startTime, weekIndex)
     }
 
-    fun getLessonFinishTime(lessonId: Long): Long {
+    fun getLessonFinishTime(lessonId: Long, weekIndex: Int): Long {
         val lesson = getLesson(lessonId) ?: throw RuntimeException()
 
-        return getLessonTime(lesson.day, lesson.finishTime)
+        return getLessonTime(lesson.day, lesson.finishTime, weekIndex)
     }
 
-    private fun getLessonTime(day: DayOfWeek, time: Time): Long {
+    private fun getLessonTime(day: DayOfWeek, time: Time, weekIndex: Int): Long {
         val calendar = Calendar.getInstance()
 
+        calendar.set(Calendar.WEEK_OF_YEAR, calendar.get(Calendar.WEEK_OF_YEAR) + weekIndex)
         calendar.set(Calendar.DAY_OF_WEEK, TimeUtils().getCalendayDayOfWeek(day))
         calendar.set(Calendar.HOUR_OF_DAY, TimeUtils().getCalendarHour(time))
         calendar.set(Calendar.MINUTE,      TimeUtils().getCalendarMinute(time))

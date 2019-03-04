@@ -43,7 +43,7 @@ open class LessonRowView : LinearLayout {
         listOf(lessonRowStudent1View, lessonRowStudent2View, lessonRowStudent3View, lessonRowStudent4View, lessonRowStudent5View, lessonRowStudent6View)
                 .forEachIndexed { index, it ->
                     val student = if (students.size > index) { students[index] } else { null }
-                    val attendance = if (student != null) { studentsAttendancesService.getAttendance(lesson.id, student.id) } else { null }
+                    val attendance = if (student != null) { studentsAttendancesService.getAttendance(lesson.id, student.id, 0) } else { null }
 
                     setStudentIcon(student, attendance, it)
                 }
@@ -75,10 +75,10 @@ open class LessonRowView : LinearLayout {
     }
 
     private fun setLessonIcon(group: Group, lesson: Lesson) {
-        val isLessonFinished = lessonsService.isLessonFinished(lesson)
+        val isLessonFinished = lessonsService.isLessonFinished(lesson, 0)
 
-        val isLessonFilled = lessonsAttendancesService.isLessonAttendanceFilled(group, lesson)
-        val isLessonMarked = lessonStatusService.getLessonStatus(lesson.id, lessonsService.getLessonStartTime(lesson.id)) != null
+        val isLessonFilled = lessonsAttendancesService.isLessonAttendanceFilled(group, lesson, 0)
+        val isLessonMarked = lessonStatusService.getLessonStatus(lesson.id, lessonsService.getLessonStartTime(lesson.id, 0)) != null
 
         val iconId = if (isLessonFinished) {
             if (isLessonFilled) {
@@ -105,7 +105,7 @@ open class LessonRowView : LinearLayout {
     }
 
     private fun setLessonStatus(lesson: Lesson) {
-        val lessonStatus = lessonStatusService.getLessonStatus(lesson.id, lessonsService.getLessonStartTime(lesson.id))
+        val lessonStatus = lessonStatusService.getLessonStatus(lesson.id, lessonsService.getLessonStartTime(lesson.id, 0))
 
         lessonRowLessonStatusView.visibility = if (lessonStatus != null) { View.VISIBLE } else { View.GONE }
 

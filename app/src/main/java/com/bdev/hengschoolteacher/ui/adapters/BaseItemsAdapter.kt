@@ -4,11 +4,27 @@ import android.content.Context
 import android.widget.BaseAdapter
 
 abstract class BaseItemsAdapter<T>(
-        protected val context: Context,
-        private val items: List<T>
+        protected val context: Context
 ) : BaseAdapter() {
+    private var items: List<T> = ArrayList()
+    private var filter: (T) -> Boolean = { true }
+
+    private var filteredItems: List<T> = ArrayList()
+
+    fun setItems(items: List<T>) {
+        this.items = items
+
+        filteredItems = items.filter(filter)
+    }
+
+    fun setFilter(filter: (T) -> Boolean) {
+        this.filter = filter
+
+        filteredItems = items.filter(filter)
+    }
+
     override fun getItem(position: Int): T {
-        return items[position]
+        return filteredItems[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -16,6 +32,6 @@ abstract class BaseItemsAdapter<T>(
     }
 
     override fun getCount(): Int {
-        return items.size
+        return filteredItems.size
     }
 }

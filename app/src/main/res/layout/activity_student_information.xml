@@ -40,7 +40,7 @@
                 android:paddingTop="@dimen/app_size_0_5"
                 android:paddingBottom="@dimen/app_size_0_5"
                 android:background="@drawable/layout_row"
-                android:backgroundTint="@color/alt_contrast_light">
+                android:backgroundTint="@color/status_info_base">
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                     android:id="@+id/studentNameView"
@@ -50,12 +50,13 @@
                     android:layout_marginStart="@dimen/app_size_2"
                     android:layout_marginEnd="@dimen/app_size_2"
                     android:textSize="@dimen/font_large"
-                    android:textColor="@color/fill_text_accent"/>
+                    android:textColor="@color/fill_text_base"/>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_size_0_5"
                     android:layout_marginStart="@dimen/app_size_1"
                     android:layout_marginEnd="@dimen/app_size_1">
 
@@ -82,6 +83,24 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_2"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:layout_marginEnd="@dimen/app_size_2"
+                android:text="Расписание:"
+                android:textColor="@color/fill_text_accent"
+                android:textSize="@dimen/font_large"/>
+
+            <ListView
+                android:id="@+id/studentInformationTimetableListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/app_size_1"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
 
         </LinearLayout>
 

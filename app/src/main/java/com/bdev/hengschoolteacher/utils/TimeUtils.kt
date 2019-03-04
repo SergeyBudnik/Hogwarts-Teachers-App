@@ -35,6 +35,40 @@ class TimeUtils {
         return calendar.timeInMillis
     }
 
+    fun getWeekStart(weekFromCurrent: Int): Long {
+        val calendar = Calendar.getInstance()
+
+        val currentWeekYear = calendar.get(Calendar.WEEK_OF_YEAR)
+
+        with (calendar) {
+            set(Calendar.WEEK_OF_YEAR, currentWeekYear + weekFromCurrent)
+            set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE,      0)
+            set(Calendar.SECOND,      0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        return calendar.timeInMillis
+    }
+
+    fun getWeekFinish(weekFromCurrent: Int): Long {
+        val calendar = Calendar.getInstance()
+
+        val currentWeekYear = calendar.get(Calendar.WEEK_OF_YEAR)
+
+        with (calendar) {
+            set(Calendar.WEEK_OF_YEAR, currentWeekYear + weekFromCurrent)
+            set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE,      59)
+            set(Calendar.SECOND,      59)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        return calendar.timeInMillis
+    }
+
     fun getDayOfWeek(calendar: Calendar) : DayOfWeek {
         return when (calendar.get(Calendar.DAY_OF_WEEK)) {
             Calendar.MONDAY -> DayOfWeek.MONDAY

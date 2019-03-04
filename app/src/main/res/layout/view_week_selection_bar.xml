@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/app_size_6"
+    android:background="@color/fill_contrast_medium">
+
+    <ImageView
+        android:id="@+id/weekSelectionBarPreviousWeekView"
+        android:layout_width="@dimen/app_size_4"
+        android:layout_height="@dimen/app_size_4"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/app_size_1"
+        android:src="@drawable/ic_small_arrow_left"
+        android:tint="@color/fill_text_base"
+        android:importantForAccessibility="no"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Текущая неделя"
+            android:textColor="@color/fill_text_accent"
+            android:textSize="@dimen/font_large"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/weekSelectionBarDateRangeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/fill_text_base"
+            android:textSize="@dimen/font_normal"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/weekSelectionBarNextWeekView"
+        android:layout_width="@dimen/app_size_4"
+        android:layout_height="@dimen/app_size_4"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/app_size_1"
+        android:src="@drawable/ic_small_arrow_right"
+        android:tint="@color/fill_text_base"
+        android:importantForAccessibility="no"/>
+
+</RelativeLayout>

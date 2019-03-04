@@ -4,28 +4,28 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherActionType
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherPayment
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_profile_payment.*
 import kotlinx.android.synthetic.main.view_profile_payment_item.view.*
-import org.androidannotations.annotations.*
+import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.Bean
+import org.androidannotations.annotations.EActivity
+import org.androidannotations.annotations.EViewGroup
 
 @EViewGroup(R.layout.view_profile_payment_item)
 open class ProfilePaymentItemView : LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(newDay: Boolean, teacherPayment: TeacherPayment) {
-        profilePaymentItemDayView.visibility = if (newDay) { View.VISIBLE } else { View.GONE }
-        profilePaymentItemDayView.text = resources.getString(teacherPayment.teacherAction.dayOfWeek.shortNameId)
-
+    fun bind(teacherPayment: TeacherPayment) {
         profilePaymentItemTypeView.text = when (teacherPayment.teacherAction.type) {
             TeacherActionType.ROAD -> "Дорога"
             TeacherActionType.LESSON -> "Занятие"
@@ -40,45 +40,38 @@ open class ProfilePaymentItemView : LinearLayout {
     }
 }
 
-@EBean
-open class ProfilePaymentListAdapter : BaseAdapter() {
-    @RootContext
-    lateinit var context: Context
-
-    private var teacherPayments: List<TeacherPayment> = emptyList()
-
-    fun setItems(teacherPayments: List<TeacherPayment>) {
-        this.teacherPayments = teacherPayments
-    }
-
-    override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
-        val v = if (convertView == null) {
+class ProfilePaymentListAdapter(context: Context) : BaseWeekItemsListAdapter<TeacherPayment>(context) {
+    override fun getElementView(item: TeacherPayment, convertView: View?): View {
+        val v = if (convertView == null || convertView !is ProfilePaymentItemView) {
             ProfilePaymentItemView_.build(context)
         } else {
-            convertView as ProfilePaymentItemView
+            convertView
         }
 
-        val previousItem = if (position != 0) { getItem(position - 1) } else { null }
-        val currentItem = getItem(position)
-
-        v.bind(
-                previousItem == null || (previousItem.teacherAction.dayOfWeek != currentItem.teacherAction.dayOfWeek),
-                getItem(position)
-        )
+        v.bind(item)
 
         return v
     }
 
-    override fun getItem(position: Int): TeacherPayment {
-        return teacherPayments[position]
+    override fun getElementDayOfWeek(item: TeacherPayment): DayOfWeek {
+        return item.teacherAction.dayOfWeek
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getElementComparator(): Comparator<TeacherPayment> {
+        return object: Comparator<TeacherPayment> {
+            override fun compare(tp1: TeacherPayment, tp2: TeacherPayment): Int {
+                val dayComparision = tp1.teacherAction.dayOfWeek.compareTo(tp2.teacherAction.dayOfWeek)
+                val startTimeComparision = tp1.teacherAction.startTime.order.compareTo(tp2.teacherAction.startTime.ordinal)
+                val finishTimeComparision = tp1.teacherAction.finishTime.order.compareTo(tp2.teacherAction.finishTime.order)
 
-    override fun getCount(): Int {
-        return teacherPayments.size
+                return when {
+                    dayComparision != 0 -> dayComparision
+                    startTimeComparision != 0 -> startTimeComparision
+                    finishTimeComparision != 0 -> finishTimeComparision
+                    else -> 0
+                }
+            }
+        }
     }
 }
 
@@ -96,8 +89,7 @@ open class ProfilePaymentActivity : BaseActivity() {
     @Bean
     lateinit var teachersPaymentService: TeachersPaymentService
 
-    @Bean
-    lateinit var profilePaymentListAdapter: ProfilePaymentListAdapter
+    private var profilePaymentListAdapter = ProfilePaymentListAdapter(this)
 
     @AfterViews
     fun init() {

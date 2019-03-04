@@ -32,10 +32,7 @@ open class ActionsUsersRequestsItemView : LinearLayout {
     }
 }
 
-open class ActionsUsersRequestsListAdapter(
-        context: Context,
-        items: List<UserRequest>
-) : BaseItemsAdapter<UserRequest>(context, items) {
+open class ActionsUsersRequestsListAdapter(context: Context) : BaseItemsAdapter<UserRequest>(context) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup?): View {
         val view = if (convertView == null) {
             ActionsUsersRequestsItemView_.build(context)
@@ -59,10 +56,9 @@ open class ActionsUsersRequestsListActivity : BaseActivity() {
     fun init() {
         actionsUsersRequestsListMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.ACTIONS)
 
-        val adapter = ActionsUsersRequestsListAdapter(
-                this,
-                usersRequestsService.getUsersRequests()
-        )
+        val adapter = ActionsUsersRequestsListAdapter(this)
+
+        adapter.setItems(usersRequestsService.getUsersRequests())
 
         actionsUsersRequestsListView.adapter = adapter
 

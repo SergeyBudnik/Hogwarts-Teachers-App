@@ -40,13 +40,13 @@
                 android:paddingStart="@dimen/app_size_2"
                 android:paddingEnd="@dimen/app_size_2"
                 android:background="@drawable/layout_row"
-                android:backgroundTint="@color/alt_contrast_light">
+                android:backgroundTint="@color/status_info_base">
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Текущая неделя:"
-                    android:textColor="@color/fill_text_base"
+                    android:textColor="@color/fill_text_light"
                     android:textSize="@dimen/font_large"/>
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="3600 Р"
-                    android:textColor="@color/fill_text_accent"
+                    android:textColor="@color/fill_text_base"
                     android:textSize="@dimen/font_large"/>
 
             </RelativeLayout>

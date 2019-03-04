@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true">
 
     <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-        android:id="@+id/lessonHeaderView"
+        android:id="@+id/monitoringStudentPaymentHeaderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Мониторинг оплаты. Студент"

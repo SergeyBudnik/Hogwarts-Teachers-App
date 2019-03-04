@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         app:title="Мониторинг"
         app:leftIcon="@drawable/ic_menu"
-        app:rightIcon="@drawable/ic_search"/>
+        app:firstRightIcon="@drawable/ic_search"
+        app:secondRightIcon="@drawable/ic_filter"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView_
         android:layout_width="match_parent"

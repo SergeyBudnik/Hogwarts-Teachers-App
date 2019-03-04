@@ -22,7 +22,7 @@ open class TeachersPaymentService {
     fun getTeacherPayments(teacherId: Long): List<TeacherPayment> {
         val teacherPayments = ArrayList<TeacherPayment>()
 
-        val teacherActions = teacherActionsService.getTeacherActions(teacherId)
+        val teacherActions = teacherActionsService.getTeacherActions(teacherId, 0)
 
         for (teacherAction in teacherActions) {
             when (teacherAction.type) {

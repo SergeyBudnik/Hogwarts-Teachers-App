@@ -28,7 +28,11 @@ open class StudentsAttendancesService {
                 .toList()
     }
 
-    fun getAllAttendances(studentId: Long): List<StudentAttendance> {
+    fun getAllAttendances(): List<StudentAttendance> {
+        return studentsAttendancesDao.getAttendances()
+    }
+
+    fun getAllStudentAttendances(studentId: Long): List<StudentAttendance> {
         return studentsAttendancesDao
                 .getAttendances()
                 .asSequence()
@@ -36,12 +40,12 @@ open class StudentsAttendancesService {
                 .toList()
     }
 
-    fun getAttendance(lessonId: Long, studentId: Long): StudentAttendance.Type? {
+    fun getAttendance(lessonId: Long, studentId: Long, weekIndex: Int): StudentAttendance.Type? {
         val attendance = studentsAttendancesDao
                 .getAttendances()
                 .asSequence()
                 .filter { it.studentId == studentId }
-                .filter { it.startTime == lessonsService.getLessonStartTime(lessonId) }
+                .filter { it.startTime == lessonsService.getLessonStartTime(lessonId, weekIndex) }
                 .maxBy { it.id ?: -1 }
 
         return attendance?.type

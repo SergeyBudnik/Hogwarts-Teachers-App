@@ -12,6 +12,10 @@ open class StudentsPaymentsService {
     @Bean
     lateinit var studentsPaymentsDao: StudentsPaymentsDao
 
+    fun getAllPayments(): List<StudentPayment> {
+        return studentsPaymentsDao.getPayments()
+    }
+
     fun getPayments(studentId: Long): List<StudentPayment> {
         return studentsPaymentsDao
                 .getPayments()

@@ -100,8 +100,8 @@ open class MonitoringLessonsActivity : BaseActivity() {
     fun init() {
         monitoringLessonsHeaderView
                 .setLeftButtonAction { monitoringLessonsMenuLayoutView.openMenu() }
-                .setRightButtonAction { toggleFilter() }
-                .setRightButtonColor(getFilterColor())
+                .setFirstRightButtonAction { toggleFilter() }
+                .setFirstRightButtonColor(getFilterColor())
 
         monitoringLessonsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
@@ -119,9 +119,9 @@ open class MonitoringLessonsActivity : BaseActivity() {
     private fun initLessonsList() {
         val lessons = lessonsService.getAllLessons()
                 .filter {
-                    val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson)
+                    val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson, 0)
 
-                    !filterEnabled || attendanceFilled
+                    !filterEnabled || !attendanceFilled
                 }
 
         val adapter = MonitoringLessonsListAdapter(this)
@@ -134,7 +134,7 @@ open class MonitoringLessonsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        monitoringLessonsHeaderView.setRightButtonColor(getFilterColor())
+        monitoringLessonsHeaderView.setFirstRightButtonColor(getFilterColor())
 
         initLessonsList()
     }

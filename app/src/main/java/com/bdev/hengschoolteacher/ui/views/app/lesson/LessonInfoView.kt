@@ -22,7 +22,7 @@ open class LessonInfoView : RelativeLayout {
 
     fun bind(lesson: Lesson) {
         lessonInfoDayOfWeekView.text = context.getString(lesson.day.shortNameId)
-        lessonInfoDateView.text = SimpleDateFormat("dd.MM.yyyy", Locale.US).format(lessonsService.getLessonStartTime(lesson.id))
+        lessonInfoDateView.text = SimpleDateFormat("dd.MM.yyyy", Locale.US).format(lessonsService.getLessonStartTime(lesson.id, 0))
         lessonInfoStartTimeView.text = context.getString(lesson.startTime.translationId)
         lessonInfoFinishTimeView.text = context.getString(lesson.finishTime.translationId)
     }
