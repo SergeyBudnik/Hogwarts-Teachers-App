@@ -98,6 +98,8 @@ open class ProfileLessonsActivity : BaseActivity() {
     lateinit var userPreferencesService: UserPreferencesService
     @Bean
     lateinit var lessonsAttendancesService: LessonsAttendancesService
+    @Bean
+    lateinit var lessonStatusService: LessonStatusService
 
     private lateinit var me: Teacher
 
@@ -143,7 +145,10 @@ open class ProfileLessonsActivity : BaseActivity() {
 
         adapter.setWeekIndex(weekIndex)
         adapter.setItems(lessonsService.getTeacherLessons(me.id).filter {
-            !filterEnabled || !lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson, weekIndex)
+            val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson, weekIndex)
+            val statusFilled = lessonStatusService.getLessonStatus(it.lesson.id, lessonsService.getLessonStartTime(it.lesson.id, weekIndex)) != null
+
+            !filterEnabled || !attendanceFilled || !statusFilled
         })
 
         profileLessonsListView.adapter = adapter

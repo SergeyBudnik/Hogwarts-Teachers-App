@@ -138,8 +138,9 @@ open class MonitoringLessonsActivity : BaseActivity() {
         val lessons = lessonsService.getAllLessons()
                 .filter {
                     val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson, weekIndex)
+                    val statusFilled = lessonStatusService.getLessonStatus(it.lesson.id, lessonsService.getLessonStartTime(it.lesson.id, weekIndex)) != null
 
-                    !filterEnabled || !attendanceFilled
+                    !filterEnabled || !attendanceFilled || !statusFilled
                 }
 
         val adapter = MonitoringLessonsListAdapter(this)
