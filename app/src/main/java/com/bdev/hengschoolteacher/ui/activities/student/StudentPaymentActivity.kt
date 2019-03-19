@@ -58,7 +58,7 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
     }
 
     override fun getItem(position: Int): StudentPayment {
-        return payments.get(position)
+        return payments[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -75,6 +75,7 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
 open class StudentPaymentActivity : BaseActivity() {
     companion object {
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+        const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
     }
 
     @Bean
@@ -96,6 +97,10 @@ open class StudentPaymentActivity : BaseActivity() {
     @JvmField
     var studentId: Long = 0
 
+    @Extra(EXTRA_WEEK_INDEX)
+    @JvmField
+    var weekIndex: Int = 0
+
     @AfterViews
     fun init() {
         lessonPaymentHeaderView.setLeftButtonAction { doFinish() }
@@ -106,7 +111,12 @@ open class StudentPaymentActivity : BaseActivity() {
 
         studentPaymentAddPaymentView.setOnClickListener { addPayment(student) }
 
-        studentPaymentsListAdapter.setItems(studentPaymentsService.getPayments(studentId))
+        studentPaymentsListAdapter.setItems(
+                studentPaymentsService
+                        .getPayments(studentId)
+                        .sortedBy { it.time }
+        )
+
         studentPaymentItemsListView.adapter = studentPaymentsListAdapter
     }
 

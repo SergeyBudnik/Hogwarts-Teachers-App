@@ -40,16 +40,17 @@ open class MonitoringLessonItemView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(group: Group, lesson: Lesson): MonitoringLessonItemView {
+    fun bind(group: Group, lesson: Lesson, weekIndex: Int): MonitoringLessonItemView {
         val students = studentsService.getGroupStudents(group.id)
 
-        allLessonRowView.bind(group, lesson, students)
+        allLessonRowView.bind(group, lesson, students, weekIndex)
 
         setOnClickListener {
             RedirectUtils.redirect(context as BaseActivity)
                     .to(LessonActivity_::class.java)
                     .withExtra(LessonActivity.EXTRA_GROUP_ID, group.id)
                     .withExtra(LessonActivity.EXTRA_LESSON_ID, lesson.id)
+                    .withExtra(LessonActivity.EXTRA_WEEK_INDEX, weekIndex)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .goForResult(MonitoringLessonsActivity.REQUEST_CODE_LESSON)
         }
@@ -61,12 +62,18 @@ open class MonitoringLessonItemView : RelativeLayout {
 }
 
 open class MonitoringLessonsListAdapter(context: Context) : BaseWeekItemsListAdapter<GroupAndLesson>(context) {
+    private var weekIndex = 0
+
+    fun setWeekIndex(weekIndex: Int) {
+        this.weekIndex = weekIndex
+    }
+
     override fun getElementView(item: GroupAndLesson, convertView: View?): View {
         return if (convertView == null || convertView !is MonitoringLessonItemView) {
             MonitoringLessonItemView_.build(context)
         } else {
             convertView
-        }.bind(item.group, item.lesson)
+        }.bind(item.group, item.lesson, weekIndex)
     }
 
     override fun getElementDayOfWeek(item: GroupAndLesson): DayOfWeek {
@@ -95,17 +102,28 @@ open class MonitoringLessonsActivity : BaseActivity() {
     lateinit var lessonsAttendancesService: LessonsAttendancesService
 
     private var filterEnabled = true
+    private var calendarEnabled = false
+
+    private var weekIndex = 0
 
     @AfterViews
     fun init() {
         monitoringLessonsHeaderView
                 .setLeftButtonAction { monitoringLessonsMenuLayoutView.openMenu() }
                 .setFirstRightButtonAction { toggleFilter() }
-                .setFirstRightButtonColor(getFilterColor())
+                .setFirstRightButtonColor(getHeaderButtonColor(filterEnabled))
+                .setSecondRightButtonAction { toggleCalendar() }
+                .setSecondRightButtonColor(getHeaderButtonColor(calendarEnabled))
 
         monitoringLessonsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
         initLessonsList()
+
+        monitoringLessonsWeekSelectionBarView.init { weekIndex ->
+            this.weekIndex = weekIndex
+
+            initLessonsList()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -119,7 +137,7 @@ open class MonitoringLessonsActivity : BaseActivity() {
     private fun initLessonsList() {
         val lessons = lessonsService.getAllLessons()
                 .filter {
-                    val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson, 0)
+                    val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson, weekIndex)
 
                     !filterEnabled || !attendanceFilled
                 }
@@ -127,6 +145,7 @@ open class MonitoringLessonsActivity : BaseActivity() {
         val adapter = MonitoringLessonsListAdapter(this)
 
         adapter.setItems(lessons)
+        adapter.setWeekIndex(weekIndex)
 
         monitoringLessonsListView.adapter = adapter
     }
@@ -134,12 +153,24 @@ open class MonitoringLessonsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        monitoringLessonsHeaderView.setFirstRightButtonColor(getFilterColor())
+        monitoringLessonsHeaderView.setFirstRightButtonColor(getHeaderButtonColor(filterEnabled))
 
         initLessonsList()
     }
 
-    private fun getFilterColor(): Int {
-        return resources.getColor(if (filterEnabled) { R.color.fill_text_action_link } else { R.color.fill_text_base })
+    private fun toggleCalendar() {
+        calendarEnabled = !calendarEnabled
+
+        monitoringLessonsHeaderView.setSecondRightButtonColor(getHeaderButtonColor(calendarEnabled))
+
+        monitoringLessonsWeekSelectionBarView.visibility = if (calendarEnabled) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+    private fun getHeaderButtonColor(enabled: Boolean): Int {
+        return resources.getColor(if (enabled) { R.color.fill_text_action_link } else { R.color.fill_text_base })
     }
 }

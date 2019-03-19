@@ -30,12 +30,12 @@ open class LessonStudentItemView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(student: Student, group: Group, lesson: Lesson): LessonStudentItemView {
+    fun bind(student: Student, group: Group, lesson: Lesson, weekIndex: Int): LessonStudentItemView {
         nameView.text = student.name
 
-        bindAttendance(student, group, lesson)
-        bindCall(student)
-        bindPayment(student)
+        bindAttendance(student, group, lesson, weekIndex)
+        bindCall(student, weekIndex)
+        bindPayment(student, weekIndex)
 
         setOnClickListener {
             redirect(context as BaseActivity)
@@ -48,28 +48,30 @@ open class LessonStudentItemView : RelativeLayout {
         return this
     }
 
-    private fun bindPayment(student: Student) {
+    private fun bindPayment(student: Student, weekIndex: Int) {
         paymentView.setOnClickListener {
             redirect(context as BaseActivity)
                     .to(StudentPaymentActivity_::class.java)
                     .withExtra(StudentPaymentActivity.EXTRA_STUDENT_ID, student.id)
+                    .withExtra(StudentPaymentActivity.EXTRA_WEEK_INDEX, weekIndex)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }
     }
 
-    private fun bindCall(student: Student) {
+    private fun bindCall(student: Student, weekIndex: Int) {
         callView.setOnClickListener {
             redirect(context as BaseActivity)
                     .to(StudentCallActivity_::class.java)
                     .withExtra(LessonStudentAttendanceActivity.EXTRA_STUDENT_ID, student.id)
+                    .withExtra(LessonStudentAttendanceActivity.EXTRA_WEEK_INDEX, weekIndex)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }
     }
 
-    private fun bindAttendance(student: Student, group: Group, lesson: Lesson) {
-        val attendanceType = studentsAttendanceService.getAttendance(lesson.id, student.id, 0)
+    private fun bindAttendance(student: Student, group: Group, lesson: Lesson, weekIndex: Int) {
+        val attendanceType = studentsAttendanceService.getAttendance(lesson.id, student.id, weekIndex)
 
         val colorId = when (attendanceType) {
             null -> R.color.fill_text_base
@@ -86,6 +88,7 @@ open class LessonStudentItemView : RelativeLayout {
                     .withExtra(LessonStudentAttendanceActivity.EXTRA_GROUP_ID, group.id)
                     .withExtra(LessonStudentAttendanceActivity.EXTRA_LESSON_ID, lesson.id)
                     .withExtra(LessonStudentAttendanceActivity.EXTRA_STUDENT_ID, student.id)
+                    .withExtra(LessonStudentAttendanceActivity.EXTRA_WEEK_INDEX, weekIndex)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .goForResult(LessonActivity.REQUEST_CODE_LESSON_ATTENDANCE)
         }
@@ -101,6 +104,7 @@ open class LessonActivity : BaseActivity() {
 
         const val EXTRA_GROUP_ID = "EXTRA_GROUP_ID"
         const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
+        const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
     }
 
     @Extra(EXTRA_GROUP_ID)
@@ -110,6 +114,10 @@ open class LessonActivity : BaseActivity() {
     @Extra(EXTRA_LESSON_ID)
     @JvmField
     var lessonId: Long = 0
+
+    @Extra(EXTRA_WEEK_INDEX)
+    @JvmField
+    var weekIndex: Int = 0
 
     @Bean
     lateinit var groupsService: GroupsService
@@ -140,9 +148,9 @@ open class LessonActivity : BaseActivity() {
         val group = groupsService.getGroup(groupId) ?: throw RuntimeException()
         val lesson = group.lessons.find { it.id == lessonId } ?: throw RuntimeException()
         val students = studentsService.getGroupStudents(groupId)
-        val lessonStatus = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId, 0))
+        val lessonStatus = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId, weekIndex))
 
-        lessonTimeView.bind(lesson)
+        lessonTimeView.bind(lesson, weekIndex)
         lessonTeacherInfoView.bind(lesson.teacherId)
 
         if (lessonStatus != null) {
@@ -158,6 +166,7 @@ open class LessonActivity : BaseActivity() {
             redirect(this)
                     .to(LessonStatusActivity_::class.java)
                     .withExtra(LessonStatusActivity.EXTRA_LESSON_ID, lesson.id)
+                    .withExtra(LessonStatusActivity.EXTRA_WEEK_INDEX, weekIndex)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .goForResult(LessonActivity.REQUEST_CODE_LESSON_STATUS)
         }
@@ -165,7 +174,7 @@ open class LessonActivity : BaseActivity() {
         studentsContainerView.removeAllViews()
 
         students.forEach {
-            studentsContainerView.addView(LessonStudentItemView_.build(this).bind(it, group, lesson))
+            studentsContainerView.addView(LessonStudentItemView_.build(this).bind(it, group, lesson, weekIndex))
         }
     }
 

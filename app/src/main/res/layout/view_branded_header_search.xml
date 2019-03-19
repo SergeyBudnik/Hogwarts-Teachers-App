@@ -20,9 +20,11 @@
     <EditText
         android:id="@+id/brandedHeaderSearchView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/brandedHeaderSearchCancelView"
+        android:layout_marginTop="@dimen/app_size_0_5"
+        android:layout_marginBottom="@dimen/app_size_0_5"
         android:paddingTop="@dimen/app_size_0_5"
         android:paddingBottom="@dimen/app_size_0_5"
         android:paddingStart="@dimen/app_size_3"

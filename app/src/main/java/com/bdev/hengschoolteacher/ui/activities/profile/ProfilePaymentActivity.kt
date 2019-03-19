@@ -89,23 +89,53 @@ open class ProfilePaymentActivity : BaseActivity() {
     @Bean
     lateinit var teachersPaymentService: TeachersPaymentService
 
-    private var profilePaymentListAdapter = ProfilePaymentListAdapter(this)
+    private var calendarEnabled = false
+
+    private var weekIndex = 0
 
     @AfterViews
     fun init() {
-        profilePaymentHeaderView.setLeftButtonAction { profilePaymentMenuLayoutView.openMenu() }
+        profilePaymentHeaderView
+                .setLeftButtonAction { profilePaymentMenuLayoutView.openMenu() }
+                .setFirstRightButtonAction { toggleCalendar() }
+                .setFirstRightButtonColor(getHeaderButtonColor(calendarEnabled))
 
         profilePaymentMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
 
-        val login = userPreferencesService.getUserLogin() ?: throw RuntimeException()
+        profilePaymentWeekSelectionBarView.init { weekIndex ->
+            this.weekIndex = weekIndex
 
-        val me = teachersService.getTeacherByLogin(login) ?: throw RuntimeException()
+            initPaymentsList()
+        }
+    }
 
-        val teacherPayments = teachersPaymentService.getTeacherPayments(me.id)
+    private fun initPaymentsList() {
+        val me = teachersService.getTeacherMe()
+
+        val teacherPayments = teachersPaymentService.getTeacherPayments(me.id, weekIndex)
 
         profilePaymentThisWeekView.text = "${teacherPayments.fold(0) {v, tp -> v + tp.amount}} Р"
 
-        profilePaymentListAdapter.setItems(teacherPayments)
-        profilePaymentListView.adapter = profilePaymentListAdapter
+        val adapter = ProfilePaymentListAdapter(this)
+
+        adapter.setItems(teacherPayments)
+
+        profilePaymentListView.adapter = adapter
+    }
+
+    private fun toggleCalendar() {
+        calendarEnabled = !calendarEnabled
+
+        profilePaymentHeaderView.setFirstRightButtonColor(getHeaderButtonColor(calendarEnabled))
+
+        profilePaymentWeekSelectionBarView.visibility = if (calendarEnabled) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+    private fun getHeaderButtonColor(enabled: Boolean): Int {
+        return resources.getColor(if (enabled) { R.color.fill_text_action_link } else { R.color.fill_text_base })
     }
 }

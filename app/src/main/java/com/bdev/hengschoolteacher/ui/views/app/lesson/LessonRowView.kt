@@ -34,7 +34,7 @@ open class LessonRowView : LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(group: Group, lesson: Lesson, students: List<Student>) {
+    fun bind(group: Group, lesson: Lesson, students: List<Student>, weekIndex: Int) {
         lessonRowGroupIconView.bind(group)
 
         lessonRowStartTimeView.text = context.getString(lesson.startTime.translationId)
@@ -43,13 +43,13 @@ open class LessonRowView : LinearLayout {
         listOf(lessonRowStudent1View, lessonRowStudent2View, lessonRowStudent3View, lessonRowStudent4View, lessonRowStudent5View, lessonRowStudent6View)
                 .forEachIndexed { index, it ->
                     val student = if (students.size > index) { students[index] } else { null }
-                    val attendance = if (student != null) { studentsAttendancesService.getAttendance(lesson.id, student.id, 0) } else { null }
+                    val attendance = if (student != null) { studentsAttendancesService.getAttendance(lesson.id, student.id, weekIndex) } else { null }
 
                     setStudentIcon(student, attendance, it)
                 }
 
-        setLessonIcon(group, lesson)
-        setLessonStatus(lesson)
+        setLessonIcon(group, lesson, weekIndex)
+        setLessonStatus(lesson, weekIndex)
     }
 
     private fun setStudentIcon(student: Student?, attendanceType: StudentAttendance.Type?, studentView: ImageView) {
@@ -74,11 +74,11 @@ open class LessonRowView : LinearLayout {
         studentView.setColorFilter(resources.getColor(color))
     }
 
-    private fun setLessonIcon(group: Group, lesson: Lesson) {
-        val isLessonFinished = lessonsService.isLessonFinished(lesson, 0)
+    private fun setLessonIcon(group: Group, lesson: Lesson, weekIndex: Int) {
+        val isLessonFinished = lessonsService.isLessonFinished(lesson, weekIndex)
 
-        val isLessonFilled = lessonsAttendancesService.isLessonAttendanceFilled(group, lesson, 0)
-        val isLessonMarked = lessonStatusService.getLessonStatus(lesson.id, lessonsService.getLessonStartTime(lesson.id, 0)) != null
+        val isLessonFilled = lessonsAttendancesService.isLessonAttendanceFilled(group, lesson, weekIndex)
+        val isLessonMarked = lessonStatusService.getLessonStatus(lesson.id, lessonsService.getLessonStartTime(lesson.id, weekIndex)) != null
 
         val iconId = if (isLessonFinished) {
             if (isLessonFilled) {
@@ -104,8 +104,8 @@ open class LessonRowView : LinearLayout {
         lessonRowStatusView.setColorFilter(resources.getColor(colorId), PorterDuff.Mode.SRC_IN)
     }
 
-    private fun setLessonStatus(lesson: Lesson) {
-        val lessonStatus = lessonStatusService.getLessonStatus(lesson.id, lessonsService.getLessonStartTime(lesson.id, 0))
+    private fun setLessonStatus(lesson: Lesson, weekIndex: Int) {
+        val lessonStatus = lessonStatusService.getLessonStatus(lesson.id, lessonsService.getLessonStartTime(lesson.id, weekIndex))
 
         lessonRowLessonStatusView.visibility = if (lessonStatus != null) { View.VISIBLE } else { View.GONE }
 

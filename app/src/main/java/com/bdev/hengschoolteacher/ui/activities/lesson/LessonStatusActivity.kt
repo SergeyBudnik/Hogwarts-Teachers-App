@@ -22,6 +22,7 @@ import java.util.*
 open class LessonStatusActivity : BaseActivity() {
     companion object {
         const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
+        const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
     }
 
     @Bean
@@ -38,13 +39,17 @@ open class LessonStatusActivity : BaseActivity() {
     @JvmField
     var lessonId: Long = 0
 
+    @Extra(EXTRA_WEEK_INDEX)
+    @JvmField
+    var weekIndex: Int = 0
+
     @AfterViews
     fun init() {
         lessonStatusHeaderView.setLeftButtonAction { doFinish() }
 
         val lesson = lessonsService.getLesson(lessonId) ?: throw RuntimeException()
 
-        lessonStatusLessonTimeView.bind(lesson)
+        lessonStatusLessonTimeView.bind(lesson, weekIndex)
         lessonStatusTeacherInfoView.bind(lesson.teacherId)
 
         initButtons()

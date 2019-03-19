@@ -25,6 +25,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         const val EXTRA_GROUP_ID = "EXTRA_GROUP_ID"
         const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+        const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
     }
 
     @Bean
@@ -51,6 +52,10 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     @JvmField
     var studentId: Long = 0
 
+    @Extra(EXTRA_WEEK_INDEX)
+    @JvmField
+    var weekIndex: Int = 0
+
     @AfterViews
     fun init() {
         lessonAttendanceHeaderView.setLeftButtonAction { doFinish() }
@@ -58,7 +63,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         val lesson = lessonsService.getLesson(lessonId) ?: throw RuntimeException()
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
-        lessonStudentAttendanceLessonTimeView.bind(lesson)
+        lessonStudentAttendanceLessonTimeView.bind(lesson, weekIndex)
         lessonStudentAttendanceStudentInfoView.bind(student)
         lessonStudentAttendanceTeacherInfoView.bind(lesson.teacherId)
 

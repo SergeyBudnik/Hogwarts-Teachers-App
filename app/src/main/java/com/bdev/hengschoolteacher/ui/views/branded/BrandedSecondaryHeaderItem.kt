@@ -39,7 +39,7 @@ open class BrandedSecondaryHeaderItem(context: Context, attrs: AttributeSet) : L
         }))
 
         activeMarkView.setBackgroundColor(resources.getColor(if (active) {
-            R.color.fill_text_base
+            R.color.fill_accent_strong
         } else {
             R.color.transparent
         }))

@@ -9,9 +9,17 @@ import org.androidannotations.annotations.EBean
 open class TeachersService {
     @Bean
     lateinit var teachersDao: TeachersDao
+    @Bean
+    lateinit var userPreferencesService: UserPreferencesService
 
     fun getAllTeachers(): List<Teacher> {
         return teachersDao.getTeachers()
+    }
+
+    fun getTeacherMe(): Teacher {
+        val login = userPreferencesService.getUserLogin() ?: throw RuntimeException()
+
+        return getTeacherByLogin(login) ?: throw RuntimeException()
     }
 
     fun getTeacherById(id: Long): Teacher? {

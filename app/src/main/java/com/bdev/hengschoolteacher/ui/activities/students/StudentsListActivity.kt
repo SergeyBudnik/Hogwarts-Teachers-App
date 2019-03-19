@@ -34,7 +34,7 @@ open class StudentsListRowItemView : RelativeLayout {
     }
 }
 
-open class StudentsListAdapter(context: Context) : BaseItemsAdapter<Student>(context) {
+class StudentsListAdapter(context: Context) : BaseItemsAdapter<Student>(context) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
         return if (convertView == null) {
             StudentsListRowItemView_.build(context)
@@ -73,7 +73,12 @@ open class StudentsListActivity : BaseActivity() {
         }
 
         studentsListHeaderSearchView.addOnTextChangeListener { filter ->
-            studentsListAdapter.setFilter { it.name.contains(filter) }
+            studentsListAdapter.setFilter { student ->
+                val nameMatches = student.name.toLowerCase().contains(filter.toLowerCase())
+                val phoneMatches = student.phones.filter { it.contains(filter) }.any()
+
+                return@setFilter nameMatches || phoneMatches
+            }
             studentsListAdapter.notifyDataSetChanged()
         }
     }

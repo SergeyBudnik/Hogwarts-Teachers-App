@@ -15,7 +15,6 @@ object KeyboardUtils {
     }
 
     private fun withKeyboard(current: BaseActivity, action: (InputMethodManager, View) -> Unit) {
-
         val imm = current.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         val view = current.currentFocus ?: View(current)
 

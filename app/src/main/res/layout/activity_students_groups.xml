@@ -7,12 +7,26 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-        android:id="@+id/studentsGroupsHeaderView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Студенты"
-        app:leftIcon="@drawable/ic_menu"/>
+        android:layout_height="wrap_content">
+
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            android:id="@+id/studentsGroupsHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Студенты"
+            app:leftIcon="@drawable/ic_menu"
+            app:firstRightIcon="@drawable/ic_search"/>
+
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedHeaderSearchView_
+            android:id="@+id/studentsGroupsHeaderSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1"/>
+
+    </RelativeLayout>
 
     <com.bdev.hengschoolteacher.ui.views.app.students.StudentsHeaderView_
         android:layout_width="match_parent"
@@ -28,11 +42,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.bdev.hengschoolteacher.ui.views.app.dev.InDevelopmentView_
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/app_size_10"/>
+            <ListView
+                android:id="@+id/studentsGroupsListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/app_size_1"
+                android:paddingBottom="@dimen/app_size_1"
+                android:clipToPadding="false"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
 
         </RelativeLayout>
 

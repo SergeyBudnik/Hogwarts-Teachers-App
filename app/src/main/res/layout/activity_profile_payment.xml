@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Профиль"
-        app:leftIcon="@drawable/ic_menu"/>
+        app:leftIcon="@drawable/ic_menu"
+        app:firstRightIcon="@drawable/ic_calendar"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView_
         android:layout_width="match_parent"
@@ -32,15 +33,11 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_1"
-                android:layout_marginStart="@dimen/app_size_1"
-                android:layout_marginEnd="@dimen/app_size_1"
                 android:paddingTop="@dimen/app_size_1"
                 android:paddingBottom="@dimen/app_size_1"
                 android:paddingStart="@dimen/app_size_2"
                 android:paddingEnd="@dimen/app_size_2"
-                android:background="@drawable/layout_row"
-                android:backgroundTint="@color/status_info_base">
+                android:background="@color/status_info_subtle">
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                     android:layout_width="wrap_content"
@@ -54,20 +51,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="3600 Р"
                     android:textColor="@color/fill_text_base"
                     android:textSize="@dimen/font_large"/>
 
             </RelativeLayout>
 
-            <ListView
-                android:id="@+id/profilePaymentListView"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/app_size_0_25"
-                android:paddingBottom="@dimen/app_size_0_5"
-                android:clipToPadding="false"
-                android:divider="@null"/>
+                android:layout_height="match_parent">
+
+                <ListView
+                    android:id="@+id/profilePaymentListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/app_size_0_25"
+                    android:paddingBottom="@dimen/app_size_0_5"
+                    android:clipToPadding="false"
+                    android:divider="@null"/>
+
+                <com.bdev.hengschoolteacher.ui.views.app.date.WeekSelectionBarView_
+                    android:id="@+id/profilePaymentWeekSelectionBarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
 

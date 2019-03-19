@@ -15,15 +15,15 @@
 
         <ImageView
             android:id="@+id/loadingInProgressSpinnerView"
-            android:layout_width="@dimen/app_size_4"
-            android:layout_height="@dimen/app_size_4"
-            android:layout_marginBottom="@dimen/app_size_1"
+            android:layout_width="@dimen/app_size_6"
+            android:layout_height="@dimen/app_size_6"
             android:src="@drawable/ic_spinner"
             android:contentDescription="@string/img_content_description"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_2"
             android:text="Загрузка..."
             android:textColor="@color/fill_text_base"
             android:textSize="@dimen/font_large"

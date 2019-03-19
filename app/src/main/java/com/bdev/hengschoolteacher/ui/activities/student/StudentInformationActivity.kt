@@ -83,6 +83,7 @@ open class StudentInformationActivity : BaseActivity() {
             redirect(this)
                     .to(StudentCallActivity_::class.java)
                     .withExtra(LessonStudentAttendanceActivity.EXTRA_STUDENT_ID, student.id)
+                    .withExtra(LessonStudentAttendanceActivity.EXTRA_WEEK_INDEX, 0) // WeekIndex
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }

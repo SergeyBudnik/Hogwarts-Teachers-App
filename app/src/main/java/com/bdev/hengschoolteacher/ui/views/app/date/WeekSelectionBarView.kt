@@ -12,43 +12,83 @@ import java.util.*
 
 @EViewGroup(R.layout.view_week_selection_bar)
 open class WeekSelectionBarView : RelativeLayout {
-    private var currentWeekIndex = 0
-    private var changeListener: (Long, Long) -> Unit = { _, _ -> }
+    companion object {
+        private const val WEEK_LEFT_BORDER = -8
+        private const val WEEK_RIGHT_BORDED = 0
+        private const val WEEK_CENTER = 0
+    }
+
+    private var currentWeekIndex = WEEK_CENTER
+    private var changeListener: (Int) -> Unit = { _ -> }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun init() {
-        setTime()
+    fun init(changeListener: (Int) -> Unit) {
+        this.changeListener = changeListener
+
+        update()
+
+        weekSelectionBarWeekView.setOnClickListener {
+            currentWeekIndex = WEEK_CENTER
+
+            update()
+        }
 
         weekSelectionBarPreviousWeekView.setOnClickListener {
-            currentWeekIndex--
+            if (currentWeekIndex > WEEK_LEFT_BORDER) {
+                currentWeekIndex--
 
-            setTime()
+                update()
+            }
         }
 
         weekSelectionBarNextWeekView.setOnClickListener {
-            currentWeekIndex++
+            if (currentWeekIndex < WEEK_RIGHT_BORDED) {
+                currentWeekIndex++
 
-            setTime()
+                update()
+            }
         }
     }
 
-    fun setOnWeekChangedListener(changeListener: (Long, Long) -> Unit) {
-        this.changeListener = changeListener
+    private fun update() {
+        changeListener.invoke(currentWeekIndex)
+
+        updateWeekTitle()
+        updateWeekRange()
+
+        setLeftArrowEnabled()
+        setRightArrowEnabled()
     }
 
-    private fun setTime() {
+    private fun updateWeekTitle() {
+        weekSelectionBarWeekView.text = if (currentWeekIndex == 0) {
+            "Текущая неделя"
+        } else if (currentWeekIndex < 0) {
+            "${-currentWeekIndex} недель назад"
+        } else {
+            ""
+        }
+    }
+
+    private fun updateWeekRange() {
+        val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.US)
+
         val startTime = TimeUtils().getWeekStart(currentWeekIndex)
         val finishTime = TimeUtils().getWeekFinish(currentWeekIndex)
-
-        changeListener.invoke(startTime, finishTime)
-
-        val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.US)
 
         val startTimeString = sdf.format(Date(startTime))
         val finishTimeString = sdf.format(Date(finishTime))
 
         weekSelectionBarDateRangeView.text = "$startTimeString - $finishTimeString"
+    }
+
+    private fun setLeftArrowEnabled() {
+        weekSelectionBarPreviousWeekView.alpha = if (currentWeekIndex == WEEK_LEFT_BORDER) { 0.2f } else { 1.0f }
+    }
+
+    private fun setRightArrowEnabled() {
+        weekSelectionBarNextWeekView.alpha = if (currentWeekIndex == WEEK_RIGHT_BORDED) { 0.2f } else { 1.0f }
     }
 }

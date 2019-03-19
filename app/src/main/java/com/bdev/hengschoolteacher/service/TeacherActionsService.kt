@@ -60,6 +60,8 @@ open class TeacherActionsService {
 
                     lessonStatus?.type == LessonStatus.Type.FINISHED
                 }
+                .sortedBy { it.startTime }
+                .sortedBy { it.day }
                 .toList()
     }
 

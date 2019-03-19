@@ -24,8 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/app_size_1"
-            android:paddingEnd="@dimen/app_size_1"
-            android:background="@color/fill_contrast_medium"/>
+            android:paddingEnd="@dimen/app_size_1"/>
 
     </RelativeLayout>
 

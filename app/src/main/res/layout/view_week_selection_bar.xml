@@ -22,10 +22,10 @@
         android:layout_centerInParent="true">
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/weekSelectionBarWeekView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Текущая неделя"
             android:textColor="@color/fill_text_accent"
             android:textSize="@dimen/font_large"/>
 

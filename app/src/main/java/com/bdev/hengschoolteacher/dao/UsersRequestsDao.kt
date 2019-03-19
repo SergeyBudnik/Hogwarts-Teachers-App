@@ -4,9 +4,11 @@ import android.content.Context
 import com.bdev.hengschoolteacher.data.school.requests.UserRequest
 import org.androidannotations.annotations.EBean
 import org.androidannotations.annotations.RootContext
+import org.codehaus.jackson.annotate.JsonCreator
+import org.codehaus.jackson.annotate.JsonProperty
 
-class UsersRequestModel(
-        var usersRequests: MutableList<UserRequest>
+class UsersRequestModel @JsonCreator constructor(
+        @JsonProperty("usersRequests") var usersRequests: MutableList<UserRequest>
 )
 
 @EBean(scope = EBean.Scope.Singleton)

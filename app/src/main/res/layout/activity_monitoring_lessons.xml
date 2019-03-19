@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         app:title="Мониторинг"
         app:leftIcon="@drawable/ic_menu"
-        app:firstRightIcon="@drawable/ic_filter"/>
+        app:firstRightIcon="@drawable/ic_filter"
+        app:secondRightIcon="@drawable/ic_calendar"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView_
         android:layout_width="match_parent"
@@ -25,15 +26,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/monitoringLessonsListView"
-            android:orientation="vertical"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="@dimen/app_size_1"
-            android:clipToPadding="false"
-            android:dividerHeight="0dp"
-            android:divider="@null"/>
+            android:layout_height="match_parent">
+
+            <com.bdev.hengschoolteacher.ui.views.app.date.WeekSelectionBarView_
+                android:id="@+id/monitoringLessonsWeekSelectionBarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"/>
+
+            <ListView
+                android:id="@+id/monitoringLessonsListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/monitoringLessonsWeekSelectionBarView"
+                android:paddingBottom="@dimen/app_size_1"
+                android:clipToPadding="false"
+                android:dividerHeight="0dp"
+                android:divider="@null"/>
+
+        </RelativeLayout>
 
     </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
 

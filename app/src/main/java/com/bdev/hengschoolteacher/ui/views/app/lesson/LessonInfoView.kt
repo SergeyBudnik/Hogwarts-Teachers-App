@@ -20,9 +20,9 @@ open class LessonInfoView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(lesson: Lesson) {
+    fun bind(lesson: Lesson, weekIndex: Int) {
         lessonInfoDayOfWeekView.text = context.getString(lesson.day.shortNameId)
-        lessonInfoDateView.text = SimpleDateFormat("dd.MM.yyyy", Locale.US).format(lessonsService.getLessonStartTime(lesson.id, 0))
+        lessonInfoDateView.text = SimpleDateFormat("dd.MM.yyyy", Locale.US).format(lessonsService.getLessonStartTime(lesson.id, weekIndex))
         lessonInfoStartTimeView.text = context.getString(lesson.startTime.translationId)
         lessonInfoFinishTimeView.text = context.getString(lesson.finishTime.translationId)
     }

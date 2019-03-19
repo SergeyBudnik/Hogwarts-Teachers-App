@@ -19,10 +19,10 @@ open class TeachersPaymentService {
     @Bean
     lateinit var teacherActionsService: TeacherActionsService
 
-    fun getTeacherPayments(teacherId: Long): List<TeacherPayment> {
+    fun getTeacherPayments(teacherId: Long, weekIndex: Int): List<TeacherPayment> {
         val teacherPayments = ArrayList<TeacherPayment>()
 
-        val teacherActions = teacherActionsService.getTeacherActions(teacherId, 0)
+        val teacherActions = teacherActionsService.getTeacherActions(teacherId, weekIndex)
 
         for (teacherAction in teacherActions) {
             when (teacherAction.type) {

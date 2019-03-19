@@ -25,8 +25,8 @@ open class MonitoringSalariesItemView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(teacher: Teacher) {
-        val teacherPayments = teachersPaymentService.getTeacherPayments(teacher.id)
+    fun bind(teacher: Teacher, weekIndex: Int) {
+        val teacherPayments = teachersPaymentService.getTeacherPayments(teacher.id, weekIndex)
 
         monitoringSalariesItemNameView.text = teacher.name
         monitoringSalariesItemSalaryView.text = "${teacherPayments.fold(0) {v, tp -> v + tp.amount}} Р"
@@ -51,7 +51,7 @@ open class MonitoringSalariesListAdapter : BaseAdapter() {
             convertView as MonitoringSalariesItemView
         }
 
-        v.bind(getItem(position))
+        v.bind(getItem(position), 0) // WeekIndex
 
         return v
     }
