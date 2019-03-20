@@ -49,7 +49,7 @@ open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayou
     }
 
     fun setCurrentItem(isCurrent: Boolean) {
-        val textColor = if (isCurrent) { R.color.fill_text_base } else { R.color.fill_text_action_link }
+        val textColor = if (isCurrent) { R.color.fill_text_basic } else { R.color.fill_text_basic_action_link }
         val backgroundColor = if (isCurrent) { R.color.alt_contrast_light } else { R.color.transparent }
 
         menuItemView.setBackgroundColor(context.resources.getColor(backgroundColor))

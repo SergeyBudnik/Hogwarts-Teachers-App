@@ -35,7 +35,7 @@
                 android:paddingBottom="@dimen/app_size_1"
                 android:paddingStart="@dimen/app_size_2"
                 android:paddingEnd="@dimen/app_size_2"
-                android:textColor="@color/fill_text_accent"
+                android:textColor="@color/fill_text_basic_accent"
                 android:textSize="@dimen/font_large"
                 android:background="@drawable/layout_row"
                 android:backgroundTint="@color/alt_contrast_light"/>

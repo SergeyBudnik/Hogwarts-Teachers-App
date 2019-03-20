@@ -49,15 +49,15 @@ open class StudentMonthAttendanceView : LinearLayout {
             }
 
             val colorId = if (index >= amountOfLessons) {
-                R.color.fill_text_base
+                R.color.fill_text_basic
             } else {
                 if (index >= attendances.size) {
-                    R.color.fill_text_base
+                    R.color.fill_text_basic
                 } else {
                     when (attendances[index].type) {
-                        StudentAttendance.Type.VISITED -> R.color.fill_text_positive
-                        StudentAttendance.Type.VALID_SKIP -> R.color.fill_text_warning
-                        StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_negative
+                        StudentAttendance.Type.VISITED -> R.color.fill_text_basic_positive
+                        StudentAttendance.Type.VALID_SKIP -> R.color.fill_text_basic_warning
+                        StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_basic_negative
                     }
                 }
             }

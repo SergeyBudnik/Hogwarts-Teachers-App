@@ -36,7 +36,7 @@
                 android:layout_marginTop="@dimen/app_size_1"
                 android:layout_marginStart="@dimen/app_size_1"
                 android:layout_marginEnd="@dimen/app_size_1"
-                android:textColor="@color/fill_text_accent"
+                android:textColor="@color/fill_text_basic_accent"
                 android:textSize="@dimen/font_large"
                 app:app_font="bold"/>
 
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/app_size_1"
                 android:layout_marginBottom="@dimen/app_size_1"
-                android:textColor="@color/fill_text_light"
+                android:textColor="@color/fill_text_basic_light"
                 android:textSize="@dimen/font_large"/>
 
             <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_

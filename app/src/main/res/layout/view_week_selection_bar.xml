@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:padding="@dimen/app_size_1"
         android:src="@drawable/ic_small_arrow_left"
-        android:tint="@color/fill_text_base"
+        android:tint="@color/fill_text_basic"
         android:importantForAccessibility="no"/>
 
     <LinearLayout
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/fill_text_accent"
+            android:textColor="@color/fill_text_basic_accent"
             android:textSize="@dimen/font_large"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/fill_text_base"
+            android:textColor="@color/fill_text_basic"
             android:textSize="@dimen/font_normal"/>
 
     </LinearLayout>
@@ -47,7 +47,7 @@
         android:layout_alignParentEnd="true"
         android:padding="@dimen/app_size_1"
         android:src="@drawable/ic_small_arrow_right"
-        android:tint="@color/fill_text_base"
+        android:tint="@color/fill_text_basic"
         android:importantForAccessibility="no"/>
 
 </RelativeLayout>

@@ -79,7 +79,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
                 attendance,
                 StudentAttendance.Type.VISITED,
                 "Посетил",
-                R.color.fill_text_positive
+                R.color.fill_text_basic_positive
         )
 
         initButton(
@@ -88,7 +88,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
                 attendance,
                 StudentAttendance.Type.VALID_SKIP,
                 "Уважительный пропуск",
-                R.color.fill_text_warning
+                R.color.fill_text_basic_warning
         )
 
         initButton(
@@ -97,7 +97,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
                 attendance,
                 StudentAttendance.Type.INVALID_SKIP,
                 "Неуважительный пропуск",
-                R.color.fill_text_negative
+                R.color.fill_text_basic_negative
         )
     }
 
@@ -114,7 +114,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         if (actualAttendance != null) {
             buttonView.setButtonIcon(
                     R.drawable.ic_ok,
-                    if (actualAttendance == buttonAttendance) { buttonColorId } else { R.color.fill_text_light }
+                    if (actualAttendance == buttonAttendance) { buttonColorId } else { R.color.fill_text_basic_light }
             )
         }
 

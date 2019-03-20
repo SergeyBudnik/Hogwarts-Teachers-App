@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="Hogwarts Teacher"
-            android:textColor="@color/fill_text_base"
+            android:textColor="@color/fill_text_basic"
             android:textSize="@dimen/font_large"
             app:app_font="regular"/>
 

@@ -2,7 +2,7 @@
 <resources>
     <color name="transparent">#00ffffff</color>
 
-    <!-- Background of elements -->
+    <!-- Fill colors -->
     
     <color name="fill_contrast_strong">#2b3848</color>
     <color name="fill_contrast_medium">#222e3d</color>
@@ -10,19 +10,65 @@
     <color name="fill_contrast_light">#121c29</color>
     <color name="fill_contrast_subtle">#09121f</color>
 
+    <color name="fill_basic_strong">#3E536B</color>
+    <color name="fill_basic_medium">#374B63</color>
+    <color name="fill_basic_subtle">#2E4057</color>
+    <color name="fill_basic_base">#27394F</color>
+    <color name="fill_basic_light">#202F42</color>
+
     <color name="fill_accent_strong">#1966e5</color>
     <color name="fill_accent_medium">#1d5dc7</color>
     <color name="fill_accent_base">#2155a8</color>
     <color name="fill_accent_light">#234b88</color>
     <color name="fill_accent_subtle">#1f4172</color>
 
-    <!-- Semi-transparent shade -->
+    <!-- Line colors -->
+
+    <color name="line_contrast_strong">#3D4A5A</color>
+    <color name="line_contrast_medium">#34404F</color>
+    <color name="line_contrast_base">#2C3845</color>
+    <color name="line_contrast_light">#242E3B</color>
+    <color name="line_contrast_subtle">#1B2431</color>
+
+    <color name="line_basic_strong">#4B6078</color>
+    <color name="line_basic_medium">#485B73</color>
+    <color name="line_basic_base">#43556A</color>
+    <color name="line_basic_light">#34465C</color>
+    <color name="line_basic_subtle">#2D3E52</color>
+
+    <!-- Stroke colors -->
+
+    <color name="stroke_contrast_strong">#455262</color>
+    <color name="stroke_contrast_medium">#3C4857</color>
+    <color name="stroke_contrast_base">#34404D</color>
+    <color name="stroke_contrast_light">#2C3643</color>
+    <color name="stroke_contrast_subtle">#232C39</color>
+
+    <color name="stroke_basic_strong">#586D85</color>
+    <color name="stroke_basic_medium">#556880</color>
+    <color name="stroke_basic_base">#506277</color>
+    <color name="stroke_basic_light">#415369</color>
+    <color name="stroke_basic_subtle">#3A4B39</color>
+
+    <color name="stroke_accent_strong">#26A3FF</color>
+    <color name="stroke_accent_medium">#2B8EEF</color>
+    <color name="stroke_accent_base">#2F7EE8</color>
+    <color name="stroke_accent_light">#3672CF</color>
+    <color name="stroke_accent_subtle">#2F63AD</color>
+
+    <!-- Alt colors -->
 
     <color name="alt_contrast_strong">#ebf0f5</color>
     <color name="alt_contrast_medium">#99c5d7e6</color>
     <color name="alt_contrast_base">#33c5d7e6</color>
     <color name="alt_contrast_light">#1ac5d7e6</color>
     <color name="alt_contrast_subtle">#0dc5d7e6</color>
+
+    <color name="alt_basic_strong">#020508</color>
+    <color name="alt_basic_medium">#B2020508</color>
+    <color name="alt_basic_base">#66020508</color>
+    <color name="alt_basic_light">#33020508</color>
+    <color name="alt_basic_subtle">#1A020508</color>
 
     <color name="alt_accent_strong">#992183ff</color>
     <color name="alt_accent_medium">#802183ff</color>
@@ -31,6 +77,18 @@
     <color name="alt_accent_subtle">#332183ff</color>
 
     <!-- Status -->
+
+    <color name="status_success_strong">#017903</color>
+    <color name="status_success_medium">#016603</color>
+    <color name="status_success_base">#015402</color>
+    <color name="status_success_light">#014502</color>
+    <color name="status_success_subtle">#013D02</color>
+
+    <color name="status_warning_strong">#AC5711</color>
+    <color name="status_warning_medium">#994D15</color>
+    <color name="status_warning_base">#904918</color>
+    <color name="status_warning_light">#87441A</color>
+    <color name="status_warning_subtle">#743A1E</color>
 
     <color name="status_error_strong">#be0e0e</color>
     <color name="status_error_medium">#a10b0b</color>
@@ -46,14 +104,25 @@
 
     <!-- Text -->
 
-    <color name="fill_text_base">#ffffff</color>
-    <color name="fill_text_light">#99ffffff</color>
-    <color name="fill_text_subtle">#66ffffff</color>
-    <color name="fill_text_negative">#ff6666</color>
-    <color name="fill_text_warning">#ffaa00</color>
-    <color name="fill_text_positive">#23c423</color>
-    <color name="fill_text_action_link">#45cbfd</color>
-    <color name="fill_text_accent">#9bcefd</color>
+    <color name="fill_text_basic">#ffffff</color>
+    <color name="fill_text_basic_light">#99ffffff</color>
+    <color name="fill_text_basic_subtle">#66ffffff</color>
+
+    <color name="fill_text_inverse">#ffffff</color>
+    <color name="fill_text_inverse_light">#99ffffff</color>
+    <color name="fill_text_inverse_subtle">#66ffffff</color>
+
+    <color name="fill_text_basic_negative">#ff6666</color>
+    <color name="fill_text_basic_warning">#ffaa00</color>
+    <color name="fill_text_basic_positive">#23c423</color>
+    <color name="fill_text_basic_action_link">#45cbfd</color>
+    <color name="fill_text_basic_accent">#9bcefd</color>
+
+    <color name="fill_text_inverse_negative">#ff6666</color>
+    <color name="fill_text_inverse_warning">#ffaa00</color>
+    <color name="fill_text_inverse_positive">#23c423</color>
+    <color name="fill_text_inverse_action_link">#45cbfd</color>
+    <color name="fill_text_inverse_accent">#9bcefd</color>
 
     <!-- Android colors -->
 

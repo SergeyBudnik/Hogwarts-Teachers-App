@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:text="Долг:"
                     android:textSize="@dimen/font_large"
-                    android:textColor="@color/fill_text_base"/>
+                    android:textColor="@color/fill_text_basic"/>
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                     android:id="@+id/monitoringStudentPaymentDeptView"
@@ -46,7 +46,7 @@
                     android:layout_alignParentEnd="true"
                     android:text="1000 Р"
                     android:textSize="@dimen/font_large"
-                    android:textColor="@color/fill_text_accent"/>
+                    android:textColor="@color/fill_text_basic_accent"/>
 
             </RelativeLayout>
 
@@ -68,7 +68,7 @@
                     android:gravity="center"
                     android:text="Месяц"
                     android:textSize="@dimen/font_normal"
-                    android:textColor="@color/fill_text_base"/>
+                    android:textColor="@color/fill_text_basic"/>
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                     android:layout_width="0dp"
@@ -77,7 +77,7 @@
                     android:gravity="center"
                     android:text="Занятия"
                     android:textSize="@dimen/font_normal"
-                    android:textColor="@color/fill_text_base"/>
+                    android:textColor="@color/fill_text_basic"/>
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                     android:layout_width="0dp"
@@ -86,7 +86,7 @@
                     android:gravity="center"
                     android:text="Оплата"
                     android:textSize="@dimen/font_normal"
-                    android:textColor="@color/fill_text_base"/>
+                    android:textColor="@color/fill_text_basic"/>
 
             </LinearLayout>
 

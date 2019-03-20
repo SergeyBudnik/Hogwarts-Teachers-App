@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Текущая неделя:"
-                    android:textColor="@color/fill_text_light"
+                    android:textColor="@color/fill_text_basic_light"
                     android:textSize="@dimen/font_large"/>
 
                 <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:textColor="@color/fill_text_base"
+                    android:textColor="@color/fill_text_basic"
                     android:textSize="@dimen/font_large"/>
 
             </RelativeLayout>

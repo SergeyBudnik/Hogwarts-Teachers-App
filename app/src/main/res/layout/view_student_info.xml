@@ -16,7 +16,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="@dimen/app_size_1"
         android:src="@drawable/ic_user_filled"
-        android:tint="@color/fill_text_accent"
+        android:tint="@color/fill_text_basic_accent"
         android:importantForAccessibility="no"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textColor="@color/fill_text_accent"
+        android:textColor="@color/fill_text_basic_accent"
         android:textSize="@dimen/font_large"/>
 
 </LinearLayout>

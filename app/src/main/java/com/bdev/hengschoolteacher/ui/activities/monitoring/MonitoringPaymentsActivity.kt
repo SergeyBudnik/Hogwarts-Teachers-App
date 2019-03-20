@@ -123,7 +123,7 @@ open class MonitoringPaymentsActivity : BaseActivity() {
     }
 
     private fun getFilterColor(): Int {
-        return resources.getColor(if (filterEnabled) { R.color.fill_text_action_link } else { R.color.fill_text_base })
+        return resources.getColor(if (filterEnabled) { R.color.fill_text_basic_action_link } else { R.color.fill_text_basic })
     }
 
     private fun getStudentDept(

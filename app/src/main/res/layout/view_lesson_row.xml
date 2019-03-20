@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/app_size_0_5"
                 android:textSize="@dimen/font_large"
-                android:textColor="@color/fill_text_accent"
+                android:textColor="@color/fill_text_basic_accent"
                 app:app_font="bold"/>
 
             <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -38,7 +38,7 @@
                 android:layout_marginEnd="@dimen/app_size_0_5"
                 android:text="@string/separator"
                 android:textSize="@dimen/font_large"
-                android:textColor="@color/fill_text_accent"
+                android:textColor="@color/fill_text_basic_accent"
                 app:app_font="bold"/>
 
             <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_large"
-                android:textColor="@color/fill_text_accent"
+                android:textColor="@color/fill_text_basic_accent"
                 app:app_font="bold"/>
 
         </LinearLayout>
@@ -129,7 +129,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/fill_text_base"
+            android:textColor="@color/fill_text_basic"
             android:visibility="gone"/>
 
     </RelativeLayout>

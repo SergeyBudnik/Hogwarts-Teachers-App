@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="1000 Р"
         android:textSize="@dimen/font_large"
-        android:textColor="@color/fill_text_accent"/>
+        android:textColor="@color/fill_text_basic_accent"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
         android:id="@+id/studentPaymentItemTimeView"
@@ -24,6 +24,6 @@
         android:layout_alignParentEnd="true"
         android:text="02.01.2019"
         android:textSize="@dimen/font_large"
-        android:textColor="@color/fill_text_base"/>
+        android:textColor="@color/fill_text_basic"/>
 
 </RelativeLayout>

@@ -50,7 +50,7 @@
                     android:layout_marginStart="@dimen/app_size_2"
                     android:layout_marginEnd="@dimen/app_size_2"
                     android:textSize="@dimen/font_large"
-                    android:textColor="@color/fill_text_base"/>
+                    android:textColor="@color/fill_text_basic"/>
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -67,7 +67,7 @@
                         android:layout_marginEnd="@dimen/app_size_0_5"
                         android:padding="@dimen/app_size_1"
                         android:src="@drawable/ic_phone"
-                        android:tint="@color/fill_text_base"
+                        android:tint="@color/fill_text_basic"
                         android:importantForAccessibility="no"/>
 
                     <ImageView
@@ -77,7 +77,7 @@
                         android:layout_marginEnd="@dimen/app_size_0_5"
                         android:padding="@dimen/app_size_1"
                         android:src="@drawable/ic_payment"
-                        android:tint="@color/fill_text_base"
+                        android:tint="@color/fill_text_basic"
                         android:importantForAccessibility="no"/>
 
                 </LinearLayout>
@@ -91,7 +91,7 @@
                 android:layout_marginStart="@dimen/app_size_2"
                 android:layout_marginEnd="@dimen/app_size_2"
                 android:text="Расписание:"
-                android:textColor="@color/fill_text_accent"
+                android:textColor="@color/fill_text_basic_accent"
                 android:textSize="@dimen/font_large"/>
 
             <ListView

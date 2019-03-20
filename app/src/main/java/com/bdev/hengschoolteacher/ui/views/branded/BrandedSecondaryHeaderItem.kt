@@ -33,9 +33,9 @@ open class BrandedSecondaryHeaderItem(context: Context, attrs: AttributeSet) : L
 
     fun setActive(active: Boolean) {
         titleView.setTextColor(resources.getColor(if (active) {
-            R.color.fill_text_base
+            R.color.fill_text_basic
         } else {
-            R.color.fill_text_action_link
+            R.color.fill_text_basic_action_link
         }))
 
         activeMarkView.setBackgroundColor(resources.getColor(if (active) {

@@ -176,6 +176,6 @@ open class ProfileLessonsActivity : BaseActivity() {
     }
 
     private fun getHeaderButtonColor(enabled: Boolean): Int {
-        return resources.getColor(if (enabled) { R.color.fill_text_action_link } else { R.color.fill_text_base })
+        return resources.getColor(if (enabled) { R.color.fill_text_basic_action_link } else { R.color.fill_text_basic })
     }
 }

@@ -16,7 +16,7 @@
         android:layout_marginStart="@dimen/app_size_2"
         android:layout_marginEnd="@dimen/app_size_2"
         android:textSize="@dimen/font_large"
-        android:textColor="@color/fill_text_accent"
+        android:textColor="@color/fill_text_basic_accent"
         app:app_font="bold"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
@@ -27,7 +27,7 @@
         android:layout_marginStart="@dimen/app_size_2"
         android:layout_marginEnd="@dimen/app_size_2"
         android:textSize="@dimen/font_large"
-        android:textColor="@color/fill_text_light"/>
+        android:textColor="@color/fill_text_basic_light"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView_
         android:id="@+id/menuItemMyProfileView"
@@ -87,7 +87,7 @@
                 android:paddingTop="@dimen/app_size_1"
                 android:paddingBottom="@dimen/app_size_1"
                 android:text="Обновить данные"
-                android:textColor="@color/fill_text_action_link"
+                android:textColor="@color/fill_text_basic_action_link"
                 android:textSize="@dimen/font_large"/>
 
             <RelativeLayout
@@ -107,14 +107,14 @@
                         android:layout_marginEnd="@dimen/app_size_0_5"
                         android:text="Версия:"
                         android:textSize="@dimen/font_normal"
-                        android:textColor="@color/fill_text_light"/>
+                        android:textColor="@color/fill_text_basic_light"/>
 
                     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                         android:id="@+id/versionView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/font_normal"
-                        android:textColor="@color/fill_text_base"/>
+                        android:textColor="@color/fill_text_basic"/>
 
                 </LinearLayout>
 
@@ -128,7 +128,7 @@
                     android:paddingBottom="@dimen/app_size_1"
                     android:text="Обновить"
                     android:textSize="@dimen/font_normal"
-                    android:textColor="@color/fill_text_action_link"/>
+                    android:textColor="@color/fill_text_basic_action_link"/>
 
             </RelativeLayout>
 

@@ -19,7 +19,7 @@
         android:id="@+id/studentNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/fill_text_base"
+        android:textColor="@color/fill_text_basic"
         android:textSize="@dimen/font_large"/>
 
 </LinearLayout>

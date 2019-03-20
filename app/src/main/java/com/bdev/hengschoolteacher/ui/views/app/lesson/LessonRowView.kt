@@ -60,13 +60,13 @@ open class LessonRowView : LinearLayout {
         }
 
         val color = if (student == null) {
-            R.color.fill_text_base
+            R.color.fill_text_basic
         } else {
             when (attendanceType) {
-                null -> R.color.fill_text_base
-                StudentAttendance.Type.VISITED -> R.color.fill_text_positive
-                StudentAttendance.Type.VALID_SKIP -> R.color.fill_text_warning
-                StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_negative
+                null -> R.color.fill_text_basic
+                StudentAttendance.Type.VISITED -> R.color.fill_text_basic_positive
+                StudentAttendance.Type.VALID_SKIP -> R.color.fill_text_basic_warning
+                StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_basic_negative
             }
         }
 
@@ -92,12 +92,12 @@ open class LessonRowView : LinearLayout {
 
         val colorId = if (isLessonFinished) {
             if (isLessonFilled && isLessonMarked) {
-                R.color.fill_text_positive
+                R.color.fill_text_basic_positive
             } else {
-                R.color.fill_text_negative
+                R.color.fill_text_basic_negative
             }
         } else {
-            R.color.fill_text_warning
+            R.color.fill_text_basic_warning
         }
 
         lessonRowStatusView.setImageDrawable(resources.getDrawable(iconId))

@@ -12,7 +12,7 @@
         android:layout_height="@dimen/app_size_5"
         android:paddingStart="@dimen/app_size_2"
         android:paddingEnd="@dimen/app_size_1_5"
-        android:tint="@color/fill_text_base"/>
+        android:tint="@color/fill_text_basic"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
         android:id="@+id/titleView"
@@ -21,7 +21,7 @@
         android:layout_toEndOf="@id/leftActionButtonView"
         android:layout_centerVertical="true"
         android:textSize="@dimen/font_large"
-        android:textColor="@color/fill_text_base"
+        android:textColor="@color/fill_text_basic"
         app:app_font="bold"/>
 
     <LinearLayout
@@ -40,7 +40,7 @@
             android:paddingBottom="@dimen/app_size_1"
             android:paddingStart="@dimen/app_size_1"
             android:paddingEnd="@dimen/app_size_1"
-            android:tint="@color/fill_text_base"
+            android:tint="@color/fill_text_basic"
             android:visibility="gone"
             android:importantForAccessibility="no"/>
 
@@ -52,7 +52,7 @@
             android:paddingBottom="@dimen/app_size_1"
             android:paddingStart="@dimen/app_size_1"
             android:paddingEnd="@dimen/app_size_1"
-            android:tint="@color/fill_text_base"
+            android:tint="@color/fill_text_basic"
             android:visibility="gone"
             android:importantForAccessibility="no"/>
 

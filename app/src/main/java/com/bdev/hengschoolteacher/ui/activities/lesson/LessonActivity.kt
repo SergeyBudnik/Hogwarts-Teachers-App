@@ -74,10 +74,10 @@ open class LessonStudentItemView : RelativeLayout {
         val attendanceType = studentsAttendanceService.getAttendance(lesson.id, student.id, weekIndex)
 
         val colorId = when (attendanceType) {
-            null -> R.color.fill_text_base
-            StudentAttendance.Type.VISITED -> R.color.fill_text_positive
-            StudentAttendance.Type.VALID_SKIP -> R.color.fill_text_warning
-            StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_negative
+            null -> R.color.fill_text_basic
+            StudentAttendance.Type.VISITED -> R.color.fill_text_basic_positive
+            StudentAttendance.Type.VALID_SKIP -> R.color.fill_text_basic_warning
+            StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_basic_negative
         }
 
         attendanceView.setColorFilter(resources.getColor(colorId), PorterDuff.Mode.SRC_IN)

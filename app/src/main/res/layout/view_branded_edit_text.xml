@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/app_size_1"
-        android:textColor="@color/fill_text_base"
+        android:textColor="@color/fill_text_basic"
         android:textSize="@dimen/font_large"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableEditTextView
@@ -23,8 +23,8 @@
         android:paddingStart="@dimen/app_size_1"
         android:paddingEnd="@dimen/app_size_1"
         android:textSize="@dimen/font_large"
-        android:textColor="@color/fill_text_base"
-        android:textColorHint="@color/fill_text_light"
+        android:textColor="@color/fill_text_basic"
+        android:textColorHint="@color/fill_text_basic_light"
         android:background="@drawable/layout_row"
         android:backgroundTint="@color/fill_contrast_medium"/>
 

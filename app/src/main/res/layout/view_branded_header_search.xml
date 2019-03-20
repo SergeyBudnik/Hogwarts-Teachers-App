@@ -14,7 +14,7 @@
         android:paddingStart="@dimen/app_size_1"
         android:paddingEnd="@dimen/app_size_1"
         android:text="Отмена"
-        android:textColor="@color/fill_text_action_link"
+        android:textColor="@color/fill_text_basic_action_link"
         android:textSize="@dimen/font_large"/>
 
     <EditText
@@ -31,8 +31,8 @@
         android:paddingEnd="@dimen/app_size_1"
         android:hint="Введите для поиска"
         android:textSize="@dimen/font_normal"
-        android:textColorHint="@color/fill_text_light"
-        android:textColor="@color/fill_text_base"
+        android:textColorHint="@color/fill_text_basic_light"
+        android:textColor="@color/fill_text_basic"
         android:background="@drawable/layout_row"
         android:backgroundTint="@color/fill_contrast_base"/>
 
@@ -42,6 +42,6 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/app_size_1"
         android:src="@drawable/ic_search"
-        android:tint="@color/fill_text_base"/>
+        android:tint="@color/fill_text_basic"/>
 
 </RelativeLayout>
