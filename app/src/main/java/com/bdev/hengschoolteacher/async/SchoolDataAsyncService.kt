@@ -50,13 +50,13 @@ open class SchoolDataAsyncService : CommonAsyncService() {
                     authService.getAuthInfo()
             )
 
-            val groups = groupsRest.getAllGroups()
-            val students = studentsRest.getAllStudents()
-            val attendances = studentsAttendancesRest.getStudentsAttendances()
-            val payments = studentsPaymentsRest.getStudentsPayments()
-            val teachers = teachersRest.getTeachers()
-            val lessonsStatuses = lessonStatusRest.getAllLessonsStatuses(0, Long.MAX_VALUE) // ToDo
-            val usersRequests = usersRequestsRest.getAllUsersRequests()
+            val groups = trustSsl(groupsRest).getAllGroups()
+            val students = trustSsl(studentsRest).getAllStudents()
+            val attendances = trustSsl(studentsAttendancesRest).getStudentsAttendances()
+            val payments = trustSsl(studentsPaymentsRest).getStudentsPayments()
+            val teachers = trustSsl(teachersRest).getTeachers()
+            val lessonsStatuses = trustSsl(lessonStatusRest).getAllLessonsStatuses(0, Long.MAX_VALUE) // ToDo
+            val usersRequests = trustSsl(usersRequestsRest).getAllUsersRequests()
 
             groupsService.setGroups(groups)
             studentsService.setStudents(students)

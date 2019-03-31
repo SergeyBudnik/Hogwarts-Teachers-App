@@ -18,7 +18,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.1'
+        classpath 'com.android.tools.build:gradle:3.3.2'
     }
 }
 
@@ -29,8 +29,8 @@ android {
         applicationId "com.bdev.hengschoolteacher"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 9
-        versionName "1.7.0"
+        versionCode 10
+        versionName "1.8.0"
         multiDexEnabled true
     }
 
@@ -56,6 +56,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -75,6 +77,9 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:mediarouter-v7:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
+
+    implementation ('org.apache.httpcomponents:httpcore:4.4.11')
+    implementation('org.apache.httpcomponents:httpmime:4.3.6')
 
     implementation 'nl.komponents.kovenant:kovenant:3.3.0'
 

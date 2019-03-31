@@ -56,7 +56,7 @@ open class LessonStatusActivity : BaseActivity() {
     }
 
     private fun initButtons() {
-        val status = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId, 0))
+        val status = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId, weekIndex))
 
         initButton(
                 lessonStatusPassedView,
@@ -97,7 +97,7 @@ open class LessonStatusActivity : BaseActivity() {
         buttonView.setOnClickListener {
             allButtonsViews.forEach { btn ->
                 btn.hideButtonIcon()
-                btn.setOnClickListener { _ -> }
+                btn.setOnClickListener { }
             }
 
             buttonView.setButtonInProgressIcon()
@@ -106,7 +106,7 @@ open class LessonStatusActivity : BaseActivity() {
                     null,
                     lessonId,
                     buttonStatus,
-                    lessonsService.getLessonStartTime(lessonId, 0),
+                    lessonsService.getLessonStartTime(lessonId, weekIndex),
                     Date().time
             ))
                     .onSuccess { runOnUiThread {

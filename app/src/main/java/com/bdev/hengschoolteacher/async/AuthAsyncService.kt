@@ -7,14 +7,12 @@ import com.bdev.hengschoolteacher.data.auth.AuthInfo
 import com.bdev.hengschoolteacher.rest.AuthRest
 import com.bdev.hengschoolteacher.service.AuthService
 import com.bdev.hengschoolteacher.service.UserPreferencesService
-import nl.komponents.kovenant.Promise
-import nl.komponents.kovenant.task
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.rest.spring.annotations.RestService
 
 @EBean
-open class AuthAsyncService {
+open class AuthAsyncService : CommonAsyncService() {
     @RestService
     lateinit var authRest: AuthRest
 
@@ -25,7 +23,7 @@ open class AuthAsyncService {
 
     fun login(authCredentials: AuthCredentials): SmartPromise<AuthInfo, Exception> {
         return smartTask {
-            val authInfo = authRest.login(authCredentials)
+            val authInfo = trustSsl(authRest).login(authCredentials)
 
             authService.setAuthInfo(authInfo)
 

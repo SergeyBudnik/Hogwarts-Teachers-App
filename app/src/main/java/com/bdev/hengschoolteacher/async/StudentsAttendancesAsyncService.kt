@@ -28,7 +28,7 @@ open class StudentsAttendancesAsyncService : CommonAsyncService() {
                     authService.getAuthInfo()
             )
 
-            attendance.id = studentsAttendancesRest.addStudentAttendance(attendance)
+            attendance.id = trustSsl(studentsAttendancesRest).addStudentAttendance(attendance)
 
             studentsAttendancesService.addAttendance(attendance)
         }

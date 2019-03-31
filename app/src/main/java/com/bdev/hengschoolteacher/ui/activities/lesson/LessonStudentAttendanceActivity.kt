@@ -71,7 +71,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     }
 
     private fun initButtons() {
-        val attendance = studentsAttendancesService.getAttendance(lessonId, studentId, 0)
+        val attendance = studentsAttendancesService.getAttendance(lessonId, studentId, weekIndex)
 
         initButton(
                 studentAttendanceVisitButtonView,
@@ -131,8 +131,8 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
                     studentId,
                     GroupType.GROUP, // ToDo,
                     studentsService.getGroupStudents(groupId).size,
-                    lessonsService.getLessonStartTime(lessonId, 0),
-                    lessonsService.getLessonFinishTime(lessonId, 0),
+                    lessonsService.getLessonStartTime(lessonId, weekIndex),
+                    lessonsService.getLessonFinishTime(lessonId, weekIndex),
                     buttonAttendance
             ))
                     .onSuccess { runOnUiThread {

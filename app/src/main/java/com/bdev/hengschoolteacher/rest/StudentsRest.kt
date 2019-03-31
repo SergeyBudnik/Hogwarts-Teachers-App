@@ -7,9 +7,10 @@ import org.androidannotations.rest.spring.annotations.Get
 import org.androidannotations.rest.spring.annotations.RequiresHeader
 import org.androidannotations.rest.spring.annotations.Rest
 import org.androidannotations.rest.spring.api.RestClientHeaders
+import org.androidannotations.rest.spring.api.RestClientSupport
 
 @Rest(rootUrl = RestConfiguration.ROOT_URL, converters = [JsonConverter::class])
-interface StudentsRest : RestClientHeaders {
+interface StudentsRest : RestClientHeaders, RestClientSupport {
     @Get("/students")
     @RequiresHeader(RestConfiguration.HEADER_AUTHORIZATION)
     fun getAllStudents(): List<Student>
