@@ -78,9 +78,6 @@ dependencies {
     implementation 'com.android.support:mediarouter-v7:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
 
-    implementation ('org.apache.httpcomponents:httpcore:4.4.11')
-    implementation('org.apache.httpcomponents:httpmime:4.3.6')
-
     implementation 'nl.komponents.kovenant:kovenant:3.3.0'
 
     implementation 'com.makeramen:roundedimageview:2.3.0'
