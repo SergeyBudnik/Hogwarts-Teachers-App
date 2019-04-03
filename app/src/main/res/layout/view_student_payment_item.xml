@@ -17,13 +17,29 @@
         android:textSize="@dimen/font_large"
         android:textColor="@color/fill_text_basic_accent"/>
 
-    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-        android:id="@+id/studentPaymentItemTimeView"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:text="02.01.2019"
-        android:textSize="@dimen/font_large"
-        android:textColor="@color/fill_text_basic"/>
+        android:layout_alignParentEnd="true">
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/studentPaymentItemTeacherView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:text="Надежда Кропина"
+            android:textSize="@dimen/font_large"
+            android:textColor="@color/fill_text_basic_light"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/studentPaymentItemTimeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="02.01.2019"
+            android:textSize="@dimen/font_large"
+            android:textColor="@color/fill_text_basic"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

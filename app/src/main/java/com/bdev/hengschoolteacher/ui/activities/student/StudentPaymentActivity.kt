@@ -11,10 +11,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentPayment
-import com.bdev.hengschoolteacher.service.GroupsService
-import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
-import com.bdev.hengschoolteacher.service.StudentsService
+import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.KeyboardUtils
 import kotlinx.android.synthetic.main.activity_student_payment.*
@@ -25,12 +22,16 @@ import java.util.*
 
 @EViewGroup(R.layout.view_student_payment_item)
 open class StudentPaymentItemView : RelativeLayout {
+    @Bean
+    lateinit var teachersService: TeachersService
+
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
 
     fun bind(studentPayment: StudentPayment) {
         studentPaymentItemValueView.text = "${studentPayment.amount} Р"
         studentPaymentItemTimeView.text = SimpleDateFormat("dd.MM.yyyy", Locale.US).format(studentPayment.time)
+        studentPaymentItemTeacherView.text = teachersService.getTeacherById(studentPayment.teacherId)?.name ?: "?"
     }
 }
 
@@ -86,6 +87,8 @@ open class StudentPaymentActivity : BaseActivity() {
     lateinit var lessonsService: LessonsService
     @Bean
     lateinit var studentPaymentsService: StudentsPaymentsService
+    @Bean
+    lateinit var teachersService: TeachersService
 
     @Bean
     lateinit var studentsPaymentAsyncService: StudentsPaymentAsyncService
@@ -127,7 +130,13 @@ open class StudentPaymentActivity : BaseActivity() {
         val lessonStartTime = Date().time
 
         studentsPaymentAsyncService
-                .addPayment(StudentPayment(null, amount, student.id, lessonStartTime))
+                .addPayment(StudentPayment(
+                        null,
+                        amount,
+                        student.id,
+                        teachersService.getTeacherMe().id,
+                        lessonStartTime
+                ))
                 .onSuccess { runOnUiThread { onPaymentMarkSuccess() } }
                 .onAuthFail { println("AUTH") }
                 .onOtherFail { println("FAIL") }

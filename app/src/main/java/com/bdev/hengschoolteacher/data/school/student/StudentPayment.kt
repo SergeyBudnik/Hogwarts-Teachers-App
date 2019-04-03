@@ -6,12 +6,9 @@ class StudentPayment(
     var id: Long?,
     var amount: Long,
     var studentId: Long,
+    var teacherId: Long,
     var time: Long
 ) : Serializable {
     @Suppress("UNUSED")
-    constructor(): this(null, 0L, 0L, 0L)
-
-    fun withId(id: Long): StudentPayment {
-        return StudentPayment(id, amount, studentId, time)
-    }
+    constructor(): this(null, 0L, 0L, 0L, 0L)
 }

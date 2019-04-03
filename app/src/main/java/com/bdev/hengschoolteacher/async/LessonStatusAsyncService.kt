@@ -27,7 +27,7 @@ open class LessonStatusAsyncService : CommonAsyncService() {
                     authService.getAuthInfo()
             )
 
-            lessonStatus.id = trustSsl(lessonStatusRest).addLessonStatus(lessonStatus)
+            lessonStatus.id = lessonStatusRest.addLessonStatus(lessonStatus)
 
             lessonStatusService.addLessonStatus(lessonStatus)
         }

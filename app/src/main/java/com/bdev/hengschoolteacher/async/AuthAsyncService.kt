@@ -23,7 +23,7 @@ open class AuthAsyncService : CommonAsyncService() {
 
     fun login(authCredentials: AuthCredentials): SmartPromise<AuthInfo, Exception> {
         return smartTask {
-            val authInfo = trustSsl(authRest).login(authCredentials)
+            val authInfo = authRest.login(authCredentials)
 
             authService.setAuthInfo(authInfo)
 

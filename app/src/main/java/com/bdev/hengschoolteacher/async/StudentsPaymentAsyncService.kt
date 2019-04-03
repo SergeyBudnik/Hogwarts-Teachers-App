@@ -28,7 +28,7 @@ open class StudentsPaymentAsyncService : CommonAsyncService() {
                     authService.getAuthInfo()
             )
 
-            trustSsl(studentsPaymentsRest).addStudentPayment(payment)
+            studentsPaymentsRest.addStudentPayment(payment)
 
             studentsPaymentsService.addPayment(payment)
         }
