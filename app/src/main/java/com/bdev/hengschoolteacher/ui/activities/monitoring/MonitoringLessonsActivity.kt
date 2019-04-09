@@ -41,7 +41,7 @@ open class MonitoringLessonItemView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(group: Group, lesson: Lesson, weekIndex: Int): MonitoringLessonItemView {
-        val students = studentsService.getGroupStudents(group.id)
+        val students = studentsService.getGroupStudents(group.id, weekIndex)
 
         allLessonRowView.bind(group, lesson, students, weekIndex)
 

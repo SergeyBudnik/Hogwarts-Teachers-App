@@ -5,7 +5,7 @@ import java.io.Serializable
 class Student(
         var id: Long,
         var statusType: StudentStatusType,
-        var groupIds: List<Long>,
+        var studentGroups: List<StudentGroup>,
         var name: String,
         var phones: List<String>,
         var emails: List<String>,

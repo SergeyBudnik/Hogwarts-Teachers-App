@@ -147,7 +147,7 @@ open class LessonActivity : BaseActivity() {
     private fun doInit() {
         val group = groupsService.getGroup(groupId) ?: throw RuntimeException()
         val lesson = group.lessons.find { it.id == lessonId } ?: throw RuntimeException()
-        val students = studentsService.getGroupStudents(groupId)
+        val students = studentsService.getGroupStudents(groupId, weekIndex)
         val lessonStatus = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId, weekIndex))
 
         lessonTimeView.bind(lesson, weekIndex)

@@ -41,7 +41,7 @@ open class LessonsService {
     fun getStudentLessons(studentId: Long): List<GroupAndLesson> {
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
-        return getLessonsByCondition { group, _ -> student.groupIds.contains(group.id) }
+        return getLessonsByCondition { group, _ -> student.studentGroups.map { it.groupId }.contains(group.id) }
     }
 
     private fun getLessonsByCondition(condition: (Group, Lesson) -> Boolean): List<GroupAndLesson> {

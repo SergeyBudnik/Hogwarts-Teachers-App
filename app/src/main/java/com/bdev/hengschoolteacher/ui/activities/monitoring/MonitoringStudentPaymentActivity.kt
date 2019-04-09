@@ -70,7 +70,7 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
     }
 
     private fun getTotalLessonsAmount(student: Student, month: Int): Int {
-        return lessonsService.getLessonsAmountInMonth(student.groupIds[0], month)
+        return lessonsService.getLessonsAmountInMonth(student.studentGroups[0].groupId, month)
     }
 }
 

@@ -130,7 +130,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
                     null,
                     studentId,
                     GroupType.GROUP, // ToDo,
-                    studentsService.getGroupStudents(groupId).size,
+                    studentsService.getGroupStudents(groupId, weekIndex).size,
                     lessonsService.getLessonStartTime(lessonId, weekIndex),
                     lessonsService.getLessonFinishTime(lessonId, weekIndex),
                     buttonAttendance

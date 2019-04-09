@@ -40,7 +40,7 @@ open class StudentsGroupsListItemView : LinearLayout {
     }
 
     private fun setTitle(group: Group) {
-        val groupStudents = studentsService.getGroupStudents(group.id)
+        val groupStudents = studentsService.getGroupStudents(group.id, 0) // ToDo
 
         studentsGroupsItemNameView.text = groupStudents.foldRight("") {
             student, sum -> "${student.name.split(" ")[0]}; $sum"
@@ -103,7 +103,7 @@ open class StudentsGroupsListActivity : BaseActivity() {
 
         studentsGroupsHeaderSearchView.addOnTextChangeListener { filter ->
             adapter.setFilter { group ->
-                val groupStudents = studentsService.getGroupStudents(group.id)
+                val groupStudents = studentsService.getGroupStudents(group.id, 0) // ToDo
 
                 return@setFilter groupStudents.filter { it.name.toLowerCase().contains(filter.toLowerCase()) }.any()
             }

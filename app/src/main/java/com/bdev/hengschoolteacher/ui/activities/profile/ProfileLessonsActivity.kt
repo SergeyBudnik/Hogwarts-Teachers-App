@@ -41,7 +41,12 @@ open class ProfileLessonsItemView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(group: Group, lesson: Lesson, weekIndex: Int): ProfileLessonsItemView {
-        profileLessonsItemView.bind(group, lesson, studentsService.getGroupStudents(group.id), weekIndex)
+        profileLessonsItemView.bind(
+                group,
+                lesson,
+                studentsService.getGroupStudents(group.id, weekIndex),
+                weekIndex
+        )
 
         setOnClickListener {
             redirect(context as BaseActivity)

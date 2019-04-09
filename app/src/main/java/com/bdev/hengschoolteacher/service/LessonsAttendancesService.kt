@@ -14,7 +14,7 @@ open class LessonsAttendancesService {
 
     fun isLessonAttendanceFilled(group: Group, lesson: Lesson, weekIndex: Int): Boolean {
         return studentsService
-                .getGroupStudents(group.id)
+                .getGroupStudents(group.id, weekIndex)
                 .asSequence()
                 .map { studentsAttendancesService.getAttendance(lesson.id, it.id, weekIndex) }
                 .filter { it != null }

@@ -19,8 +19,10 @@ open class StudentsService {
         return studentsDao.getStudents().find { it.id == studentId }
     }
 
-    fun getGroupStudents(groupId: Long): List<Student> {
-        return studentsDao.getStudents().filter { it.groupIds.contains(groupId) }
+    fun getGroupStudents(groupId: Long, weekIndex: Int): List<Student> {
+        return studentsDao.getStudents().filter { student -> student
+                .studentGroups
+                .map { it.groupId }.contains(groupId) }
     }
 
     fun setStudents(students: List<Student>) {

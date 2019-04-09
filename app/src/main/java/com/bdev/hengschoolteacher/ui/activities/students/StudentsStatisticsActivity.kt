@@ -43,7 +43,7 @@ open class StudentsStatisticsActivity : BaseActivity() {
         return groupsService
                 .getGroups()
                 .filter { it.type == type }
-                .map { studentsService.getGroupStudents(it.id).size }
+                .map { studentsService.getGroupStudents(it.id, 0).size }
                 .filter { it == amount }
                 .size
     }
