@@ -6,7 +6,7 @@ import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teachers.TeachersListActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.view_header_teachers.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup

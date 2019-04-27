@@ -1,51 +1,26 @@
 package com.bdev.hengschoolteacher.dao
 
-import android.content.Context
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import org.androidannotations.annotations.EBean
-import org.androidannotations.annotations.RootContext
-import java.io.Serializable
+import org.codehaus.jackson.annotate.JsonCreator
+import org.codehaus.jackson.annotate.JsonProperty
+import org.codehaus.jackson.map.ObjectMapper
 
-class StudentsAttendancesModel : Serializable {
-    var studentsAttendances: MutableList<StudentAttendance> = ArrayList()
-}
+class StudentsAttendancesModel @JsonCreator constructor(
+    @JsonProperty("studentsAttendances") val studentsAttendances: List<StudentAttendance>
+)
 
 @EBean(scope = EBean.Scope.Singleton)
 open class StudentsAttendancesDao : CommonDao<StudentsAttendancesModel>() {
-    @RootContext
-    lateinit var rootContext: Context
-
-    fun getAttendances(): List<StudentAttendance> {
-        readCache()
-
-        return getValue().studentsAttendances
-    }
-
-    fun setAttendances(attendances: List<StudentAttendance>) {
-        readCache()
-
-        getValue().studentsAttendances = attendances.toMutableList()
-
-        persist()
-    }
-
-    fun addAttendance(attendance: StudentAttendance) {
-        readCache()
-
-        getValue().studentsAttendances.add(attendance)
-
-        persist()
-    }
-
-    override fun getContext(): Context {
-        return rootContext
-    }
-
     override fun getFileName(): String {
-        return StudentsAttendancesDao::class.java.canonicalName
+        return "students-attendances.data"
     }
 
     override fun newInstance(): StudentsAttendancesModel {
-        return StudentsAttendancesModel()
+        return StudentsAttendancesModel(emptyList())
+    }
+
+    override fun deserialize(json: String): StudentsAttendancesModel {
+        return ObjectMapper().readValue(json, StudentsAttendancesModel::class.java)
     }
 }

@@ -13,7 +13,7 @@ import com.bdev.hengschoolteacher.service.GroupsService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.TeachersService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.adapters.BaseItemsAdapter
+import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_students_groups.*
 import kotlinx.android.synthetic.main.view_list_item_students_groups.view.*
@@ -40,7 +40,7 @@ open class StudentsGroupsListItemView : LinearLayout {
     }
 
     private fun setTitle(group: Group) {
-        val groupStudents = studentsService.getGroupStudents(group.id, 0) // ToDo
+        val groupStudents = studentsService.getGroupStudents(group.id)
 
         studentsGroupsItemNameView.text = groupStudents.foldRight("") {
             student, sum -> "${student.name.split(" ")[0]}; $sum"
@@ -60,7 +60,7 @@ open class StudentsGroupsListItemView : LinearLayout {
     }
 }
 
-class StudentsGroupsListAdapter(context: Context): BaseItemsAdapter<Group>(context) {
+class StudentsGroupsListAdapter(context: Context): BaseItemsListAdapter<Group>(context) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return if (convertView == null) {
             StudentsGroupsListItemView_.build(context)
@@ -103,7 +103,7 @@ open class StudentsGroupsListActivity : BaseActivity() {
 
         studentsGroupsHeaderSearchView.addOnTextChangeListener { filter ->
             adapter.setFilter { group ->
-                val groupStudents = studentsService.getGroupStudents(group.id, 0) // ToDo
+                val groupStudents = studentsService.getGroupStudents(group.id)
 
                 return@setFilter groupStudents.filter { it.name.toLowerCase().contains(filter.toLowerCase()) }.any()
             }

@@ -38,6 +38,8 @@
         <activity android:name=".ui.activities.monitoring.MonitoringLessonsActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.monitoring.MonitoringSalariesActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.monitoring.MonitoringPaymentsActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringTeacherSalaryActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringTeacherPaymentsActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.monitoring.MonitoringStudentPaymentActivity_" android:screenOrientation="sensorPortrait"/>
 
         <activity android:name=".ui.activities.student.StudentPaymentActivity_" android:screenOrientation="sensorPortrait"/>

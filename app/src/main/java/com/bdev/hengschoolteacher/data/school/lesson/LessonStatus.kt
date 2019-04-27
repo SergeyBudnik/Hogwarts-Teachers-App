@@ -1,18 +1,26 @@
 package com.bdev.hengschoolteacher.data.school.lesson
 
-import java.io.Serializable
+import org.codehaus.jackson.annotate.JsonCreator
+import org.codehaus.jackson.annotate.JsonProperty
 
-class LessonStatus(
-    var id: Long?,
-    var lessonId: Long,
-    var type: Type,
-    var actionTime: Long,
-    var creationTime: Long
-): Serializable {
+class LessonStatus @JsonCreator constructor(
+        @JsonProperty("id") val id: Long?,
+        @JsonProperty("lessonId") val lessonId: Long,
+        @JsonProperty("type") val type: Type,
+        @JsonProperty("actionTime") val actionTime: Long,
+        @JsonProperty("creationTime") val creationTime: Long
+) {
     enum class Type {
         CANCELED, MOVED, FINISHED
     }
 
-    @Suppress("UNUSED")
-    constructor(): this(0L, 0L, Type.CANCELED, 0L, 0L)
+    fun withId(id: Long): LessonStatus {
+        return LessonStatus(
+                id = id,
+                lessonId = this.lessonId,
+                type = this.type,
+                actionTime = this.actionTime,
+                creationTime = this.creationTime
+        )
+    }
 }

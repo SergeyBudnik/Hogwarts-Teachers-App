@@ -3,7 +3,7 @@ package com.bdev.hengschoolteacher.ui.adapters
 import android.content.Context
 import android.widget.BaseAdapter
 
-abstract class BaseItemsAdapter<T>(
+abstract class BaseItemsListAdapter<T>(
         protected val context: Context
 ) : BaseAdapter() {
     private var items: List<T> = ArrayList()

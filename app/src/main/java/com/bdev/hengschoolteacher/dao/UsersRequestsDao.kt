@@ -1,44 +1,26 @@
 package com.bdev.hengschoolteacher.dao
 
-import android.content.Context
 import com.bdev.hengschoolteacher.data.school.requests.UserRequest
 import org.androidannotations.annotations.EBean
-import org.androidannotations.annotations.RootContext
 import org.codehaus.jackson.annotate.JsonCreator
 import org.codehaus.jackson.annotate.JsonProperty
+import org.codehaus.jackson.map.ObjectMapper
 
 class UsersRequestModel @JsonCreator constructor(
-        @JsonProperty("usersRequests") var usersRequests: MutableList<UserRequest>
+        @JsonProperty("usersRequests") val usersRequests: List<UserRequest>
 )
 
 @EBean(scope = EBean.Scope.Singleton)
 open class UsersRequestsDao : CommonDao<UsersRequestModel>() {
-    @RootContext
-    lateinit var contextValue: Context
-
-    fun getUsersRequests(): List<UserRequest> {
-        readCache()
-
-        return getValue().usersRequests
-    }
-
-    fun setUsersRequests(usersRequests: List<UserRequest>) {
-        readCache()
-
-        getValue().usersRequests = usersRequests.toMutableList()
-
-        persist()
-    }
-
-    override fun getContext(): Context {
-        return contextValue
-    }
-
     override fun getFileName(): String {
-        return UsersRequestsDao::class.java.canonicalName
+        return "users-requests.data"
     }
 
     override fun newInstance(): UsersRequestModel {
         return UsersRequestModel(ArrayList())
+    }
+
+    override fun deserialize(json: String): UsersRequestModel {
+        return ObjectMapper().readValue(json, UsersRequestModel::class.java)
     }
 }

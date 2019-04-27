@@ -8,7 +8,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity_
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringPaymentsActivity_
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringSalariesActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.view_header_monitoring.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup

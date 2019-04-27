@@ -7,7 +7,7 @@ import com.bdev.hengschoolteacher.service.TeachersService
 import com.bdev.hengschoolteacher.service.UserPreferencesService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoginActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_profile_account.*
 import org.androidannotations.annotations.AfterViews

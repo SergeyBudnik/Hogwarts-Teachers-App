@@ -1,35 +1,26 @@
 package com.bdev.hengschoolteacher.dao
 
-import android.content.Context
 import com.bdev.hengschoolteacher.data.auth.AuthInfo
 import org.androidannotations.annotations.EBean
-import org.androidannotations.annotations.RootContext
-import java.io.Serializable
+import org.codehaus.jackson.annotate.JsonCreator
+import org.codehaus.jackson.annotate.JsonProperty
+import org.codehaus.jackson.map.ObjectMapper
 
-class AuthModel : Serializable {
-    var authInfo: AuthInfo? = null
-}
+class AuthModel @JsonCreator constructor(
+    @JsonProperty("authInfo") val authInfo: AuthInfo?
+)
 
 @EBean(scope = EBean.Scope.Singleton)
 open class AuthDao : CommonDao<AuthModel>() {
-    @RootContext
-    lateinit var rootContext: Context
-
-    fun getAuthInfo(): AuthInfo? {
-        readCache()
-
-        return getValue().authInfo
+    override fun getFileName(): String {
+        return "auth.data"
     }
 
-    fun setAuthInfo(authInfo: AuthInfo?) {
-        readCache()
-
-        getValue().authInfo = authInfo
-
-        persist()
+    override fun newInstance(): AuthModel {
+        return AuthModel(null)
     }
 
-    override fun getContext(): Context { return rootContext }
-    override fun getFileName(): String { return AuthDao::class.java.canonicalName }
-    override fun newInstance(): AuthModel { return AuthModel() }
+    override fun deserialize(json: String): AuthModel {
+        return ObjectMapper().readValue(json, AuthModel::class.java)
+    }
 }

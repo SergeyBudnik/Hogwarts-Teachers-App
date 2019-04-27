@@ -123,4 +123,11 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="MonitoringTeacherHeaderView">
+        <attr name="monitoring_teacher_item" format="enum">
+            <enum name="monitoring_teacher_salary" value="1"/>
+            <enum name="monitoring_teacher_payments" value="2"/>
+        </attr>
+    </declare-styleable>
+
 </resources>

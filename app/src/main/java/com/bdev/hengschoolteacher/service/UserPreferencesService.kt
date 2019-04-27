@@ -11,18 +11,14 @@ open class UserPreferencesService {
     lateinit var userPreferencesDao: UserPreferencesDao
 
     fun getUserLogin(): String? {
-        return userPreferencesDao.getUserPreferences().login
+        return userPreferencesDao.readValue().login
     }
 
     fun getUserPassword(): String? {
-        return userPreferencesDao.getUserPreferences().password
+        return userPreferencesDao.readValue().password
     }
 
     fun setUserCredentials(login: String, password: String) {
-        userPreferencesDao.setUserPreferences(UserPreferencesModel(login, password))
-    }
-
-    fun clearUserPreferences() {
-        userPreferencesDao.setUserPreferences(UserPreferencesModel(null, null))
+        userPreferencesDao.writeValue(UserPreferencesModel(login, password))
     }
 }

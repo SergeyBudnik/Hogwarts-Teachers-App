@@ -5,67 +5,40 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.teacher.Teacher
-import com.bdev.hengschoolteacher.service.TeachersPaymentService
 import com.bdev.hengschoolteacher.service.TeachersService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_monitoring_salaries.*
-import kotlinx.android.synthetic.main.view_monitoring_salaries_item.view.*
-import org.androidannotations.annotations.*
+import kotlinx.android.synthetic.main.view_monitoring_teachers_item.view.*
+import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.Bean
+import org.androidannotations.annotations.EActivity
+import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_monitoring_salaries_item)
-open class MonitoringSalariesItemView : RelativeLayout {
-    @Bean
-    lateinit var teachersPaymentService: TeachersPaymentService
-
+@EViewGroup(R.layout.view_monitoring_teachers_item)
+open class MonitoringTeachersItemView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(teacher: Teacher, weekIndex: Int) {
-        val teacherPayments = teachersPaymentService.getTeacherPayments(teacher.id, weekIndex)
+    fun bind(teacher: Teacher): MonitoringTeachersItemView {
+        monitoringTeachersItemNameView.text = teacher.name
 
-        monitoringSalariesItemNameView.text = teacher.name
-        monitoringSalariesItemSalaryView.text = "${teacherPayments.fold(0) {v, tp -> v + tp.amount}} Р"
+        return this
     }
 }
 
-@EBean
-open class MonitoringSalariesListAdapter : BaseAdapter() {
-    @RootContext
-    lateinit var context: Context
-
-    private var teachers: List<Teacher> = emptyList()
-
-    fun setItems(teachers: List<Teacher>) {
-        this.teachers = teachers
-    }
-
+class MonitoringTeachersListAdapter(context: Context) : BaseItemsListAdapter<Teacher>(context) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
-        val v = if (convertView == null) {
-            MonitoringSalariesItemView_.build(context)
+        return if (convertView == null) {
+            MonitoringTeachersItemView_.build(context)
         } else {
-            convertView as MonitoringSalariesItemView
-        }
-
-        v.bind(getItem(position), 0) // WeekIndex
-
-        return v
-    }
-
-    override fun getItem(position: Int): Teacher {
-        return teachers[position]
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getCount(): Int {
-        return teachers.size
+            convertView as MonitoringTeachersItemView
+        }.bind(getItem(position))
     }
 }
 
@@ -75,16 +48,26 @@ open class MonitoringSalariesActivity : BaseActivity() {
     @Bean
     lateinit var teachersService: TeachersService
 
-    @Bean
-    lateinit var monitoringSalariesListAdapter: MonitoringSalariesListAdapter
-
     @AfterViews
     fun init() {
         monitoringSalariesHeaderView.setLeftButtonAction { monitoringSalariesMenuLayoutView.openMenu() }
 
         monitoringSalariesMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
-        monitoringSalariesListAdapter.setItems(teachersService.getAllTeachers())
-        monitoringSalariesListView.adapter = monitoringSalariesListAdapter
+        val adapter = MonitoringTeachersListAdapter(this)
+
+        adapter.setItems(teachersService.getAllTeachers())
+
+        monitoringSalariesListView.adapter = adapter
+
+        monitoringSalariesListView.setOnItemClickListener { _, _, position, _ ->
+            val teacher = adapter.getItem(position)
+
+            redirect(this)
+                    .to(MonitoringTeacherSalaryActivity_::class.java)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .withExtra(MonitoringTeacherSalaryActivity.EXTRA_TEACHER_ID, teacher.id)
+                    .go()
+        }
     }
 }

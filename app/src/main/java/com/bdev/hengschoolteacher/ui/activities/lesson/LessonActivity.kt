@@ -16,7 +16,8 @@ import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.*
 import com.bdev.hengschoolteacher.ui.activities.student.*
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
 import kotlinx.android.synthetic.main.activity_lesson.*
 import kotlinx.android.synthetic.main.view_item_lesson_student.view.*
@@ -105,6 +106,19 @@ open class LessonActivity : BaseActivity() {
         const val EXTRA_GROUP_ID = "EXTRA_GROUP_ID"
         const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
         const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
+
+        fun redirectWithExtras(
+                context: Context,
+                groupId: Long,
+                lessonId: Long,
+                weekIndex: Int
+        ): RedirectBuilder {
+            return redirect(context as BaseActivity)
+                    .to(LessonActivity_::class.java)
+                    .withExtra(EXTRA_GROUP_ID, groupId)
+                    .withExtra(EXTRA_LESSON_ID, lessonId)
+                    .withExtra(EXTRA_WEEK_INDEX, weekIndex)
+        }
     }
 
     @Extra(EXTRA_GROUP_ID)
@@ -147,7 +161,7 @@ open class LessonActivity : BaseActivity() {
     private fun doInit() {
         val group = groupsService.getGroup(groupId) ?: throw RuntimeException()
         val lesson = group.lessons.find { it.id == lessonId } ?: throw RuntimeException()
-        val students = studentsService.getGroupStudents(groupId, weekIndex)
+        val students = lessonsService.getLessonStudents(lessonId, weekIndex)
         val lessonStatus = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId, weekIndex))
 
         lessonTimeView.bind(lesson, weekIndex)

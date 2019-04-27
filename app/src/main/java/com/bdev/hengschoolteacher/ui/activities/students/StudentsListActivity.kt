@@ -12,8 +12,8 @@ import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity_
-import com.bdev.hengschoolteacher.ui.adapters.BaseItemsAdapter
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_students_list.*
 import kotlinx.android.synthetic.main.view_students_list_row_item.view.*
@@ -34,7 +34,7 @@ open class StudentsListRowItemView : RelativeLayout {
     }
 }
 
-class StudentsListAdapter(context: Context) : BaseItemsAdapter<Student>(context) {
+class StudentsListAdapter(context: Context) : BaseItemsListAdapter<Student>(context) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
         return if (convertView == null) {
             StudentsListRowItemView_.build(context)

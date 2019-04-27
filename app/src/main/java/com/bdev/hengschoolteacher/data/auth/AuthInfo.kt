@@ -1,10 +1,8 @@
 package com.bdev.hengschoolteacher.data.auth
 
-import java.io.Serializable
+import org.codehaus.jackson.annotate.JsonCreator
+import org.codehaus.jackson.annotate.JsonProperty
 
-class AuthInfo(
-        var token: String
-) : Serializable {
-    @Suppress("UNUSED")
-    constructor(): this("")
-}
+class AuthInfo @JsonCreator constructor(
+        @JsonProperty("token") val token: String
+)

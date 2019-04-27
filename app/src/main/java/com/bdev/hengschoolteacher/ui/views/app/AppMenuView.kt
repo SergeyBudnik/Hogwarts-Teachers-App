@@ -18,7 +18,7 @@ import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActi
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity_
 import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity_
 import com.bdev.hengschoolteacher.ui.activities.teachers.TeachersListActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.utils.VersionUtils
 import kotlinx.android.synthetic.main.view_app_menu.view.*
 import kotlinx.android.synthetic.main.view_app_menu_row.view.*

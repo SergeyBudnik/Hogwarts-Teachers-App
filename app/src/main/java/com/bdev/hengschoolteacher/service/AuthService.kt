@@ -1,6 +1,7 @@
 package com.bdev.hengschoolteacher.service
 
 import com.bdev.hengschoolteacher.dao.AuthDao
+import com.bdev.hengschoolteacher.dao.AuthModel
 import com.bdev.hengschoolteacher.data.auth.AuthInfo
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
@@ -11,14 +12,14 @@ open class AuthService {
     lateinit var authDao: AuthDao
 
     fun getAuthInfo(): AuthInfo? {
-        return authDao.getAuthInfo()
+        return authDao.readValue().authInfo
     }
 
     fun setAuthInfo(authInfo: AuthInfo) {
-        authDao.setAuthInfo(authInfo)
+        authDao.writeValue(AuthModel(authInfo))
     }
 
     fun clearAuthInfo() {
-        authDao.setAuthInfo(null)
+        authDao.writeValue(AuthModel(null))
     }
 }

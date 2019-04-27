@@ -32,9 +32,20 @@ open class StudentMonthAttendanceView : LinearLayout {
 
         studentAttendancesMonthView.text = resources.getString(Month.findByIndex(currentMonthIndex).nameId)
 
-        val amountOfLessons = lessonsService.getLessonsAmountInMonth(student.studentGroups[0].groupId, currentMonthIndex)
-        val attendances = studentsAttendancesService.getMonthlyAttendances(student, currentMonthIndex)
-        val payment = studentsPaymentsService.getMonthPayments(student, currentMonthIndex)
+        val amountOfLessons = lessonsService.getLessonsAmountInMonth(
+                groupId = student.studentGroups[0].groupId,
+                month = currentMonthIndex
+        )
+
+        val attendances = studentsAttendancesService.getMonthlyAttendances(
+                studentId = student.id,
+                month = currentMonthIndex
+        )
+
+        val payment = studentsPaymentsService.getMonthPayments(
+                studentId = student.id,
+                month = currentMonthIndex
+        )
 
         paymentView.text = "$payment Р"
 

@@ -2,7 +2,7 @@ package com.bdev.hengschoolteacher.ui.activities
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import org.androidannotations.annotations.AfterInject
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity

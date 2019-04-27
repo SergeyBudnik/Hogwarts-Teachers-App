@@ -28,9 +28,11 @@ open class StudentsAttendancesAsyncService : CommonAsyncService() {
                     authService.getAuthInfo()
             )
 
-            attendance.id = studentsAttendancesRest.addStudentAttendance(attendance)
-
-            studentsAttendancesService.addAttendance(attendance)
+            studentsAttendancesService.addAttendance(
+                    attendance.withId(
+                            studentsAttendancesRest.addStudentAttendance(attendance) as Long
+                    )
+            )
         }
     }
 }

@@ -46,25 +46,65 @@ open class SchoolDataAsyncService : CommonAsyncService() {
     fun load(): SmartPromise<Unit, Exception> {
         return smartTask {
             authenticateAll(
-                    listOf(groupsRest, studentsRest, studentsAttendancesRest, studentsPaymentsRest, teachersRest, lessonStatusRest, usersRequestsRest),
+                    listOf(lessonStatusRest, usersRequestsRest),
                     authService.getAuthInfo()
             )
 
-            val groups = groupsRest.getAllGroups()
-            val students = studentsRest.getAllStudents()
-            val attendances = studentsAttendancesRest.getStudentsAttendances()
-            val payments = studentsPaymentsRest.getStudentsPayments()
-            val teachers = teachersRest.getTeachers()
             val lessonsStatuses = lessonStatusRest.getAllLessonsStatuses(0, Long.MAX_VALUE) // ToDo
             val usersRequests = usersRequestsRest.getAllUsersRequests()
 
-            groupsService.setGroups(groups)
-            studentsService.setStudents(students)
-            studentsAttendancesService.setAttendances(attendances)
-            studentsPaymentsService.setPayments(payments)
-            teachersService.setTeachers(teachers)
             lessonStatusService.setLessonsStatuses(lessonsStatuses)
             usersRequestsService.setUsersRequests(usersRequests)
+        }
+    }
+
+    fun loadStudents(): SmartPromise<Unit, Exception> {
+        return smartTask {
+            authenticateAll(listOf(studentsRest), authService.getAuthInfo())
+
+            studentsService.setStudents(
+                    studentsRest.getAllStudents()
+            )
+        }
+    }
+
+    fun loadGroups(): SmartPromise<Unit, Exception> {
+        return smartTask {
+            authenticateAll(listOf(groupsRest), authService.getAuthInfo())
+
+            groupsService.setGroups(
+                    groupsRest.getAllGroups()
+            )
+        }
+    }
+
+    fun loadTeachers(): SmartPromise<Unit, Exception> {
+        return smartTask {
+            authenticateAll(listOf(teachersRest), authService.getAuthInfo())
+
+            teachersService.setTeachers(
+                    teachersRest.getTeachers()
+            )
+        }
+    }
+
+    fun loadStudentsPayments(): SmartPromise<Unit, Exception> {
+        return smartTask {
+            authenticateAll(listOf(studentsPaymentsRest), authService.getAuthInfo())
+
+            studentsPaymentsService.setPayments(
+                    studentsPaymentsRest.getStudentsPayments()
+            )
+        }
+    }
+
+    fun loadStudentsAttendances(): SmartPromise<Unit, Exception> {
+        return smartTask {
+            authenticateAll(listOf(studentsAttendancesRest), authService.getAuthInfo())
+
+            studentsAttendancesService.setAttendances(
+                    studentsAttendancesRest.getStudentsAttendances()
+            )
         }
     }
 }

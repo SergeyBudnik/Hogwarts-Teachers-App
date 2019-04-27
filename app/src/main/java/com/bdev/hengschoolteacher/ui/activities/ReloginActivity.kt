@@ -7,7 +7,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.AuthAsyncService
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
 import com.bdev.hengschoolteacher.service.UserPreferencesService
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.activity_relogin.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean

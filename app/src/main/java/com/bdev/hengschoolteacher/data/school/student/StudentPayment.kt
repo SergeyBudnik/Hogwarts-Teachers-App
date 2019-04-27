@@ -7,8 +7,9 @@ class StudentPayment(
     var amount: Long,
     var studentId: Long,
     var teacherId: Long,
-    var time: Long
+    var time: Long,
+    var processed: Boolean
 ) : Serializable {
     @Suppress("UNUSED")
-    constructor(): this(null, 0L, 0L, 0L, 0L)
+    constructor(): this(null, 0L, 0L, 0L, 0L, false)
 }

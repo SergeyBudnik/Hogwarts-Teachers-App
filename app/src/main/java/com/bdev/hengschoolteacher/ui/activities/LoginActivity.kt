@@ -1,14 +1,12 @@
 package com.bdev.hengschoolteacher.ui.activities
 
 import android.annotation.SuppressLint
-import android.support.v4.app.FragmentActivity
 import android.widget.Toast
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.AuthAsyncService
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.activity_login.*
-import nl.komponents.kovenant.then
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity

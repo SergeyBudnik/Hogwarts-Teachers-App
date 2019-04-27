@@ -60,7 +60,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     fun init() {
         lessonAttendanceHeaderView.setLeftButtonAction { doFinish() }
 
-        val lesson = lessonsService.getLesson(lessonId) ?: throw RuntimeException()
+        val lesson = lessonsService.getLesson(lessonId)?.lesson ?: throw RuntimeException()
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
         lessonStudentAttendanceLessonTimeView.bind(lesson, weekIndex)
@@ -121,7 +121,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         buttonView.setOnClickListener {
             allButtonsViews.forEach { btn ->
                 btn.hideButtonIcon()
-                btn.setOnClickListener { _ -> }
+                btn.setOnClickListener { }
             }
 
             buttonView.setButtonInProgressIcon()
@@ -130,7 +130,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
                     null,
                     studentId,
                     GroupType.GROUP, // ToDo,
-                    studentsService.getGroupStudents(groupId, weekIndex).size,
+                    lessonsService.getLessonStudents(lessonId, weekIndex).size,
                     lessonsService.getLessonStartTime(lessonId, weekIndex),
                     lessonsService.getLessonFinishTime(lessonId, weekIndex),
                     buttonAttendance

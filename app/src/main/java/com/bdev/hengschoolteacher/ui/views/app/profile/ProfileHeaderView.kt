@@ -8,7 +8,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileAccountActivity_
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity_
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfilePaymentActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.view_profile_header.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup

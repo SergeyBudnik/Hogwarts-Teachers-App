@@ -13,7 +13,7 @@ import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.*
 import com.bdev.hengschoolteacher.ui.activities.lesson.LessonStudentAttendanceActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.activity_student_information.*
 import kotlinx.android.synthetic.main.view_list_item_student_information_timetable.view.*
 import org.androidannotations.annotations.*

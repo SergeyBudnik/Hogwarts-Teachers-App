@@ -1,19 +1,16 @@
 package com.bdev.hengschoolteacher.data.school.teacher
 
-import java.io.Serializable
+import org.codehaus.jackson.annotate.JsonCreator
+import org.codehaus.jackson.annotate.JsonProperty
 
-class Teacher(
-        var id: Long,
-        var login: String,
-        var name: String,
-        var type: Type,
-        var phones: List<String>,
-        var emails: List<String>
-) : Serializable {
+class Teacher @JsonCreator constructor(
+        @JsonProperty("id") val id: Long,
+        @JsonProperty("login") val login: String,
+        @JsonProperty("name") val name: String,
+        @JsonProperty("type") val type: Type,
+        @JsonProperty("phones") val phones: List<String>
+) {
     enum class Type {
         NON_NATIVE, NATIVE
     }
-
-    @Suppress("UNUSED")
-    constructor(): this(0, "", "", Type.NON_NATIVE, emptyList(), emptyList())
 }

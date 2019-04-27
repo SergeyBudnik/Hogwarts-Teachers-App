@@ -1,6 +1,7 @@
 package com.bdev.hengschoolteacher.data.school
 
 import com.bdev.hengschoolteacher.R
+
 enum class DayOfWeek constructor(
     val index: Int,
     val shortNameId: Int

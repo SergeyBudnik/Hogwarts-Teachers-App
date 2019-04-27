@@ -1,35 +1,26 @@
 package com.bdev.hengschoolteacher.dao
 
-import android.content.Context
 import com.bdev.hengschoolteacher.data.school.student.Student
 import org.androidannotations.annotations.EBean
-import org.androidannotations.annotations.RootContext
-import java.io.Serializable
+import org.codehaus.jackson.annotate.JsonCreator
+import org.codehaus.jackson.annotate.JsonProperty
+import org.codehaus.jackson.map.ObjectMapper
 
-class StudentsModel : Serializable {
-    var students: List<Student> = emptyList()
-}
+class StudentsModel @JsonCreator constructor(
+    @JsonProperty("students") val students: List<Student>
+)
 
 @EBean(scope = EBean.Scope.Singleton)
 open class StudentsDao : CommonDao<StudentsModel>() {
-    @RootContext
-    lateinit var rootContext: Context
-
-    fun setStudents(students: List<Student>) {
-        readCache()
-
-        getValue().students = students
-
-        persist()
+    override fun getFileName(): String {
+        return "students.data"
     }
 
-    fun getStudents(): List<Student> {
-        readCache()
-
-        return getValue().students
+    override fun newInstance(): StudentsModel {
+        return StudentsModel(emptyList())
     }
 
-    override fun getContext(): Context { return rootContext }
-    override fun getFileName(): String { return StudentsDao::class.java.canonicalName }
-    override fun newInstance(): StudentsModel { return StudentsModel() }
+    override fun deserialize(json: String): StudentsModel {
+        return ObjectMapper().readValue(json, StudentsModel::class.java)
+    }
 }

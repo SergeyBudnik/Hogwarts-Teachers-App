@@ -3,14 +3,20 @@ package com.bdev.hengschoolteacher.dao
 import android.content.Context
 import android.util.Log
 import com.bdev.hengschoolteacher.utils.StorageUtils
+import org.androidannotations.annotations.EBean
+import org.androidannotations.annotations.RootContext
+import org.codehaus.jackson.map.ObjectMapper
 
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicReference
 
-abstract class CommonDao<out T> {
+@EBean
+abstract class CommonDao<T> {
+    @RootContext
+    lateinit var context: Context
+
     private val cache = AtomicReference<T>(null)
 
-    protected abstract fun getContext(): Context
     protected abstract fun getFileName(): String
     protected abstract fun newInstance(): T
 
@@ -18,20 +24,45 @@ abstract class CommonDao<out T> {
         return cache.get()
     }
 
-    fun persist() {
+    fun readValue(): T {
+        readCache()
+
+        return cache.get()
+    }
+
+    fun writeValue(o: T) {
+        readCache()
+
+        cache.set(o)
+
+        persist()
+    }
+
+    private fun persist() {
         if (cache.get() != null) {
             try {
-                StorageUtils.writeData(getContext(), getFileName(), cache.get())
+                StorageUtils.writeData(
+                        context,
+                        getFileName(),
+                        ObjectMapper().writeValueAsString(cache.get())
+                )
             } catch (e: IOException) {
                 Log.e("CommonDao", "Persist failed", e)
             }
         }
     }
 
-    protected fun readCache() {
+    private fun readCache() {
         if (cache.get() == null) {
             try {
-                cache.set(StorageUtils.readData<Any>(getContext(), getFileName()) as T)
+                val json = StorageUtils.readData<Any>(
+                        context,
+                        getFileName()
+                ) as String?
+
+                if (json != null) {
+                    cache.set(deserialize(json))
+                }
             } catch (e: IOException) {
                 Log.e("CommonDao", "Reading failed", e)
             }
@@ -42,11 +73,5 @@ abstract class CommonDao<out T> {
         }
     }
 
-    protected fun inTransaction(action: () -> Unit) {
-        readCache()
-
-        action.invoke()
-
-        persist()
-    }
+    protected abstract fun deserialize(json: String): T
 }

@@ -51,7 +51,10 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
         monitoringStudentPaymentItemLeftLessonsAmountView.text = "$leftLessonsAmount"
         monitoringStudentPaymentItemTotalLessonsAmountView.text = "$totalLessonsAmount"
 
-        val monthPayments = studentsPaymentsService.getMonthPayments(student, month)
+        val monthPayments = studentsPaymentsService.getMonthPayments(
+                studentId = student.id,
+                month = month
+        )
 
         monitoringStudentPaymentItemTotalPriceAmountView.text = "${700 * payableLessonsAmount}"
         monitoringStudentPaymentItemPayedPriceView.text = "$monthPayments"

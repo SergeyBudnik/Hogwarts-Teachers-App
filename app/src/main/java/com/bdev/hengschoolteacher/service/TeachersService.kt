@@ -1,6 +1,7 @@
 package com.bdev.hengschoolteacher.service
 
 import com.bdev.hengschoolteacher.dao.TeachersDao
+import com.bdev.hengschoolteacher.dao.TeachersModel
 import com.bdev.hengschoolteacher.data.school.teacher.Teacher
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
@@ -13,7 +14,7 @@ open class TeachersService {
     lateinit var userPreferencesService: UserPreferencesService
 
     fun getAllTeachers(): List<Teacher> {
-        return teachersDao.getTeachers()
+        return teachersDao.readValue().teachers
     }
 
     fun getTeacherMe(): Teacher {
@@ -23,14 +24,14 @@ open class TeachersService {
     }
 
     fun getTeacherById(id: Long): Teacher? {
-        return teachersDao.getTeachers().find { it.id == id }
+        return teachersDao.readValue().teachers.find { it.id == id }
     }
 
     fun getTeacherByLogin(login: String): Teacher? {
-        return teachersDao.getTeachers().find { it.login == login }
+        return teachersDao.readValue().teachers.find { it.login == login }
     }
 
     fun setTeachers(teachers: List<Teacher>) {
-        teachersDao.setTeachers(teachers)
+        teachersDao.writeValue(TeachersModel(teachers))
     }
 }

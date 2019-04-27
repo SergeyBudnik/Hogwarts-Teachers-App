@@ -135,7 +135,8 @@ open class StudentPaymentActivity : BaseActivity() {
                         amount,
                         student.id,
                         teachersService.getTeacherMe().id,
-                        lessonStartTime
+                        lessonStartTime,
+                        false
                 ))
                 .onSuccess { runOnUiThread { onPaymentMarkSuccess() } }
                 .onAuthFail { println("AUTH") }

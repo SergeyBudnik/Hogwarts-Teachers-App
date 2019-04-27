@@ -4,7 +4,7 @@ import android.content.Intent
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import java.io.Serializable
 
-class RedirectUtils private constructor(private val current: BaseActivity) {
+class RedirectBuilder private constructor(private val current: BaseActivity) {
     private lateinit var target: Class<out BaseActivity>
 
     private var enterAnim = 0
@@ -13,25 +13,25 @@ class RedirectUtils private constructor(private val current: BaseActivity) {
     private val extra = HashMap<String, Serializable>()
 
     companion object {
-        fun redirect(current: BaseActivity): RedirectUtils {
-            return RedirectUtils(current)
+        fun redirect(current: BaseActivity): RedirectBuilder {
+            return RedirectBuilder(current)
         }
     }
 
-    fun to(target: Class<out BaseActivity>): RedirectUtils {
+    fun to(target: Class<out BaseActivity>): RedirectBuilder {
         this.target = target
 
         return this
     }
 
-    fun withAnim(enterAnim: Int, exitAnim: Int): RedirectUtils {
+    fun withAnim(enterAnim: Int, exitAnim: Int): RedirectBuilder {
         this.enterAnim = enterAnim
         this.exitAnim = exitAnim
 
         return this
     }
 
-    fun withExtra(key: String, value: Serializable): RedirectUtils {
+    fun withExtra(key: String, value: Serializable): RedirectBuilder {
         extra[key] = value
 
         return this

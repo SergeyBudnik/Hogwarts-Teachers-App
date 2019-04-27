@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.bdev.hengschoolteacher.ui.views.branded.BrandedListItemView_
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/app_size_0_5"
-    android:layout_marginStart="@dimen/app_size_1"
-    android:layout_marginEnd="@dimen/app_size_1"
-    android:paddingTop="@dimen/app_size_1"
-    android:paddingBottom="@dimen/app_size_1"
-    android:paddingLeft="@dimen/app_size_2"
-    android:paddingRight="@dimen/app_size_2"
-    android:background="@drawable/layout_row"
-    android:backgroundTint="@color/alt_contrast_light">
+    android:layout_height="wrap_content">
 
     <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonRowView_
         android:id="@+id/profileLessonsItemView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-</LinearLayout>
+</com.bdev.hengschoolteacher.ui.views.branded.BrandedListItemView_>

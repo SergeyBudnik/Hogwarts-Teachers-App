@@ -16,9 +16,8 @@ import com.bdev.hengschoolteacher.data.school.teacher.Teacher
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity
-import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity_
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.ListUtils
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_profile_lessons.*
 import kotlinx.android.synthetic.main.view_item_profile_lessons.view.*
@@ -26,7 +25,6 @@ import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
 import org.androidannotations.annotations.EViewGroup
-import com.bdev.hengschoolteacher.ui.utils.ListUtils
 
 @EViewGroup(R.layout.view_item_profile_lessons)
 open class ProfileLessonsItemView : RelativeLayout {
@@ -44,16 +42,21 @@ open class ProfileLessonsItemView : RelativeLayout {
         profileLessonsItemView.bind(
                 group,
                 lesson,
-                studentsService.getGroupStudents(group.id, weekIndex),
+                lessonsService.getLessonStudents(
+                        lessonId = lesson.id,
+                        weekIndex = weekIndex
+                ),
                 weekIndex
         )
 
         setOnClickListener {
-            redirect(context as BaseActivity)
-                    .to(LessonActivity_::class.java)
-                    .withExtra(LessonActivity.EXTRA_GROUP_ID, group.id)
-                    .withExtra(LessonActivity.EXTRA_LESSON_ID, lesson.id)
-                    .withExtra(LessonActivity.EXTRA_WEEK_INDEX, weekIndex)
+            LessonActivity
+                    .redirectWithExtras(
+                            context = context,
+                            groupId = group.id,
+                            lessonId = lesson.id,
+                            weekIndex = weekIndex
+                    )
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .goForResult(ProfileLessonsActivity.REQUEST_CODE_LESSON)
         }
@@ -150,8 +153,15 @@ open class ProfileLessonsActivity : BaseActivity() {
 
         adapter.setWeekIndex(weekIndex)
         adapter.setItems(lessonsService.getTeacherLessons(me.id).filter {
-            val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson, weekIndex)
-            val statusFilled = lessonStatusService.getLessonStatus(it.lesson.id, lessonsService.getLessonStartTime(it.lesson.id, weekIndex)) != null
+            val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(
+                    lessonId = it.lesson.id,
+                    weekIndex = weekIndex
+            )
+
+            val statusFilled = lessonStatusService.getLessonStatus(
+                    lessonId = it.lesson.id,
+                    lessonTime = lessonsService.getLessonStartTime(it.lesson.id, weekIndex)
+            ) != null
 
             !filterEnabled || !attendanceFilled || !statusFilled
         })

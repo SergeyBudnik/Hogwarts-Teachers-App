@@ -12,8 +12,8 @@ import com.bdev.hengschoolteacher.service.UsersRequestsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.user_request.UserRequestActivity
 import com.bdev.hengschoolteacher.ui.activities.user_request.UserRequestActivity_
-import com.bdev.hengschoolteacher.ui.adapters.BaseItemsAdapter
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_actions_users_requests_list.*
 import kotlinx.android.synthetic.main.view_actions_users_requests_item.view.*
@@ -32,7 +32,7 @@ open class ActionsUsersRequestsItemView : LinearLayout {
     }
 }
 
-open class ActionsUsersRequestsListAdapter(context: Context) : BaseItemsAdapter<UserRequest>(context) {
+open class ActionsUsersRequestsListAdapter(context: Context) : BaseItemsListAdapter<UserRequest>(context) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup?): View {
         val view = if (convertView == null) {
             ActionsUsersRequestsItemView_.build(context)

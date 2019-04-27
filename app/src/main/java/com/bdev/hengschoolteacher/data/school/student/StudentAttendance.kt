@@ -1,21 +1,31 @@
 package com.bdev.hengschoolteacher.data.school.student
 
 import com.bdev.hengschoolteacher.data.school.group.GroupType
+import org.codehaus.jackson.annotate.JsonProperty
 import java.io.Serializable
 
-class StudentAttendance(
-        var id: Long?,
-        var studentId: Long,
-        var groupType: GroupType,
-        var studentsInGroup: Int,
-        var startTime: Long,
-        var finishTime: Long,
-        var type: Type
+class StudentAttendance constructor(
+        @JsonProperty("id") val id: Long?,
+        @JsonProperty("studentId") val studentId: Long,
+        @JsonProperty("groupType") val groupType: GroupType,
+        @JsonProperty("studentsInGroup") val studentsInGroup: Int,
+        @JsonProperty("startTime") val startTime: Long,
+        @JsonProperty("finishTime") val finishTime: Long,
+        @JsonProperty("type") val type: Type
 ) : Serializable {
     enum class Type {
         VISITED, VALID_SKIP, INVALID_SKIP
     }
 
-    @Suppress("UNUSED")
-    constructor(): this(0L, 0L, GroupType.GROUP, 0, 0L, 0L, Type.VISITED)
+    fun withId(id: Long): StudentAttendance {
+        return StudentAttendance(
+                id = id,
+                studentId = this.studentId,
+                groupType = this.groupType,
+                studentsInGroup = this.studentsInGroup,
+                startTime = this.startTime,
+                finishTime = this.finishTime,
+                type = this.type
+        )
+    }
 }

@@ -5,6 +5,7 @@ import com.bdev.hengschoolteacher.data.school.Time
 import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.data.school.group.Lesson
+import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
@@ -18,11 +19,14 @@ open class LessonsService {
     @Bean
     lateinit var studentsService: StudentsService
 
-    fun getLesson(lessonId: Long): Lesson? {
+    fun getLesson(lessonId: Long): GroupAndLesson? {
         for (group in groupsService.getGroups()) {
             for (lesson in group.lessons) {
                 if (lesson.id == lessonId) {
-                    return lesson
+                    return GroupAndLesson(
+                            group = group,
+                            lesson = lesson
+                    )
                 }
             }
         }
@@ -32,6 +36,22 @@ open class LessonsService {
 
     fun getAllLessons(): List<GroupAndLesson> {
         return getLessonsByCondition { _, _ -> true }
+    }
+
+    fun getLessonStudents(lessonId: Long, weekIndex: Int): List<Student> {
+        val groupAndLesson = getLesson(lessonId) ?: return emptyList()
+
+        val lessonStartTime = getLessonStartTime(lessonId, weekIndex)
+        val lessonFinishTime = getLessonFinishTime(lessonId, weekIndex)
+
+        return studentsService
+                .getAllStudents()
+                .filter { student -> student.studentGroups
+                        .filter { it.groupId == groupAndLesson.group.id }
+                        .filter { it.startTime < lessonStartTime }
+                        .filter { it.finishTime == 0L || lessonFinishTime < it.finishTime }
+                        .any()
+                }
     }
 
     fun getTeacherLessons(teacherId: Long): List<GroupAndLesson> {
@@ -90,20 +110,28 @@ open class LessonsService {
         return lessonsAmount
     }
 
-    fun isLessonFinished(lesson: Lesson, weekIndex: Int): Boolean {
-        return Date(getLessonFinishTime(lesson.id, weekIndex)).before(Date())
+    fun isLessonFinished(lessonId: Long, weekIndex: Int): Boolean {
+        return Date(getLessonFinishTime(lessonId, weekIndex)).before(Date())
     }
 
     fun getLessonStartTime(lessonId: Long, weekIndex: Int): Long {
-        val lesson = getLesson(lessonId) ?: throw RuntimeException()
+        val groupAndLesson = getLesson(lessonId) ?: throw RuntimeException()
 
-        return getLessonTime(lesson.day, lesson.startTime, weekIndex)
+        return getLessonTime(
+                day = groupAndLesson.lesson.day,
+                time = groupAndLesson.lesson.startTime,
+                weekIndex = weekIndex
+        )
     }
 
     fun getLessonFinishTime(lessonId: Long, weekIndex: Int): Long {
-        val lesson = getLesson(lessonId) ?: throw RuntimeException()
+        val groupAndLesson = getLesson(lessonId) ?: throw RuntimeException()
 
-        return getLessonTime(lesson.day, lesson.finishTime, weekIndex)
+        return getLessonTime(
+                day = groupAndLesson.lesson.day,
+                time = groupAndLesson.lesson.finishTime,
+                weekIndex = weekIndex
+        )
     }
 
     private fun getLessonTime(day: DayOfWeek, time: Time, weekIndex: Int): Long {

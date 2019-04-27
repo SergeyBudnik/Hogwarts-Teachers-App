@@ -8,30 +8,33 @@
     android:fitsSystemWindows="true">
 
     <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-        android:id="@+id/teachersHeaderView"
+        android:id="@+id/monitoringTeacherPaymentsHeaderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Учителя"
-        app:leftIcon="@drawable/ic_menu"/>
+        app:title="Мониторинг. Преподаватель"
+        app:leftIcon="@drawable/ic_arrow_left"/>
 
-    <com.bdev.hengschoolteacher.ui.views.app.teachers.TeachersHeaderView_
+    <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView_
+        android:id="@+id/monitoringTeacherPaymentsSecondaryHeaderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:teachers_item="teachers_list"/>
+        app:monitoring_teacher_item="monitoring_teacher_payments"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
-        android:id="@+id/teachersMenuLayoutView"
+        android:id="@+id/monitoringTeacherPaymentsMenuLayoutView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/teachersListView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/app_size_1"
-            android:paddingBottom="@dimen/app_size_1"
-            android:clipToPadding="false"
-            android:divider="@null"/>
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/monitoringTeacherPaymentsListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </RelativeLayout>
 
     </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
 

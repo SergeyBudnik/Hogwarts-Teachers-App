@@ -16,8 +16,8 @@ import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.adapters.BaseItemsAdapter
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_monitoring_payments.*
 import kotlinx.android.synthetic.main.view_monitoring_payments_item.view.*
@@ -46,7 +46,7 @@ open class MonitoringPaymentsItemView : RelativeLayout {
     }
 }
 
-private class MonitoringPaymentsListAdapter(context: Context) : BaseItemsAdapter<StudentInfo>(context) {
+private class MonitoringPaymentsListAdapter(context: Context) : BaseItemsListAdapter<StudentInfo>(context) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
         val v = if (convertView == null) {
             MonitoringPaymentsItemView_.build(context)

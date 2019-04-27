@@ -3,16 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/app_size_4"
-    android:background="@color/fill_contrast_medium">
+    android:layout_height="@dimen/app_size_4_5"
+    android:background="@color/fill_contrast_base">
 
     <ImageView
         android:id="@+id/leftActionButtonView"
-        android:layout_width="@dimen/app_size_5"
-        android:layout_height="@dimen/app_size_5"
-        android:paddingStart="@dimen/app_size_2"
-        android:paddingEnd="@dimen/app_size_1_5"
-        android:tint="@color/fill_text_basic"/>
+        android:layout_width="@dimen/app_size_4_5"
+        android:layout_height="@dimen/app_size_4_5"
+        android:padding="@dimen/app_size_1_5"
+        android:tint="@color/fill_text_basic"
+        android:importantForAccessibility="no"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
         android:id="@+id/titleView"
@@ -35,11 +35,9 @@
         <ImageView
             android:id="@+id/firstRightActionButtonView"
             android:layout_width="@dimen/app_size_3_5"
-            android:layout_height="@dimen/app_size_3_5"
-            android:paddingTop="@dimen/app_size_1"
-            android:paddingBottom="@dimen/app_size_1"
-            android:paddingStart="@dimen/app_size_1"
-            android:paddingEnd="@dimen/app_size_1"
+            android:layout_height="@dimen/app_size_4_5"
+            android:paddingTop="@dimen/app_size_1_5"
+            android:paddingBottom="@dimen/app_size_1_5"
             android:tint="@color/fill_text_basic"
             android:visibility="gone"
             android:importantForAccessibility="no"/>
@@ -47,11 +45,9 @@
         <ImageView
             android:id="@+id/secondRightActionButtonView"
             android:layout_width="@dimen/app_size_3_5"
-            android:layout_height="@dimen/app_size_3_5"
-            android:paddingTop="@dimen/app_size_1"
-            android:paddingBottom="@dimen/app_size_1"
-            android:paddingStart="@dimen/app_size_1"
-            android:paddingEnd="@dimen/app_size_1"
+            android:layout_height="@dimen/app_size_4_5"
+            android:paddingTop="@dimen/app_size_1_5"
+            android:paddingBottom="@dimen/app_size_1_5"
             android:tint="@color/fill_text_basic"
             android:visibility="gone"
             android:importantForAccessibility="no"/>

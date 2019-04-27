@@ -1,36 +1,26 @@
 package com.bdev.hengschoolteacher.dao
 
-import android.content.Context
 import org.androidannotations.annotations.EBean
-import org.androidannotations.annotations.RootContext
-import java.io.Serializable
+import org.codehaus.jackson.annotate.JsonCreator
+import org.codehaus.jackson.annotate.JsonProperty
+import org.codehaus.jackson.map.ObjectMapper
 
-class UserPreferencesModel(
-        var login: String?,
-        var password: String?
-) : Serializable
+class UserPreferencesModel @JsonCreator constructor(
+        @JsonProperty("login") val login: String?,
+        @JsonProperty("password") val password: String?
+)
 
 @EBean(scope = EBean.Scope.Singleton)
 open class UserPreferencesDao : CommonDao<UserPreferencesModel>() {
-    @RootContext
-    lateinit var rootContext: Context
-
-    fun setUserPreferences(userPreferencesModel: UserPreferencesModel) {
-        readCache()
-
-        getValue().login = userPreferencesModel.login
-        getValue().password = userPreferencesModel.password
-
-        persist()
+    override fun getFileName(): String {
+        return "user-preferences.data"
     }
 
-    fun getUserPreferences() : UserPreferencesModel {
-        readCache()
-
-        return getValue()
+    override fun newInstance(): UserPreferencesModel {
+        return UserPreferencesModel(null, null)
     }
 
-    override fun getContext(): Context { return rootContext }
-    override fun getFileName(): String { return UserPreferencesDao::class.java.canonicalName }
-    override fun newInstance(): UserPreferencesModel { return UserPreferencesModel(null, null) }
+    override fun deserialize(json: String): UserPreferencesModel {
+        return ObjectMapper().readValue(json, UserPreferencesModel::class.java)
+    }
 }

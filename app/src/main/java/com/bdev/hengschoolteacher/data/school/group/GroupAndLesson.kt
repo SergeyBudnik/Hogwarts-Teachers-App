@@ -1,8 +1,11 @@
 package com.bdev.hengschoolteacher.data.school.group
 
-class GroupAndLesson(
-        val group: Group,
-        val lesson: Lesson
+import org.codehaus.jackson.annotate.JsonCreator
+import org.codehaus.jackson.annotate.JsonProperty
+
+class GroupAndLesson @JsonCreator constructor(
+        @JsonProperty("group") val group: Group,
+        @JsonProperty("lesson") val lesson: Lesson
 ) {
     companion object {
         fun getComparator(): Comparator<GroupAndLesson> {

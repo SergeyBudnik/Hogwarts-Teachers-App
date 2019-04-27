@@ -27,9 +27,9 @@ open class LessonStatusAsyncService : CommonAsyncService() {
                     authService.getAuthInfo()
             )
 
-            lessonStatus.id = lessonStatusRest.addLessonStatus(lessonStatus)
-
-            lessonStatusService.addLessonStatus(lessonStatus)
+            lessonStatusService.addLessonStatus(
+                    lessonStatus.withId(lessonStatusRest.addLessonStatus(lessonStatus) as Long)
+            )
         }
     }
 }

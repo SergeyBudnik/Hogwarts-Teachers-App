@@ -6,7 +6,7 @@ import android.view.animation.Animation
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.SchoolDataAsyncService
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -36,7 +36,19 @@ open class LoadingActivity : BaseActivity() {
 
         loadingFailedView.visibility = View.GONE
 
-        schoolDataAsyncService.load()
+        val loadPromise = schoolDataAsyncService.load()
+        val loadStudentsPromise = schoolDataAsyncService.loadStudents()
+        val loadGroupsPromise = schoolDataAsyncService.loadGroups()
+        val loadTeachersPromise = schoolDataAsyncService.loadTeachers()
+        val loadStudentsAttendancesPromise = schoolDataAsyncService.loadStudentsAttendances()
+        val loadStudentsPaymentsPromise = schoolDataAsyncService.loadStudentsPayments()
+
+        loadPromise
+                .and(loadStudentsPromise)
+                .and(loadGroupsPromise)
+                .and(loadTeachersPromise)
+                .and(loadStudentsAttendancesPromise)
+                .and(loadStudentsPaymentsPromise)
                 .onSuccess { runOnUiThread { doRedirect() } }
                 .onAuthFail { runOnUiThread { onLoadingAuthFailure() } }
                 .onOtherFail { runOnUiThread { onLoadingOtherFailure() } }

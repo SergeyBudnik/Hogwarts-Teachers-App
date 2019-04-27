@@ -8,7 +8,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.students.StudentsGroupsListActivity_
 import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity_
 import com.bdev.hengschoolteacher.ui.activities.students.StudentsStatisticsActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.view_students_header.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup

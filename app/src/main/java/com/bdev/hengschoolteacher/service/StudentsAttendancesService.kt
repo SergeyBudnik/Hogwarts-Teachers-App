@@ -1,7 +1,7 @@
 package com.bdev.hengschoolteacher.service
 
 import com.bdev.hengschoolteacher.dao.StudentsAttendancesDao
-import com.bdev.hengschoolteacher.data.school.student.Student
+import com.bdev.hengschoolteacher.dao.StudentsAttendancesModel
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import org.androidannotations.annotations.Bean
@@ -14,14 +14,15 @@ open class StudentsAttendancesService {
     @Bean
     lateinit var lessonsService: LessonsService
 
-    fun getMonthlyAttendances(student: Student, month: Int): List<StudentAttendance> {
+    fun getMonthlyAttendances(studentId: Long, month: Int): List<StudentAttendance> {
         val startTime = TimeUtils().getMonthStart(month)
         val finishTime = TimeUtils().getMonthFinish(month)
 
         return studentsAttendancesDao
-                .getAttendances()
+                .readValue()
+                .studentsAttendances
                 .asSequence()
-                .filter { it.studentId == student.id }
+                .filter { it.studentId == studentId }
                 .filter { it.startTime <= finishTime }
                 .filter { it.startTime >= startTime }
                 .sortedBy { it.startTime }
@@ -29,12 +30,13 @@ open class StudentsAttendancesService {
     }
 
     fun getAllAttendances(): List<StudentAttendance> {
-        return studentsAttendancesDao.getAttendances()
+        return studentsAttendancesDao.readValue().studentsAttendances
     }
 
     fun getAllStudentAttendances(studentId: Long): List<StudentAttendance> {
         return studentsAttendancesDao
-                .getAttendances()
+                .readValue()
+                .studentsAttendances
                 .asSequence()
                 .filter { it.studentId == studentId }
                 .toList()
@@ -42,7 +44,8 @@ open class StudentsAttendancesService {
 
     fun getAttendance(lessonId: Long, studentId: Long, weekIndex: Int): StudentAttendance.Type? {
         val attendance = studentsAttendancesDao
-                .getAttendances()
+                .readValue()
+                .studentsAttendances
                 .asSequence()
                 .filter { it.studentId == studentId }
                 .filter { it.startTime == lessonsService.getLessonStartTime(lessonId, weekIndex) }
@@ -52,10 +55,14 @@ open class StudentsAttendancesService {
     }
 
     fun setAttendances(attendances: List<StudentAttendance>) {
-        studentsAttendancesDao.setAttendances(attendances)
+        studentsAttendancesDao.writeValue(StudentsAttendancesModel(
+                attendances
+        ))
     }
 
     fun addAttendance(attendance: StudentAttendance) {
-        studentsAttendancesDao.addAttendance(attendance)
+        studentsAttendancesDao.writeValue(StudentsAttendancesModel(
+                studentsAttendancesDao.readValue().studentsAttendances.union(listOf(attendance)).toList()
+        ))
     }
 }

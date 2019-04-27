@@ -17,7 +17,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity_
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
-import com.bdev.hengschoolteacher.ui.utils.RedirectUtils
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_monitoring_lessons.*
 import kotlinx.android.synthetic.main.view_item_monitoring_lessons.view.*
@@ -41,12 +41,12 @@ open class MonitoringLessonItemView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(group: Group, lesson: Lesson, weekIndex: Int): MonitoringLessonItemView {
-        val students = studentsService.getGroupStudents(group.id, weekIndex)
+        val students = lessonsService.getLessonStudents(lesson.id, weekIndex)
 
         allLessonRowView.bind(group, lesson, students, weekIndex)
 
         setOnClickListener {
-            RedirectUtils.redirect(context as BaseActivity)
+            RedirectBuilder.redirect(context as BaseActivity)
                     .to(LessonActivity_::class.java)
                     .withExtra(LessonActivity.EXTRA_GROUP_ID, group.id)
                     .withExtra(LessonActivity.EXTRA_LESSON_ID, lesson.id)
@@ -137,10 +137,22 @@ open class MonitoringLessonsActivity : BaseActivity() {
     private fun initLessonsList() {
         val lessons = lessonsService.getAllLessons()
                 .filter {
-                    val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(it.group, it.lesson, weekIndex)
-                    val statusFilled = lessonStatusService.getLessonStatus(it.lesson.id, lessonsService.getLessonStartTime(it.lesson.id, weekIndex)) != null
+                    val attendanceFilled = lessonsAttendancesService
+                            .isLessonAttendanceFilled(
+                                    lessonId = it.lesson.id,
+                                    weekIndex = weekIndex
+                            )
 
-                    !filterEnabled || !attendanceFilled || !statusFilled
+                    val statusFilled = lessonStatusService.getLessonStatus(
+                            lessonId = it.lesson.id,
+                            lessonTime = lessonsService.getLessonStartTime(it.lesson.id, weekIndex)
+                    ) != null
+
+                    return@filter if (filterEnabled) {
+                        !attendanceFilled || !statusFilled
+                    } else {
+                        true
+                    }
                 }
 
         val adapter = MonitoringLessonsListAdapter(this)
