@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:paddingStart="@dimen/app_size_2"
+    android:paddingEnd="@dimen/app_size_2">
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Все занятия отмечены."
+        android:textColor="@color/fill_text_basic"
+        android:textSize="@dimen/font_large"/>
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Отключите фильтр, чтобы посмотреть отмеченные занятия."
+        android:textColor="@color/fill_text_basic"
+        android:textSize="@dimen/font_large"/>
+
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+        android:id="@+id/profileLessonsNoLessonsDisableFilterView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_1"
+        app:button_text="Отключить фильтр"/>
+
+</LinearLayout>

@@ -22,7 +22,6 @@ import org.androidannotations.annotations.Extra
 @EActivity(R.layout.activity_lesson_student_attendance)
 open class LessonStudentAttendanceActivity : BaseActivity() {
     companion object {
-        const val EXTRA_GROUP_ID = "EXTRA_GROUP_ID"
         const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
         const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
@@ -39,10 +38,6 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
 
     @Bean
     lateinit var studentsAttendancesAsyncService: StudentsAttendancesAsyncService
-
-    @Extra(EXTRA_GROUP_ID)
-    @JvmField
-    var groupId: Long = 0
 
     @Extra(EXTRA_LESSON_ID)
     @JvmField

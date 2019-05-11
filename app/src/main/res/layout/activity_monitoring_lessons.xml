@@ -47,6 +47,12 @@
                 android:dividerHeight="0dp"
                 android:divider="@null"/>
 
+            <com.bdev.hengschoolteacher.ui.views.app.lesson.NoLessonsView_
+                android:id="@+id/monitoringLessonsNoLessonsView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_5"/>
+
         </RelativeLayout>
 
     </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>

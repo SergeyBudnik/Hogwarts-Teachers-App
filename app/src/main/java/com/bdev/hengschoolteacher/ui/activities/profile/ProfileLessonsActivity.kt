@@ -136,6 +136,8 @@ open class ProfileLessonsActivity : BaseActivity() {
 
             initLessonsList()
         }
+
+        profileLessonsNoLessonsView.bind { toggleFilter() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -151,8 +153,7 @@ open class ProfileLessonsActivity : BaseActivity() {
 
         val adapter = ProfileLessonsListAdapter(this)
 
-        adapter.setWeekIndex(weekIndex)
-        adapter.setItems(lessonsService.getTeacherLessons(me.id).filter {
+        val lessons = lessonsService.getTeacherLessons(me.id).filter {
             val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(
                     lessonId = it.lesson.id,
                     weekIndex = weekIndex
@@ -164,10 +165,19 @@ open class ProfileLessonsActivity : BaseActivity() {
             ) != null
 
             !filterEnabled || !attendanceFilled || !statusFilled
-        })
+        }
+
+        adapter.setWeekIndex(weekIndex)
+        adapter.setItems(lessons)
 
         profileLessonsListView.adapter = adapter
         profileLessonsListView.setSelectionFromTop(listState.first, listState.second)
+
+        profileLessonsNoLessonsView.visibility = if (lessons.isEmpty() && filterEnabled) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
     }
 
     private fun toggleFilter() {

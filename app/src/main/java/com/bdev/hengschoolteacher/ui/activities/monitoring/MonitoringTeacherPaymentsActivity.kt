@@ -16,6 +16,8 @@ import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_payments.*
 import kotlinx.android.synthetic.main.view_item_monitoring_teacher_payments.view.*
 import org.androidannotations.annotations.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 @EViewGroup(R.layout.view_item_monitoring_teacher_payments)
 open class MonitoringTeacherPaymentsItemView : RelativeLayout {
@@ -37,6 +39,10 @@ open class MonitoringTeacherPaymentsItemView : RelativeLayout {
         monitoringTeacherPaymentsItemStudentView.text = studentsService.getStudent(
                 studentPayment.studentId
         )?.name ?: "?"
+
+        monitoringTeacherPaymentsItemDateView.text = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.US).format(
+                Date(studentPayment.time)
+        )
 
         return this
     }

@@ -6,16 +6,18 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.util.AttributeSet
+import android.view.View
+import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.service.*
-import com.bdev.hengschoolteacher.ui.activities.*
+import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.*
+import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
@@ -31,10 +33,10 @@ open class LessonStudentItemView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(student: Student, group: Group, lesson: Lesson, weekIndex: Int): LessonStudentItemView {
+    fun bind(student: Student, lesson: Lesson, weekIndex: Int): LessonStudentItemView {
         nameView.text = student.name
 
-        bindAttendance(student, group, lesson, weekIndex)
+        bindAttendance(student, lesson, weekIndex)
         bindCall(student, weekIndex)
         bindPayment(student, weekIndex)
 
@@ -71,7 +73,7 @@ open class LessonStudentItemView : RelativeLayout {
         }
     }
 
-    private fun bindAttendance(student: Student, group: Group, lesson: Lesson, weekIndex: Int) {
+    private fun bindAttendance(student: Student, lesson: Lesson, weekIndex: Int) {
         val attendanceType = studentsAttendanceService.getAttendance(lesson.id, student.id, weekIndex)
 
         val colorId = when (attendanceType) {
@@ -86,7 +88,6 @@ open class LessonStudentItemView : RelativeLayout {
         attendanceView.setOnClickListener {
             redirect(context as BaseActivity)
                     .to(LessonStudentAttendanceActivity_::class.java)
-                    .withExtra(LessonStudentAttendanceActivity.EXTRA_GROUP_ID, group.id)
                     .withExtra(LessonStudentAttendanceActivity.EXTRA_LESSON_ID, lesson.id)
                     .withExtra(LessonStudentAttendanceActivity.EXTRA_STUDENT_ID, student.id)
                     .withExtra(LessonStudentAttendanceActivity.EXTRA_WEEK_INDEX, weekIndex)
@@ -96,12 +97,27 @@ open class LessonStudentItemView : RelativeLayout {
     }
 }
 
+class LessonStudentsListAdapter(val lesson: Lesson, val weekIndex: Int, context: Context) : BaseItemsListAdapter<Student>(context) {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        return if (convertView == null) {
+            LessonStudentItemView_.build(context)
+        } else {
+            convertView as LessonStudentItemView
+        }.bind(
+                student = getItem(position),
+                lesson = lesson,
+                weekIndex = weekIndex
+        )
+    }
+}
+
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_lesson)
 open class LessonActivity : BaseActivity() {
     companion object {
         const val REQUEST_CODE_LESSON_ATTENDANCE = 1
         const val REQUEST_CODE_LESSON_STATUS = 2
+        const val REQUEST_CODE_LESSON_TRANSFER = 3
 
         const val EXTRA_GROUP_ID = "EXTRA_GROUP_ID"
         const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
@@ -185,11 +201,22 @@ open class LessonActivity : BaseActivity() {
                     .goForResult(LessonActivity.REQUEST_CODE_LESSON_STATUS)
         }
 
-        studentsContainerView.removeAllViews()
-
-        students.forEach {
-            studentsContainerView.addView(LessonStudentItemView_.build(this).bind(it, group, lesson, weekIndex))
+        lessonAddTransferView.setOnClickListener {
+            LessonTransferActivity.redirect(
+                    context = this,
+                    groupId = groupId,
+                    lessonId = lessonId,
+                    weekIndex = weekIndex
+            )
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .goForResult(LessonActivity.REQUEST_CODE_LESSON_TRANSFER)
         }
+
+        val adapter = LessonStudentsListAdapter(lesson, weekIndex, this)
+
+        adapter.setItems(students)
+
+        lessonStudentsListView.adapter = adapter
     }
 
     override fun onBackPressed() {

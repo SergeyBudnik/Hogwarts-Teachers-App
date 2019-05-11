@@ -42,6 +42,7 @@ open class LoadingActivity : BaseActivity() {
         val loadTeachersPromise = schoolDataAsyncService.loadTeachers()
         val loadStudentsAttendancesPromise = schoolDataAsyncService.loadStudentsAttendances()
         val loadStudentsPaymentsPromise = schoolDataAsyncService.loadStudentsPayments()
+        val loadLessonsTransferPromise = schoolDataAsyncService.loadLessonsTransfers()
 
         loadPromise
                 .and(loadStudentsPromise)
@@ -49,6 +50,7 @@ open class LoadingActivity : BaseActivity() {
                 .and(loadTeachersPromise)
                 .and(loadStudentsAttendancesPromise)
                 .and(loadStudentsPaymentsPromise)
+                .and(loadLessonsTransferPromise)
                 .onSuccess { runOnUiThread { doRedirect() } }
                 .onAuthFail { runOnUiThread { onLoadingAuthFailure() } }
                 .onOtherFail { runOnUiThread { onLoadingOtherFailure() } }

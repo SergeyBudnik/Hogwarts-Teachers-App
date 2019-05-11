@@ -127,6 +127,6 @@
     <!-- Android colors -->
 
     <color name="colorPrimary">@color/fill_accent_strong</color>
-    <color name="colorPrimaryDark">@color/fill_contrast_strong</color>
+    <color name="colorPrimaryDark">@color/fill_contrast_base</color>
     <color name="colorAccent">@color/fill_accent_base</color>
 </resources>

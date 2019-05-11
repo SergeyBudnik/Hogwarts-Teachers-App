@@ -23,75 +23,96 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                android:id="@+id/studentPaymentNameView"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_1"
-                android:layout_marginStart="@dimen/app_size_1"
-                android:layout_marginEnd="@dimen/app_size_1"
-                android:paddingTop="@dimen/app_size_1"
                 android:paddingBottom="@dimen/app_size_1"
-                android:paddingStart="@dimen/app_size_2"
-                android:paddingEnd="@dimen/app_size_2"
-                android:textColor="@color/fill_text_basic_accent"
-                android:textSize="@dimen/font_large"
-                android:background="@drawable/layout_row"
-                android:backgroundTint="@color/alt_contrast_light"/>
+                android:paddingLeft="@dimen/app_size_1"
+                android:paddingRight="@dimen/app_size_1"
+                android:background="@color/fill_contrast_base">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_2"
-                android:layout_marginStart="@dimen/app_size_2"
-                android:layout_marginEnd="@dimen/app_size_2">
-
-                <EditText
-                    android:id="@+id/studentPaymentAmountView"
+                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                    android:id="@+id/studentPaymentNameView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/app_size_1"
                     android:paddingBottom="@dimen/app_size_1"
-                    android:gravity="center"
-                    android:inputType="numberDecimal"
-                    android:hint="Введите сумму"
-                    android:textColor="@color/fill_text_basic_positive"
-                    android:textColorHint="@color/fill_text_basic_light"
+                    android:paddingStart="@dimen/app_size_2"
+                    android:paddingEnd="@dimen/app_size_2"
+                    android:textColor="@color/fill_text_basic_accent"
                     android:textSize="@dimen/font_large"
-                    android:background="@drawable/layout_edit_text"/>
+                    android:background="@drawable/layout_row"
+                    android:backgroundTint="@color/alt_contrast_light"/>
 
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/studentPaymentAddPaymentContainerView"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/app_size_1_5"
-                    android:gravity="center"
-                    android:text="₽"
-                    android:textColor="@color/fill_text_basic"
-                    android:textSize="@dimen/font_large"/>
+                    android:layout_alignParentBottom="true"
+                    android:paddingTop="@dimen/app_size_2"
+                    android:paddingBottom="@dimen/app_size_2"
+                    android:paddingStart="@dimen/app_size_1"
+                    android:paddingEnd="@dimen/app_size_1"
+                    android:background="@color/fill_contrast_base">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/studentPaymentAmountView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/app_size_1"
+                            android:paddingBottom="@dimen/app_size_1"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:hint="Введите сумму"
+                            android:textColor="@color/fill_text_basic_positive"
+                            android:textColorHint="@color/fill_text_basic_light"
+                            android:textSize="@dimen/font_large"
+                            android:background="@drawable/layout_edit_text"/>
+
+                        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/app_size_1_5"
+                            android:gravity="center"
+                            android:text="₽"
+                            android:textColor="@color/fill_text_basic"
+                            android:textSize="@dimen/font_large"/>
+
+                    </RelativeLayout>
+
+                    <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+                        android:id="@+id/studentPaymentAddPaymentView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/app_size_1"
+                        app:button_style="primary_style"
+                        app:button_text="Добавить"/>
+
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/studentPaymentItemsListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/studentPaymentAddPaymentContainerView"
+                    android:divider="@null"
+                    android:dividerHeight="@dimen/app_size_0_5"/>
 
             </RelativeLayout>
-
-            <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
-                android:id="@+id/studentPaymentAddPaymentView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_1"
-                android:layout_marginStart="@dimen/app_size_2"
-                android:layout_marginEnd="@dimen/app_size_2"
-                app:button_style="primary_style"
-                app:button_text="Добавить"/>
-
-            <ListView
-                android:id="@+id/studentPaymentItemsListView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_2"
-                android:paddingStart="@dimen/app_size_1"
-                android:paddingEnd="@dimen/app_size_1"
-                android:divider="@null"
-                android:dividerHeight="@dimen/app_size_0_5"/>
 
         </LinearLayout>
 

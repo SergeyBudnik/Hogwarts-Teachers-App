@@ -24,55 +24,68 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonInfoView_
-                android:id="@+id/lessonTimeView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_1"
-                android:layout_marginStart="@dimen/app_size_1"
-                android:layout_marginEnd="@dimen/app_size_1"/>
-
-            <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
-                android:id="@+id/lessonTeacherInfoView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_1"
-                android:layout_marginStart="@dimen/app_size_1"
-                android:layout_marginEnd="@dimen/app_size_1"/>
-
-            <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
-                android:id="@+id/lessonMarkStatusView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_1"
-                android:layout_marginStart="@dimen/app_size_1"
-                android:layout_marginEnd="@dimen/app_size_1"
-                app:button_text="Отметить статус занятия"
-                app:button_style="primary_style"/>
-
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/app_size_0_5">
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/app_size_1"
+                android:background="@color/fill_contrast_base">
 
-                <ScrollView
+                <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonInfoView_
+                    android:id="@+id/lessonTimeView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/app_size_1"
+                    android:layout_marginEnd="@dimen/app_size_1"/>
 
-                    <LinearLayout
-                        android:id="@+id/studentsContainerView"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
+                <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
+                    android:id="@+id/lessonTeacherInfoView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_size_0_5"
+                    android:layout_marginStart="@dimen/app_size_1"
+                    android:layout_marginEnd="@dimen/app_size_1"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_size_1"
+                    android:layout_marginStart="@dimen/app_size_1"
+                    android:layout_marginEnd="@dimen/app_size_1"
+                    android:weightSum="2">
+
+                    <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+                        android:id="@+id/lessonMarkStatusView"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/app_size_1"
-                        android:layout_marginEnd="@dimen/app_size_1">
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/app_size_0_5"
+                        app:button_text="Отметить статус"
+                        app:button_style="primary_style"/>
 
-                    </LinearLayout>
+                    <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+                        android:id="@+id/lessonAddTransferView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/app_size_0_5"
+                        app:button_text="Перенести"
+                        app:button_style="default_style"/>
 
-                </ScrollView>
+                </LinearLayout>
 
             </LinearLayout>
+
+            <ListView
+                android:id="@+id/lessonStudentsListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="@dimen/app_size_0_5"
+                android:paddingBottom="@dimen/app_size_0_5"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
 
         </LinearLayout>
 

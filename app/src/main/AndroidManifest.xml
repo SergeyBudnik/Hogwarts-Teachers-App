@@ -49,6 +49,7 @@
 
         <activity android:name=".ui.activities.lesson.LessonActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.lesson.LessonStatusActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.lesson.LessonTransferActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.lesson.LessonStudentAttendanceActivity_" android:screenOrientation="sensorPortrait"/>
 
         <activity android:name=".ui.activities.actions.ActionsEventsListActivity_" android:screenOrientation="sensorPortrait"/>

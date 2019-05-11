@@ -24,6 +24,8 @@ open class SchoolDataAsyncService : CommonAsyncService() {
     lateinit var lessonStatusRest: LessonStatusRest
     @RestService
     lateinit var usersRequestsRest: UsersRequestsRest
+    @RestService
+    lateinit var lessonsTransferRest: LessonsTransferRest
 
     @Bean
     lateinit var authService: AuthService
@@ -42,6 +44,8 @@ open class SchoolDataAsyncService : CommonAsyncService() {
     lateinit var lessonStatusService: LessonStatusService
     @Bean
     lateinit var usersRequestsService: UsersRequestsService
+    @Bean
+    lateinit var lessonsTransferStorageService: LessonsTransferStorageService
 
     fun load(): SmartPromise<Unit, Exception> {
         return smartTask {
@@ -104,6 +108,16 @@ open class SchoolDataAsyncService : CommonAsyncService() {
 
             studentsAttendancesService.setAttendances(
                     studentsAttendancesRest.getStudentsAttendances()
+            )
+        }
+    }
+
+    fun loadLessonsTransfers(): SmartPromise<Unit, Exception> {
+        return smartTask {
+            authenticateAll(listOf(lessonsTransferRest), authService.getAuthInfo())
+
+            lessonsTransferStorageService.setLessonsTransfers(
+                lessonsTransferRest.getAllLessonsTransfers()
             )
         }
     }

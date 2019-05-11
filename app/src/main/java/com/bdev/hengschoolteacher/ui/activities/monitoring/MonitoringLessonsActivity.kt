@@ -124,6 +124,10 @@ open class MonitoringLessonsActivity : BaseActivity() {
 
             initLessonsList()
         }
+
+        monitoringLessonsNoLessonsView.bind {
+            toggleFilter()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -161,6 +165,12 @@ open class MonitoringLessonsActivity : BaseActivity() {
         adapter.setWeekIndex(weekIndex)
 
         monitoringLessonsListView.adapter = adapter
+
+        monitoringLessonsNoLessonsView.visibility = if (lessons.isEmpty() && filterEnabled) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
     }
 
     private fun toggleFilter() {

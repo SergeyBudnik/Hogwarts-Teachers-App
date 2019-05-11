@@ -23,27 +23,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonInfoView_
-                android:id="@+id/lessonStatusLessonTimeView"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_1"
-                android:layout_marginStart="@dimen/app_size_1"
-                android:layout_marginEnd="@dimen/app_size_1"/>
+                android:background="@color/fill_contrast_base"
+                android:paddingBottom="@dimen/app_size_1">
 
-            <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
-                android:id="@+id/lessonStatusTeacherInfoView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_0_5"
-                android:layout_marginStart="@dimen/app_size_1"
-                android:layout_marginEnd="@dimen/app_size_1"/>
+                <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonInfoView_
+                    android:id="@+id/lessonStatusLessonTimeView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/app_size_1"
+                    android:layout_marginEnd="@dimen/app_size_1"/>
+
+                <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
+                    android:id="@+id/lessonStatusTeacherInfoView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_size_0_5"
+                    android:layout_marginStart="@dimen/app_size_1"
+                    android:layout_marginEnd="@dimen/app_size_1"/>
+
+            </LinearLayout>
 
             <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView_
                 android:id="@+id/lessonStatusPassedView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_1_5"
+                android:layout_marginTop="@dimen/app_size_1"
                 android:layout_marginStart="@dimen/app_size_1"
                 android:layout_marginEnd="@dimen/app_size_1"/>
 
