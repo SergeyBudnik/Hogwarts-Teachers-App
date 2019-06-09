@@ -18,8 +18,7 @@
 
     <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView_
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:monitoring_item="monitoring_payments"/>
+        android:layout_height="wrap_content"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
         android:id="@+id/monitoringPaymentsMenuLayoutView"

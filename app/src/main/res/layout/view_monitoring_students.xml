@@ -15,19 +15,19 @@
     android:backgroundTint="@color/alt_contrast_light">
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-        android:id="@+id/monitoringPaymentsItemNameView"
+        android:id="@+id/monitoringStudentsItemNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_large"
         android:textColor="@color/fill_text_basic"/>
 
-    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-        android:id="@+id/monitoringPaymentsItemDeptView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/monitoringStudentsItemMarkView"
+        android:layout_width="@dimen/app_size_1_5"
+        android:layout_height="@dimen/app_size_1_5"
+        android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:text="2000 Р"
-        android:textColor="@color/fill_text_basic_negative"
-        android:textSize="@dimen/font_large"/>
+        android:src="@drawable/ic_alert"
+        android:tint="@color/fill_text_basic_negative"/>
 
 </RelativeLayout>

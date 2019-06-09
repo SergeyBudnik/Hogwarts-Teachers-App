@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.TeachersService
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.service.UserPreferencesService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoadingActivity_
@@ -71,7 +71,7 @@ open class AppMenuView : LinearLayout {
     @Bean
     lateinit var userPreferencesService: UserPreferencesService
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -80,7 +80,7 @@ open class AppMenuView : LinearLayout {
     fun init() {
         if (!isInEditMode) {
             val login = userPreferencesService.getUserLogin() ?: throw RuntimeException()
-            val teacher = teachersService.getTeacherByLogin(login) ?: throw RuntimeException()
+            val teacher = teacherStorageService.getTeacherByLogin(login) ?: throw RuntimeException()
 
             teacherNameView.text = teacher.name
             teacherLoginView.text = login

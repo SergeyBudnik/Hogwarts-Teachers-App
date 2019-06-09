@@ -15,9 +15,9 @@
         app:leftIcon="@drawable/ic_menu"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView_
+        android:id="@+id/monitoringTeachersSecondaryHeaderView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:monitoring_item="monitoring_salaries"/>
+        android:layout_height="wrap_content" />
 
     <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
         android:id="@+id/monitoringTeachersMenuLayoutView"

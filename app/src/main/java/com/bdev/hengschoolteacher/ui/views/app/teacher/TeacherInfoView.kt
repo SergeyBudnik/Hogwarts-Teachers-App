@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.TeachersService
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity_
@@ -17,13 +17,13 @@ import java.lang.RuntimeException
 @EViewGroup(R.layout.view_teacher_info)
 open class TeacherInfoView : LinearLayout {
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(teacherId: Long) {
-        teacherInfoNameView.text = teachersService.getTeacherById(teacherId)?.name ?: throw RuntimeException()
+        teacherInfoNameView.text = teacherStorageService.getTeacherById(teacherId)?.name ?: throw RuntimeException()
 
         setOnClickListener {
             redirect(context as BaseActivity)

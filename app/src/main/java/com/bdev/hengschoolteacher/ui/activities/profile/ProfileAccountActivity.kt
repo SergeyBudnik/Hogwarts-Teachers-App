@@ -3,7 +3,7 @@ package com.bdev.hengschoolteacher.ui.activities.profile
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.TeachersService
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.service.UserPreferencesService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoginActivity_
@@ -20,7 +20,7 @@ open class ProfileAccountActivity : BaseActivity() {
     @Bean
     lateinit var userPreferencesService: UserPreferencesService
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
     @Bean
     lateinit var authService: AuthService
 
@@ -31,7 +31,7 @@ open class ProfileAccountActivity : BaseActivity() {
         profileAccountMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
 
         val login = userPreferencesService.getUserLogin() ?: throw RuntimeException()
-        val teacher = teachersService.getTeacherByLogin(login) ?: throw RuntimeException()
+        val teacher = teacherStorageService.getTeacherByLogin(login) ?: throw RuntimeException()
 
         profileAccountNameView.text = teacher.name
         profileAccountLoginView.text = login

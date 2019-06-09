@@ -148,7 +148,8 @@ open class MonitoringStudentPaymentActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        monitoringStudentPaymentHeaderView.setFirstRightButtonAction { doFinish() }
+        monitoringStudentPaymentHeaderView
+                .setLeftButtonAction { doFinish() }
 
         val allAttendances = studentsAttendancesService.getAllStudentAttendances(studentId)
         val allPayableAttendances = allAttendances.filter { it.type != StudentAttendance.Type.VALID_SKIP }

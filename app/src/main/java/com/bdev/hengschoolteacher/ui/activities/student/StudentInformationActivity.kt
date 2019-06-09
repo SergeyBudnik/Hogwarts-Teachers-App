@@ -85,8 +85,6 @@ open class StudentInformationActivity : BaseActivity() {
 
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
-        studentInformationSecondaryHeaderView.bind(student)
-
         studentNameView.text = student.name
 
         studentInformationCallView.setOnClickListener {

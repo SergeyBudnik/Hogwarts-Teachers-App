@@ -13,12 +13,15 @@ import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.service.*
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity_
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
+import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
+import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_lessons.*
 import kotlinx.android.synthetic.main.view_item_monitoring_lessons.view.*
 import org.androidannotations.annotations.AfterViews
@@ -34,7 +37,7 @@ open class MonitoringLessonItemView : RelativeLayout {
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
     @Bean
     lateinit var studentsService: StudentsService
 
@@ -56,7 +59,7 @@ open class MonitoringLessonItemView : RelativeLayout {
                     .goForResult(MonitoringLessonsActivity.REQUEST_CODE_LESSON)
         }
 
-        teacherView.text = (teachersService.getTeacherById(lesson.teacherId) ?: throw RuntimeException()).name
+        teacherView.text = (teacherStorageService.getTeacherById(lesson.teacherId) ?: throw RuntimeException()).name
 
         return this
     }
@@ -115,6 +118,8 @@ open class MonitoringLessonsActivity : BaseActivity() {
                 .setFirstRightButtonColor(getHeaderButtonColor(filterEnabled))
                 .setSecondRightButtonAction { toggleCalendar() }
                 .setSecondRightButtonColor(getHeaderButtonColor(calendarEnabled))
+
+        monitoringLessonsSecondaryHeaderView.bind(currentItem = MonitoringHeaderView.Item.LESSONS)
 
         monitoringLessonsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
@@ -195,6 +200,6 @@ open class MonitoringLessonsActivity : BaseActivity() {
     }
 
     private fun getHeaderButtonColor(enabled: Boolean): Int {
-        return resources.getColor(if (enabled) { R.color.fill_text_basic_action_link } else { R.color.fill_text_basic })
+        return HeaderElementsUtils.getColor(this, enabled)
     }
 }

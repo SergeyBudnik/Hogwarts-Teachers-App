@@ -5,9 +5,11 @@ import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.LessonStatusService
 import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.TeachersService
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.service.UserPreferencesService
+import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_profile_payment.*
 import org.androidannotations.annotations.AfterViews
@@ -20,15 +22,15 @@ open class ProfilePaymentActivity : BaseActivity() {
     @Bean
     lateinit var userPreferencesService: UserPreferencesService
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
+    @Bean
+    lateinit var profileService: ProfileService
     @Bean
     lateinit var lessonStatusService: LessonStatusService
     @Bean
     lateinit var lessonsService: LessonsService
 
     private var calendarEnabled = false
-
-    private var weekIndex = 0
 
     @AfterViews
     fun init() {
@@ -39,12 +41,12 @@ open class ProfilePaymentActivity : BaseActivity() {
 
         profilePaymentMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
 
-        val me = teachersService.getTeacherMe()
+        val me = profileService.getMe()
 
-        profilePaymentWeekSelectionBarView.init { weekIndex ->
-            this.weekIndex = weekIndex
-
-            profilePaymentTeacherSalaryView.init(me.id, weekIndex)
+        if (me != null) {
+            profilePaymentWeekSelectionBarView.init { weekIndex ->
+                profilePaymentTeacherSalaryView.init(me.id, weekIndex)
+            }
         }
     }
 
@@ -61,6 +63,6 @@ open class ProfilePaymentActivity : BaseActivity() {
     }
 
     private fun getHeaderButtonColor(enabled: Boolean): Int {
-        return resources.getColor(if (enabled) { R.color.fill_text_basic_action_link } else { R.color.fill_text_basic })
+        return HeaderElementsUtils.getColor(this, enabled)
     }
 }

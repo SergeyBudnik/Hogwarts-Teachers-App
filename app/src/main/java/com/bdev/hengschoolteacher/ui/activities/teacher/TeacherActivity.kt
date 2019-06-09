@@ -2,7 +2,7 @@ package com.bdev.hengschoolteacher.ui.activities.teacher
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.TeachersService
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView_
@@ -31,13 +31,13 @@ open class TeacherActivity : BaseActivity() {
     var teacherId = 0L
 
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
 
     @AfterViews
     fun init() {
         teacherHeaderView.setLeftButtonAction { doFinish() }
 
-        val teacher = teachersService.getTeacherById(teacherId) ?: throw RuntimeException()
+        val teacher = teacherStorageService.getTeacherById(teacherId) ?: throw RuntimeException()
 
         teacherNameView.text = teacher.name
 

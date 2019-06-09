@@ -9,7 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.teacher.Teacher
-import com.bdev.hengschoolteacher.service.TeachersService
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
@@ -65,7 +65,7 @@ open class TeachersListAdapter : BaseAdapter() {
 @EActivity(R.layout.activity_teachers_list)
 open class TeachersListActivity : BaseActivity() {
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
 
     @Bean
     lateinit var teachersListAdapter: TeachersListAdapter
@@ -75,7 +75,7 @@ open class TeachersListActivity : BaseActivity() {
         teachersHeaderView.setLeftButtonAction { teachersMenuLayoutView.openMenu() }
         teachersMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.TEACHERS)
 
-        teachersListAdapter.setTeachers(teachersService.getAllTeachers())
+        teachersListAdapter.setTeachers(teacherStorageService.getAllTeachers())
 
         teachersListView.adapter = teachersListAdapter
         teachersListView.setOnItemClickListener { adapterView, _, position, _ ->

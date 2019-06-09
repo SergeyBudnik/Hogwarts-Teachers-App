@@ -13,6 +13,8 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
 import com.bdev.hengschoolteacher.data.school.student_payment.StudentPaymentInfo
 import com.bdev.hengschoolteacher.service.*
+import com.bdev.hengschoolteacher.service.profile.ProfileService
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity_
@@ -27,7 +29,7 @@ import java.util.*
 @EViewGroup(R.layout.view_student_payment_item)
 open class StudentPaymentItemView : RelativeLayout {
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -41,7 +43,7 @@ open class StudentPaymentItemView : RelativeLayout {
     }
 
     private fun initTeachers(studentPayment: StudentPayment) {
-        val teacher = teachersService.getTeacherById(studentPayment.teacherId)
+        val teacher = teacherStorageService.getTeacherById(studentPayment.teacherId)
 
         studentPaymentItemTeacherView.text = teacher
                 ?.name
@@ -125,7 +127,9 @@ open class StudentPaymentActivity : BaseActivity() {
     @Bean
     lateinit var studentPaymentsService: StudentsPaymentsService
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
+    @Bean
+    lateinit var profileService: ProfileService
 
     @Bean
     lateinit var studentsPaymentAsyncService: StudentsPaymentAsyncService
@@ -159,20 +163,23 @@ open class StudentPaymentActivity : BaseActivity() {
     private fun addPayment(student: Student) {
         KeyboardUtils.hideKeyboard(this)
 
+        val me = profileService.getMe()
         val amount = studentPaymentAmountView.text.toString().toLong()
         val lessonStartTime = Date().time
 
-        studentsPaymentAsyncService
-                .addPayment(StudentPaymentInfo(
-                        amount,
-                        student.id,
-                        teachersService.getTeacherMe().id,
-                        lessonStartTime,
-                        false
-                ))
-                .onSuccess { runOnUiThread { onPaymentMarkSuccess() } }
-                .onAuthFail { println("AUTH") }
-                .onOtherFail { println("FAIL") }
+        if (me != null) {
+            studentsPaymentAsyncService
+                    .addPayment(StudentPaymentInfo(
+                            amount,
+                            student.id,
+                            me.id,
+                            lessonStartTime,
+                            false
+                    ))
+                    .onSuccess { runOnUiThread { onPaymentMarkSuccess() } }
+                    .onAuthFail { println("AUTH") }
+                    .onOtherFail { println("FAIL") }
+        }
     }
 
     private fun onPaymentMarkSuccess() {

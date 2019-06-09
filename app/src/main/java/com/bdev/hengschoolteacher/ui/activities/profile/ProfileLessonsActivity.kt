@@ -14,6 +14,7 @@ import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.teacher.Teacher
 import com.bdev.hengschoolteacher.service.*
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
@@ -102,7 +103,7 @@ open class ProfileLessonsActivity : BaseActivity() {
     @Bean
     lateinit var studentsService: StudentsService
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
     @Bean
     lateinit var userPreferencesService: UserPreferencesService
     @Bean
@@ -121,7 +122,7 @@ open class ProfileLessonsActivity : BaseActivity() {
     fun init() {
         val login = userPreferencesService.getUserLogin() ?: throw RuntimeException()
 
-        me = teachersService.getTeacherByLogin(login) ?: throw RuntimeException()
+        me = teacherStorageService.getTeacherByLogin(login) ?: throw RuntimeException()
 
         profileLessonsHeaderView
                 .setLeftButtonAction { profileLessonsMenuLayoutView.openMenu() }

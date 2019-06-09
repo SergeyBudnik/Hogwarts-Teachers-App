@@ -17,9 +17,9 @@
         app:secondRightIcon="@drawable/ic_calendar"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView_
+        android:id="@+id/monitoringLessonsSecondaryHeaderView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:monitoring_item="monitoring_lessons"/>
+        android:layout_height="wrap_content"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
         android:id="@+id/monitoringLessonsMenuLayoutView"
@@ -51,7 +51,8 @@
                 android:id="@+id/monitoringLessonsNoLessonsView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_5"/>
+                android:layout_marginTop="@dimen/app_size_5"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 

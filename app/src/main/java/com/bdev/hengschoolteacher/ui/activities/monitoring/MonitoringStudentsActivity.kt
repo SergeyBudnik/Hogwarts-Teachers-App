@@ -20,7 +20,7 @@ import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_monitoring_students.*
-import kotlinx.android.synthetic.main.view_monitoring_payments_item.view.*
+import kotlinx.android.synthetic.main.view_monitoring_students.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
@@ -31,25 +31,24 @@ class StudentInfo(
     val dept: Long
 )
 
-@EViewGroup(R.layout.view_monitoring_payments_item)
-open class MonitoringPaymentsItemView : RelativeLayout {
+@EViewGroup(R.layout.view_monitoring_students)
+open class MonitoringStudentsItemView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(studentInfo: StudentInfo) {
-        monitoringPaymentsItemNameView.text = studentInfo.student.name
+        monitoringStudentsItemNameView.text = studentInfo.student.name
 
-        monitoringPaymentsItemDeptView.visibility = if (studentInfo.dept > 0) { View.VISIBLE } else { View.GONE }
-        monitoringPaymentsItemDeptView.text = "${studentInfo.dept} Р"
+        monitoringStudentsItemMarkView.visibility = if (studentInfo.dept > 0) { View.VISIBLE } else { View.GONE }
     }
 }
 
 private class MonitoringStudentsListAdapter(context: Context) : BaseItemsListAdapter<StudentInfo>(context) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
         val v = if (convertView == null) {
-            MonitoringPaymentsItemView_.build(context)
+            MonitoringStudentsItemView_.build(context)
         } else {
-            convertView as MonitoringPaymentsItemView
+            convertView as MonitoringStudentsItemView
         }
 
         v.bind(getItem(position))

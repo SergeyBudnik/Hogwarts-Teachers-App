@@ -76,15 +76,6 @@
         </attr>
     </declare-styleable>
 
-    <!-- Student -->
-
-    <declare-styleable name="StudentHeaderView">
-        <attr name="student_item" format="enum">
-            <enum name="student_information" value="1"/>
-            <enum name="student_payment" value="2"/>
-        </attr>
-    </declare-styleable>
-
     <!-- Profile -->
 
     <declare-styleable name="ProfileHeaderView">
@@ -114,14 +105,6 @@
     </declare-styleable>
 
     <!-- Monitoring -->
-
-    <declare-styleable name="MonitoringHeaderView">
-        <attr name="monitoring_item" format="enum">
-            <enum name="monitoring_lessons" value="1"/>
-            <enum name="monitoring_salaries" value="2"/>
-            <enum name="monitoring_payments" value="3"/>
-        </attr>
-    </declare-styleable>
 
     <declare-styleable name="MonitoringTeacherHeaderView">
         <attr name="monitoring_teacher_item" format="enum">

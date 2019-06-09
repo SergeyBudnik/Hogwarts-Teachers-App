@@ -14,12 +14,6 @@
         app:title="Студент"
         app:leftIcon="@drawable/ic_arrow_left"/>
 
-    <com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderView_
-        android:id="@+id/studentInformationSecondaryHeaderView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:student_item="student_information"/>
-
     <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
         android:id="@+id/studentInformationMenuLayoutView"
         android:layout_width="match_parent"

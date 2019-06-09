@@ -11,7 +11,8 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.service.GroupsService
 import com.bdev.hengschoolteacher.service.StudentsService
-import com.bdev.hengschoolteacher.service.TeachersService
+import com.bdev.hengschoolteacher.service.profile.ProfileService
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
@@ -27,7 +28,9 @@ open class StudentsGroupsListItemView : LinearLayout {
     @Bean
     lateinit var studentsService: StudentsService
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
+    @Bean
+    lateinit var profileService: ProfileService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -48,15 +51,17 @@ open class StudentsGroupsListItemView : LinearLayout {
     }
 
     private fun setBackground(group: Group) {
-        val me = teachersService.getTeacherMe()
+        val me = profileService.getMe()
 
-        val isMyGroup = group.lessons.filter { it.teacherId == me.id }.any()
+        if (me != null) {
+            val isMyGroup = group.lessons.filter { it.teacherId == me.id }.any()
 
-        val colorId = if (isMyGroup) { R.color.status_info_subtle } else { R.color.alt_contrast_light }
+            val colorId = if (isMyGroup) { R.color.status_info_subtle } else { R.color.alt_contrast_light }
 
-        studentsGroupsItemView.backgroundTintList = ColorStateList.valueOf(
-                resources.getColor(colorId)
-        )
+            studentsGroupsItemView.backgroundTintList = ColorStateList.valueOf(
+                    resources.getColor(colorId)
+            )
+        }
     }
 }
 
@@ -78,37 +83,39 @@ open class StudentsGroupsListActivity : BaseActivity() {
     @Bean
     lateinit var studentsService: StudentsService
     @Bean
-    lateinit var teachersService: TeachersService
-
-    private lateinit var adapter: StudentsGroupsListAdapter
+    lateinit var teacherStorageService: TeacherStorageService
+    @Bean
+    lateinit var profileService: ProfileService
 
     @AfterViews
     fun init() {
-        val me = teachersService.getTeacherMe()
-
         studentsGroupsHeaderView
                 .setLeftButtonAction { studentsGroupsMenuLayoutView.openMenu() }
                 .setFirstRightButtonAction { studentsGroupsHeaderSearchView.show() }
 
         studentsGroupsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.STUDENTS)
 
-        adapter = StudentsGroupsListAdapter(this)
+        val me = profileService.getMe()
 
-        adapter.setItems(groupsService
-                .getGroups()
-                .sortedByDescending { group -> group.lessons.filter { it.teacherId == me.id }.any() }
-        )
+        if (me != null) {
+            val adapter = StudentsGroupsListAdapter(this)
 
-        studentsGroupsListView.adapter = adapter
+            adapter.setItems(groupsService
+                    .getGroups()
+                    .sortedByDescending { group -> group.lessons.filter { it.teacherId == me.id }.any() }
+            )
 
-        studentsGroupsHeaderSearchView.addOnTextChangeListener { filter ->
-            adapter.setFilter { group ->
-                val groupStudents = studentsService.getGroupStudents(group.id)
+            studentsGroupsListView.adapter = adapter
 
-                return@setFilter groupStudents.filter { it.name.toLowerCase().contains(filter.toLowerCase()) }.any()
+            studentsGroupsHeaderSearchView.addOnTextChangeListener { filter ->
+                adapter.setFilter { group ->
+                    val groupStudents = studentsService.getGroupStudents(group.id)
+
+                    return@setFilter groupStudents.filter { it.name.toLowerCase().contains(filter.toLowerCase()) }.any()
+                }
+
+                adapter.notifyDataSetChanged()
             }
-
-            adapter.notifyDataSetChanged()
         }
     }
 }

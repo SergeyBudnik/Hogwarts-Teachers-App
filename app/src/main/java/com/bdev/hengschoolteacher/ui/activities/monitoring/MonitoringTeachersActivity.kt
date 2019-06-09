@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.teacher.Teacher
-import com.bdev.hengschoolteacher.service.TeachersService
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
+import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_teachers.*
 import kotlinx.android.synthetic.main.view_monitoring_teachers_item.view.*
 import org.androidannotations.annotations.AfterViews
@@ -46,18 +47,20 @@ class MonitoringTeachersListAdapter(context: Context) : BaseItemsListAdapter<Tea
 @EActivity(R.layout.activity_monitoring_teachers)
 open class MonitoringTeachersActivity : BaseActivity() {
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
 
     @AfterViews
     fun init() {
         monitoringTeachersHeaderView
                 .setLeftButtonAction { monitoringTeachersMenuLayoutView.openMenu() }
 
+        monitoringTeachersSecondaryHeaderView.bind(currentItem = MonitoringHeaderView.Item.SALARIES)
+
         monitoringTeachersMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
         val adapter = MonitoringTeachersListAdapter(this)
 
-        adapter.setItems(teachersService.getAllTeachers())
+        adapter.setItems(teacherStorageService.getAllTeachers())
 
         monitoringTeachersListView.adapter = adapter
 

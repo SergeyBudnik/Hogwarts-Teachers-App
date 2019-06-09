@@ -4,6 +4,7 @@ import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
 import com.bdev.hengschoolteacher.rest.*
 import com.bdev.hengschoolteacher.service.*
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.rest.spring.annotations.RestService
@@ -39,7 +40,7 @@ open class SchoolDataAsyncService : CommonAsyncService() {
     @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
     @Bean
-    lateinit var teachersService: TeachersService
+    lateinit var teacherStorageService: TeacherStorageService
     @Bean
     lateinit var lessonStatusService: LessonStatusService
     @Bean
@@ -86,7 +87,7 @@ open class SchoolDataAsyncService : CommonAsyncService() {
         return smartTask {
             authenticateAll(listOf(teachersRest), authService.getAuthInfo())
 
-            teachersService.setTeachers(
+            teacherStorageService.setTeachers(
                     teachersRest.getTeachers()
             )
         }
