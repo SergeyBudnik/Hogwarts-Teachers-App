@@ -25,6 +25,7 @@ import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
 import org.androidannotations.annotations.EViewGroup
+import java.util.*
 
 @EViewGroup(R.layout.view_item_monitoring_lessons)
 open class MonitoringLessonItemView : RelativeLayout {
@@ -81,7 +82,7 @@ open class MonitoringLessonsListAdapter(context: Context) : BaseWeekItemsListAda
     }
 
     override fun getElementComparator(): Comparator<GroupAndLesson> {
-        return GroupAndLesson.getComparator()
+        return GroupAndLesson.getComparator(Calendar.getInstance())
     }
 }
 

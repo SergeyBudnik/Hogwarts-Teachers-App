@@ -5,10 +5,9 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringTeacherPaymentsActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringTeacherPaymentsActivity_
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringTeacherSalaryActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringTeacherSalaryActivity_
+import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity_
+import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity
+import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity_
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.view_monitoring_teacher_header.view.*
 import org.androidannotations.annotations.AfterViews
@@ -55,7 +54,7 @@ open class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : 
         monitoringTeacherHeaderPaymentsView.setOnClickListener {
             redirect(context as BaseActivity)
                     .to(MonitoringTeacherPaymentsActivity_::class.java)
-                    .withExtra(MonitoringTeacherPaymentsActivity.EXTRA_TEACHER_ID, teacherId)
+                    .withExtra(MonitoringTeacherSalaryActivity.EXTRA_TEACHER_ID, teacherId)
                     .goAndCloseCurrent()
         }
     }

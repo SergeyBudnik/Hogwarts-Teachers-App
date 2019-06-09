@@ -13,10 +13,12 @@ import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.*
 import com.bdev.hengschoolteacher.ui.activities.lesson.LessonStudentAttendanceActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.activity_student_information.*
 import kotlinx.android.synthetic.main.view_list_item_student_information_timetable.view.*
 import org.androidannotations.annotations.*
+import java.util.*
 
 @EViewGroup(R.layout.view_list_item_student_information_timetable)
 open class StudentInformationTimetableListItemView : LinearLayout {
@@ -47,7 +49,7 @@ class StudentInformationTimetableListAdapter(context: Context) : BaseWeekItemsLi
     }
 
     override fun getElementComparator(): Comparator<GroupAndLesson> {
-        return GroupAndLesson.getComparator()
+        return GroupAndLesson.getComparator(Calendar.getInstance())
     }
 }
 
@@ -56,6 +58,14 @@ class StudentInformationTimetableListAdapter(context: Context) : BaseWeekItemsLi
 open class StudentInformationActivity : BaseActivity() {
     companion object {
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+
+        fun redirect(current: BaseActivity, studentId: Long): RedirectBuilder {
+            return RedirectBuilder
+                    .redirect(current)
+                    .to(StudentInformationActivity_::class.java)
+                    .withExtra(EXTRA_STUDENT_ID, studentId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+        }
     }
 
     @Extra(EXTRA_STUDENT_ID)
@@ -89,9 +99,11 @@ open class StudentInformationActivity : BaseActivity() {
         }
 
         studentInformationPaymentView.setOnClickListener {
-            redirect(this)
-                    .to(StudentPaymentActivity_::class.java)
-                    .withExtra(StudentPaymentActivity.EXTRA_STUDENT_ID, student.id)
+            StudentPaymentActivity
+                    .redirect(
+                            current = this,
+                            studentId = student.id
+                    )
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }

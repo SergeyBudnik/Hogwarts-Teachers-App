@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:id="@+id/nameView"
+            android:id="@+id/lessonStudentItemNameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:textSize="@dimen/font_large"
             android:textColor="@color/fill_text_basic_accent"/>
 
@@ -20,37 +21,29 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_size_0_5">
+            android:layout_alignParentEnd="true">
 
             <ImageView
-                android:id="@+id/callView"
-                android:layout_width="@dimen/app_size_4"
-                android:layout_height="@dimen/app_size_4"
-                android:layout_marginEnd="@dimen/app_size_0_5"
-                android:padding="@dimen/app_size_1"
-                android:src="@drawable/ic_phone"
-                android:tint="@color/fill_text_basic"/>
-
-            <ImageView
-                android:id="@+id/paymentView"
+                android:id="@+id/lessonStudentItemPaymentView"
                 android:layout_width="@dimen/app_size_4"
                 android:layout_height="@dimen/app_size_4"
                 android:layout_marginEnd="@dimen/app_size_0_5"
                 android:padding="@dimen/app_size_1"
                 android:src="@drawable/ic_payment"
-                android:tint="@color/fill_text_basic"/>
+                android:tint="@color/fill_text_basic"
+                android:importantForAccessibility="no"/>
 
             <ImageView
-                android:id="@+id/attendanceView"
+                android:id="@+id/lessonStudentItemAttendanceView"
                 android:layout_width="@dimen/app_size_4"
                 android:layout_height="@dimen/app_size_4"
-                android:layout_marginEnd="@dimen/app_size_0_5"
                 android:padding="@dimen/app_size_1"
                 android:src="@drawable/ic_attendance"
-                android:tint="@color/fill_text_basic"/>
+                android:tint="@color/fill_text_basic"
+                android:importantForAccessibility="no"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </com.bdev.hengschoolteacher.ui.views.branded.BrandedListItemView_>

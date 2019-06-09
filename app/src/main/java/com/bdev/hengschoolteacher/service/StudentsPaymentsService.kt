@@ -2,7 +2,7 @@ package com.bdev.hengschoolteacher.service
 
 import com.bdev.hengschoolteacher.dao.StudentsPaymentsDao
 import com.bdev.hengschoolteacher.dao.StudentsPaymentsModel
-import com.bdev.hengschoolteacher.data.school.student.StudentPayment
+import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
@@ -13,13 +13,18 @@ open class StudentsPaymentsService {
     lateinit var studentsPaymentsDao: StudentsPaymentsDao
 
     fun getAllPayments(): List<StudentPayment> {
-        return studentsPaymentsDao.readValue().studentsPayments
+        return studentsPaymentsDao.readValue().studentsPayments.values.toList()
+    }
+
+    fun getPayment(id: Long): StudentPayment? {
+        return studentsPaymentsDao.readValue().studentsPayments[id]
     }
 
     fun getPayments(studentId: Long): List<StudentPayment> {
         return studentsPaymentsDao
                 .readValue()
                 .studentsPayments
+                .values
                 .asSequence()
                 .filter { it.studentId == studentId }
                 .toList()
@@ -32,6 +37,7 @@ open class StudentsPaymentsService {
         return studentsPaymentsDao
                 .readValue()
                 .studentsPayments
+                .values
                 .asSequence()
                 .filter { it.studentId == studentId }
                 .filter { it.time <= finishTime }
@@ -44,19 +50,23 @@ open class StudentsPaymentsService {
         return studentsPaymentsDao
                 .readValue()
                 .studentsPayments
+                .values
                 .filter { it.teacherId == teacherId }
                 .toList()
     }
 
     fun setPayments(payments: List<StudentPayment>) {
         studentsPaymentsDao.writeValue(StudentsPaymentsModel(
-                payments
+                payments.map { it.id to it }.toMap()
         ))
     }
 
     fun addPayment(payment: StudentPayment) {
         studentsPaymentsDao.writeValue(StudentsPaymentsModel(
-                studentsPaymentsDao.readValue().studentsPayments.union(listOf(payment)).toList()
+                studentsPaymentsDao
+                        .readValue()
+                        .studentsPayments
+                        .plus(Pair(payment.id, payment))
         ))
     }
 }

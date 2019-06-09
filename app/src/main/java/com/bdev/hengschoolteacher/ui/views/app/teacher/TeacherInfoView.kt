@@ -6,8 +6,8 @@ import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.TeachersService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.TeacherActivity
-import com.bdev.hengschoolteacher.ui.activities.TeacherActivity_
+import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
+import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity_
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.view_teacher_info.view.*
 import org.androidannotations.annotations.Bean

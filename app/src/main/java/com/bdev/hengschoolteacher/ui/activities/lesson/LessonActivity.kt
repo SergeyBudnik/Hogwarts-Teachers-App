@@ -34,16 +34,17 @@ open class LessonStudentItemView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(student: Student, lesson: Lesson, weekIndex: Int): LessonStudentItemView {
-        nameView.text = student.name
+        lessonStudentItemNameView.text = student.name
 
         bindAttendance(student, lesson, weekIndex)
-        bindCall(student, weekIndex)
-        bindPayment(student, weekIndex)
+        bindPayment(student)
 
         setOnClickListener {
-            redirect(context as BaseActivity)
-                    .to(StudentInformationActivity_::class.java)
-                    .withExtra(StudentInformationActivity.EXTRA_STUDENT_ID, student.id)
+            StudentInformationActivity
+                    .redirect(
+                            current = context as BaseActivity,
+                            studentId = student.id
+                    )
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }
@@ -51,23 +52,13 @@ open class LessonStudentItemView : RelativeLayout {
         return this
     }
 
-    private fun bindPayment(student: Student, weekIndex: Int) {
-        paymentView.setOnClickListener {
-            redirect(context as BaseActivity)
-                    .to(StudentPaymentActivity_::class.java)
-                    .withExtra(StudentPaymentActivity.EXTRA_STUDENT_ID, student.id)
-                    .withExtra(StudentPaymentActivity.EXTRA_WEEK_INDEX, weekIndex)
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
-        }
-    }
-
-    private fun bindCall(student: Student, weekIndex: Int) {
-        callView.setOnClickListener {
-            redirect(context as BaseActivity)
-                    .to(StudentCallActivity_::class.java)
-                    .withExtra(LessonStudentAttendanceActivity.EXTRA_STUDENT_ID, student.id)
-                    .withExtra(LessonStudentAttendanceActivity.EXTRA_WEEK_INDEX, weekIndex)
+    private fun bindPayment(student: Student) {
+        lessonStudentItemPaymentView.setOnClickListener {
+            StudentPaymentActivity
+                    .redirect(
+                            current = context as BaseActivity,
+                            studentId = student.id
+                    )
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }
@@ -83,14 +74,16 @@ open class LessonStudentItemView : RelativeLayout {
             StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_basic_negative
         }
 
-        attendanceView.setColorFilter(resources.getColor(colorId), PorterDuff.Mode.SRC_IN)
+        lessonStudentItemAttendanceView.setColorFilter(resources.getColor(colorId), PorterDuff.Mode.SRC_IN)
 
-        attendanceView.setOnClickListener {
-            redirect(context as BaseActivity)
-                    .to(LessonStudentAttendanceActivity_::class.java)
-                    .withExtra(LessonStudentAttendanceActivity.EXTRA_LESSON_ID, lesson.id)
-                    .withExtra(LessonStudentAttendanceActivity.EXTRA_STUDENT_ID, student.id)
-                    .withExtra(LessonStudentAttendanceActivity.EXTRA_WEEK_INDEX, weekIndex)
+        lessonStudentItemAttendanceView.setOnClickListener {
+            LessonStudentAttendanceActivity
+                    .redirect(
+                            current = context as BaseActivity,
+                            lessonId = lesson.id,
+                            studentId = student.id,
+                            weekIndex = weekIndex
+                    )
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .goForResult(LessonActivity.REQUEST_CODE_LESSON_ATTENDANCE)
         }
@@ -181,7 +174,6 @@ open class LessonActivity : BaseActivity() {
         val lessonStatus = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId, weekIndex))
 
         lessonTimeView.bind(lesson, weekIndex)
-        lessonTeacherInfoView.bind(lesson.teacherId)
 
         if (lessonStatus != null) {
             lessonMarkStatusView.setText(when (lessonStatus.type) {
@@ -202,12 +194,13 @@ open class LessonActivity : BaseActivity() {
         }
 
         lessonAddTransferView.setOnClickListener {
-            LessonTransferActivity.redirect(
-                    context = this,
-                    groupId = groupId,
-                    lessonId = lessonId,
-                    weekIndex = weekIndex
-            )
+            LessonTransferActivity
+                    .redirect(
+                            context = this,
+                            groupId = groupId,
+                            lessonId = lessonId,
+                            weekIndex = weekIndex
+                    )
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .goForResult(LessonActivity.REQUEST_CODE_LESSON_TRANSFER)
         }

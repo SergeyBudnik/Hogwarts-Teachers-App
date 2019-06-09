@@ -10,10 +10,10 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.teacher.Teacher
 import com.bdev.hengschoolteacher.service.TeachersService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
-import kotlinx.android.synthetic.main.activity_monitoring_salaries.*
+import kotlinx.android.synthetic.main.activity_monitoring_teachers.*
 import kotlinx.android.synthetic.main.view_monitoring_teachers_item.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -43,30 +43,33 @@ class MonitoringTeachersListAdapter(context: Context) : BaseItemsListAdapter<Tea
 }
 
 @SuppressLint("Registered")
-@EActivity(R.layout.activity_monitoring_salaries)
-open class MonitoringSalariesActivity : BaseActivity() {
+@EActivity(R.layout.activity_monitoring_teachers)
+open class MonitoringTeachersActivity : BaseActivity() {
     @Bean
     lateinit var teachersService: TeachersService
 
     @AfterViews
     fun init() {
-        monitoringSalariesHeaderView.setLeftButtonAction { monitoringSalariesMenuLayoutView.openMenu() }
+        monitoringTeachersHeaderView
+                .setLeftButtonAction { monitoringTeachersMenuLayoutView.openMenu() }
 
-        monitoringSalariesMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
+        monitoringTeachersMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
         val adapter = MonitoringTeachersListAdapter(this)
 
         adapter.setItems(teachersService.getAllTeachers())
 
-        monitoringSalariesListView.adapter = adapter
+        monitoringTeachersListView.adapter = adapter
 
-        monitoringSalariesListView.setOnItemClickListener { _, _, position, _ ->
+        monitoringTeachersListView.setOnItemClickListener { _, _, position, _ ->
             val teacher = adapter.getItem(position)
 
-            redirect(this)
-                    .to(MonitoringTeacherSalaryActivity_::class.java)
+            MonitoringTeacherSalaryActivity
+                    .redirect(
+                            current = this,
+                            teacherId = teacher.id
+                    )
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .withExtra(MonitoringTeacherSalaryActivity.EXTRA_TEACHER_ID, teacher.id)
                     .go()
         }
     }

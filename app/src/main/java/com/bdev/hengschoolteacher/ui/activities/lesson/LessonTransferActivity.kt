@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_lesson_transfer.*
 import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
 import org.androidannotations.annotations.Extra
 
@@ -46,6 +48,9 @@ open class LessonTransferActivity : BaseActivity() {
     @JvmField
     var weekIndex: Int = 0
 
+    @Bean
+    lateinit var lessonsService: LessonsService
+
     @AfterViews
     fun init() {
         lessonTransferHeaderView.setLeftButtonAction { doFinish() }
@@ -58,6 +63,18 @@ open class LessonTransferActivity : BaseActivity() {
     }
 
     private fun doInit() {
+        val lesson = lessonsService.getLesson(lessonId)?.lesson
+
+        if (lesson != null) {
+            lessonTransferTimeView.bind(
+                    lesson = lesson,
+                    weekIndex = weekIndex
+            )
+
+            lessonTransferTeacherInfoView.bind(
+                    teacherId = lesson.teacherId
+            )
+        }
 
     }
 

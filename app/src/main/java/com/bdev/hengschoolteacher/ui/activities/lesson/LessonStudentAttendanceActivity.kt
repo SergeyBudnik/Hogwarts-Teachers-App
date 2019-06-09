@@ -11,6 +11,7 @@ import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
 import kotlinx.android.synthetic.main.activity_lesson_student_attendance.*
 import org.androidannotations.annotations.AfterViews
@@ -25,6 +26,15 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
         const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
+
+        fun redirect(current: BaseActivity, lessonId: Long, studentId: Long, weekIndex: Int): RedirectBuilder {
+            return RedirectBuilder
+                    .redirect(current)
+                    .to(LessonStudentAttendanceActivity_::class.java)
+                    .withExtra(EXTRA_LESSON_ID, lessonId)
+                    .withExtra(EXTRA_STUDENT_ID, studentId)
+                    .withExtra(EXTRA_WEEK_INDEX, weekIndex)
+        }
     }
 
     @Bean
@@ -60,7 +70,6 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
 
         lessonStudentAttendanceLessonTimeView.bind(lesson, weekIndex)
         lessonStudentAttendanceStudentInfoView.bind(student)
-        lessonStudentAttendanceTeacherInfoView.bind(lesson.teacherId)
 
         initButtons()
     }

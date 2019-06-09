@@ -10,10 +10,14 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.data.school.student.StudentPayment
+import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
+import com.bdev.hengschoolteacher.data.school.student_payment.StudentPaymentInfo
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
+import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity_
 import com.bdev.hengschoolteacher.ui.utils.KeyboardUtils
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_student_payment.*
 import kotlinx.android.synthetic.main.view_student_payment_item.view.*
 import org.androidannotations.annotations.*
@@ -31,7 +35,31 @@ open class StudentPaymentItemView : RelativeLayout {
     fun bind(studentPayment: StudentPayment) {
         studentPaymentItemValueView.text = "${studentPayment.amount} Р"
         studentPaymentItemTimeView.text = SimpleDateFormat("dd.MM.yyyy", Locale.US).format(studentPayment.time)
-        studentPaymentItemTeacherView.text = teachersService.getTeacherById(studentPayment.teacherId)?.name ?: "?"
+
+
+        initTeachers(studentPayment)
+    }
+
+    private fun initTeachers(studentPayment: StudentPayment) {
+        val teacher = teachersService.getTeacherById(studentPayment.teacherId)
+
+        studentPaymentItemTeacherView.text = teacher
+                ?.name
+                ?.split(" ")
+                ?.map { it.substring(0, 1) }
+                ?.fold("") { r, t -> r + t }
+                ?: "?"
+
+        if (teacher != null) {
+            studentPaymentItemTeacherView.setOnClickListener {
+                RedirectBuilder
+                        .redirect(context as BaseActivity)
+                        .to(TeacherActivity_::class.java)
+                        .withExtra(TeacherActivity.EXTRA_TEACHER_ID, teacher.id)
+                        .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                        .go()
+            }
+        }
     }
 }
 
@@ -75,8 +103,17 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
 @EActivity(R.layout.activity_student_payment)
 open class StudentPaymentActivity : BaseActivity() {
     companion object {
-        const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
-        const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
+        private const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+
+        fun redirect(
+                current: BaseActivity,
+                studentId: Long
+        ): RedirectBuilder {
+            return RedirectBuilder
+                    .redirect(current)
+                    .to(StudentPaymentActivity_::class.java)
+                    .withExtra(StudentPaymentActivity.EXTRA_STUDENT_ID, studentId)
+        }
     }
 
     @Bean
@@ -100,17 +137,13 @@ open class StudentPaymentActivity : BaseActivity() {
     @JvmField
     var studentId: Long = 0
 
-    @Extra(EXTRA_WEEK_INDEX)
-    @JvmField
-    var weekIndex: Int = 0
-
     @AfterViews
     fun init() {
         lessonPaymentHeaderView.setLeftButtonAction { doFinish() }
 
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
-        studentPaymentNameView.text = student.name
+        studentPaymentStudentInfoView.bind(student)
 
         studentPaymentAddPaymentView.setOnClickListener { addPayment(student) }
 
@@ -130,8 +163,7 @@ open class StudentPaymentActivity : BaseActivity() {
         val lessonStartTime = Date().time
 
         studentsPaymentAsyncService
-                .addPayment(StudentPayment(
-                        null,
+                .addPayment(StudentPaymentInfo(
                         amount,
                         student.id,
                         teachersService.getTeacherMe().id,

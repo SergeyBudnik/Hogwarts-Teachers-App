@@ -6,8 +6,8 @@ import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity_
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringPaymentsActivity_
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringSalariesActivity_
+import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringStudentsActivity_
+import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringTeachersActivity_
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.view_header_monitoring.view.*
 import org.androidannotations.annotations.AfterViews
@@ -48,11 +48,11 @@ open class MonitoringHeaderView(context: Context, attrs: AttributeSet) : LinearL
         }
 
         monitoringHeaderSalariesView.setOnClickListener {
-            redirect(context as BaseActivity).to(MonitoringSalariesActivity_::class.java).goAndCloseCurrent()
+            redirect(context as BaseActivity).to(MonitoringTeachersActivity_::class.java).goAndCloseCurrent()
         }
 
         monitoringHeaderPaymentsView.setOnClickListener {
-            redirect(context as BaseActivity).to(MonitoringPaymentsActivity_::class.java).goAndCloseCurrent()
+            redirect(context as BaseActivity).to(MonitoringStudentsActivity_::class.java).goAndCloseCurrent()
         }
     }
 }

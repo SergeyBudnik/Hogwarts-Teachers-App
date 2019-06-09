@@ -45,14 +45,6 @@
                     android:layout_marginStart="@dimen/app_size_1"
                     android:layout_marginEnd="@dimen/app_size_1"/>
 
-                <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
-                    android:id="@+id/lessonStudentAttendanceTeacherInfoView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/app_size_0_5"
-                    android:layout_marginStart="@dimen/app_size_1"
-                    android:layout_marginEnd="@dimen/app_size_1"/>
-
             </LinearLayout>
 
             <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView_

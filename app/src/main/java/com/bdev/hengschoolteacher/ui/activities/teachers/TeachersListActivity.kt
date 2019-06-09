@@ -11,9 +11,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.teacher.Teacher
 import com.bdev.hengschoolteacher.service.TeachersService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.TeacherActivity
-import com.bdev.hengschoolteacher.ui.activities.TeacherActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_teachers_list.*
 import kotlinx.android.synthetic.main.view_teachers_list_row_item.view.*
@@ -83,9 +81,11 @@ open class TeachersListActivity : BaseActivity() {
         teachersListView.setOnItemClickListener { adapterView, _, position, _ ->
             val teacher = adapterView.getItemAtPosition(position) as Teacher
 
-            RedirectBuilder.redirect(this)
-                    .to(TeacherActivity_::class.java)
-                    .withExtra(TeacherActivity.EXTRA_TEACHER_ID, teacher.id)
+            TeacherActivity
+                    .redirect(
+                            current = this,
+                            teacherId = teacher.id
+                    )
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }

@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="3">
+    android:weightSum="2">
 
     <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
         android:id="@+id/studentsHeaderListView"
@@ -21,14 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         app:header_title="Группы"
-        app:header_active="false"/>
-
-    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
-        android:id="@+id/studentsHeaderStatisticsView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:header_title="Статистика"
         app:header_active="false"/>
 
 </LinearLayout>

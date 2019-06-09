@@ -12,8 +12,8 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.AuthService
 import com.bdev.hengschoolteacher.service.TeachersService
 import com.bdev.hengschoolteacher.service.UserPreferencesService
-import com.bdev.hengschoolteacher.ui.activities.*
-import com.bdev.hengschoolteacher.ui.activities.actions.ActionsUsersRequestsListActivity_
+import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.LoadingActivity_
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity_
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity_
 import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity_
@@ -62,7 +62,7 @@ open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayou
 @EViewGroup(R.layout.view_app_menu)
 open class AppMenuView : LinearLayout {
     enum class Item {
-        MY_PROFILE, STUDENTS, TEACHERS, MONITORING, ACTIONS, NONE
+        MY_PROFILE, STUDENTS, TEACHERS, MONITORING, NONE
     }
 
     @Bean
@@ -90,7 +90,6 @@ open class AppMenuView : LinearLayout {
         menuItemStudentsView.setOnClickListener { goToPage(StudentsListActivity_::class.java) }
         menuItemTeachersView.setOnClickListener { goToPage(TeachersListActivity_::class.java) }
         menuItemMonitoringView.setOnClickListener { goToPage(MonitoringLessonsActivity_::class.java) }
-        menuItemActionsView.setOnClickListener { goToPage(ActionsUsersRequestsListActivity_::class.java) }
 
         refreshButtonView.setOnClickListener { goToPage(LoadingActivity_::class.java) }
 
@@ -116,7 +115,6 @@ open class AppMenuView : LinearLayout {
         menuItemStudentsView.setCurrentItem(item == Item.STUDENTS)
         menuItemTeachersView.setCurrentItem(item == Item.TEACHERS)
         menuItemMonitoringView.setCurrentItem(item == Item.MONITORING)
-        menuItemActionsView.setCurrentItem(item == Item.ACTIONS)
     }
 
     private fun goToPage(target: Class<out BaseActivity>) {

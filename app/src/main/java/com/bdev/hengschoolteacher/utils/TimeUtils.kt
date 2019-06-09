@@ -42,7 +42,7 @@ class TimeUtils {
 
         with (calendar) {
             set(Calendar.WEEK_OF_YEAR, currentWeekYear + weekFromCurrent)
-            set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+            set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek)
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE,      0)
             set(Calendar.SECOND,      0)
@@ -59,7 +59,7 @@ class TimeUtils {
 
         with (calendar) {
             set(Calendar.WEEK_OF_YEAR, currentWeekYear + weekFromCurrent)
-            set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+            set(Calendar.DAY_OF_WEEK, getLastDayOfWeek(calendar))
             set(Calendar.HOUR_OF_DAY, 23)
             set(Calendar.MINUTE,      59)
             set(Calendar.SECOND,      59)
@@ -123,6 +123,14 @@ class TimeUtils {
             Time.T_07_30, Time.T_08_30, Time.T_09_30, Time.T_10_30, Time.T_11_30,
             Time.T_12_30, Time.T_13_30, Time.T_14_30, Time.T_15_30, Time.T_16_30,
             Time.T_17_30, Time.T_18_30, Time.T_19_30, Time.T_20_30, Time.T_21_30 -> 30
+        }
+    }
+
+    private fun getLastDayOfWeek(calendar: Calendar): Int {
+        return when (calendar.firstDayOfWeek) {
+            Calendar.MONDAY -> Calendar.SUNDAY
+            Calendar.SUNDAY -> Calendar.SATURDAY
+            else -> Calendar.SUNDAY
         }
     }
 }

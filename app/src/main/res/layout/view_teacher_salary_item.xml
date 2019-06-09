@@ -11,7 +11,7 @@
     android:paddingEnd="@dimen/app_size_2">
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-        android:id="@+id/profilePaymentItemTypeView"
+        android:id="@+id/teacherSalaryItemTypeView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
@@ -19,7 +19,7 @@
         android:textSize="@dimen/font_large"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-        android:id="@+id/profilePaymentItemTimeView"
+        android:id="@+id/teacherSalaryItemTimeView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
@@ -28,7 +28,7 @@
         android:textSize="@dimen/font_large"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-        android:id="@+id/profilePaymentItemAmountView"
+        android:id="@+id/teacherSalaryItemAmountView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"

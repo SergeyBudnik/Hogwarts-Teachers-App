@@ -31,16 +31,15 @@
 
         <activity android:name=".ui.activities.students.StudentsListActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.students.StudentsGroupsListActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.students.StudentsStatisticsActivity_" android:screenOrientation="sensorPortrait"/>
 
         <activity android:name=".ui.activities.teachers.TeachersListActivity_" android:screenOrientation="sensorPortrait"/>
 
         <activity android:name=".ui.activities.monitoring.MonitoringLessonsActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.monitoring.MonitoringSalariesActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.monitoring.MonitoringPaymentsActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.monitoring.MonitoringTeacherSalaryActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.monitoring.MonitoringTeacherPaymentsActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringTeachersActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringStudentsActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.monitoring.MonitoringStudentPaymentActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity_" android:screenOrientation="sensorPortrait"/>
 
         <activity android:name=".ui.activities.student.StudentPaymentActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.student.StudentCallActivity_" android:screenOrientation="sensorPortrait"/>
@@ -52,16 +51,13 @@
         <activity android:name=".ui.activities.lesson.LessonTransferActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.lesson.LessonStudentAttendanceActivity_" android:screenOrientation="sensorPortrait"/>
 
-        <activity android:name=".ui.activities.actions.ActionsEventsListActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.actions.ActionsUsersRequestsListActivity_" android:screenOrientation="sensorPortrait"/>
-
         <activity android:name=".ui.activities.user_request.UserRequestActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.user_request.UserRequestAddActivity_" android:screenOrientation="sensorPortrait"/>
 
         <activity android:name=".ui.activities.LoginActivity_" android:screenOrientation="sensorPortrait" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.activities.LoadingActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.ReloginActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.TeacherActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.teacher.TeacherActivity_" android:screenOrientation="sensorPortrait"/>
     </application>
 
 </manifest>

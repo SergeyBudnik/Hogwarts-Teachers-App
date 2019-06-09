@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="@dimen/app_size_3"
+        android:layout_height="@dimen/app_size_3"
+        android:src="@drawable/ic_tick"
+        android:tint="@color/fill_text_basic"
+        android:importantForAccessibility="no"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_1"
+        android:text="@string/monitoring_teacher_payments_no_payments_filter_enabled_title"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/fill_text_basic"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_0_5"
+        android:gravity="center_horizontal"
+        android:text="@string/monitoring_teacher_payments_no_payments_filter_enabled_warning"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/fill_text_basic"/>
+
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+        android:id="@+id/monitoringTeacherPaymentsEmptyWithFilterDisableFilterView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_1"
+        app:button_text="@string/disable_filter"/>
+
+</LinearLayout>

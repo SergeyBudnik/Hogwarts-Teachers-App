@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        android:id="@+id/teacherInformationHeaderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Преподаватель"
+        app:leftIcon="@drawable/ic_arrow_left"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherHeaderView_
+        android:id="@+id/teacherInformationSecondaryHeaderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/app_size_1">
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Телефоны:"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/fill_text_basic"/>
+
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView_
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_1"/>
+
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView_
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_0_5"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_1"
+            android:text="Группы:"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/fill_text_basic"/>
+
+    </LinearLayout>
+
+</LinearLayout>

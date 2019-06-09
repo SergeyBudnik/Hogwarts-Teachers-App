@@ -11,7 +11,7 @@ import com.bdev.hengschoolteacher.data.school.group.GroupType
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance.Type.VALID_SKIP
-import com.bdev.hengschoolteacher.data.school.student.StudentPayment
+import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
 import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
@@ -19,7 +19,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
-import kotlinx.android.synthetic.main.activity_monitoring_payments.*
+import kotlinx.android.synthetic.main.activity_monitoring_students.*
 import kotlinx.android.synthetic.main.view_monitoring_payments_item.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -33,8 +33,6 @@ class StudentInfo(
 
 @EViewGroup(R.layout.view_monitoring_payments_item)
 open class MonitoringPaymentsItemView : RelativeLayout {
-    lateinit var studentsAttendancesService: StudentsAttendancesService
-
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
@@ -46,7 +44,7 @@ open class MonitoringPaymentsItemView : RelativeLayout {
     }
 }
 
-private class MonitoringPaymentsListAdapter(context: Context) : BaseItemsListAdapter<StudentInfo>(context) {
+private class MonitoringStudentsListAdapter(context: Context) : BaseItemsListAdapter<StudentInfo>(context) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
         val v = if (convertView == null) {
             MonitoringPaymentsItemView_.build(context)
@@ -61,8 +59,8 @@ private class MonitoringPaymentsListAdapter(context: Context) : BaseItemsListAda
 }
 
 @SuppressLint("Registered")
-@EActivity(R.layout.activity_monitoring_payments)
-open class MonitoringPaymentsActivity : BaseActivity() {
+@EActivity(R.layout.activity_monitoring_students)
+open class MonitoringStudentsActivity : BaseActivity() {
     @Bean
     lateinit var studentsService: StudentsService
     @Bean
@@ -85,7 +83,7 @@ open class MonitoringPaymentsActivity : BaseActivity() {
     }
 
     private fun initList() {
-        val adapter = MonitoringPaymentsListAdapter(this)
+        val adapter = MonitoringStudentsListAdapter(this)
 
         adapter.setItems(
                 studentsService.getAllStudents()

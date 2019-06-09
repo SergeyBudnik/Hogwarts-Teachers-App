@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="@dimen/app_size_3"
+        android:layout_height="@dimen/app_size_3"
+        android:src="@drawable/ic_tick"
+        android:tint="@color/fill_text_basic"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_1"
+        android:text="У вас нет отмеченной оплаты."
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/fill_text_basic"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_size_0_5"
+        android:gravity="center_horizontal"
+        android:text="Внесите оплату из экрана занятия или ученика."
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/fill_text_basic"/>
+
+</LinearLayout>

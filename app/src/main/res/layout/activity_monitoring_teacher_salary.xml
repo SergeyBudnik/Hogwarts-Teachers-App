@@ -12,7 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Мониторинг. Преподаватель"
-        app:leftIcon="@drawable/ic_arrow_left"/>
+        app:leftIcon="@drawable/ic_arrow_left"
+        app:firstRightIcon="@drawable/ic_calendar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/app_size_1"
+        android:paddingEnd="@dimen/app_size_1"
+        android:background="@color/fill_contrast_base">
+
+        <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
+            android:id="@+id/monitoringTeacherSalaryTeacherInfoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
 
     <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView_
         android:id="@+id/monitoringTeacherSalarySecondaryHeaderView"
@@ -24,10 +39,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.bdev.hengschoolteacher.ui.views.app.dev.InDevelopmentView_
-            android:layout_width="wrap_content"
+        <com.bdev.hengschoolteacher.ui.views.app.date.WeekSelectionBarView_
+            android:id="@+id/monitoringTeacherSalaryWeekSelectionBarView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"/>
+
+        <com.bdev.hengschoolteacher.ui.views.app.teacher_salary.TeacherSalaryView_
+            android:id="@+id/monitoringTeacherSalaryTeacherSalaryView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/monitoringTeacherSalaryWeekSelectionBarView"/>
 
     </RelativeLayout>
 

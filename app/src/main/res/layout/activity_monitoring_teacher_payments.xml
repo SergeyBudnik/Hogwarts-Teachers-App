@@ -12,7 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Мониторинг. Преподаватель"
-        app:leftIcon="@drawable/ic_arrow_left"/>
+        app:leftIcon="@drawable/ic_arrow_left"
+        app:firstRightIcon="@drawable/ic_filter"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/app_size_1"
+        android:paddingEnd="@dimen/app_size_1"
+        android:background="@color/fill_contrast_base">
+
+        <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
+            android:id="@+id/monitoringTeacherPaymentsTeacherInfoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
 
     <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView_
         android:id="@+id/monitoringTeacherPaymentsSecondaryHeaderView"
@@ -26,6 +41,7 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -38,6 +54,24 @@
                 android:paddingBottom="@dimen/app_size_0_5"
                 android:divider="@null"
                 android:dividerHeight="0dp"/>
+
+            <com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherPaymentsEmptyWithFilterView_
+                android:id="@+id/monitoringTeacherPaymentsEmptyWithFilterView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_5"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:layout_marginEnd="@dimen/app_size_2"
+                android:visibility="gone"/>
+
+            <com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherPaymentsEmptyView_
+                android:id="@+id/monitoringTeacherPaymentsEmptyView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_5"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:layout_marginEnd="@dimen/app_size_2"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bdev.hengschoolteacher.ui.views.branded.BrandedListItemView_
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/monitoringTeacherPaymentsItemAmountView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:textColor="@color/fill_text_basic_accent"/>
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/monitoringTeacherPaymentsItemStudentView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/fill_text_basic_light"
+                android:textSize="@dimen/font_normal"/>
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/monitoringTeacherPaymentsItemDateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/fill_text_basic_subtle"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/monitoringTeacherPaymentsItemProcessedView"
+            android:layout_width="@dimen/app_size_3"
+            android:layout_height="@dimen/app_size_3"
+            android:padding="@dimen/app_size_0_5"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_question"
+            android:tint="@color/fill_text_basic_negative"
+            android:importantForAccessibility="no"/>
+
+    </RelativeLayout>
+
+</com.bdev.hengschoolteacher.ui.views.branded.BrandedListItemView_>

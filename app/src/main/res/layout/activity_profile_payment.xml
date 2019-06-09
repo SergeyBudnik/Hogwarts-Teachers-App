@@ -25,60 +25,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
+            <com.bdev.hengschoolteacher.ui.views.app.date.WeekSelectionBarView_
+                android:id="@+id/profilePaymentWeekSelectionBarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/app_size_1"
-                android:paddingBottom="@dimen/app_size_1"
-                android:paddingStart="@dimen/app_size_2"
-                android:paddingEnd="@dimen/app_size_2"
-                android:background="@color/fill_contrast_medium">
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"/>
 
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Суммарно за неделю:"
-                    android:textColor="@color/fill_text_basic"
-                    android:textSize="@dimen/font_large"/>
-
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:id="@+id/profilePaymentThisWeekView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/fill_text_basic"
-                    android:textSize="@dimen/font_large"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
+            <com.bdev.hengschoolteacher.ui.views.app.teacher_salary.TeacherSalaryView_
+                android:id="@+id/profilePaymentTeacherSalaryView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_above="@id/profilePaymentWeekSelectionBarView"/>
 
-                <ListView
-                    android:id="@+id/profilePaymentListView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/app_size_0_25"
-                    android:paddingBottom="@dimen/app_size_0_5"
-                    android:clipToPadding="false"
-                    android:divider="@null"/>
-
-                <com.bdev.hengschoolteacher.ui.views.app.date.WeekSelectionBarView_
-                    android:id="@+id/profilePaymentWeekSelectionBarView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:visibility="gone"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
 

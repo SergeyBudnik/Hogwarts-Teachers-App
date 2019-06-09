@@ -48,6 +48,12 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
         }
     }
 
+    fun setTitle(title: String): AppHeaderView {
+        titleView.text = title
+
+        return this
+    }
+
     fun setLeftButtonAction(action: () -> Unit): AppHeaderView {
         leftActionButtonView.setOnClickListener { action.invoke() }
 

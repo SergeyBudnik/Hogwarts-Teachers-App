@@ -14,11 +14,6 @@
         app:title="Учителя"
         app:leftIcon="@drawable/ic_menu"/>
 
-    <com.bdev.hengschoolteacher.ui.views.app.teachers.TeachersHeaderView_
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:teachers_item="teachers_list"/>
-
     <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
         android:id="@+id/teachersMenuLayoutView"
         android:layout_width="match_parent"
