@@ -1,12 +1,14 @@
-package com.bdev.hengschoolteacher.service
+package com.bdev.hengschoolteacher.service.teacher
 
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherActionType
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherPayment
+import com.bdev.hengschoolteacher.service.LessonStatusService
+import com.bdev.hengschoolteacher.service.LessonsService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 
 @EBean
-open class TeachersPaymentService {
+open class TeacherSalaryService {
     companion object {
         const val TEACHER_HALF_HOUR_RATE = 180
     }

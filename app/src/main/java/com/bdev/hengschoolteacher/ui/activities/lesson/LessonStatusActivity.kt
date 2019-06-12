@@ -9,6 +9,7 @@ import com.bdev.hengschoolteacher.service.GroupsService
 import com.bdev.hengschoolteacher.service.LessonStatusService
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
 import kotlinx.android.synthetic.main.activity_lesson_status.*
 import org.androidannotations.annotations.AfterViews
@@ -23,6 +24,14 @@ open class LessonStatusActivity : BaseActivity() {
     companion object {
         const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
         const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
+
+        fun redirect(current: BaseActivity, lessonId: Long, weekIndex: Int): RedirectBuilder {
+            return RedirectBuilder
+                    .redirect(current)
+                    .to(LessonStatusActivity_::class.java)
+                    .withExtra(EXTRA_LESSON_ID, lessonId)
+                    .withExtra(EXTRA_WEEK_INDEX, weekIndex)
+        }
     }
 
     @Bean

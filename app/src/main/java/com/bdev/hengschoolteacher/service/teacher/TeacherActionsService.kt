@@ -1,4 +1,4 @@
-package com.bdev.hengschoolteacher.service
+package com.bdev.hengschoolteacher.service.teacher
 
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.Time
@@ -6,6 +6,8 @@ import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherAction
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherActionType
+import com.bdev.hengschoolteacher.service.LessonStatusService
+import com.bdev.hengschoolteacher.service.LessonsService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 

@@ -17,4 +17,14 @@
         android:textSize="@dimen/font_large"
         android:textColor="@color/fill_text_basic"/>
 
+    <ImageView
+        android:id="@+id/monitoringTeachersItemAlertView"
+        android:layout_width="@dimen/app_size_1_5"
+        android:layout_height="@dimen/app_size_1_5"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_alert"
+        android:tint="@color/fill_text_basic_negative"
+        android:importantForAccessibility="no"/>
+
 </RelativeLayout>

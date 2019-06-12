@@ -12,6 +12,7 @@ import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
 import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
+import com.bdev.hengschoolteacher.service.teacher.TeacherPaymentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
@@ -124,7 +125,7 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var studentPaymentsService: StudentsPaymentsService
+    lateinit var teacherPaymentsService: TeacherPaymentsService
 
     @Extra(EXTRA_TEACHER_ID)
     @JvmField
@@ -167,7 +168,11 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
     }
 
     private fun initList() {
-        val allPayments = studentPaymentsService.getPaymentsToTeacher(teacherId)
+        val allPayments = teacherPaymentsService.getPayments(
+                teacherId = teacherId,
+                onlyUnprocessed = false
+        )
+
         val filteredPayments = allPayments.filter { payment -> !filterEnabled || !payment.processed }
 
         monitoringTeacherPaymentsEmptyView.visibility =

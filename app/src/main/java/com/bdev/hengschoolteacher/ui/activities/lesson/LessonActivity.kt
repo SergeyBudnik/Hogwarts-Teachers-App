@@ -116,7 +116,7 @@ open class LessonActivity : BaseActivity() {
         const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
         const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
 
-        fun redirectWithExtras(
+        fun redirect(
                 context: Context,
                 groupId: Long,
                 lessonId: Long,
@@ -185,10 +185,12 @@ open class LessonActivity : BaseActivity() {
         }
 
         lessonMarkStatusView.setOnClickListener {
-            redirect(this)
-                    .to(LessonStatusActivity_::class.java)
-                    .withExtra(LessonStatusActivity.EXTRA_LESSON_ID, lesson.id)
-                    .withExtra(LessonStatusActivity.EXTRA_WEEK_INDEX, weekIndex)
+            LessonStatusActivity
+                    .redirect(
+                            current = this,
+                            lessonId = lessonId,
+                            weekIndex = weekIndex
+                    )
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .goForResult(LessonActivity.REQUEST_CODE_LESSON_STATUS)
         }

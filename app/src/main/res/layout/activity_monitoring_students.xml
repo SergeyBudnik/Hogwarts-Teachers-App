@@ -17,6 +17,7 @@
         app:secondRightIcon="@drawable/ic_filter"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView_
+        android:id="@+id/monitoringPaymentsSecondaryHeaderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

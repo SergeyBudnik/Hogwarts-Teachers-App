@@ -8,15 +8,30 @@
     android:layout_height="wrap_content"
     android:background="@color/fill_contrast_base">
 
-    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-        android:id="@+id/titleView"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/app_size_1"
         android:layout_marginBottom="@dimen/app_size_1"
-        android:textSize="@dimen/font_normal"
-        app:app_font="regular"/>
+        android:gravity="center_vertical">
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/brandedSecondaryHeaderItemTitleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_normal"
+            app:app_font="regular"/>
+
+        <ImageView
+            android:id="@+id/brandedSecondaryHeaderItemIconView"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_marginStart="@dimen/app_size_0_5"
+            android:importantForAccessibility="no"
+            android:visibility="gone"/>
+
+    </LinearLayout>
 
     <View
         android:id="@+id/activeMarkView"

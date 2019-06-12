@@ -53,7 +53,7 @@ open class ProfileLessonsItemView : RelativeLayout {
 
         setOnClickListener {
             LessonActivity
-                    .redirectWithExtras(
+                    .redirect(
                             context = context,
                             groupId = group.id,
                             lessonId = lesson.id,

@@ -81,11 +81,11 @@ open class StudentInformationActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        studentInformationHeaderView.setLeftButtonAction { doFinish() }
-
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
-        studentNameView.text = student.name
+        studentInformationHeaderView
+                .setTitle("Студент. ${student.name}")
+                .setLeftButtonAction { doFinish() }
 
         studentInformationCallView.setOnClickListener {
             redirect(this)

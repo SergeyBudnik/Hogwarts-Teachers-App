@@ -8,7 +8,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherActionType
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherPayment
-import com.bdev.hengschoolteacher.service.TeachersPaymentService
+import com.bdev.hengschoolteacher.service.teacher.TeacherSalaryService
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import kotlinx.android.synthetic.main.view_teacher_salary.view.*
 import kotlinx.android.synthetic.main.view_teacher_salary_item.view.*
@@ -73,13 +73,13 @@ class TeacherSalaryListAdapter(context: Context) : BaseWeekItemsListAdapter<Teac
 @EViewGroup(R.layout.view_teacher_salary)
 open class TeacherSalaryView : LinearLayout {
     @Bean
-    lateinit var teachersPaymentService: TeachersPaymentService
+    lateinit var teacherSalaryService: TeacherSalaryService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun init(teacherId: Long, weekIndex: Int) {
-        val teacherPayments = teachersPaymentService.getTeacherPayments(
+        val teacherPayments = teacherSalaryService.getTeacherPayments(
                 teacherId = teacherId,
                 weekIndex = weekIndex
         )

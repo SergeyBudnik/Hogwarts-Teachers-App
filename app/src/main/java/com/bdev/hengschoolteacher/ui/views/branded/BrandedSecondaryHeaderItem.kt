@@ -1,7 +1,9 @@
 package com.bdev.hengschoolteacher.ui.views.branded
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import kotlinx.android.synthetic.main.view_branded_secondary_header_item.view.*
@@ -26,13 +28,26 @@ open class BrandedSecondaryHeaderItem(context: Context, attrs: AttributeSet) : L
 
     @AfterViews
     fun init() {
-        titleView.text = title
+        brandedSecondaryHeaderItemTitleView.text = title
 
         setActive(active)
     }
 
+    fun setIcon(iconId: Int, colorId: Int) {
+        brandedSecondaryHeaderItemIconView.visibility = View.VISIBLE
+
+        brandedSecondaryHeaderItemIconView.setImageDrawable(
+                resources.getDrawable(iconId)
+        )
+
+        brandedSecondaryHeaderItemIconView.setColorFilter(
+                resources.getColor(colorId),
+                PorterDuff.Mode.SRC_IN
+        )
+    }
+
     fun setActive(active: Boolean) {
-        titleView.setTextColor(resources.getColor(if (active) {
+        brandedSecondaryHeaderItemTitleView.setTextColor(resources.getColor(if (active) {
             R.color.fill_text_basic
         } else {
             R.color.fill_text_basic_action_link

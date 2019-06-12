@@ -19,6 +19,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
+import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_students.*
 import kotlinx.android.synthetic.main.view_monitoring_students.view.*
 import org.androidannotations.annotations.AfterViews
@@ -77,6 +78,10 @@ open class MonitoringStudentsActivity : BaseActivity() {
                 .setSecondRightButtonColor(getFilterColor())
 
         monitoringPaymentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
+
+        monitoringPaymentsSecondaryHeaderView.bind(
+                currentItem = MonitoringHeaderView.Item.PAYMENTS
+        )
 
         initList()
     }

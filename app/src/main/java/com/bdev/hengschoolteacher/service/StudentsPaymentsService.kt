@@ -46,12 +46,13 @@ open class StudentsPaymentsService {
                 .fold(0L) { p1, p2 -> p1 + p2 }
     }
 
-    fun getPaymentsToTeacher(teacherId: Long): List<StudentPayment> {
+    fun getPaymentsToTeacher(teacherId: Long, onlyUnprocessed: Boolean): List<StudentPayment> {
         return studentsPaymentsDao
                 .readValue()
                 .studentsPayments
                 .values
                 .filter { it.teacherId == teacherId }
+                .filter { !onlyUnprocessed || !it.processed }
                 .toList()
     }
 
