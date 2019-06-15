@@ -36,7 +36,7 @@ open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayou
 
         try {
             itemIcon = ta.getResourceId(R.styleable.AppMenuRowView_menuItemIcon, 0)
-            itemName = ta.getString(R.styleable.AppMenuRowView_menuItemName)
+            itemName = ta.getString(R.styleable.AppMenuRowView_menuItemName) ?: ""
         } finally {
             ta.recycle()
         }
