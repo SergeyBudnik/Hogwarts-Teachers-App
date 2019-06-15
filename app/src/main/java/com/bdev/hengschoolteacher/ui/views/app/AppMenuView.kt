@@ -16,6 +16,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoadingActivity_
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity_
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity_
+import com.bdev.hengschoolteacher.ui.activities.settings.SettingsActivity_
 import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity_
 import com.bdev.hengschoolteacher.ui.activities.teachers.TeachersListActivity_
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
@@ -62,7 +63,7 @@ open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayou
 @EViewGroup(R.layout.view_app_menu)
 open class AppMenuView : LinearLayout {
     enum class Item {
-        MY_PROFILE, STUDENTS, TEACHERS, MONITORING, NONE
+        MY_PROFILE, STUDENTS, TEACHERS, MONITORING, SETTINGS, NONE
     }
 
     @Bean
@@ -78,18 +79,17 @@ open class AppMenuView : LinearLayout {
 
     @AfterViews
     fun init() {
-        if (!isInEditMode) {
-            val login = userPreferencesService.getUserLogin() ?: throw RuntimeException()
-            val teacher = teacherStorageService.getTeacherByLogin(login) ?: throw RuntimeException()
+        val login = userPreferencesService.getUserLogin()
+        val teacher = login?.let { teacherStorageService.getTeacherByLogin(login) }
 
-            teacherNameView.text = teacher.name
-            teacherLoginView.text = login
-        }
+        teacherNameView.text = teacher?.name ?: ""
+        teacherLoginView.text = login ?: ""
 
         menuItemMyProfileView.setOnClickListener { goToPage(ProfileLessonsActivity_::class.java) }
         menuItemStudentsView.setOnClickListener { goToPage(StudentsListActivity_::class.java) }
         menuItemTeachersView.setOnClickListener { goToPage(TeachersListActivity_::class.java) }
         menuItemMonitoringView.setOnClickListener { goToPage(MonitoringLessonsActivity_::class.java) }
+        menuItemSettingsView.setOnClickListener { goToPage(SettingsActivity_::class.java) }
 
         refreshButtonView.setOnClickListener { goToPage(LoadingActivity_::class.java) }
 
@@ -115,6 +115,7 @@ open class AppMenuView : LinearLayout {
         menuItemStudentsView.setCurrentItem(item == Item.STUDENTS)
         menuItemTeachersView.setCurrentItem(item == Item.TEACHERS)
         menuItemMonitoringView.setCurrentItem(item == Item.MONITORING)
+        menuItemSettingsView.setCurrentItem(item == Item.SETTINGS)
     }
 
     private fun goToPage(target: Class<out BaseActivity>) {
