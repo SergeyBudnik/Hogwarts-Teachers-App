@@ -82,7 +82,6 @@
         <attr name="profile_item" format="enum">
             <enum name="profile_lessons" value="1"/>
             <enum name="profile_payment" value="2"/>
-            <enum name="profile_account" value="3"/>
         </attr>
     </declare-styleable>
 

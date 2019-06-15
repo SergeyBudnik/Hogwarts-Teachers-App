@@ -27,7 +27,6 @@
 
         <activity android:name=".ui.activities.profile.ProfileLessonsActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.profile.ProfilePaymentActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.profile.ProfileAccountActivity_" android:screenOrientation="sensorPortrait"/>
 
         <activity android:name=".ui.activities.students.StudentsListActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.students.StudentsGroupsListActivity_" android:screenOrientation="sensorPortrait"/>
@@ -44,7 +43,6 @@
         <activity android:name=".ui.activities.student.StudentPaymentActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.student.StudentCallActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.student.StudentInformationActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.student.StudentStatisticsActivity_" android:screenOrientation="sensorPortrait"/>
 
         <activity android:name=".ui.activities.lesson.LessonActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.lesson.LessonStatusActivity_" android:screenOrientation="sensorPortrait"/>
@@ -58,6 +56,8 @@
         <activity android:name=".ui.activities.LoadingActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.ReloginActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.teacher.TeacherActivity_" android:screenOrientation="sensorPortrait"/>
+
+        <activity android:name=".ui.activities.settings.SettingsActivity_" android:screenOrientation="sensorPortrait"/>
     </application>
 
 </manifest>
