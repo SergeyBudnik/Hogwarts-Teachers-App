@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true">
 
     <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-        android:id="@+id/profilePaymentHeaderView"
+        android:id="@+id/profileSalaryHeaderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Профиль"
@@ -18,10 +18,10 @@
     <com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView_
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:profile_item="profile_payment"/>
+        app:profile_item="profile_salary"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
-        android:id="@+id/profilePaymentMenuLayoutView"
+        android:id="@+id/profileSalaryMenuLayoutView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -30,17 +30,17 @@
             android:layout_height="match_parent">
 
             <com.bdev.hengschoolteacher.ui.views.app.date.WeekSelectionBarView_
-                android:id="@+id/profilePaymentWeekSelectionBarView"
+                android:id="@+id/profileSalaryWeekSelectionBarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:visibility="gone"/>
 
             <com.bdev.hengschoolteacher.ui.views.app.teacher_salary.TeacherSalaryView_
-                android:id="@+id/profilePaymentTeacherSalaryView"
+                android:id="@+id/profileSalaryTeacherSalaryView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@id/profilePaymentWeekSelectionBarView"/>
+                android:layout_above="@id/profileSalaryWeekSelectionBarView"/>
 
         </RelativeLayout>
 

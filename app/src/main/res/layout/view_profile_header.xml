@@ -16,7 +16,7 @@
         app:header_active="true"/>
 
     <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
-        android:id="@+id/profileHeaderMyPaymentView"
+        android:id="@+id/profileHeaderMySalaryView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

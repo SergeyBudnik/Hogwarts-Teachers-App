@@ -26,7 +26,7 @@
         </activity>
 
         <activity android:name=".ui.activities.profile.ProfileLessonsActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.profile.ProfilePaymentActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.profile.ProfileSalaryActivity_" android:screenOrientation="sensorPortrait"/>
 
         <activity android:name=".ui.activities.students.StudentsListActivity_" android:screenOrientation="sensorPortrait"/>
         <activity android:name=".ui.activities.students.StudentsGroupsListActivity_" android:screenOrientation="sensorPortrait"/>
