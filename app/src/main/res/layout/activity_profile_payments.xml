@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        android:id="@+id/profilePaymentsHeaderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Профиль"
+        app:leftIcon="@drawable/ic_menu"
+        app:firstRightIcon="@drawable/ic_filter"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView_
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:profile_item="profile_payments"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+        android:id="@+id/profilePaymentsMenuLayoutView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsView_
+                android:id="@+id/profilePaymentsTeacherPaymentsView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsEmptyWithFilterView_
+                android:id="@+id/profilePaymentsEmptyWithFilterView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_5"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:layout_marginEnd="@dimen/app_size_2"
+                android:visibility="gone"/>
+
+            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsEmptyView_
+                android:id="@+id/profilePaymentsEmptyView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_5"
+                android:layout_marginStart="@dimen/app_size_2"
+                android:layout_marginEnd="@dimen/app_size_2"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+
+</LinearLayout>

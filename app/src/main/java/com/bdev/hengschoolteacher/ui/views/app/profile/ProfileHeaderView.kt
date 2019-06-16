@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity_
+import com.bdev.hengschoolteacher.ui.activities.profile.ProfilePaymentsActivity_
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileSalaryActivity_
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.view_profile_header.view.*
@@ -15,7 +16,7 @@ import org.androidannotations.annotations.EViewGroup
 @EViewGroup(R.layout.view_profile_header)
 open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     private enum class Item(val id: Int) {
-        LESSONS(1), SALARY(2);
+        LESSONS(1), SALARY(2), PAYMENTS(3);
 
         companion object {
             fun findById(id: Int): Item {
@@ -40,6 +41,7 @@ open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayo
     fun init() {
         profileHeaderMyLessonsView.setActive(item == Item.LESSONS)
         profileHeaderMySalaryView.setActive(item == Item.SALARY)
+        profileHeaderMyPaymentsView.setActive(item == Item.PAYMENTS)
 
         profileHeaderMyLessonsView.setOnClickListener {
             redirect(context as BaseActivity).to(ProfileLessonsActivity_::class.java).goAndCloseCurrent()
@@ -47,6 +49,10 @@ open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayo
 
         profileHeaderMySalaryView.setOnClickListener {
             redirect(context as BaseActivity).to(ProfileSalaryActivity_::class.java).goAndCloseCurrent()
+        }
+
+        profileHeaderMyPaymentsView.setOnClickListener {
+            redirect(context as BaseActivity).to(ProfilePaymentsActivity_::class.java).goAndCloseCurrent()
         }
     }
 }
