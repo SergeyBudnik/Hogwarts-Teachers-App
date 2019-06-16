@@ -11,13 +11,13 @@ import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
-import kotlinx.android.synthetic.main.activity_salary_payment.*
+import kotlinx.android.synthetic.main.activity_profile_salary.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
 
 @SuppressLint("Registered")
-@EActivity(R.layout.activity_salary_payment)
+@EActivity(R.layout.activity_profile_salary)
 open class ProfileSalaryActivity : BaseActivity() {
     @Bean
     lateinit var userPreferencesService: UserPreferencesService

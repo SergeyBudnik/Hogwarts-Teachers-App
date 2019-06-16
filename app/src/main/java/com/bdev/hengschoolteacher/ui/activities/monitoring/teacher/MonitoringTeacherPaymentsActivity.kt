@@ -1,114 +1,17 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
-import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
-import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.teacher.TeacherPaymentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
-import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_payments.*
-import kotlinx.android.synthetic.main.view_monitoring_teacher_payments_empty_with_filter.view.*
-import kotlinx.android.synthetic.main.view_monitoring_teacher_payments_item.view.*
-import org.androidannotations.annotations.*
-
-@EViewGroup(R.layout.view_monitoring_teacher_payments_empty_with_filter)
-open class MonitoringTeacherPaymentsEmptyWithFilterView : LinearLayout {
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-    fun bind(disableFilterAction: () -> Unit) {
-        monitoringTeacherPaymentsEmptyWithFilterDisableFilterView.setOnClickListener {
-            disableFilterAction.invoke()
-        }
-    }
-}
-
-@EViewGroup(R.layout.view_monitoring_teacher_payments_empty)
-open class MonitoringTeacherPaymentsEmptyView : LinearLayout {
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-}
-
-@EViewGroup(R.layout.view_monitoring_teacher_payments_item)
-open class MonitoringTeacherPaymentsItemView : RelativeLayout {
-    @Bean
-    lateinit var studentsService: StudentsService
-    @Bean
-    lateinit var studentsPaymentsService: StudentsPaymentsService
-
-    @Bean
-    lateinit var studentsPaymentsAsyncService: StudentsPaymentAsyncService
-
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-    fun bind(studentPayment: StudentPayment): MonitoringTeacherPaymentsItemView {
-        monitoringTeacherPaymentsItemAmountView.text = context.getString(
-                R.string.amount_in_rub,
-                studentPayment.amount
-        )
-
-        monitoringTeacherPaymentsItemStudentView.text = studentsService.getStudent(
-                studentPayment.studentId
-        )?.name ?: ""
-
-        monitoringTeacherPaymentsItemDateView.text = TimeFormatUtils.format(studentPayment.time)
-
-        renderProcessed(
-                studentsPaymentsService.getPayment(studentPayment.id)?.processed ?: false
-        )
-
-        setOnClickListener { process(studentPayment.id) }
-
-        return this
-    }
-
-    private fun process(studentPaymentId: Long) {
-        studentsPaymentsAsyncService
-                .setPaymentProcessed(studentPaymentId)
-                .onSuccess { renderProcessed(it.processed) }
-    }
-
-    private fun renderProcessed(processed: Boolean) {
-        monitoringTeacherPaymentsItemProcessedView.setImageDrawable(
-                context.resources.getDrawable(if (processed) {
-                    R.drawable.ic_tick
-                } else {
-                    R.drawable.ic_question
-                })
-        )
-
-        monitoringTeacherPaymentsItemProcessedView.setColorFilter(
-                context.resources.getColor(if (processed) {
-                    R.color.fill_text_basic_positive
-                } else {
-                    R.color.fill_text_basic_negative
-                })
-        )
-    }
-}
-
-class MonitoringTeacherPaymentsListAdapter(context: Context) : BaseItemsListAdapter<StudentPayment>(context) {
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        return if (convertView == null) {
-            MonitoringTeacherPaymentsItemView_.build(context)
-        } else {
-            convertView as MonitoringTeacherPaymentsItemView
-        }.bind(getItem(position))
-    }
-}
+import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.Bean
+import org.androidannotations.annotations.EActivity
+import org.androidannotations.annotations.Extra
 
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_monitoring_teacher_payments)
@@ -189,11 +92,10 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
                     View.GONE
                 }
 
-        MonitoringTeacherPaymentsListAdapter(this).let {
-            it.setItems(filteredPayments)
-
-            monitoringTeacherPaymentsListView.adapter = it
-        }
+        monitoringTeacherPaymentsView.bind(
+                payments = filteredPayments,
+                editable = true
+        )
     }
 
     override fun onBackPressed() {

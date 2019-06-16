@@ -8,50 +8,34 @@
     android:fitsSystemWindows="true">
 
     <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-        android:id="@+id/monitoringTeacherPaymentsHeaderView"
+        android:id="@+id/profilePaymentsHeaderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Мониторинг. Преподаватель"
-        app:leftIcon="@drawable/ic_arrow_left"
+        app:title="Профиль"
+        app:leftIcon="@drawable/ic_menu"
         app:firstRightIcon="@drawable/ic_filter"/>
 
-    <RelativeLayout
+    <com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView_
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/app_size_1"
-        android:paddingEnd="@dimen/app_size_1"
-        android:background="@color/fill_contrast_base">
-
-        <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
-            android:id="@+id/monitoringTeacherPaymentsTeacherInfoView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </RelativeLayout>
-
-    <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView_
-        android:id="@+id/monitoringTeacherPaymentsSecondaryHeaderView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:monitoring_teacher_item="monitoring_teacher_payments"/>
+        app:profile_item="profile_payments"/>
 
     <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
-        android:id="@+id/monitoringTeacherPaymentsMenuLayoutView"
+        android:id="@+id/profilePaymentsMenuLayoutView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsView_
-                android:id="@+id/monitoringTeacherPaymentsView"
+                android:id="@+id/profilePaymentsTeacherPaymentsView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
             <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsEmptyWithFilterView_
-                android:id="@+id/monitoringTeacherPaymentsEmptyWithFilterView"
+                android:id="@+id/profilePaymentsEmptyWithFilterView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/app_size_5"
@@ -60,7 +44,7 @@
                 android:visibility="gone"/>
 
             <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsEmptyView_
-                android:id="@+id/monitoringTeacherPaymentsEmptyView"
+                android:id="@+id/profilePaymentsEmptyView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/app_size_5"
