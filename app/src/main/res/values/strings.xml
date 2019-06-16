@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HEngSchoolTeacher</string>
+    <string name="app_name">hTeacher</string>
 
     <string name="login_login_label">Логин:</string>
     <string name="login_login_placeholder">Введите логин</string>
