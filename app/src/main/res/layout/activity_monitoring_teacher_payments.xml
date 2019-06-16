@@ -45,17 +45,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ListView
-                android:id="@+id/monitoringTeacherPaymentsListView"
+            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsView_
+                android:id="@+id/monitoringTeacherPaymentsView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingTop="@dimen/app_size_0_5"
-                android:paddingBottom="@dimen/app_size_0_5"
-                android:divider="@null"
-                android:dividerHeight="0dp"/>
+                android:layout_height="match_parent"/>
 
-            <com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherPaymentsEmptyWithFilterView_
+            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsEmptyWithFilterView_
                 android:id="@+id/monitoringTeacherPaymentsEmptyWithFilterView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,7 +59,7 @@
                 android:layout_marginEnd="@dimen/app_size_2"
                 android:visibility="gone"/>
 
-            <com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherPaymentsEmptyView_
+            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsEmptyView_
                 android:id="@+id/monitoringTeacherPaymentsEmptyView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

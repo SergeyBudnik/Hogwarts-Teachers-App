@@ -38,8 +38,8 @@
     <string name="student_referral_source_search_engine">Поисковые системы</string>
     <string name="student_referral_source_friend_recommendation">Рекомендации</string>
 
-    <string name="monitoring_teacher_payments_no_payments_filter_enabled_title">Вся оплата обработана.</string>
-    <string name="monitoring_teacher_payments_no_payments_filter_enabled_warning">Отключите фильтр, чтобы посмотреть всю сданную оплату</string>
+    <string name="teacher_payments_no_payments_filter_enabled_title">Вся оплата обработана.</string>
+    <string name="teacher_payments_no_payments_filter_enabled_warning">Отключите фильтр, чтобы посмотреть всю сданную оплату</string>
 
     <string name="disable_filter">Отключить фильтр</string>
 
