@@ -5,10 +5,9 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity_
+import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity
+import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.view_monitoring_teacher_header.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup
@@ -16,7 +15,7 @@ import org.androidannotations.annotations.EViewGroup
 @EViewGroup(R.layout.view_monitoring_teacher_header)
 open class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     private enum class Item(val id: Int) {
-        SALARY(1), PAYMENTS(2);
+        LESSONS(1), SALARY(2), PAYMENTS(3);
 
         companion object {
             fun findById(id: Int): Item {
@@ -41,21 +40,29 @@ open class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : 
 
     @AfterViews
     fun init() {
+        monitoringTeacherHeaderLessonsView.setActive(item == Item.LESSONS)
         monitoringTeacherHeaderSalaryView.setActive(item == Item.SALARY)
         monitoringTeacherHeaderPaymentsView.setActive(item == Item.PAYMENTS)
 
+        monitoringTeacherHeaderLessonsView.setOnClickListener {
+            MonitoringTeacherLessonsActivity.redirect(
+                    current = context as BaseActivity,
+                    teacherId = teacherId
+            ).goAndCloseCurrent()
+        }
+
         monitoringTeacherHeaderSalaryView.setOnClickListener {
-            redirect(context as BaseActivity)
-                    .to(MonitoringTeacherSalaryActivity_::class.java)
-                    .withExtra(MonitoringTeacherSalaryActivity.EXTRA_TEACHER_ID, teacherId)
-                    .goAndCloseCurrent()
+            MonitoringTeacherSalaryActivity.redirect(
+                    current = context as BaseActivity,
+                    teacherId = teacherId
+            ).goAndCloseCurrent()
         }
 
         monitoringTeacherHeaderPaymentsView.setOnClickListener {
-            redirect(context as BaseActivity)
-                    .to(MonitoringTeacherPaymentsActivity_::class.java)
-                    .withExtra(MonitoringTeacherSalaryActivity.EXTRA_TEACHER_ID, teacherId)
-                    .goAndCloseCurrent()
+            MonitoringTeacherPaymentsActivity.redirect(
+                    current = context as BaseActivity,
+                    teacherId = teacherId
+            ).goAndCloseCurrent()
         }
     }
 
