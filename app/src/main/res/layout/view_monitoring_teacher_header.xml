@@ -7,19 +7,27 @@
     android:layout_height="wrap_content">
 
     <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+        android:id="@+id/monitoringTeacherHeaderLessonsView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:header_title="Занятия"
+        app:header_active="true"/>
+
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
         android:id="@+id/monitoringTeacherHeaderSalaryView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         app:header_title="Зарплаты"
-        app:header_active="true"/>
+        app:header_active="false"/>
 
     <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
         android:id="@+id/monitoringTeacherHeaderPaymentsView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:header_title="Оплаченные занятия"
+        app:header_title="Оплата"
         app:header_active="false"/>
 
 </LinearLayout>
