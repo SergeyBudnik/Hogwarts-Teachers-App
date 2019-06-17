@@ -5,9 +5,9 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.profile.ProfileAccountActivity_
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity_
-import com.bdev.hengschoolteacher.ui.activities.profile.ProfilePaymentActivity_
+import com.bdev.hengschoolteacher.ui.activities.profile.ProfilePaymentsActivity_
+import com.bdev.hengschoolteacher.ui.activities.profile.ProfileSalaryActivity_
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.view_profile_header.view.*
 import org.androidannotations.annotations.AfterViews
@@ -16,7 +16,7 @@ import org.androidannotations.annotations.EViewGroup
 @EViewGroup(R.layout.view_profile_header)
 open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     private enum class Item(val id: Int) {
-        LESSONS(1), PAYMENT(2), ACCOUNT(3);
+        LESSONS(1), SALARY(2), PAYMENTS(3);
 
         companion object {
             fun findById(id: Int): Item {
@@ -40,19 +40,19 @@ open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayo
     @AfterViews
     fun init() {
         profileHeaderMyLessonsView.setActive(item == Item.LESSONS)
-        profileHeaderMyPaymentView.setActive(item == Item.PAYMENT)
-        profileHeaderMyAccountView.setActive(item == Item.ACCOUNT)
+        profileHeaderMySalaryView.setActive(item == Item.SALARY)
+        profileHeaderMyPaymentsView.setActive(item == Item.PAYMENTS)
 
         profileHeaderMyLessonsView.setOnClickListener {
             redirect(context as BaseActivity).to(ProfileLessonsActivity_::class.java).goAndCloseCurrent()
         }
 
-        profileHeaderMyPaymentView.setOnClickListener {
-            redirect(context as BaseActivity).to(ProfilePaymentActivity_::class.java).goAndCloseCurrent()
+        profileHeaderMySalaryView.setOnClickListener {
+            redirect(context as BaseActivity).to(ProfileSalaryActivity_::class.java).goAndCloseCurrent()
         }
 
-        profileHeaderMyAccountView.setOnClickListener {
-            redirect(context as BaseActivity).to(ProfileAccountActivity_::class.java).goAndCloseCurrent()
+        profileHeaderMyPaymentsView.setOnClickListener {
+            redirect(context as BaseActivity).to(ProfilePaymentsActivity_::class.java).goAndCloseCurrent()
         }
     }
 }

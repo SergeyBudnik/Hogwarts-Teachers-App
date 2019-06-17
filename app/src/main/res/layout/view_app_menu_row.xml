@@ -17,7 +17,7 @@
         android:layout_height="@dimen/app_size_1_5"
         android:layout_marginEnd="@dimen/app_size_1"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_menu"
+        android:tint="@color/fill_text_basic"
         android:importantForAccessibility="no"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
