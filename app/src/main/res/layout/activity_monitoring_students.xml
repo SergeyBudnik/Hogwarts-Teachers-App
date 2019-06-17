@@ -7,14 +7,27 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-        android:id="@+id/monitoringPaymentsHeaderView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Мониторинг"
-        app:leftIcon="@drawable/ic_menu"
-        app:firstRightIcon="@drawable/ic_search"
-        app:secondRightIcon="@drawable/ic_filter"/>
+        android:layout_height="wrap_content">
+
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            android:id="@+id/monitoringPaymentsHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Мониторинг"
+            app:leftIcon="@drawable/ic_menu"
+            app:firstRightIcon="@drawable/ic_search"
+            app:secondRightIcon="@drawable/ic_filter"/>
+
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedHeaderSearchView_
+            android:id="@+id/monitoringPaymentsHeaderSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1"/>
+
+    </RelativeLayout>
 
     <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView_
         android:id="@+id/monitoringPaymentsSecondaryHeaderView"
