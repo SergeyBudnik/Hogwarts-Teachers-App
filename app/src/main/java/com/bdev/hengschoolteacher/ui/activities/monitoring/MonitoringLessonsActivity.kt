@@ -5,16 +5,12 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.LessonStatusService
-import com.bdev.hengschoolteacher.service.LessonsAttendancesService
+import com.bdev.hengschoolteacher.service.LessonStateService
 import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity
-import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity_
 import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
+import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_lessons.*
 import org.androidannotations.annotations.AfterViews
@@ -24,18 +20,10 @@ import org.androidannotations.annotations.EActivity
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_monitoring_lessons)
 open class MonitoringLessonsActivity : BaseActivity() {
-    companion object {
-        const val REQUEST_CODE_LESSON = 1
-    }
-
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean
-    lateinit var studentsService: StudentsService
-    @Bean
-    lateinit var lessonStatusService: LessonStatusService
-    @Bean
-    lateinit var lessonsAttendancesService: LessonsAttendancesService
+    lateinit var lessonStateService: LessonStateService
 
     private var filterEnabled = true
     private var calendarEnabled = false
@@ -55,18 +43,7 @@ open class MonitoringLessonsActivity : BaseActivity() {
 
         monitoringLessonsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
-        monitoringLessonsListView.bind(
-                showTeacher = true,
-                clickAction = {
-                    group, lesson, weekIndex -> RedirectBuilder.redirect(this)
-                        .to(LessonActivity_::class.java)
-                        .withExtra(LessonActivity.EXTRA_GROUP_ID, group.id)
-                        .withExtra(LessonActivity.EXTRA_LESSON_ID, lesson.id)
-                        .withExtra(LessonActivity.EXTRA_WEEK_INDEX, weekIndex)
-                        .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                        .goForResult(REQUEST_CODE_LESSON)
-                }
-        )
+        monitoringLessonsListView.bind(showTeacher = true)
 
         monitoringLessonsWeekSelectionBarView.init { weekIndex ->
             this.weekIndex = weekIndex
@@ -80,7 +57,7 @@ open class MonitoringLessonsActivity : BaseActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_LESSON) {
+        if (requestCode == LessonItemView.REQUEST_CODE_LESSON) {
             if (resultCode == Activity.RESULT_OK) {
                 initLessonsList()
             }
@@ -90,26 +67,10 @@ open class MonitoringLessonsActivity : BaseActivity() {
     private fun initLessonsList() {
         val lessons = lessonsService.getAllLessons()
                 .filter {
-                    val attendanceFilled = lessonsAttendancesService
-                            .isLessonAttendanceFilled(
-                                    lessonId = it.lesson.id,
-                                    weekIndex = weekIndex
-                            )
-
-                    val statusFilled = lessonStatusService.getLessonStatus(
-                            lessonId = it.lesson.id,
-                            lessonTime = lessonsService.getLessonStartTime(it.lesson.id, weekIndex)
-                    ) != null
-
-                    return@filter if (filterEnabled) {
-                        !attendanceFilled || !statusFilled
-                    } else {
-                        true
-                    }
+                    !filterEnabled || !lessonStateService.isLessonFilled(it.lesson, weekIndex)
                 }
 
-        monitoringLessonsListView.setLessons(lessons)
-        monitoringLessonsListView.setWeekIndex(weekIndex)
+        monitoringLessonsListView.fill(lessons, weekIndex)
 
         monitoringLessonsNoLessonsView.visibility = if (lessons.isEmpty() && filterEnabled) {
             View.VISIBLE
