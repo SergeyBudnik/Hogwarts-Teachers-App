@@ -3,11 +3,16 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 import android.annotation.SuppressLint
 import android.view.View
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.service.LessonStatusService
+import com.bdev.hengschoolteacher.service.LessonsAttendancesService
+import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity
 import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_lessons.*
 import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
 import org.androidannotations.annotations.Extra
 
@@ -16,6 +21,8 @@ import org.androidannotations.annotations.Extra
 open class MonitoringTeacherLessonsActivity : BaseActivity() {
     companion object {
         const val EXTRA_TEACHER_ID = "EXTRA_TEACHER_ID"
+
+        const val REQUEST_CODE_LESSON = 1
 
         fun redirect(current: BaseActivity, teacherId: Long): RedirectBuilder {
             return RedirectBuilder
@@ -28,6 +35,15 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
     @Extra(EXTRA_TEACHER_ID)
     @JvmField
     var teacherId: Long = 0L
+
+    @Bean
+    lateinit var lessonsService: LessonsService
+    @Bean
+    lateinit var lessonStatusService: LessonStatusService
+    @Bean
+    lateinit var lessonsAttendancesService: LessonsAttendancesService
+
+    private var weekIndex = 0
 
     private var filterEnabled = true
     private var calendarEnabled = false
@@ -49,7 +65,25 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
                 teacherId = teacherId
         )
 
+        monitoringTeacherLessonsListView.bind(
+                showTeacher = false,
+                clickAction = {
+                    group, lesson, weekIndex -> LessonActivity
+                        .redirect(
+                                context = this,
+                                groupId = group.id,
+                                lessonId = lesson.id,
+                                weekIndex = weekIndex
+                        )
+                        .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                        .goForResult(REQUEST_CODE_LESSON)
+                }
+        )
+
         monitoringTeacherLessonsWeekSelectionBarView.init { weekIndex ->
+            this.weekIndex = weekIndex
+
+            initLessonsList()
         }
     }
 
@@ -60,6 +94,25 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
     private fun doFinish() {
         finish()
         overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
+    }
+
+    private fun initLessonsList() {
+        val lessons = lessonsService.getTeacherLessons(teacherId).filter {
+            val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(
+                    lessonId = it.lesson.id,
+                    weekIndex = weekIndex
+            )
+
+            val statusFilled = lessonStatusService.getLessonStatus(
+                    lessonId = it.lesson.id,
+                    lessonTime = lessonsService.getLessonStartTime(it.lesson.id, weekIndex)
+            ) != null
+
+            !filterEnabled || !attendanceFilled || !statusFilled
+        }
+
+        monitoringTeacherLessonsListView.setLessons(lessons)
+        monitoringTeacherLessonsListView.setWeekIndex(weekIndex)
     }
 
     private fun toggleFilter() {
