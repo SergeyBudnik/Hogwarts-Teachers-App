@@ -13,6 +13,9 @@ import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity
+import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import kotlinx.android.synthetic.main.view_lesson_item.view.*
 import kotlinx.android.synthetic.main.view_lessons.view.*
@@ -23,6 +26,10 @@ import kotlin.Comparator
 
 @EViewGroup(R.layout.view_lesson_item)
 open class LessonItemView : RelativeLayout {
+    companion object {
+        const val REQUEST_CODE_LESSON = 1
+    }
+
     @Bean
     lateinit var studentsAttendancesService: StudentsAttendancesService
     @Bean
@@ -39,15 +46,22 @@ open class LessonItemView : RelativeLayout {
             group: Group,
             lesson: Lesson,
             weekIndex: Int,
-            showTeacher: Boolean,
-            clickAction: (Group, Lesson, Int) -> Unit
+            showTeacher: Boolean
     ): LessonItemView {
         val students = lessonsService.getLessonStudents(lesson.id, weekIndex)
 
         lessonItemRowView.bind(group, lesson, students, weekIndex)
 
         setOnClickListener {
-            clickAction.invoke(group, lesson, weekIndex)
+            LessonActivity
+                    .redirect(
+                            context = context as BaseActivity,
+                            groupId = group.id,
+                            lessonId = lesson.id,
+                            weekIndex = weekIndex
+                    )
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .goForResult(REQUEST_CODE_LESSON)
         }
 
         lessonItemTeacherView.text = teacherStorageService.getTeacherById(lesson.teacherId)?.name ?: ""
@@ -59,8 +73,7 @@ open class LessonItemView : RelativeLayout {
 
 class LessonsListAdapter(
         context: Context,
-        private val showTeacher: Boolean,
-        private val clickAction: (Group, Lesson, Int) -> Unit
+        private val showTeacher: Boolean
 ) : BaseWeekItemsListAdapter<GroupAndLesson>(context) {
     private var weekIndex = 0
 
@@ -77,8 +90,7 @@ class LessonsListAdapter(
                 group = item.group,
                 lesson = item.lesson,
                 weekIndex = weekIndex,
-                showTeacher = showTeacher,
-                clickAction = clickAction
+                showTeacher = showTeacher
         )
     }
 
@@ -98,22 +110,17 @@ open class LessonsView : RelativeLayout {
 
     private lateinit var adapter: LessonsListAdapter
 
-    fun bind(showTeacher: Boolean, clickAction: (Group, Lesson, Int) -> Unit) {
+    fun bind(showTeacher: Boolean) {
         adapter = LessonsListAdapter(
                 context = context,
-                showTeacher = showTeacher,
-                clickAction = clickAction
+                showTeacher = showTeacher
         )
 
         lessonsListView.adapter = adapter
     }
 
-    fun setLessons(lessons: List<GroupAndLesson>) {
+    fun fill(lessons: List<GroupAndLesson>, weekIndex: Int) {
         adapter.setItems(lessons)
-        adapter.notifyDataSetChanged()
-    }
-
-    fun setWeekIndex(weekIndex: Int) {
         adapter.setWeekIndex(weekIndex)
         adapter.notifyDataSetChanged()
     }
