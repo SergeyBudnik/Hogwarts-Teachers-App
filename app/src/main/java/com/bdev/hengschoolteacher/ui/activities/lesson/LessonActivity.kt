@@ -33,6 +33,9 @@ open class LessonStudentItemView : RelativeLayout {
     @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
 
+    @Bean
+    lateinit var studentPaymentsDeptService: StudentPaymentsDeptService
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
@@ -94,12 +97,12 @@ open class LessonStudentItemView : RelativeLayout {
     }
 
     private fun bindDept(student: Student) {
-        val dept = getStudentsDept(student)
+        val dept = studentPaymentsDeptService.getStudentDept(student.id)
 
         lessonStudentItemNoDeptView.visibility = if (dept > 0) { View.GONE } else { View.VISIBLE }
         lessonStudentItemDeptView.visibility = if (dept > 0) { View.VISIBLE } else { View.GONE }
 
-        lessonStudentItemDeptView.text = "Долг: ${getStudentsDept(student)}"
+        lessonStudentItemDeptView.text = "Долг: $dept Р"
     }
 
     private fun getStudentsDept(student: Student): Long {
