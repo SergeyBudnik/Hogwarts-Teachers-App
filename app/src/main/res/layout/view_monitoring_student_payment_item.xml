@@ -12,136 +12,100 @@
     android:paddingBottom="@dimen/app_size_1"
     android:paddingStart="@dimen/app_size_1"
     android:paddingEnd="@dimen/app_size_1"
-    android:weightSum="5"
     android:background="@drawable/layout_row"
     android:backgroundTint="@color/alt_contrast_light">
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
         android:id="@+id/monitoringStudentPaymentItemMonthView"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
         android:textSize="@dimen/font_normal"
         android:textColor="@color/fill_text_basic_accent"/>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_weight="2">
-
-        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:id="@+id/monitoringStudentPaymentItemNonPayableLessonsAmountView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_normal"
-            android:textColor="@color/fill_text_basic_negative"/>
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/app_size_0_25"
-            android:layout_marginEnd="@dimen/app_size_0_25"
-            android:text="+"
+            android:padding="@dimen/app_size_0_5"
+            android:text="Отработано:"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/fill_text_basic"/>
+            android:textColor="@color/fill_text_basic_subtle"/>
 
-        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:id="@+id/monitoringStudentPaymentItemPayableLessonsAmountView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_normal"
-            android:textColor="@color/fill_text_basic_positive"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stroke_basic_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/app_size_0_25"
-            android:layout_marginEnd="@dimen/app_size_0_25"
-            android:text="+"
+            android:padding="@dimen/app_size_0_5"
+            android:text="Ув. пропуск:"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/fill_text_basic"/>
+            android:textColor="@color/fill_text_basic_subtle"/>
 
-        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:id="@+id/monitoringStudentPaymentItemLeftLessonsAmountView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_normal"
-            android:textColor="@color/fill_text_basic"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stroke_basic_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/app_size_0_25"
-            android:layout_marginEnd="@dimen/app_size_0_25"
-            android:text="="
+            android:padding="@dimen/app_size_0_5"
+            android:text="Неув. пропуск:"
             android:textSize="@dimen/font_normal"
-            android:textColor="@color/fill_text_basic"/>
-
-        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:id="@+id/monitoringStudentPaymentItemTotalLessonsAmountView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_normal"
-            android:textColor="@color/fill_text_basic_accent"/>
+            android:textColor="@color/fill_text_basic_subtle"/>
 
     </LinearLayout>
 
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/stroke_basic_base"/>
+
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:gravity="center">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:id="@+id/monitoringStudentPaymentItemTotalPriceAmountView"
+            android:id="@+id/monitoringStudentPaymentItemVisitedLessonsAmountView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="5000"
+            android:padding="@dimen/app_size_0_5"
             android:textSize="@dimen/font_normal"
             android:textColor="@color/fill_text_basic"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stroke_basic_base"/>
+
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/monitoringStudentPaymentItemValidSkipLessonsAmountView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/app_size_0_25"
-            android:layout_marginEnd="@dimen/app_size_0_25"
-            android:text="-"
+            android:padding="@dimen/app_size_0_5"
             android:textSize="@dimen/font_normal"
             android:textColor="@color/fill_text_basic"/>
 
-        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:id="@+id/monitoringStudentPaymentItemPayedPriceView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_normal"
-            android:textColor="@color/fill_text_basic_positive"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stroke_basic_base"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/monitoringStudentPaymentItemInvalidSkipLessonsAmountView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/app_size_0_25"
-            android:layout_marginEnd="@dimen/app_size_0_25"
-            android:text="="
+            android:padding="@dimen/app_size_0_5"
             android:textSize="@dimen/font_normal"
             android:textColor="@color/fill_text_basic"/>
-
-        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:id="@+id/monitoringStudentPaymentItemDeptPriceView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="2000"
-            android:textSize="@dimen/font_normal"
-            android:textColor="@color/fill_text_basic_negative"/>
 
     </LinearLayout>
 
