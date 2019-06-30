@@ -15,14 +15,12 @@ import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity
-import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import kotlinx.android.synthetic.main.view_lesson_item.view.*
 import kotlinx.android.synthetic.main.view_lessons.view.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
 import java.util.*
-import kotlin.Comparator
 
 @EViewGroup(R.layout.view_lesson_item)
 open class LessonItemView : RelativeLayout {
