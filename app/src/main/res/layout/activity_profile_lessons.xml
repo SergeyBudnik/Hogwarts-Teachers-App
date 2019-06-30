@@ -37,15 +37,11 @@
                 android:layout_alignParentBottom="true"
                 android:visibility="gone"/>
 
-            <ListView
+            <com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsView_
                 android:id="@+id/profileLessonsListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@id/profileLessonsWeekSelectionBarView"
-                android:paddingBottom="@dimen/app_size_1"
-                android:clipToPadding="false"
-                android:divider="@null"
-                android:dividerHeight="0dp"/>
+                android:layout_above="@id/profileLessonsWeekSelectionBarView" />
 
             <com.bdev.hengschoolteacher.ui.views.app.lesson.NoLessonsView_
                 android:id="@+id/profileLessonsNoLessonsView"

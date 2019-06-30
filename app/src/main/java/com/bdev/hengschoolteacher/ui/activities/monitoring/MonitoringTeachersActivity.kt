@@ -11,7 +11,7 @@ import com.bdev.hengschoolteacher.data.school.teacher.Teacher
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity
+import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
@@ -82,7 +82,7 @@ open class MonitoringTeachersActivity : BaseActivity() {
         monitoringTeachersListView.setOnItemClickListener { _, _, position, _ ->
             val teacher = adapter.getItem(position)
 
-            MonitoringTeacherSalaryActivity
+            MonitoringTeacherLessonsActivity
                     .redirect(
                             current = this,
                             teacherId = teacher.id

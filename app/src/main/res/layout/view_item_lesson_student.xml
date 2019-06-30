@@ -9,13 +9,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:id="@+id/lessonStudentItemNameView"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/font_large"
-            android:textColor="@color/fill_text_basic_accent"/>
+            android:layout_height="wrap_content">
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/lessonStudentItemNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:textColor="@color/fill_text_basic_accent"/>
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/lessonStudentItemDeptView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:text="Долг: 2500 Р"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/fill_text_basic_negative"/>
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/lessonStudentItemNoDeptView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:text="Оплачено"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/fill_text_basic_subtle"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"

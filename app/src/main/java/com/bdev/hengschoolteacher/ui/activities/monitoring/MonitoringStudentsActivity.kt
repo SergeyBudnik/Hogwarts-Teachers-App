@@ -70,10 +70,13 @@ open class MonitoringStudentsActivity : BaseActivity() {
 
     private var filterEnabled = true
 
+    private var filter = ""
+
     @AfterViews
     fun init() {
         monitoringPaymentsHeaderView
                 .setLeftButtonAction { monitoringPaymentsMenuLayoutView.openMenu() }
+                .setFirstRightButtonAction { monitoringPaymentsHeaderSearchView.show() }
                 .setSecondRightButtonAction { toggleFilter() }
                 .setSecondRightButtonColor(getFilterColor())
 
@@ -82,6 +85,12 @@ open class MonitoringStudentsActivity : BaseActivity() {
         monitoringPaymentsSecondaryHeaderView.bind(
                 currentItem = MonitoringHeaderView.Item.PAYMENTS
         )
+
+        monitoringPaymentsHeaderSearchView.addOnTextChangeListener { filter ->
+            this.filter = filter
+
+            initList()
+        }
 
         initList()
     }
@@ -99,6 +108,12 @@ open class MonitoringStudentsActivity : BaseActivity() {
                             ))
                         }
                         .filter { !filterEnabled || it.dept > 0 }
+                        .filter {
+                            val nameMatches = it.student.name.toLowerCase().contains(filter.toLowerCase())
+                            val phoneMatches = it.student.phones.filter { it.contains(filter) }.any()
+
+                            return@filter nameMatches || phoneMatches
+                        }
                         .sortedBy { it.student.name }
         )
 

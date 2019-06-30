@@ -16,7 +16,8 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.student.*
+import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
+import com.bdev.hengschoolteacher.ui.activities.student.StudentPaymentActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
@@ -29,6 +30,11 @@ import org.androidannotations.annotations.*
 open class LessonStudentItemView : RelativeLayout {
     @Bean
     lateinit var studentsAttendanceService: StudentsAttendancesService
+    @Bean
+    lateinit var studentsPaymentsService: StudentsPaymentsService
+
+    @Bean
+    lateinit var studentPaymentsDeptService: StudentPaymentsDeptService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -38,6 +44,7 @@ open class LessonStudentItemView : RelativeLayout {
 
         bindAttendance(student, lesson, weekIndex)
         bindPayment(student)
+        bindDept(student)
 
         setOnClickListener {
             StudentInformationActivity
@@ -87,6 +94,22 @@ open class LessonStudentItemView : RelativeLayout {
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .goForResult(LessonActivity.REQUEST_CODE_LESSON_ATTENDANCE)
         }
+    }
+
+    private fun bindDept(student: Student) {
+        val dept = studentPaymentsDeptService.getStudentDept(student.id)
+
+        lessonStudentItemNoDeptView.visibility = if (dept > 0) { View.GONE } else { View.VISIBLE }
+        lessonStudentItemDeptView.visibility = if (dept > 0) { View.VISIBLE } else { View.GONE }
+
+        lessonStudentItemDeptView.text = "Долг: $dept Р"
+    }
+
+    private fun getStudentsDept(student: Student): Long {
+        val allAttendances = studentsAttendanceService.getAllStudentAttendances(student.id)
+        val allPayableAttendances = allAttendances.filter { it.type != StudentAttendance.Type.VALID_SKIP }
+
+        return allPayableAttendances.size * 700L - studentsPaymentsService.getPayments(student.id).fold(0L) { amount, value -> amount + value.amount }
     }
 }
 
@@ -192,7 +215,7 @@ open class LessonActivity : BaseActivity() {
                             weekIndex = weekIndex
                     )
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .goForResult(LessonActivity.REQUEST_CODE_LESSON_STATUS)
+                    .goForResult(REQUEST_CODE_LESSON_STATUS)
         }
 
         lessonAddTransferView.setOnClickListener {
@@ -204,7 +227,7 @@ open class LessonActivity : BaseActivity() {
                             weekIndex = weekIndex
                     )
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .goForResult(LessonActivity.REQUEST_CODE_LESSON_TRANSFER)
+                    .goForResult(REQUEST_CODE_LESSON_TRANSFER)
         }
 
         val adapter = LessonStudentsListAdapter(lesson, weekIndex, this)
