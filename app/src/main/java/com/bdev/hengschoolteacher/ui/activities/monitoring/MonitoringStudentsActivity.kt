@@ -7,11 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.data.school.group.GroupType
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
-import com.bdev.hengschoolteacher.data.school.student.StudentAttendance.Type.VALID_SKIP
-import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
+import com.bdev.hengschoolteacher.service.StudentPaymentsDeptService
 import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
@@ -67,6 +64,8 @@ open class MonitoringStudentsActivity : BaseActivity() {
     lateinit var studentsPaymentsService: StudentsPaymentsService
     @Bean
     lateinit var studentsAttendancesService: StudentsAttendancesService
+    @Bean
+    lateinit var studentPaymentsDeptService: StudentPaymentsDeptService
 
     private var filterEnabled = true
 
@@ -101,11 +100,10 @@ open class MonitoringStudentsActivity : BaseActivity() {
         adapter.setItems(
                 studentsService.getAllStudents()
                         .map {
-                            StudentInfo(it, getStudentDept(
-                                    it.id,
-                                    studentsAttendancesService.getAllAttendances(),
-                                    studentsPaymentsService.getAllPayments()
-                            ))
+                            StudentInfo(
+                                    student = it,
+                                    dept = studentPaymentsDeptService.getStudentDept(it.id).toLong()
+                            )
                         }
                         .filter { !filterEnabled || it.dept > 0 }
                         .filter {
@@ -141,26 +139,5 @@ open class MonitoringStudentsActivity : BaseActivity() {
 
     private fun getFilterColor(): Int {
         return resources.getColor(if (filterEnabled) { R.color.fill_text_basic_action_link } else { R.color.fill_text_basic })
-    }
-
-    private fun getStudentDept(
-            studentId: Long,
-            allAttendances: List<StudentAttendance>,
-            allPayments: List<StudentPayment>
-    ): Long {
-        val studentAttendances = allAttendances.filter { it.studentId == studentId }.filter { it.type != VALID_SKIP }
-        val studentPayments = allPayments.filter { it.studentId == studentId }
-
-        val payed = studentAttendances.fold(0L) { amount, payment ->
-            if (payment.groupType == GroupType.INDIVIDUAL) {
-                amount + 1100L
-            } else {
-                amount + 700L
-            }
-        }
-
-        val spent = studentPayments.map { it.amount }.fold(0L) { amount, value -> amount + value }
-
-        return payed - spent
     }
 }

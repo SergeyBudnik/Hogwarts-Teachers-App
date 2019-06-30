@@ -50,46 +50,6 @@
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/app_size_1"
-                android:paddingBottom="@dimen/app_size_1"
-                android:paddingStart="@dimen/app_size_2"
-                android:paddingEnd="@dimen/app_size_2"
-                android:weightSum="5"
-                android:background="@color/fill_contrast_medium">
-
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Месяц"
-                    android:textSize="@dimen/font_normal"
-                    android:textColor="@color/fill_text_basic"/>
-
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:text="Занятия"
-                    android:textSize="@dimen/font_normal"
-                    android:textColor="@color/fill_text_basic"/>
-
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:text="Оплата"
-                    android:textSize="@dimen/font_normal"
-                    android:textColor="@color/fill_text_basic"/>
-
-            </LinearLayout>
-
             <ListView
                 android:id="@+id/monitoringStudentPaymentListView"
                 android:layout_width="match_parent"
