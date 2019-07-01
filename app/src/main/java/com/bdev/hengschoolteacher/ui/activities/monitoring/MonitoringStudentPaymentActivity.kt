@@ -11,10 +11,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.Month
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
-import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.StudentsAttendancesService
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
-import com.bdev.hengschoolteacher.service.StudentsService
+import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_monitoring_student_payment.*
@@ -25,10 +22,9 @@ import java.lang.RuntimeException
 @EViewGroup(R.layout.view_monitoring_student_payment_item)
 open class MonitoringStudentPaymentItemView : RelativeLayout {
     @Bean
-    lateinit var lessonsService: LessonsService
-
-    @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
+    @Bean
+    lateinit var studentPriceService: StudentPriceService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -36,29 +32,29 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
     fun bind(
             student: Student,
             month: Int,
-            allPayableAttendances: List<StudentAttendance>,
-            allNonPayableAttendances: List<StudentAttendance>
+            allVisitedAttendances: List<StudentAttendance>,
+            allValidSkipAttendances: List<StudentAttendance>,
+            allInvalidSkipAttendances: List<StudentAttendance>
     ) {
-        val payableLessonsAmount = getLessonsAmount(allPayableAttendances, month)
-        val nonPayableLessonsAmount = getLessonsAmount(allNonPayableAttendances, month)
-        val totalLessonsAmount = getTotalLessonsAmount(student, month)
-        val leftLessonsAmount = totalLessonsAmount - payableLessonsAmount - nonPayableLessonsAmount
+        val visitedLessonsAmount = getLessonsAmount(allVisitedAttendances, month)
+        val validSkipLessonsAmount = getLessonsAmount(allValidSkipAttendances, month)
+        val invalidSkipLessonsAmount = getLessonsAmount(allInvalidSkipAttendances, month)
 
         monitoringStudentPaymentItemMonthView.text = resources.getString(Month.findByIndex(month).nameId)
 
-        monitoringStudentPaymentItemPayableLessonsAmountView.text = "$nonPayableLessonsAmount"
-        monitoringStudentPaymentItemNonPayableLessonsAmountView.text = "$payableLessonsAmount"
-        monitoringStudentPaymentItemLeftLessonsAmountView.text = "$leftLessonsAmount"
-        monitoringStudentPaymentItemTotalLessonsAmountView.text = "$totalLessonsAmount"
+        monitoringStudentPaymentItemVisitedLessonsAmountView.text = "$visitedLessonsAmount"
+        monitoringStudentPaymentItemValidSkipLessonsAmountView.text = "$validSkipLessonsAmount"
+        monitoringStudentPaymentItemInvalidSkipLessonsAmountView.text = "$invalidSkipLessonsAmount"
 
-        val monthPayments = studentsPaymentsService.getMonthPayments(
+        monitoringStudentPaymentItemPayedAmountView.text = "${studentsPaymentsService.getMonthPayments(
                 studentId = student.id,
                 month = month
-        )
+        )}"
 
-        monitoringStudentPaymentItemTotalPriceAmountView.text = "${700 * payableLessonsAmount}"
-        monitoringStudentPaymentItemPayedPriceView.text = "$monthPayments"
-        monitoringStudentPaymentItemDeptPriceView.text = "${700 * payableLessonsAmount - monthPayments}"
+        monitoringStudentPaymentItemSpentAmountView.text = "${studentPriceService.getMonthPrice(
+                studentId = student.id,
+                month = month
+        )}"
     }
 
     private fun getLessonsAmount(attendances: List<StudentAttendance>, month: Int): Int {
@@ -71,10 +67,6 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
                 .filter { it.startTime >= startTime }
                 .count()
     }
-
-    private fun getTotalLessonsAmount(student: Student, month: Int): Int {
-        return lessonsService.getLessonsAmountInMonth(student.studentGroups[0].groupId, month)
-    }
 }
 
 @EBean
@@ -83,17 +75,21 @@ open class MonitoringStudentPaymentListAdapter : BaseAdapter() {
     lateinit var context: Context
 
     private lateinit var student: Student
-    private lateinit var allPayableAttendances: List<StudentAttendance>
-    private lateinit var allNonPayableAttendances: List<StudentAttendance>
+    private lateinit var allVisitedAttendances: List<StudentAttendance>
+    private lateinit var allValidSkipAttendances: List<StudentAttendance>
+    private lateinit var allInvalidSkipAttendances: List<StudentAttendance>
 
     fun bind(
             student: Student,
-            allPayableAttendances: List<StudentAttendance>,
-            allNonPayableAttendances: List<StudentAttendance>
+            allVisitedAttendances: List<StudentAttendance>,
+            allValidSkipAttendances: List<StudentAttendance>,
+            allInvalidSkipAttendances: List<StudentAttendance>
     ) {
         this.student = student
-        this.allPayableAttendances = allPayableAttendances
-        this.allNonPayableAttendances = allNonPayableAttendances
+
+        this.allVisitedAttendances = allVisitedAttendances
+        this.allValidSkipAttendances = allValidSkipAttendances
+        this.allInvalidSkipAttendances = allInvalidSkipAttendances
     }
 
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
@@ -103,7 +99,13 @@ open class MonitoringStudentPaymentListAdapter : BaseAdapter() {
             convertView as MonitoringStudentPaymentItemView
         }
 
-        v.bind(student, getItem(position), allPayableAttendances, allNonPayableAttendances)
+        v.bind(
+                student = student,
+                month = getItem(position),
+                allVisitedAttendances = allVisitedAttendances,
+                allValidSkipAttendances = allValidSkipAttendances,
+                allInvalidSkipAttendances = allInvalidSkipAttendances
+        )
 
         return v
     }
@@ -126,8 +128,6 @@ open class MonitoringStudentPaymentListAdapter : BaseAdapter() {
 open class MonitoringStudentPaymentActivity : BaseActivity() {
     companion object {
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
-
-        const val LESSONS_START_TIME = 1547413200000
     }
 
     @Bean
@@ -138,6 +138,8 @@ open class MonitoringStudentPaymentActivity : BaseActivity() {
     lateinit var studentsService: StudentsService
     @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
+    @Bean
+    lateinit var studentPaymentsDeptService: StudentPaymentsDeptService
 
     @Bean
     lateinit var monitoringStudentPaymentListAdapter: MonitoringStudentPaymentListAdapter
@@ -151,16 +153,20 @@ open class MonitoringStudentPaymentActivity : BaseActivity() {
         monitoringStudentPaymentHeaderView
                 .setLeftButtonAction { doFinish() }
 
-        val allAttendances = studentsAttendancesService.getAllStudentAttendances(studentId)
-        val allPayableAttendances = allAttendances.filter { it.type != StudentAttendance.Type.VALID_SKIP }
-        val allNonPayableAttendances = allAttendances.filter { it.type == StudentAttendance.Type.VALID_SKIP }
+        monitoringStudentPaymentDeptView.text = "${studentPaymentsDeptService.getStudentDept(studentId)}"
 
-        monitoringStudentPaymentDeptView.text = "${allPayableAttendances.size * 700L - studentsPaymentsService.getPayments(studentId).fold(0L) { amount, value -> amount + value.amount }}"
+        val allAttendances = studentsAttendancesService.getAllStudentAttendances(studentId)
+        val allVisitedAttendances = allAttendances.filter { it.type == StudentAttendance.Type.VISITED }
+        val allValidSkipAttendances = allAttendances.filter { it.type == StudentAttendance.Type.VALID_SKIP }
+        val allInvalidSkipAttendances = allAttendances.filter { it.type == StudentAttendance.Type.INVALID_SKIP }
+
+        val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
         monitoringStudentPaymentListAdapter.bind(
-                studentsService.getStudent(studentId) ?: throw RuntimeException(),
-                allPayableAttendances,
-                allNonPayableAttendances
+                student = student,
+                allVisitedAttendances = allVisitedAttendances,
+                allValidSkipAttendances = allValidSkipAttendances,
+                allInvalidSkipAttendances = allInvalidSkipAttendances
         )
 
         monitoringStudentPaymentListView.adapter = monitoringStudentPaymentListAdapter

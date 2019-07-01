@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.StudentsAttendancesAsyncService
-import com.bdev.hengschoolteacher.data.school.group.GroupType
+import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.service.GroupsService
 import com.bdev.hengschoolteacher.service.LessonsService
@@ -65,86 +65,89 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     fun init() {
         lessonAttendanceHeaderView.setLeftButtonAction { doFinish() }
 
-        val lesson = lessonsService.getLesson(lessonId)?.lesson ?: throw RuntimeException()
+        val groupAndLesson = lessonsService.getLesson(lessonId) ?: throw RuntimeException()
+
+        val group = groupAndLesson.group
+        val lesson = groupAndLesson.lesson
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
         lessonStudentAttendanceLessonTimeView.bind(lesson, weekIndex)
         lessonStudentAttendanceStudentInfoView.bind(student)
 
-        initButtons()
+        initButtons(group)
     }
 
-    private fun initButtons() {
+    private fun initButtons(group: Group) {
         val attendance = studentsAttendancesService.getAttendance(lessonId, studentId, weekIndex)
 
-        initButton(
+        val allButtonsViews = listOf(
                 studentAttendanceVisitButtonView,
-                listOf(studentAttendanceVisitButtonView, studentAttendanceValidSkipButtonView, studentAttendanceInvalidSkipButtonView),
-                attendance,
-                StudentAttendance.Type.VISITED,
-                "Посетил",
-                R.color.fill_text_basic_positive
-        )
-
-        initButton(
                 studentAttendanceValidSkipButtonView,
-                listOf(studentAttendanceVisitButtonView, studentAttendanceValidSkipButtonView, studentAttendanceInvalidSkipButtonView),
-                attendance,
-                StudentAttendance.Type.VALID_SKIP,
-                "Уважительный пропуск",
-                R.color.fill_text_basic_warning
+                studentAttendanceInvalidSkipButtonView
         )
 
         initButton(
-                studentAttendanceInvalidSkipButtonView,
-                listOf(studentAttendanceVisitButtonView, studentAttendanceValidSkipButtonView, studentAttendanceInvalidSkipButtonView),
-                attendance,
-                StudentAttendance.Type.INVALID_SKIP,
-                "Неуважительный пропуск",
-                R.color.fill_text_basic_negative
+                group = group,
+                actualAttendance = attendance,
+                buttonAttendance = StudentAttendance.Type.VISITED,
+                currentButtonView = studentAttendanceVisitButtonView,
+                allButtonsViews = allButtonsViews,
+                text = "Посетил",
+                buttonColorId = R.color.fill_text_basic_positive
+        )
+
+        initButton(
+                group = group,
+                actualAttendance = attendance,
+                buttonAttendance = StudentAttendance.Type.VALID_SKIP,
+                currentButtonView = studentAttendanceValidSkipButtonView,
+                allButtonsViews = allButtonsViews,
+                text = "Уважительный пропуск",
+                buttonColorId = R.color.fill_text_basic_warning
+        )
+
+        initButton(
+                group = group,
+                actualAttendance = attendance,
+                buttonAttendance = StudentAttendance.Type.INVALID_SKIP,
+                currentButtonView = studentAttendanceInvalidSkipButtonView,
+                allButtonsViews = allButtonsViews,
+                text = "Неуважительный пропуск",
+                buttonColorId = R.color.fill_text_basic_negative
         )
     }
 
     private fun initButton(
-            buttonView: BrandedActionButtonView,
-            allButtonsViews: List<BrandedActionButtonView>,
+            group: Group,
             actualAttendance: StudentAttendance.Type?,
             buttonAttendance: StudentAttendance.Type,
+            currentButtonView: BrandedActionButtonView,
+            allButtonsViews: List<BrandedActionButtonView>,
             text: String,
             buttonColorId: Int
     ) {
-        buttonView.setButtonText(text)
+        currentButtonView.setButtonText(text)
 
         if (actualAttendance != null) {
-            buttonView.setButtonIcon(
+            currentButtonView.setButtonIcon(
                     R.drawable.ic_ok,
                     if (actualAttendance == buttonAttendance) { buttonColorId } else { R.color.fill_text_basic_light }
             )
         }
 
-        buttonView.setOnClickListener {
+        currentButtonView.setOnClickListener {
             allButtonsViews.forEach { btn ->
                 btn.hideButtonIcon()
-                btn.setOnClickListener { }
+                btn.setOnClickListener {
+                    markButtonAttendance(
+                            group = group,
+                            attendance = buttonAttendance
+                    )
+                }
             }
 
-            buttonView.setButtonInProgressIcon()
+            currentButtonView.setButtonInProgressIcon()
 
-            studentsAttendancesAsyncService.addAttendance(StudentAttendance(
-                    null,
-                    studentId,
-                    GroupType.GROUP, // ToDo,
-                    lessonsService.getLessonStudents(lessonId, weekIndex).size,
-                    lessonsService.getLessonStartTime(lessonId, weekIndex),
-                    lessonsService.getLessonFinishTime(lessonId, weekIndex),
-                    buttonAttendance
-            ))
-                    .onSuccess { runOnUiThread {
-                        initButtons()
-                        doFinish()
-                    } }
-                    .onAuthFail {  }
-                    .onOtherFail {  }
         }
     }
 
@@ -152,9 +155,28 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         doFinish()
     }
 
-    fun doFinish() {
+    private fun doFinish() {
         setResult(Activity.RESULT_OK)
         finish()
         overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
+    }
+
+    private fun markButtonAttendance(group: Group, attendance: StudentAttendance.Type) {
+        studentsAttendancesAsyncService
+                .addAttendance(StudentAttendance(
+                        null,
+                        studentId,
+                        group.type,
+                        lessonsService.getLessonStudents(lessonId, weekIndex).size,
+                        lessonsService.getLessonStartTime(lessonId, weekIndex),
+                        lessonsService.getLessonFinishTime(lessonId, weekIndex),
+                        attendance
+                ))
+                .onSuccess { runOnUiThread {
+                    initButtons(group)
+                    doFinish()
+                } }
+                .onAuthFail { /* ToDo */ }
+                .onOtherFail { /* ToDo */ }
     }
 }
