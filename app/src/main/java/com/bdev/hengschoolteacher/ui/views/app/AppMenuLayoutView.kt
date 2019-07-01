@@ -2,12 +2,12 @@ package com.bdev.hengschoolteacher.ui.views.app
 
 import android.content.Context
 import android.graphics.Color
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
 import android.util.AttributeSet
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import kotlinx.android.synthetic.main.view_app_menu_layout.view.*
@@ -45,7 +45,7 @@ open class AppMenuLayoutView : DrawerLayout {
     }
 
     fun openMenu() {
-        layoutContainerView.openDrawer(Gravity.START)
+        layoutContainerView.openDrawer(GravityCompat.START)
     }
 
     override fun addView(child: View) {
