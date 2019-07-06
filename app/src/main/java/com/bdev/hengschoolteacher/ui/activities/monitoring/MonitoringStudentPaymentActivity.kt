@@ -13,6 +13,7 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.monitoring.student.MonitoringStudentMonthAttendanceActivity
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_monitoring_student_payment.*
 import kotlinx.android.synthetic.main.view_monitoring_student_payment_item.view.*
@@ -55,6 +56,14 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
                 studentId = student.id,
                 month = month
         )}"
+
+        setOnClickListener {
+            MonitoringStudentMonthAttendanceActivity.redirectToChild(
+                    current = context as BaseActivity,
+                    studentId = student.id,
+                    monthIndex = month
+            )
+        }
     }
 
     private fun getLessonsAmount(attendances: List<StudentAttendance>, month: Int): Int {
