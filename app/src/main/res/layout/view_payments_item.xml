@@ -14,28 +14,28 @@
             android:layout_height="wrap_content">
 
             <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                android:id="@+id/teacherPaymentsItemAmountView"
+                android:id="@+id/paymentsItemAmountView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_large"
                 android:textColor="@color/fill_text_basic_accent"/>
 
             <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                android:id="@+id/teacherPaymentsItemStudentView"
+                android:id="@+id/paymentsItemStudentView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/fill_text_basic"
                 android:textSize="@dimen/font_normal"/>
 
             <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                android:id="@+id/teacherPaymentsItemTeacherView"
+                android:id="@+id/paymentsItemTeacherView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/fill_text_basic_light"
                 android:textSize="@dimen/font_normal"/>
 
             <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                android:id="@+id/teacherPaymentsItemDateView"
+                android:id="@+id/paymentsItemDateView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_normal"
@@ -44,7 +44,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/teacherPaymentsItemProcessedView"
+            android:id="@+id/paymentsItemProcessedView"
             android:layout_width="@dimen/app_size_3"
             android:layout_height="@dimen/app_size_3"
             android:padding="@dimen/app_size_0_5"

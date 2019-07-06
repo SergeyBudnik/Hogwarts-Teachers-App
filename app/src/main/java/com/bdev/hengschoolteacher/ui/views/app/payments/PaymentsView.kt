@@ -1,4 +1,4 @@
-package com.bdev.hengschoolteacher.ui.views.app.teacher_payments
+package com.bdev.hengschoolteacher.ui.views.app.payments
 
 import android.content.Context
 import android.util.AttributeSet
@@ -13,13 +13,13 @@ import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
-import kotlinx.android.synthetic.main.view_teacher_payments.view.*
-import kotlinx.android.synthetic.main.view_teacher_payments_item.view.*
+import kotlinx.android.synthetic.main.view_payments.view.*
+import kotlinx.android.synthetic.main.view_payments_item.view.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_teacher_payments_item)
-open class TeacherPaymentsItemView : RelativeLayout {
+@EViewGroup(R.layout.view_payments_item)
+open class PaymentsItemView : RelativeLayout {
     @Bean
     lateinit var studentsService: StudentsService
     @Bean
@@ -33,23 +33,23 @@ open class TeacherPaymentsItemView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(studentPayment: StudentPayment, singleTeacher: Boolean, editable: Boolean): TeacherPaymentsItemView {
-        teacherPaymentsItemAmountView.text = context.getString(
+    fun bind(studentPayment: StudentPayment, singleTeacher: Boolean, editable: Boolean): PaymentsItemView {
+        paymentsItemAmountView.text = context.getString(
                 R.string.amount_in_rub,
                 studentPayment.amount
         )
 
-        teacherPaymentsItemStudentView.text = studentsService.getStudent(
+        paymentsItemStudentView.text = studentsService.getStudent(
                 studentPayment.studentId
         )?.name ?: "?"
 
-        teacherPaymentsItemTeacherView.text = teachersService.getTeacherById(
+        paymentsItemTeacherView.text = teachersService.getTeacherById(
                 studentPayment.teacherId
         )?.name ?: "?"
 
-        teacherPaymentsItemDateView.text = TimeFormatUtils.format(studentPayment.time)
+        paymentsItemDateView.text = TimeFormatUtils.format(studentPayment.time)
 
-        teacherPaymentsItemTeacherView.visibility = if (singleTeacher) { View.GONE } else { View.VISIBLE }
+        paymentsItemTeacherView.visibility = if (singleTeacher) { View.GONE } else { View.VISIBLE }
 
         renderProcessed(
                 studentsPaymentsService.getPayment(studentPayment.id)?.processed ?: false
@@ -71,7 +71,7 @@ open class TeacherPaymentsItemView : RelativeLayout {
     }
 
     private fun renderProcessed(processed: Boolean) {
-        teacherPaymentsItemProcessedView.setImageDrawable(
+        paymentsItemProcessedView.setImageDrawable(
                 context.resources.getDrawable(if (processed) {
                     R.drawable.ic_tick
                 } else {
@@ -79,7 +79,7 @@ open class TeacherPaymentsItemView : RelativeLayout {
                 })
         )
 
-        teacherPaymentsItemProcessedView.setColorFilter(
+        paymentsItemProcessedView.setColorFilter(
                 context.resources.getColor(if (processed) {
                     R.color.fill_text_basic_positive
                 } else {
@@ -89,16 +89,16 @@ open class TeacherPaymentsItemView : RelativeLayout {
     }
 }
 
-class TeacherPaymentsListAdapter(
+class PaymentsListAdapter(
         private val singleTeacher: Boolean,
         private val editable: Boolean,
         context: Context
 ) : BaseItemsListAdapter<StudentPayment>(context) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         return if (convertView == null) {
-            TeacherPaymentsItemView_.build(context)
+            PaymentsItemView_.build(context)
         } else {
-            convertView as TeacherPaymentsItemView
+            convertView as PaymentsItemView
         }.bind(
                 studentPayment = getItem(position),
                 singleTeacher = singleTeacher,
@@ -107,8 +107,8 @@ class TeacherPaymentsListAdapter(
     }
 }
 
-@EViewGroup(R.layout.view_teacher_payments)
-open class TeacherPaymentsView : RelativeLayout {
+@EViewGroup(R.layout.view_payments)
+open class PaymentsView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
@@ -117,14 +117,14 @@ open class TeacherPaymentsView : RelativeLayout {
             singleTeacher: Boolean,
             editable: Boolean
     ) {
-        TeacherPaymentsListAdapter(
+        PaymentsListAdapter(
                 singleTeacher = singleTeacher,
                 editable = editable,
                 context = context
         ).let {
             it.setItems(payments.sortedByDescending { payment -> payment.time })
 
-            teacherPaymentsListView.adapter = it
+            paymentsListView.adapter = it
         }
     }
 }
