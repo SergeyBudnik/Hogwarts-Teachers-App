@@ -68,7 +68,7 @@ open class ProfilePaymentsActivity : BaseActivity() {
                 }
 
         profilePaymentsEmptyWithFilterView.visibility =
-                if (!allPayments.isEmpty() && filteredPayments.isEmpty()) {
+                if (allPayments.isNotEmpty() && filteredPayments.isEmpty()) {
                     View.VISIBLE
                 } else {
                     View.GONE

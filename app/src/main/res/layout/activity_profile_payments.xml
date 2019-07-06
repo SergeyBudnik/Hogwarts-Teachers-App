@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsView_
+            <com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsView_
                 android:id="@+id/profilePaymentsTeacherPaymentsView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
