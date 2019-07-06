@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/leftActionButtonView"
         android:layout_centerVertical="true"
-        android:textSize="@dimen/font_large"
+        android:textSize="@dimen/font_normal"
         android:textColor="@color/fill_text_basic"
         app:app_font="bold"/>
 
