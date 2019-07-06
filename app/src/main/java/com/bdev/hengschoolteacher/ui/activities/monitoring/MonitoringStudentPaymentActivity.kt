@@ -18,7 +18,6 @@ import com.bdev.hengschoolteacher.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_monitoring_student_payment.*
 import kotlinx.android.synthetic.main.view_monitoring_student_payment_item.view.*
 import org.androidannotations.annotations.*
-import java.lang.RuntimeException
 
 @EViewGroup(R.layout.view_monitoring_student_payment_item)
 open class MonitoringStudentPaymentItemView : RelativeLayout {
@@ -159,6 +158,8 @@ open class MonitoringStudentPaymentActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
+        val student = studentsService.getStudent(studentId)
+
         monitoringStudentPaymentHeaderView
                 .setLeftButtonAction { doFinish() }
 
@@ -169,16 +170,18 @@ open class MonitoringStudentPaymentActivity : BaseActivity() {
         val allValidSkipAttendances = allAttendances.filter { it.type == StudentAttendance.Type.VALID_SKIP }
         val allInvalidSkipAttendances = allAttendances.filter { it.type == StudentAttendance.Type.INVALID_SKIP }
 
-        val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
+        student?.let {
+            monitoringStudentPaymentStudentView.bind(it)
 
-        monitoringStudentPaymentListAdapter.bind(
-                student = student,
-                allVisitedAttendances = allVisitedAttendances,
-                allValidSkipAttendances = allValidSkipAttendances,
-                allInvalidSkipAttendances = allInvalidSkipAttendances
-        )
+            monitoringStudentPaymentListAdapter.bind(
+                    student = it,
+                    allVisitedAttendances = allVisitedAttendances,
+                    allValidSkipAttendances = allValidSkipAttendances,
+                    allInvalidSkipAttendances = allInvalidSkipAttendances
+            )
 
-        monitoringStudentPaymentListView.adapter = monitoringStudentPaymentListAdapter
+            monitoringStudentPaymentListView.adapter = monitoringStudentPaymentListAdapter
+        }
     }
 
     override fun onBackPressed() {
