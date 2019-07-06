@@ -138,16 +138,11 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         currentButtonView.setOnClickListener {
             allButtonsViews.forEach { btn ->
                 btn.hideButtonIcon()
-                btn.setOnClickListener {
-                    markButtonAttendance(
-                            group = group,
-                            attendance = buttonAttendance
-                    )
-                }
             }
 
             currentButtonView.setButtonInProgressIcon()
 
+            markButtonAttendance(group = group, attendance = buttonAttendance)
         }
     }
 
