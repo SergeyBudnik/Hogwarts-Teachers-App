@@ -3,6 +3,7 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.student
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.Month
+import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -44,6 +45,8 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
 
     @Bean
     lateinit var studentsService: StudentsService
+    @Bean
+    lateinit var studentPaymentsService: StudentsPaymentsService
 
     @AfterViews
     fun init() {
@@ -60,6 +63,12 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
         val student = studentsService.getStudent(studentId)
 
         student?.let { monitoringStudentMonthPaymentsStudentView.bind(it) }
+
+        monitoringStudentMonthPaymentsPaymentsView.bind(
+                payments = studentPaymentsService.getMonthPayments(studentId, monthIndex),
+                singleTeacher = false,
+                editable = false
+        )
     }
 
     override fun onBackPressed() {

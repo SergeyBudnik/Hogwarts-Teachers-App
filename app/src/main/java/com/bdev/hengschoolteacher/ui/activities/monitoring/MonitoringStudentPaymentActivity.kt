@@ -50,7 +50,7 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
         monitoringStudentPaymentItemPayedAmountView.text = "${studentsPaymentsService.getMonthPayments(
                 studentId = student.id,
                 month = month
-        )}"
+        ).map { it.amount }.fold(0L) { p1, p2 -> p1 + p2 }}"
 
         monitoringStudentPaymentItemSpentAmountView.text = "${studentPriceService.getMonthPrice(
                 studentId = student.id,
