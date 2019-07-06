@@ -11,7 +11,7 @@
         android:id="@+id/monitoringTeacherSalaryHeaderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Мониторинг. Преподаватель"
+        app:title="Мониторинг. Учитель"
         app:leftIcon="@drawable/ic_arrow_left"
         app:firstRightIcon="@drawable/ic_calendar"/>
 

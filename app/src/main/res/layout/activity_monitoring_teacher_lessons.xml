@@ -11,7 +11,7 @@
         android:id="@+id/monitoringTeacherLessonsHeaderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Мониторинг. Преподаватель"
+        app:title="Мониторинг. Учитель"
         app:leftIcon="@drawable/ic_arrow_left"
         app:firstRightIcon="@drawable/ic_filter"
         app:secondRightIcon="@drawable/ic_calendar"/>
