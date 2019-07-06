@@ -30,7 +30,7 @@ open class StudentsPaymentsService {
                 .toList()
     }
 
-    fun getMonthPayments(studentId: Long, month: Int): Long {
+    fun getMonthPayments(studentId: Long, month: Int): List<StudentPayment> {
         val startTime = TimeUtils().getMonthStart(month)
         val finishTime = TimeUtils().getMonthFinish(month)
 
@@ -42,8 +42,7 @@ open class StudentsPaymentsService {
                 .filter { it.studentId == studentId }
                 .filter { it.time <= finishTime }
                 .filter { it.time >= startTime }
-                .map { it.amount }
-                .fold(0L) { p1, p2 -> p1 + p2 }
+                .toList()
     }
 
     fun getPaymentsToTeacher(teacherId: Long, onlyUnprocessed: Boolean): List<StudentPayment> {

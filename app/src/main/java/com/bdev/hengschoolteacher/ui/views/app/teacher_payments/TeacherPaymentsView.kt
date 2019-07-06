@@ -10,6 +10,7 @@ import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
 import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
 import kotlinx.android.synthetic.main.view_teacher_payments.view.*
@@ -23,6 +24,8 @@ open class TeacherPaymentsItemView : RelativeLayout {
     lateinit var studentsService: StudentsService
     @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
+    @Bean
+    lateinit var teachersService: TeacherStorageService
 
     @Bean
     lateinit var studentsPaymentsAsyncService: StudentsPaymentAsyncService
@@ -30,7 +33,7 @@ open class TeacherPaymentsItemView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(studentPayment: StudentPayment, editable: Boolean): TeacherPaymentsItemView {
+    fun bind(studentPayment: StudentPayment, singleTeacher: Boolean, editable: Boolean): TeacherPaymentsItemView {
         teacherPaymentsItemAmountView.text = context.getString(
                 R.string.amount_in_rub,
                 studentPayment.amount
@@ -38,9 +41,15 @@ open class TeacherPaymentsItemView : RelativeLayout {
 
         teacherPaymentsItemStudentView.text = studentsService.getStudent(
                 studentPayment.studentId
-        )?.name ?: ""
+        )?.name ?: "?"
+
+        teacherPaymentsItemTeacherView.text = teachersService.getTeacherById(
+                studentPayment.teacherId
+        )?.name ?: "?"
 
         teacherPaymentsItemDateView.text = TimeFormatUtils.format(studentPayment.time)
+
+        teacherPaymentsItemTeacherView.visibility = if (singleTeacher) { View.GONE } else { View.VISIBLE }
 
         renderProcessed(
                 studentsPaymentsService.getPayment(studentPayment.id)?.processed ?: false
@@ -81,6 +90,7 @@ open class TeacherPaymentsItemView : RelativeLayout {
 }
 
 class TeacherPaymentsListAdapter(
+        private val singleTeacher: Boolean,
         private val editable: Boolean,
         context: Context
 ) : BaseItemsListAdapter<StudentPayment>(context) {
@@ -89,7 +99,11 @@ class TeacherPaymentsListAdapter(
             TeacherPaymentsItemView_.build(context)
         } else {
             convertView as TeacherPaymentsItemView
-        }.bind(getItem(position), editable)
+        }.bind(
+                studentPayment = getItem(position),
+                singleTeacher = singleTeacher,
+                editable = editable
+        )
     }
 }
 
@@ -100,9 +114,14 @@ open class TeacherPaymentsView : RelativeLayout {
 
     fun bind(
             payments: List<StudentPayment>,
+            singleTeacher: Boolean,
             editable: Boolean
     ) {
-        TeacherPaymentsListAdapter(editable, context).let {
+        TeacherPaymentsListAdapter(
+                singleTeacher = singleTeacher,
+                editable = editable,
+                context = context
+        ).let {
             it.setItems(payments.sortedByDescending { payment -> payment.time })
 
             teacherPaymentsListView.adapter = it

@@ -24,6 +24,13 @@
                 android:id="@+id/teacherPaymentsItemStudentView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/fill_text_basic"
+                android:textSize="@dimen/font_normal"/>
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/teacherPaymentsItemTeacherView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@color/fill_text_basic_light"
                 android:textSize="@dimen/font_normal"/>
 
