@@ -77,15 +77,14 @@ open class StudentInformationActivity : BaseActivity() {
     @Bean
     lateinit var lessonsService: LessonsService
 
-    private val adapter = StudentInformationTimetableListAdapter(this)
-
     @AfterViews
     fun init() {
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
         studentInformationHeaderView
-                .setTitle("Студент. ${student.name}")
                 .setLeftButtonAction { doFinish() }
+
+        studentInformationStudentView.bind(student = student, clickable = false)
 
         studentInformationCallView.setOnClickListener {
             redirect(this)
@@ -105,6 +104,8 @@ open class StudentInformationActivity : BaseActivity() {
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }
+
+        val adapter = StudentInformationTimetableListAdapter(this)
 
         adapter.setItems(lessonsService.getStudentLessons(student.id))
 

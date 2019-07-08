@@ -15,17 +15,24 @@ open class StudentInfoView : LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(student: Student) {
+    fun bind(
+            student: Student,
+            clickable: Boolean = true
+    ) {
         studentInfoNameView.text = student.name
 
         setOnClickListener {
-            StudentInformationActivity
-                    .redirect(
-                            current = context as BaseActivity,
-                            studentId = student.id
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
+            if (clickable) {
+                StudentInformationActivity
+                        .redirect(
+                                current = context as BaseActivity,
+                                studentId = student.id
+                        )
+                        .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                        .go()
+            } else {
+                /* Do nothing */
+            }
         }
     }
 }
