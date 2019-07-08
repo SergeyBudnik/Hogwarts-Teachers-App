@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_salary.*
 import org.androidannotations.annotations.AfterViews
@@ -37,7 +36,7 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
         monitoringTeacherSalaryHeaderView
                 .setLeftButtonAction { doFinish() }
                 .setFirstRightButtonAction { toggleCalendar() }
-                .setFirstRightButtonColor(getHeaderButtonColor(calendarEnabled))
+                .setFirstRightButtonActive(calendarEnabled)
 
         monitoringTeacherSalarySecondaryHeaderView.bind(
                 teacherId = teacherId
@@ -67,16 +66,12 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
     private fun toggleCalendar() {
         calendarEnabled = !calendarEnabled
 
-        monitoringTeacherSalaryHeaderView.setFirstRightButtonColor(getHeaderButtonColor(calendarEnabled))
+        monitoringTeacherSalaryHeaderView.setFirstRightButtonActive(calendarEnabled)
 
         monitoringTeacherSalaryWeekSelectionBarView.visibility = if (calendarEnabled) {
             View.VISIBLE
         } else {
             View.GONE
         }
-    }
-
-    private fun getHeaderButtonColor(enabled: Boolean): Int {
-        return HeaderElementsUtils.getColor(this, enabled)
     }
 }

@@ -9,7 +9,6 @@ import com.bdev.hengschoolteacher.data.school.teacher.Teacher
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
@@ -59,9 +58,9 @@ open class ProfileLessonsActivity : BaseActivity() {
         profileLessonsHeaderView
                 .setLeftButtonAction { profileLessonsMenuLayoutView.openMenu() }
                 .setFirstRightButtonAction { toggleFilter() }
-                .setFirstRightButtonColor(getHeaderButtonColor(filterEnabled))
+                .setFirstRightButtonActive(filterEnabled)
                 .setSecondRightButtonAction { toggleCalendar() }
-                .setSecondRightButtonColor(getHeaderButtonColor(calendarEnabled))
+                .setSecondRightButtonActive(calendarEnabled)
 
         profileLessonsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
 
@@ -103,7 +102,7 @@ open class ProfileLessonsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        profileLessonsHeaderView.setFirstRightButtonColor(getHeaderButtonColor(filterEnabled))
+        profileLessonsHeaderView.setFirstRightButtonActive(filterEnabled)
 
         initLessonsList()
     }
@@ -111,16 +110,12 @@ open class ProfileLessonsActivity : BaseActivity() {
     private fun toggleCalendar() {
         calendarEnabled = !calendarEnabled
 
-        profileLessonsHeaderView.setSecondRightButtonColor(getHeaderButtonColor(calendarEnabled))
+        profileLessonsHeaderView.setSecondRightButtonActive(calendarEnabled)
 
         profileLessonsWeekSelectionBarView.visibility = if (calendarEnabled) {
             View.VISIBLE
         } else {
             View.GONE
         }
-    }
-
-    private fun getHeaderButtonColor(enabled: Boolean): Int {
-        return HeaderElementsUtils.getColor(this, enabled)
     }
 }

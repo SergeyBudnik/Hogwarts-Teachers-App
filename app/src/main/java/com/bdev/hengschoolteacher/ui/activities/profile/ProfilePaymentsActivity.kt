@@ -6,7 +6,6 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.service.teacher.TeacherPaymentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_profile_payments.*
 import org.androidannotations.annotations.AfterViews
@@ -37,7 +36,7 @@ open class ProfilePaymentsActivity : BaseActivity() {
         profilePaymentsHeaderView
                 .setLeftButtonAction { profilePaymentsMenuLayoutView.openMenu() }
                 .setFirstRightButtonAction { toggleFilter() }
-                .setFirstRightButtonColor(getFilterColor())
+                .setFirstRightButtonActive(filterEnabled)
 
         profilePaymentsEmptyWithFilterView.bind {
             toggleFilter()
@@ -49,13 +48,9 @@ open class ProfilePaymentsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        profilePaymentsHeaderView.setFirstRightButtonColor(getFilterColor())
+        profilePaymentsHeaderView.setFirstRightButtonActive(filterEnabled)
 
         initList()
-    }
-
-    private fun getFilterColor() : Int {
-        return HeaderElementsUtils.getColor(this, filterEnabled)
     }
 
     private fun initList() {

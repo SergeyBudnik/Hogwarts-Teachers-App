@@ -87,7 +87,7 @@ open class MonitoringStudentsActivity : BaseActivity() {
                 .setLeftButtonAction { monitoringPaymentsMenuLayoutView.openMenu() }
                 .setFirstRightButtonAction { monitoringPaymentsHeaderSearchView.show() }
                 .setSecondRightButtonAction { toggleFilter() }
-                .setSecondRightButtonColor(getFilterColor())
+                .setSecondRightButtonActive(filterEnabled)
 
         monitoringPaymentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
@@ -141,12 +141,8 @@ open class MonitoringStudentsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        monitoringPaymentsHeaderView.setSecondRightButtonColor(getFilterColor())
+        monitoringPaymentsHeaderView.setSecondRightButtonActive(filterEnabled)
 
         initList()
-    }
-
-    private fun getFilterColor(): Int {
-        return resources.getColor(if (filterEnabled) { R.color.fill_text_basic_action_link } else { R.color.fill_text_basic })
     }
 }
