@@ -43,16 +43,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <RelativeLayout
+            <ListView
+                android:id="@+id/monitoringStudentMonthAttendanceListView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.bdev.hengschoolteacher.ui.views.app.dev.InDevelopmentView_
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"/>
-
-            </RelativeLayout>
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/app_size_1"
+                android:paddingBottom="@dimen/app_size_1"
+                android:clipToPadding="false"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
 
         </LinearLayout>
 
