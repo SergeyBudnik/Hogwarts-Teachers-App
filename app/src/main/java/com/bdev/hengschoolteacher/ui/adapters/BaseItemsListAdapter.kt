@@ -11,7 +11,7 @@ abstract class BaseItemsListAdapter<T>(
 
     private var filteredItems: List<T> = ArrayList()
 
-    fun setItems(items: List<T>) {
+    open fun setItems(items: List<T>) {
         this.items = items
 
         filteredItems = items.filter(filter)

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bdev.hengschoolteacher.ui.views.branded.BrandedListItemView_
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal">
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/monitoringStudentMonthAttendanceItemDateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/fill_text_basic_accent"/>
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/monitoringStudentMonthAttendanceItemTimeView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:textColor="@color/fill_text_basic"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_horizontal">
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/monitoringStudentMonthAttendanceItemGroupTypeView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/fill_text_basic"/>
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/monitoringStudentMonthAttendanceItemAttendanceTypeView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/fill_text_basic_warning"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</com.bdev.hengschoolteacher.ui.views.branded.BrandedListItemView_>
