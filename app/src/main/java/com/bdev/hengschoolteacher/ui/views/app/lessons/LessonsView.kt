@@ -50,18 +50,6 @@ open class LessonItemView : RelativeLayout {
 
         lessonItemRowView.bind(group, lesson, students, weekIndex)
 
-        setOnClickListener {
-            LessonActivity
-                    .redirect(
-                            context = context as BaseActivity,
-                            groupId = group.id,
-                            lessonId = lesson.id,
-                            weekIndex = weekIndex
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .goForResult(REQUEST_CODE_LESSON)
-        }
-
         lessonItemTeacherView.text = teacherStorageService.getTeacherById(lesson.teacherId)?.name ?: ""
         lessonItemTeacherView.visibility = if (showTeacher) { View.VISIBLE } else { View.GONE }
 
@@ -108,6 +96,8 @@ open class LessonsView : RelativeLayout {
 
     private lateinit var adapter: LessonsListAdapter
 
+    private var weekIndex = 0
+
     fun bind(showTeacher: Boolean) {
         adapter = LessonsListAdapter(
                 context = context,
@@ -115,9 +105,23 @@ open class LessonsView : RelativeLayout {
         )
 
         lessonsListView.adapter = adapter
+
+        lessonsListView.setOnItemClickListener { _, _, position, _ ->
+            adapter.getItem(position).second?.let { groupAndLesson ->
+                LessonActivity.redirectToChild(
+                        current = context as BaseActivity,
+                        groupId = groupAndLesson.group.id,
+                        lessonId = groupAndLesson.lesson.id,
+                        weekIndex = weekIndex,
+                        requestCode = LessonItemView.REQUEST_CODE_LESSON
+                )
+            }
+        }
     }
 
     fun fill(lessons: List<GroupAndLesson>, weekIndex: Int) {
+        this.weekIndex = weekIndex
+
         adapter.setItems(lessons)
         adapter.setWeekIndex(weekIndex)
         adapter.notifyDataSetChanged()

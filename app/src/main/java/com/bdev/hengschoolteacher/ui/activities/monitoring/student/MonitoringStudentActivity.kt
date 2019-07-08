@@ -1,4 +1,4 @@
-package com.bdev.hengschoolteacher.ui.activities.monitoring
+package com.bdev.hengschoolteacher.ui.activities.monitoring.student
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,11 +13,11 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_monitoring_student_payment.*
 import kotlinx.android.synthetic.main.view_monitoring_student_payment_item.view.*
 import org.androidannotations.annotations.*
-import java.lang.RuntimeException
 
 @EViewGroup(R.layout.view_monitoring_student_payment_item)
 open class MonitoringStudentPaymentItemView : RelativeLayout {
@@ -49,12 +49,20 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
         monitoringStudentPaymentItemPayedAmountView.text = "${studentsPaymentsService.getMonthPayments(
                 studentId = student.id,
                 month = month
-        )}"
+        ).map { it.amount }.fold(0L) { p1, p2 -> p1 + p2 }}"
 
         monitoringStudentPaymentItemSpentAmountView.text = "${studentPriceService.getMonthPrice(
                 studentId = student.id,
                 month = month
         )}"
+
+        setOnClickListener {
+            MonitoringStudentMonthAttendanceActivity.redirectToChild(
+                    current = context as BaseActivity,
+                    studentId = student.id,
+                    monthIndex = month
+            )
+        }
     }
 
     private fun getLessonsAmount(attendances: List<StudentAttendance>, month: Int): Int {
@@ -125,9 +133,18 @@ open class MonitoringStudentPaymentListAdapter : BaseAdapter() {
 
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_monitoring_student_payment)
-open class MonitoringStudentPaymentActivity : BaseActivity() {
+open class MonitoringStudentActivity : BaseActivity() {
     companion object {
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+
+        fun redirectToChild(current: BaseActivity, studentId: Long) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(MonitoringStudentActivity_::class.java)
+                    .withExtra(EXTRA_STUDENT_ID, studentId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
+        }
     }
 
     @Bean
@@ -150,6 +167,8 @@ open class MonitoringStudentPaymentActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
+        val student = studentsService.getStudent(studentId)
+
         monitoringStudentPaymentHeaderView
                 .setLeftButtonAction { doFinish() }
 
@@ -160,16 +179,18 @@ open class MonitoringStudentPaymentActivity : BaseActivity() {
         val allValidSkipAttendances = allAttendances.filter { it.type == StudentAttendance.Type.VALID_SKIP }
         val allInvalidSkipAttendances = allAttendances.filter { it.type == StudentAttendance.Type.INVALID_SKIP }
 
-        val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
+        student?.let {
+            monitoringStudentPaymentStudentView.bind(it)
 
-        monitoringStudentPaymentListAdapter.bind(
-                student = student,
-                allVisitedAttendances = allVisitedAttendances,
-                allValidSkipAttendances = allValidSkipAttendances,
-                allInvalidSkipAttendances = allInvalidSkipAttendances
-        )
+            monitoringStudentPaymentListAdapter.bind(
+                    student = it,
+                    allVisitedAttendances = allVisitedAttendances,
+                    allValidSkipAttendances = allValidSkipAttendances,
+                    allInvalidSkipAttendances = allInvalidSkipAttendances
+            )
 
-        monitoringStudentPaymentListView.adapter = monitoringStudentPaymentListAdapter
+            monitoringStudentPaymentListView.adapter = monitoringStudentPaymentListAdapter
+        }
     }
 
     override fun onBackPressed() {

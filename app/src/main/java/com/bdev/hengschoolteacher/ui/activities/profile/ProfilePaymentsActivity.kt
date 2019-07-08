@@ -6,7 +6,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.service.teacher.TeacherPaymentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_profile_payments.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -15,6 +15,15 @@ import org.androidannotations.annotations.EActivity
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_profile_payments)
 open class ProfilePaymentsActivity : BaseActivity() {
+    companion object {
+        fun redirectToSibling(current: BaseActivity) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(ProfilePaymentsActivity_::class.java)
+                    .goAndCloseCurrent()
+        }
+    }
+
     @Bean
     lateinit var profileService: ProfileService
     @Bean
@@ -27,7 +36,7 @@ open class ProfilePaymentsActivity : BaseActivity() {
         profilePaymentsHeaderView
                 .setLeftButtonAction { profilePaymentsMenuLayoutView.openMenu() }
                 .setFirstRightButtonAction { toggleFilter() }
-                .setFirstRightButtonColor(getFilterColor())
+                .setFirstRightButtonActive(filterEnabled)
 
         profilePaymentsEmptyWithFilterView.bind {
             toggleFilter()
@@ -39,13 +48,9 @@ open class ProfilePaymentsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        profilePaymentsHeaderView.setFirstRightButtonColor(getFilterColor())
+        profilePaymentsHeaderView.setFirstRightButtonActive(filterEnabled)
 
         initList()
-    }
-
-    private fun getFilterColor() : Int {
-        return HeaderElementsUtils.getColor(this, filterEnabled)
     }
 
     private fun initList() {
@@ -68,7 +73,7 @@ open class ProfilePaymentsActivity : BaseActivity() {
                 }
 
         profilePaymentsEmptyWithFilterView.visibility =
-                if (!allPayments.isEmpty() && filteredPayments.isEmpty()) {
+                if (allPayments.isNotEmpty() && filteredPayments.isEmpty()) {
                     View.VISIBLE
                 } else {
                     View.GONE
@@ -76,6 +81,7 @@ open class ProfilePaymentsActivity : BaseActivity() {
 
         profilePaymentsTeacherPaymentsView.bind(
                 payments = filteredPayments,
+                singleTeacher = true,
                 editable = false
         )
     }

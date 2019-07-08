@@ -5,7 +5,7 @@ import android.widget.Toast
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.AuthAsyncService
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_login.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -14,6 +14,15 @@ import org.androidannotations.annotations.EActivity
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_login)
 open class LoginActivity : BaseActivity() {
+    companion object {
+        fun redirectToSibling(current: BaseActivity) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(LoginActivity_::class.java)
+                    .goAndCloseCurrent()
+        }
+    }
+
     @Bean
     lateinit var authAsyncService: AuthAsyncService
 
@@ -33,9 +42,7 @@ open class LoginActivity : BaseActivity() {
     }
 
     private fun onLoginSuccessful() {
-        redirect(this)
-                .to(LoadingActivity_::class.java)
-                .goAndCloseCurrent()
+        LoadingActivity.redirectToSibling(this)
     }
 
     private fun onLoginFailure() {

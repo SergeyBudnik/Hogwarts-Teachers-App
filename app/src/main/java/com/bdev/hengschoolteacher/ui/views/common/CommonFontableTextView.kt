@@ -1,10 +1,9 @@
 package com.bdev.hengschoolteacher.ui.views.common
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.Typeface
-import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatTextView
 import com.bdev.hengschoolteacher.R
 
 open class CommonFontableTextView(context: Context, attrs: AttributeSet) : AppCompatTextView(context, attrs) {

@@ -18,11 +18,13 @@ open class TeacherActivity : BaseActivity() {
     companion object {
         const val EXTRA_TEACHER_ID = "EXTRA_TEACHER_ID"
 
-        fun redirect(current: BaseActivity, teacherId: Long): RedirectBuilder {
-            return RedirectBuilder
+        fun redirectToChild(current: BaseActivity, teacherId: Long) {
+            RedirectBuilder
                     .redirect(current)
                     .to(TeacherActivity_::class.java)
                     .withExtra(EXTRA_TEACHER_ID, teacherId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
         }
     }
 
@@ -39,7 +41,7 @@ open class TeacherActivity : BaseActivity() {
 
         val teacher = teacherStorageService.getTeacherById(teacherId) ?: throw RuntimeException()
 
-        teacherNameView.text = teacher.name
+        teacherInfoView.bind(teacherId = teacherId, clickable = false)
 
         teacherPhonesContainerView.removeAllViews()
 

@@ -27,13 +27,15 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
         const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
 
-        fun redirect(current: BaseActivity, lessonId: Long, studentId: Long, weekIndex: Int): RedirectBuilder {
-            return RedirectBuilder
+        fun redirectToChild(current: BaseActivity, lessonId: Long, studentId: Long, weekIndex: Int) {
+            RedirectBuilder
                     .redirect(current)
                     .to(LessonStudentAttendanceActivity_::class.java)
                     .withExtra(EXTRA_LESSON_ID, lessonId)
                     .withExtra(EXTRA_STUDENT_ID, studentId)
                     .withExtra(EXTRA_WEEK_INDEX, weekIndex)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .goForResult(LessonActivity.REQUEST_CODE_LESSON_ATTENDANCE)
         }
     }
 
@@ -138,16 +140,11 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         currentButtonView.setOnClickListener {
             allButtonsViews.forEach { btn ->
                 btn.hideButtonIcon()
-                btn.setOnClickListener {
-                    markButtonAttendance(
-                            group = group,
-                            attendance = buttonAttendance
-                    )
-                }
             }
 
             currentButtonView.setButtonInProgressIcon()
 
+            markButtonAttendance(group = group, attendance = buttonAttendance)
         }
     }
 

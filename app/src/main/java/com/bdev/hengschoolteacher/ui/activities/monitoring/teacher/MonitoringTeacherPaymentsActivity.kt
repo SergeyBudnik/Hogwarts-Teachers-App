@@ -5,7 +5,6 @@ import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.teacher.TeacherPaymentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_payments.*
 import org.androidannotations.annotations.AfterViews
@@ -19,11 +18,12 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
     companion object {
         const val EXTRA_TEACHER_ID = "EXTRA_TEACHER_ID"
 
-        fun redirect(current: BaseActivity, teacherId: Long): RedirectBuilder {
-            return RedirectBuilder
+        fun redirectToSibling(current: BaseActivity, teacherId: Long) {
+            RedirectBuilder
                     .redirect(current)
                     .to(MonitoringTeacherPaymentsActivity_::class.java)
                     .withExtra(EXTRA_TEACHER_ID, teacherId)
+                    .goAndCloseCurrent()
         }
     }
 
@@ -41,7 +41,7 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
         monitoringTeacherPaymentsHeaderView
                 .setLeftButtonAction { doFinish() }
                 .setFirstRightButtonAction { toggleFilter() }
-                .setFirstRightButtonColor(getFilterColor())
+                .setFirstRightButtonActive(filterEnabled)
 
         monitoringTeacherPaymentsSecondaryHeaderView.bind(
                 teacherId = teacherId
@@ -61,13 +61,9 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        monitoringTeacherPaymentsHeaderView.setFirstRightButtonColor(getFilterColor())
+        monitoringTeacherPaymentsHeaderView.setFirstRightButtonActive(filterEnabled)
 
         initList()
-    }
-
-    private fun getFilterColor() : Int {
-        return HeaderElementsUtils.getColor(this, filterEnabled)
     }
 
     private fun initList() {
@@ -94,6 +90,7 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
 
         monitoringTeacherPaymentsView.bind(
                 payments = filteredPayments,
+                singleTeacher = true,
                 editable = true
         )
     }

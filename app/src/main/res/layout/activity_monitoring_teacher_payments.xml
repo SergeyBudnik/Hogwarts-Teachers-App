@@ -11,7 +11,7 @@
         android:id="@+id/monitoringTeacherPaymentsHeaderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Мониторинг. Преподаватель"
+        app:title="Мониторинг. Учитель"
         app:leftIcon="@drawable/ic_arrow_left"
         app:firstRightIcon="@drawable/ic_filter"/>
 
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsView_
+            <com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsView_
                 android:id="@+id/monitoringTeacherPaymentsView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

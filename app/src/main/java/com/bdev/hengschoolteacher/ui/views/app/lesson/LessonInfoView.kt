@@ -28,19 +28,18 @@ open class LessonInfoView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(lesson: Lesson, weekIndex: Int) {
+        val lessonStartTime = lessonsService.getLessonStartTime(lesson.id, weekIndex)
+
         lessonInfoDayOfWeekView.text = context.getString(lesson.day.shortNameId)
-        lessonInfoDateView.text = TimeFormatUtils.format(lessonsService.getLessonStartTime(lesson.id, weekIndex))
+        lessonInfoDateView.text = TimeFormatUtils.formatOnlyDate(lessonStartTime)
         lessonInfoStartTimeView.text = context.getString(lesson.startTime.translationId)
         lessonInfoFinishTimeView.text = context.getString(lesson.finishTime.translationId)
 
         lessonInfoTeacherView.setOnClickListener {
-            TeacherActivity
-                    .redirect(
-                            current = context as BaseActivity,
-                            teacherId = lesson.teacherId
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
+            TeacherActivity.redirectToChild(
+                    current = context as BaseActivity,
+                    teacherId = lesson.teacherId
+            )
         }
 
         val teacher = teacherStorageService.getTeacherById(lesson.teacherId)

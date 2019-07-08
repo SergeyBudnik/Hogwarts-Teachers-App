@@ -12,12 +12,14 @@ import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
 import com.bdev.hengschoolteacher.data.school.student_payment.StudentPaymentInfo
-import com.bdev.hengschoolteacher.service.*
+import com.bdev.hengschoolteacher.service.GroupsService
+import com.bdev.hengschoolteacher.service.LessonsService
+import com.bdev.hengschoolteacher.service.StudentsPaymentsService
+import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
-import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity_
 import com.bdev.hengschoolteacher.ui.utils.KeyboardUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_student_payment.*
@@ -54,12 +56,10 @@ open class StudentPaymentItemView : RelativeLayout {
 
         if (teacher != null) {
             studentPaymentItemTeacherView.setOnClickListener {
-                RedirectBuilder
-                        .redirect(context as BaseActivity)
-                        .to(TeacherActivity_::class.java)
-                        .withExtra(TeacherActivity.EXTRA_TEACHER_ID, teacher.id)
-                        .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                        .go()
+                TeacherActivity.redirectToChild(
+                        current = context as BaseActivity,
+                        teacherId = teacher.id
+                )
             }
         }
     }
@@ -107,14 +107,16 @@ open class StudentPaymentActivity : BaseActivity() {
     companion object {
         private const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
 
-        fun redirect(
+        fun redirectToChild(
                 current: BaseActivity,
                 studentId: Long
-        ): RedirectBuilder {
+        ) {
             return RedirectBuilder
                     .redirect(current)
                     .to(StudentPaymentActivity_::class.java)
-                    .withExtra(StudentPaymentActivity.EXTRA_STUDENT_ID, studentId)
+                    .withExtra(EXTRA_STUDENT_ID, studentId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
         }
     }
 

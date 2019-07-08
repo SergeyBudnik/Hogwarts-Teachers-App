@@ -11,10 +11,8 @@ import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.*
-import com.bdev.hengschoolteacher.ui.activities.lesson.LessonStudentAttendanceActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import kotlinx.android.synthetic.main.activity_student_information.*
 import kotlinx.android.synthetic.main.view_list_item_student_information_timetable.view.*
 import org.androidannotations.annotations.*
@@ -59,12 +57,14 @@ open class StudentInformationActivity : BaseActivity() {
     companion object {
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
 
-        fun redirect(current: BaseActivity, studentId: Long): RedirectBuilder {
-            return RedirectBuilder
+        fun redirectToChild(current: BaseActivity, studentId: Long) {
+            RedirectBuilder
                     .redirect(current)
                     .to(StudentInformationActivity_::class.java)
                     .withExtra(EXTRA_STUDENT_ID, studentId)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
         }
     }
 
@@ -77,34 +77,30 @@ open class StudentInformationActivity : BaseActivity() {
     @Bean
     lateinit var lessonsService: LessonsService
 
-    private val adapter = StudentInformationTimetableListAdapter(this)
-
     @AfterViews
     fun init() {
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
         studentInformationHeaderView
-                .setTitle("Студент. ${student.name}")
                 .setLeftButtonAction { doFinish() }
 
+        studentInformationStudentView.bind(student = student, clickable = false)
+
         studentInformationCallView.setOnClickListener {
-            redirect(this)
-                    .to(StudentCallActivity_::class.java)
-                    .withExtra(LessonStudentAttendanceActivity.EXTRA_STUDENT_ID, student.id)
-                    .withExtra(LessonStudentAttendanceActivity.EXTRA_WEEK_INDEX, 0) // WeekIndex
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
+            StudentCallActivity.redirectToChild(
+                    current = this,
+                    studentId = studentId
+            )
         }
 
         studentInformationPaymentView.setOnClickListener {
-            StudentPaymentActivity
-                    .redirect(
-                            current = this,
-                            studentId = student.id
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
+            StudentPaymentActivity.redirectToChild(
+                    current = this,
+                    studentId = student.id
+            )
         }
+
+        val adapter = StudentInformationTimetableListAdapter(this)
 
         adapter.setItems(lessonsService.getStudentLessons(student.id))
 

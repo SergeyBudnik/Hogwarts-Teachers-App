@@ -4,11 +4,8 @@ import android.annotation.SuppressLint
 import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.LessonStateService
-import com.bdev.hengschoolteacher.service.LessonStatusService
-import com.bdev.hengschoolteacher.service.LessonsAttendancesService
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_lessons.*
 import org.androidannotations.annotations.AfterViews
@@ -22,7 +19,18 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
     companion object {
         const val EXTRA_TEACHER_ID = "EXTRA_TEACHER_ID"
 
-        fun redirect(current: BaseActivity, teacherId: Long): RedirectBuilder {
+        fun redirectToChild(current: BaseActivity, teacherId: Long) {
+            redirect(current = current, teacherId = teacherId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
+        }
+
+        fun redirectToSibling(current: BaseActivity, teacherId: Long) {
+            redirect(current = current, teacherId = teacherId)
+                    .goAndCloseCurrent()
+        }
+
+        private fun redirect(current: BaseActivity, teacherId: Long): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
                     .to(MonitoringTeacherLessonsActivity_::class.java)
@@ -49,9 +57,9 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
         monitoringTeacherLessonsHeaderView
                 .setLeftButtonAction { doFinish() }
                 .setFirstRightButtonAction { toggleFilter() }
-                .setFirstRightButtonColor(getHeaderButtonColor(filterEnabled))
+                .setFirstRightButtonActive(filterEnabled)
                 .setSecondRightButtonAction { toggleCalendar() }
-                .setSecondRightButtonColor(getHeaderButtonColor(calendarEnabled))
+                .setSecondRightButtonActive(calendarEnabled)
 
         monitoringTeacherLessonsSecondaryHeaderView.bind(
                 teacherId = teacherId
@@ -90,7 +98,7 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        monitoringTeacherLessonsHeaderView.setFirstRightButtonColor(getHeaderButtonColor(filterEnabled))
+        monitoringTeacherLessonsHeaderView.setFirstRightButtonActive(filterEnabled)
 
         initLessonsList()
     }
@@ -98,16 +106,12 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
     private fun toggleCalendar() {
         calendarEnabled = !calendarEnabled
 
-        monitoringTeacherLessonsHeaderView.setSecondRightButtonColor(getHeaderButtonColor(calendarEnabled))
+        monitoringTeacherLessonsHeaderView.setSecondRightButtonActive(calendarEnabled)
 
         monitoringTeacherLessonsWeekSelectionBarView.visibility = if (calendarEnabled) {
             View.VISIBLE
         } else {
             View.GONE
         }
-    }
-
-    private fun getHeaderButtonColor(enabled: Boolean): Int {
-        return HeaderElementsUtils.getColor(this, enabled)
     }
 }
