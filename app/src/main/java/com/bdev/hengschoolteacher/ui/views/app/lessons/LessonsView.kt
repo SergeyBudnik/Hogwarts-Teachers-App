@@ -51,15 +51,13 @@ open class LessonItemView : RelativeLayout {
         lessonItemRowView.bind(group, lesson, students, weekIndex)
 
         setOnClickListener {
-            LessonActivity
-                    .redirect(
-                            context = context as BaseActivity,
-                            groupId = group.id,
-                            lessonId = lesson.id,
-                            weekIndex = weekIndex
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .goForResult(REQUEST_CODE_LESSON)
+            LessonActivity.redirectToChild(
+                    current = context as BaseActivity,
+                    groupId = group.id,
+                    lessonId = lesson.id,
+                    weekIndex = weekIndex,
+                    requestCode = REQUEST_CODE_LESSON
+            )
         }
 
         lessonItemTeacherView.text = teacherStorageService.getTeacherById(lesson.teacherId)?.name ?: ""

@@ -13,8 +13,9 @@ import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.monitoring.student.MonitoringStudentActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_students.*
@@ -58,6 +59,15 @@ private class MonitoringStudentsListAdapter(context: Context) : BaseItemsListAda
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_monitoring_students)
 open class MonitoringStudentsActivity : BaseActivity() {
+    companion object {
+        fun redirectToSibling(current: BaseActivity) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(MonitoringStudentsActivity_::class.java)
+                    .goAndCloseCurrent()
+        }
+    }
+
     @Bean
     lateinit var studentsService: StudentsService
     @Bean
@@ -122,11 +132,10 @@ open class MonitoringStudentsActivity : BaseActivity() {
     }
 
     private fun openStudentPayment(studentId: Long) {
-        redirect(this)
-                .to(MonitoringStudentPaymentActivity_::class.java)
-                .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                .withExtra(MonitoringStudentPaymentActivity.EXTRA_STUDENT_ID, studentId)
-                .go()
+        MonitoringStudentActivity.redirectToChild(
+                current = this,
+                studentId = studentId
+        )
     }
 
     private fun toggleFilter() {

@@ -10,6 +10,7 @@ import com.bdev.hengschoolteacher.service.UserPreferencesService
 import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_profile_salary.*
 import org.androidannotations.annotations.AfterViews
@@ -19,6 +20,15 @@ import org.androidannotations.annotations.EActivity
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_profile_salary)
 open class ProfileSalaryActivity : BaseActivity() {
+    companion object {
+        fun redirectToSibling(current: BaseActivity) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(ProfileSalaryActivity_::class.java)
+                    .goAndCloseCurrent()
+        }
+    }
+
     @Bean
     lateinit var userPreferencesService: UserPreferencesService
     @Bean

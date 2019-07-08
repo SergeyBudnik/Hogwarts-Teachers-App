@@ -13,6 +13,7 @@ import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_teachers.*
@@ -61,6 +62,15 @@ class MonitoringTeachersListAdapter(context: Context) : BaseItemsListAdapter<Tea
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_monitoring_teachers)
 open class MonitoringTeachersActivity : BaseActivity() {
+    companion object {
+        fun redirectToSibling(current: BaseActivity) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(MonitoringTeachersActivity_::class.java)
+                    .goAndCloseCurrent()
+        }
+    }
+
     @Bean
     lateinit var teacherStorageService: TeacherStorageService
 
@@ -82,13 +92,10 @@ open class MonitoringTeachersActivity : BaseActivity() {
         monitoringTeachersListView.setOnItemClickListener { _, _, position, _ ->
             val teacher = adapter.getItem(position)
 
-            MonitoringTeacherLessonsActivity
-                    .redirect(
-                            current = this,
-                            teacherId = teacher.id
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
+            MonitoringTeacherLessonsActivity.redirectToChild(
+                    current = this,
+                    teacherId = teacher.id
+            )
         }
     }
 }

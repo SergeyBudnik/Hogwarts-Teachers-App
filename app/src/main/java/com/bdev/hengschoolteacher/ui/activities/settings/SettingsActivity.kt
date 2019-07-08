@@ -6,7 +6,7 @@ import com.bdev.hengschoolteacher.service.AuthService
 import com.bdev.hengschoolteacher.service.UserPreferencesService
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.LoginActivity_
+import com.bdev.hengschoolteacher.ui.activities.LoginActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -17,6 +17,15 @@ import org.androidannotations.annotations.EActivity
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_settings)
 open class SettingsActivity : BaseActivity() {
+    companion object {
+        fun redirectToSibling(current: BaseActivity) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(SettingsActivity_::class.java)
+                    .goAndCloseCurrent()
+        }
+    }
+
     @Bean
     lateinit var userPreferencesService: UserPreferencesService
     @Bean
@@ -42,8 +51,6 @@ open class SettingsActivity : BaseActivity() {
     private fun logOut() {
         authService.clearAuthInfo()
 
-        RedirectBuilder.redirect(this)
-                .to(LoginActivity_::class.java)
-                .goAndCloseCurrent()
+        LoginActivity.redirectToSibling(this)
     }
 }

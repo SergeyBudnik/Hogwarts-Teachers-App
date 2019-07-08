@@ -45,24 +45,24 @@ open class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : 
         monitoringTeacherHeaderPaymentsView.setActive(item == Item.PAYMENTS)
 
         monitoringTeacherHeaderLessonsView.setOnClickListener {
-            MonitoringTeacherLessonsActivity.redirect(
+            MonitoringTeacherLessonsActivity.redirectToSibling(
                     current = context as BaseActivity,
                     teacherId = teacherId
-            ).goAndCloseCurrent()
+            )
         }
 
         monitoringTeacherHeaderSalaryView.setOnClickListener {
-            MonitoringTeacherSalaryActivity.redirect(
+            MonitoringTeacherSalaryActivity.redirectToSibling(
                     current = context as BaseActivity,
                     teacherId = teacherId
-            ).goAndCloseCurrent()
+            )
         }
 
         monitoringTeacherHeaderPaymentsView.setOnClickListener {
-            MonitoringTeacherPaymentsActivity.redirect(
+            MonitoringTeacherPaymentsActivity.redirectToSibling(
                     current = context as BaseActivity,
                     teacherId = teacherId
-            ).goAndCloseCurrent()
+            )
         }
     }
 

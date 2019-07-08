@@ -20,7 +20,18 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
     companion object {
         const val EXTRA_TEACHER_ID = "EXTRA_TEACHER_ID"
 
-        fun redirect(current: BaseActivity, teacherId: Long): RedirectBuilder {
+        fun redirectToChild(current: BaseActivity, teacherId: Long) {
+            redirect(current = current, teacherId = teacherId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
+        }
+
+        fun redirectToSibling(current: BaseActivity, teacherId: Long) {
+            redirect(current = current, teacherId = teacherId)
+                    .goAndCloseCurrent()
+        }
+
+        private fun redirect(current: BaseActivity, teacherId: Long): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
                     .to(MonitoringTeacherLessonsActivity_::class.java)
