@@ -9,6 +9,7 @@ import com.bdev.hengschoolteacher.service.LessonStateService
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
@@ -20,6 +21,15 @@ import org.androidannotations.annotations.EActivity
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_monitoring_lessons)
 open class MonitoringLessonsActivity : BaseActivity() {
+    companion object {
+        fun redirectToSibling(current: BaseActivity) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(MonitoringLessonsActivity_::class.java)
+                    .goAndCloseCurrent()
+        }
+    }
+
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean

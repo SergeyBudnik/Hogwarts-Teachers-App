@@ -15,6 +15,7 @@ import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_students_groups.*
 import kotlinx.android.synthetic.main.view_list_item_students_groups.view.*
@@ -78,6 +79,15 @@ class StudentsGroupsListAdapter(context: Context): BaseItemsListAdapter<Group>(c
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_students_groups)
 open class StudentsGroupsListActivity : BaseActivity() {
+    companion object {
+        fun redirectToSibling(current: BaseActivity) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(StudentsGroupsListActivity_::class.java)
+                    .goAndCloseCurrent()
+        }
+    }
+
     @Bean
     lateinit var groupsService: GroupsService
     @Bean

@@ -21,18 +21,21 @@ open class LessonTransferActivity : BaseActivity() {
         private const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
         private const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
 
-        fun redirect(
+        fun redirectToChild(
                 context: Context,
                 groupId: Long,
                 lessonId: Long,
-                weekIndex: Int
-        ): RedirectBuilder {
-            return RedirectBuilder
+                weekIndex: Int,
+                requestCode: Int
+        ) {
+            RedirectBuilder
                     .redirect(context as BaseActivity)
                     .to(LessonTransferActivity_::class.java)
                     .withExtra(EXTRA_GROUP_ID, groupId)
                     .withExtra(EXTRA_LESSON_ID, lessonId)
                     .withExtra(EXTRA_WEEK_INDEX, weekIndex)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .goForResult(requestCode)
         }
     }
 

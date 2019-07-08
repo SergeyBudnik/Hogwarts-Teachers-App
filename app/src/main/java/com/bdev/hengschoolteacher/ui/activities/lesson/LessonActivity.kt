@@ -20,7 +20,6 @@ import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivi
 import com.bdev.hengschoolteacher.ui.activities.student.StudentPaymentActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
 import kotlinx.android.synthetic.main.activity_lesson.*
 import kotlinx.android.synthetic.main.view_item_lesson_student.view.*
@@ -47,13 +46,10 @@ open class LessonStudentItemView : RelativeLayout {
         bindDept(student)
 
         setOnClickListener {
-            StudentInformationActivity
-                    .redirect(
-                            current = context as BaseActivity,
-                            studentId = student.id
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
+            StudentInformationActivity.redirectToChild(
+                    current = context as BaseActivity,
+                    studentId = student.id
+            )
         }
 
         return this
@@ -61,13 +57,10 @@ open class LessonStudentItemView : RelativeLayout {
 
     private fun bindPayment(student: Student) {
         lessonStudentItemPaymentView.setOnClickListener {
-            StudentPaymentActivity
-                    .redirect(
-                            current = context as BaseActivity,
-                            studentId = student.id
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
+            StudentPaymentActivity.redirectToChild(
+                    current = context as BaseActivity,
+                    studentId = student.id
+            )
         }
     }
 
@@ -84,15 +77,12 @@ open class LessonStudentItemView : RelativeLayout {
         lessonStudentItemAttendanceView.setColorFilter(resources.getColor(colorId), PorterDuff.Mode.SRC_IN)
 
         lessonStudentItemAttendanceView.setOnClickListener {
-            LessonStudentAttendanceActivity
-                    .redirect(
-                            current = context as BaseActivity,
-                            lessonId = lesson.id,
-                            studentId = student.id,
-                            weekIndex = weekIndex
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .goForResult(LessonActivity.REQUEST_CODE_LESSON_ATTENDANCE)
+            LessonStudentAttendanceActivity.redirectToChild(
+                    current = context as BaseActivity,
+                    lessonId = lesson.id,
+                    studentId = student.id,
+                    weekIndex = weekIndex
+            )
         }
     }
 
@@ -103,13 +93,6 @@ open class LessonStudentItemView : RelativeLayout {
         lessonStudentItemDeptView.visibility = if (dept > 0) { View.VISIBLE } else { View.GONE }
 
         lessonStudentItemDeptView.text = "Долг: $dept Р"
-    }
-
-    private fun getStudentsDept(student: Student): Long {
-        val allAttendances = studentsAttendanceService.getAllStudentAttendances(student.id)
-        val allPayableAttendances = allAttendances.filter { it.type != StudentAttendance.Type.VALID_SKIP }
-
-        return allPayableAttendances.size * 700L - studentsPaymentsService.getPayments(student.id).fold(0L) { amount, value -> amount + value.amount }
     }
 }
 
@@ -139,17 +122,21 @@ open class LessonActivity : BaseActivity() {
         const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
         const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
 
-        fun redirect(
-                context: Context,
+        fun redirectToChild(
+                current: BaseActivity,
                 groupId: Long,
                 lessonId: Long,
-                weekIndex: Int
-        ): RedirectBuilder {
-            return redirect(context as BaseActivity)
+                weekIndex: Int,
+                requestCode: Int
+        ) {
+            RedirectBuilder
+                    .redirect(current)
                     .to(LessonActivity_::class.java)
                     .withExtra(EXTRA_GROUP_ID, groupId)
                     .withExtra(EXTRA_LESSON_ID, lessonId)
                     .withExtra(EXTRA_WEEK_INDEX, weekIndex)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .goForResult(requestCode)
         }
     }
 
@@ -198,6 +185,8 @@ open class LessonActivity : BaseActivity() {
 
         lessonTimeView.bind(lesson, weekIndex)
 
+        fillLessons(lesson, students)
+
         if (lessonStatus != null) {
             lessonMarkStatusView.setText(when (lessonStatus.type) {
                 LessonStatus.Type.FINISHED -> "Занятие проведено"
@@ -208,28 +197,26 @@ open class LessonActivity : BaseActivity() {
         }
 
         lessonMarkStatusView.setOnClickListener {
-            LessonStatusActivity
-                    .redirect(
-                            current = this,
-                            lessonId = lessonId,
-                            weekIndex = weekIndex
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .goForResult(REQUEST_CODE_LESSON_STATUS)
+            LessonStatusActivity.redirectToChild(
+                    current = this,
+                    lessonId = lessonId,
+                    weekIndex = weekIndex,
+                    requestCode = REQUEST_CODE_LESSON_STATUS
+            )
         }
 
         lessonAddTransferView.setOnClickListener {
-            LessonTransferActivity
-                    .redirect(
-                            context = this,
-                            groupId = groupId,
-                            lessonId = lessonId,
-                            weekIndex = weekIndex
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .goForResult(REQUEST_CODE_LESSON_TRANSFER)
+            LessonTransferActivity.redirectToChild(
+                    context = this,
+                    groupId = groupId,
+                    lessonId = lessonId,
+                    weekIndex = weekIndex,
+                    requestCode = REQUEST_CODE_LESSON_TRANSFER
+            )
         }
+    }
 
+    private fun fillLessons(lesson: Lesson, students: List<Student>) {
         val adapter = LessonStudentsListAdapter(lesson, weekIndex, this)
 
         adapter.setItems(students)

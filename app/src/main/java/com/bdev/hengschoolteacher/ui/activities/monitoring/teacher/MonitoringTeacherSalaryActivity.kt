@@ -17,11 +17,12 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
     companion object {
         const val EXTRA_TEACHER_ID = "EXTRA_TEACHER_ID"
 
-        fun redirect(current: BaseActivity, teacherId: Long): RedirectBuilder {
+        fun redirectToSibling(current: BaseActivity, teacherId: Long) {
             return RedirectBuilder
                     .redirect(current)
                     .to(MonitoringTeacherSalaryActivity_::class.java)
                     .withExtra(EXTRA_TEACHER_ID, teacherId)
+                    .goAndCloseCurrent()
         }
     }
 

@@ -18,52 +18,49 @@
         android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".ui.activities.StartActivity_" android:screenOrientation="sensorPortrait">
+        <activity android:name=".ui.activities.StartActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activities.profile.ProfileLessonsActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.profile.ProfileSalaryActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.profile.ProfilePaymentsActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.profile.ProfileLessonsActivity_"/>
+        <activity android:name=".ui.activities.profile.ProfileSalaryActivity_"/>
+        <activity android:name=".ui.activities.profile.ProfilePaymentsActivity_"/>
 
-        <activity android:name=".ui.activities.students.StudentsListActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.students.StudentsGroupsListActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.students.StudentsListActivity_"/>
+        <activity android:name=".ui.activities.students.StudentsGroupsListActivity_"/>
 
-        <activity android:name=".ui.activities.teachers.TeachersListActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.teachers.TeachersListActivity_"/>
 
-        <activity android:name=".ui.activities.monitoring.MonitoringLessonsActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.monitoring.MonitoringTeachersActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.monitoring.MonitoringStudentsActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.monitoring.MonitoringStudentPaymentActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringLessonsActivity_"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringTeachersActivity_"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringStudentsActivity_"/>
 
-        <activity android:name=".ui.activities.monitoring.student.MonitoringStudentMonthAttendanceActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.monitoring.student.MonitoringStudentMonthPaymentsActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.student.MonitoringStudentActivity_"/>
+        <activity android:name=".ui.activities.monitoring.student.MonitoringStudentMonthAttendanceActivity_"/>
+        <activity android:name=".ui.activities.monitoring.student.MonitoringStudentMonthPaymentsActivity_"/>
 
-        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity_"/>
+        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity_"/>
+        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity_"/>
 
-        <activity android:name=".ui.activities.student.StudentPaymentActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.student.StudentCallActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.student.StudentInformationActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.student.StudentPaymentActivity_"/>
+        <activity android:name=".ui.activities.student.StudentCallActivity_"/>
+        <activity android:name=".ui.activities.student.StudentInformationActivity_"/>
 
-        <activity android:name=".ui.activities.lesson.LessonActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.lesson.LessonStatusActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.lesson.LessonTransferActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.lesson.LessonStudentAttendanceActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.lesson.LessonActivity_"/>
+        <activity android:name=".ui.activities.lesson.LessonStatusActivity_"/>
+        <activity android:name=".ui.activities.lesson.LessonTransferActivity_"/>
+        <activity android:name=".ui.activities.lesson.LessonStudentAttendanceActivity_"/>
 
-        <activity android:name=".ui.activities.user_request.UserRequestActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.user_request.UserRequestAddActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.LoginActivity_" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.activities.LoadingActivity_"/>
+        <activity android:name=".ui.activities.ReloginActivity_"/>
+        <activity android:name=".ui.activities.teacher.TeacherActivity_"/>
 
-        <activity android:name=".ui.activities.LoginActivity_" android:screenOrientation="sensorPortrait" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".ui.activities.LoadingActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.ReloginActivity_" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".ui.activities.teacher.TeacherActivity_" android:screenOrientation="sensorPortrait"/>
-
-        <activity android:name=".ui.activities.settings.SettingsActivity_" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ui.activities.settings.SettingsActivity_"/>
     </application>
 
 </manifest>

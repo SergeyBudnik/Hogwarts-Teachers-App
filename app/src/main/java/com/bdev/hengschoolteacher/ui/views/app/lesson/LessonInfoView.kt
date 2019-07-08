@@ -36,13 +36,10 @@ open class LessonInfoView : RelativeLayout {
         lessonInfoFinishTimeView.text = context.getString(lesson.finishTime.translationId)
 
         lessonInfoTeacherView.setOnClickListener {
-            TeacherActivity
-                    .redirect(
-                            current = context as BaseActivity,
-                            teacherId = lesson.teacherId
-                    )
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
+            TeacherActivity.redirectToChild(
+                    current = context as BaseActivity,
+                    teacherId = lesson.teacherId
+            )
         }
 
         val teacher = teacherStorageService.getTeacherById(lesson.teacherId)

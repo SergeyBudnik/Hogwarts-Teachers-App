@@ -7,10 +7,9 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity_
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringStudentsActivity_
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringTeachersActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
+import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity
+import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringStudentsActivity
+import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringTeachersActivity
 import kotlinx.android.synthetic.main.view_header_monitoring.view.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
@@ -32,15 +31,15 @@ open class MonitoringHeaderView(context: Context, attrs: AttributeSet) : LinearL
         monitoringHeaderPaymentsView.setActive(currentItem == Item.PAYMENTS)
 
         monitoringHeaderLessonsView.setOnClickListener {
-            redirect(context as BaseActivity).to(MonitoringLessonsActivity_::class.java).goAndCloseCurrent()
+            MonitoringLessonsActivity.redirectToSibling(context as BaseActivity)
         }
 
         monitoringHeaderSalariesView.setOnClickListener {
-            redirect(context as BaseActivity).to(MonitoringTeachersActivity_::class.java).goAndCloseCurrent()
+            MonitoringTeachersActivity.redirectToSibling(context as BaseActivity)
         }
 
         monitoringHeaderPaymentsView.setOnClickListener {
-            redirect(context as BaseActivity).to(MonitoringStudentsActivity_::class.java).goAndCloseCurrent()
+            MonitoringStudentsActivity.redirectToSibling(context as BaseActivity)
         }
 
         if (monitoringTeachersHasAlert()) {

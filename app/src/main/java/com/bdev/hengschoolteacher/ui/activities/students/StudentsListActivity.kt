@@ -13,6 +13,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity_
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_students_list.*
@@ -47,6 +48,15 @@ class StudentsListAdapter(context: Context) : BaseItemsListAdapter<Student>(cont
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_students_list)
 open class StudentsListActivity : BaseActivity() {
+    companion object {
+        fun redirectToSibling(current: BaseActivity) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(StudentsListActivity_::class.java)
+                    .goAndCloseCurrent()
+        }
+    }
+
     @Bean
     lateinit var studentsService: StudentsService
 
@@ -65,11 +75,10 @@ open class StudentsListActivity : BaseActivity() {
         studentsListView.setOnItemClickListener { adapterView, _, position, _ ->
             val student = adapterView.getItemAtPosition(position) as Student
 
-            redirect(this)
-                    .to(StudentInformationActivity_::class.java)
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .withExtra(StudentInformationActivity.EXTRA_STUDENT_ID, student.id)
-                    .go()
+            StudentInformationActivity.redirectToChild(
+                    current = this,
+                    studentId = student.id
+            )
         }
 
         studentsListHeaderSearchView.addOnTextChangeListener { filter ->

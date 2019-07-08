@@ -8,6 +8,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.PhoneUtils
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_student_call.*
 import kotlinx.android.synthetic.main.view_item_student_phone.view.*
 import org.androidannotations.annotations.*
@@ -34,6 +35,15 @@ open class StudentPhoneItemView : RelativeLayout {
 open class StudentCallActivity : BaseActivity() {
     companion object {
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+
+        fun redirectToChild(current: BaseActivity, studentId: Long) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(StudentCallActivity_::class.java)
+                    .withExtra(EXTRA_STUDENT_ID, studentId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
+        }
     }
 
     @Bean

@@ -10,6 +10,7 @@ import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.HeaderElementsUtils
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
 import kotlinx.android.synthetic.main.activity_profile_lessons.*
@@ -20,6 +21,15 @@ import org.androidannotations.annotations.EActivity
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_profile_lessons)
 open class ProfileLessonsActivity : BaseActivity() {
+    companion object {
+        fun redirectToSibling(current: BaseActivity) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(ProfileLessonsActivity_::class.java)
+                    .goAndCloseCurrent()
+        }
+    }
+
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean

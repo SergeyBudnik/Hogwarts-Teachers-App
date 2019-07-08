@@ -5,9 +5,8 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.students.StudentsGroupsListActivity_
-import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
+import com.bdev.hengschoolteacher.ui.activities.students.StudentsGroupsListActivity
+import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity
 import kotlinx.android.synthetic.main.view_students_header.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup
@@ -42,11 +41,11 @@ open class StudentsHeaderView(context: Context, attrs: AttributeSet) : LinearLay
         studentsHeaderGroupsView.setActive(item == Item.GROUPS)
 
         studentsHeaderListView.setOnClickListener {
-            redirect(context as BaseActivity).to(StudentsListActivity_::class.java).goAndCloseCurrent()
+            StudentsListActivity.redirectToSibling(context as BaseActivity)
         }
 
         studentsHeaderGroupsView.setOnClickListener {
-            redirect(context as BaseActivity).to(StudentsGroupsListActivity_::class.java).goAndCloseCurrent()
+            StudentsGroupsListActivity.redirectToSibling(context as BaseActivity)
         }
     }
 }

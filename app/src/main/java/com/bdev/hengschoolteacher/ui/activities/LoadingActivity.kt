@@ -5,8 +5,8 @@ import android.view.View
 import android.view.animation.Animation
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.SchoolDataAsyncService
-import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
+import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -16,6 +16,15 @@ import org.androidannotations.annotations.res.AnimationRes
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_loading)
 open class LoadingActivity : BaseActivity() {
+    companion object {
+        fun redirectToSibling(current: BaseActivity) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(LoadingActivity_::class.java)
+                    .goAndCloseCurrent()
+        }
+    }
+
     @Bean
     lateinit var schoolDataAsyncService: SchoolDataAsyncService
 
@@ -57,15 +66,11 @@ open class LoadingActivity : BaseActivity() {
     }
 
     private fun doRedirect() {
-        redirect(this)
-                .to(ProfileLessonsActivity_::class.java)
-                .goAndCloseCurrent()
+        ProfileLessonsActivity.redirectToSibling(this)
     }
 
     private fun onLoadingAuthFailure() {
-        redirect(this)
-                .to(ReloginActivity_::class.java)
-                .goAndCloseCurrent()
+        ReloginActivity.redirectToSibling(this)
     }
 
     private fun onLoadingOtherFailure() {

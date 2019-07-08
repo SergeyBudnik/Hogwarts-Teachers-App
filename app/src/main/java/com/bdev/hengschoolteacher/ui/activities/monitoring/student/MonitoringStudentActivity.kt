@@ -1,4 +1,4 @@
-package com.bdev.hengschoolteacher.ui.activities.monitoring
+package com.bdev.hengschoolteacher.ui.activities.monitoring.student
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,7 +13,7 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.student.MonitoringStudentMonthAttendanceActivity
+import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_monitoring_student_payment.*
 import kotlinx.android.synthetic.main.view_monitoring_student_payment_item.view.*
@@ -133,9 +133,18 @@ open class MonitoringStudentPaymentListAdapter : BaseAdapter() {
 
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_monitoring_student_payment)
-open class MonitoringStudentPaymentActivity : BaseActivity() {
+open class MonitoringStudentActivity : BaseActivity() {
     companion object {
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+
+        fun redirectToChild(current: BaseActivity, studentId: Long) {
+            RedirectBuilder
+                    .redirect(current)
+                    .to(MonitoringStudentActivity_::class.java)
+                    .withExtra(EXTRA_STUDENT_ID, studentId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
+        }
     }
 
     @Bean

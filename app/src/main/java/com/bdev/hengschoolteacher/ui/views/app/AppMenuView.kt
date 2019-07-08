@@ -10,16 +10,15 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.service.UserPreferencesService
+import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.LoadingActivity_
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity_
-import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity_
-import com.bdev.hengschoolteacher.ui.activities.settings.SettingsActivity_
-import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity_
-import com.bdev.hengschoolteacher.ui.activities.teachers.TeachersListActivity_
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
+import com.bdev.hengschoolteacher.ui.activities.LoadingActivity
+import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity
+import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
+import com.bdev.hengschoolteacher.ui.activities.settings.SettingsActivity
+import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity
+import com.bdev.hengschoolteacher.ui.activities.teachers.TeachersListActivity
 import com.bdev.hengschoolteacher.ui.utils.VersionUtils
 import kotlinx.android.synthetic.main.view_app_menu.view.*
 import kotlinx.android.synthetic.main.view_app_menu_row.view.*
@@ -85,19 +84,19 @@ open class AppMenuView : LinearLayout {
         teacherNameView.text = teacher?.name ?: ""
         teacherLoginView.text = login ?: ""
 
-        menuItemMyProfileView.setOnClickListener { goToPage(ProfileLessonsActivity_::class.java) }
-        menuItemStudentsView.setOnClickListener { goToPage(StudentsListActivity_::class.java) }
-        menuItemTeachersView.setOnClickListener { goToPage(TeachersListActivity_::class.java) }
-        menuItemMonitoringView.setOnClickListener { goToPage(MonitoringLessonsActivity_::class.java) }
-        menuItemSettingsView.setOnClickListener { goToPage(SettingsActivity_::class.java) }
+        val activity = context as BaseActivity
 
-        refreshButtonView.setOnClickListener { goToPage(LoadingActivity_::class.java) }
+        menuItemMyProfileView.setOnClickListener { ProfileLessonsActivity.redirectToSibling(activity) }
+        menuItemStudentsView.setOnClickListener { StudentsListActivity.redirectToSibling(activity) }
+        menuItemTeachersView.setOnClickListener { TeachersListActivity.redirectToSibling(activity) }
+        menuItemMonitoringView.setOnClickListener { MonitoringLessonsActivity.redirectToSibling(activity) }
+        menuItemSettingsView.setOnClickListener { SettingsActivity.redirectToSibling(activity) }
+
+        refreshButtonView.setOnClickListener { LoadingActivity.redirectToSibling(activity) }
 
         versionView.text = VersionUtils().getVersion()
 
         menuUpdateAppView.setOnClickListener {
-            val activity = context as BaseActivity
-
             val appPackageName = activity.packageName
 
             try {
@@ -116,12 +115,5 @@ open class AppMenuView : LinearLayout {
         menuItemTeachersView.setCurrentItem(item == Item.TEACHERS)
         menuItemMonitoringView.setCurrentItem(item == Item.MONITORING)
         menuItemSettingsView.setCurrentItem(item == Item.SETTINGS)
-    }
-
-    private fun goToPage(target: Class<out BaseActivity>) {
-        redirect(context as BaseActivity)
-                .to(target)
-                .withAnim(0, 0)
-                .goAndCloseCurrent()
     }
 }

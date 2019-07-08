@@ -23,13 +23,10 @@ open class StudentInfoView : LinearLayout {
 
         setOnClickListener {
             if (clickable) {
-                StudentInformationActivity
-                        .redirect(
-                                current = context as BaseActivity,
-                                studentId = student.id
-                        )
-                        .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                        .go()
+                StudentInformationActivity.redirectToChild(
+                        current = context as BaseActivity,
+                        studentId = student.id
+                )
             } else {
                 /* Do nothing */
             }
