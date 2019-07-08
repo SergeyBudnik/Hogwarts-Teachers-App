@@ -7,13 +7,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-        android:id="@+id/teacherHeaderView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Учитель"
-        app:leftIcon="@drawable/ic_arrow_left"/>
-
     <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,17 +16,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                android:id="@+id/teacherNameView"
-                android:layout_width="wrap_content"
+            <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+                android:id="@+id/teacherHeaderView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_1"
-                android:layout_marginBottom="@dimen/app_size_1"
-                android:layout_marginStart="@dimen/app_size_2"
-                android:layout_marginEnd="@dimen/app_size_2"
-                android:textColor="@color/fill_text_basic_accent"
-                android:textSize="@dimen/font_large"
-                app:app_font="bold"/>
+                app:title="Учитель"
+                app:leftIcon="@drawable/ic_arrow_left"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/app_size_1"
+                android:paddingEnd="@dimen/app_size_1"
+                android:paddingBottom="@dimen/app_size_1"
+                android:background="@color/fill_contrast_base">
+
+                <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
+                    android:id="@+id/teacherInfoView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
 
             <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                 android:layout_width="wrap_content"

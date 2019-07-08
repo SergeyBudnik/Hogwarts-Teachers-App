@@ -39,7 +39,7 @@ open class TeacherActivity : BaseActivity() {
 
         val teacher = teacherStorageService.getTeacherById(teacherId) ?: throw RuntimeException()
 
-        teacherNameView.text = teacher.name
+        teacherInfoView.bind(teacherId = teacherId, clickable = false)
 
         teacherPhonesContainerView.removeAllViews()
 
