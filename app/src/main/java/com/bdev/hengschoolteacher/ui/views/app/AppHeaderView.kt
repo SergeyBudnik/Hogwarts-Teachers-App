@@ -60,20 +60,17 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
         return this
     }
 
-    fun setLeftButtonColor(color: Int): AppHeaderView {
-        leftActionButtonView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-
-        return this
-    }
-
     fun setFirstRightButtonAction(action: () -> Unit): AppHeaderView {
         firstRightActionButtonView.setOnClickListener { action.invoke() }
 
         return this
     }
 
-    fun setFirstRightButtonColor(color: Int): AppHeaderView {
-        firstRightActionButtonView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+    fun setFirstRightButtonActive(active: Boolean): AppHeaderView {
+        firstRightActionButtonView.setColorFilter(
+                getButtonColor(active),
+                PorterDuff.Mode.SRC_IN
+        )
 
         return this
     }
@@ -84,9 +81,20 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
         return this
     }
 
-    fun setSecondRightButtonColor(color: Int): AppHeaderView {
-        secondRightActionButtonView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+    fun setSecondRightButtonActive(active: Boolean): AppHeaderView {
+        secondRightActionButtonView.setColorFilter(
+                getButtonColor(active),
+                PorterDuff.Mode.SRC_IN
+        )
 
         return this
+    }
+
+    private fun getButtonColor(active: Boolean): Int {
+        return context.resources.getColor(if (active) {
+            R.color.fill_text_basic_accent
+        } else {
+            R.color.fill_text_basic
+        })
     }
 }
