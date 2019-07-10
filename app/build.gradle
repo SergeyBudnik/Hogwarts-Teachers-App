@@ -18,7 +18,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:3.4.2'
     }
 }
 
@@ -29,8 +29,8 @@ android {
         applicationId "com.bdev.hengschoolteacher"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 17
-        versionName "1.15.0"
+        versionCode 18
+        versionName "1.16.0"
         multiDexEnabled true
     }
 
