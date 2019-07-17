@@ -88,9 +88,11 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
     }
 
     private fun initLessonsList() {
-        val lessons = lessonsService.getTeacherLessons(teacherId).filter {
-            !filterEnabled || !lessonStateService.isLessonFilled(it.lesson, weekIndex)
-        }
+        val lessons = lessonsService
+                .getTeacherLessons(teacherId = teacherId, weekIndex = weekIndex)
+                .filter {
+                    !filterEnabled || !lessonStateService.isLessonFilled(it.lesson, weekIndex)
+                }
 
         monitoringTeacherLessonsListView.fill(lessons, weekIndex)
     }
