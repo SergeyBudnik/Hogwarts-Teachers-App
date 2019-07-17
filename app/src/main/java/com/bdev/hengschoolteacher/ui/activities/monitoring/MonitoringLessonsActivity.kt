@@ -74,7 +74,8 @@ open class MonitoringLessonsActivity : BaseActivity() {
     }
 
     private fun initLessonsList() {
-        val lessons = lessonsService.getAllLessons()
+        val lessons = lessonsService
+                .getAllLessons(weekIndex)
                 .filter {
                     !filterEnabled || !lessonStateService.isLessonFilled(it.lesson, weekIndex)
                 }

@@ -34,8 +34,8 @@ open class LessonsService {
         return null
     }
 
-    fun getAllLessons(): List<GroupAndLesson> {
-        return getLessonsByCondition { _, _ -> true }
+    fun getAllLessons(weekIndex: Int): List<GroupAndLesson> {
+        return getLessonsByCondition { _, lesson -> lessonTimeMatches(lesson, weekIndex) }
     }
 
     fun getLessonStudents(lessonId: Long, weekIndex: Int): List<Student> {
@@ -49,15 +49,21 @@ open class LessonsService {
                 .filter { student -> student.studentGroups
                         .filter { it.groupId == groupAndLesson.group.id }
                         .filter { it.startTime < lessonStartTime }
-                        .filter { it.finishTime == 0L || lessonFinishTime < it.finishTime }
+                        .filter { it.finishTime == null || lessonFinishTime < it.finishTime }
                         .any()
                 }
     }
 
-    fun getTeacherLessons(teacherId: Long): List<GroupAndLesson> {
-        return getLessonsByCondition { _, lesson -> lesson.teacherId == teacherId }
+    fun getTeacherLessons(teacherId: Long, weekIndex: Int): List<GroupAndLesson> {
+        return getLessonsByCondition { _, lesson ->
+            val teacherMatches = lesson.teacherId == teacherId
+            val timeMatches = lessonTimeMatches(lesson, weekIndex)
+
+            teacherMatches && timeMatches
+        }
     }
 
+    // ToDo: add info about time
     fun getStudentLessons(studentId: Long): List<GroupAndLesson> {
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
@@ -132,6 +138,15 @@ open class LessonsService {
                 time = groupAndLesson.lesson.finishTime,
                 weekIndex = weekIndex
         )
+    }
+
+    private fun lessonTimeMatches(lesson: Lesson, weekIndex: Int): Boolean {
+        val lessonStartTime = getLessonStartTime(lesson.id, weekIndex)
+
+        val creationTimeMatches = lesson.creationTime <= lessonStartTime
+        val deactivationTimeMatches = (lesson.deactivationTime == null) || lessonStartTime <= lesson.deactivationTime
+
+        return creationTimeMatches && deactivationTimeMatches
     }
 
     private fun getLessonTime(day: DayOfWeek, time: Time, weekIndex: Int): Long {

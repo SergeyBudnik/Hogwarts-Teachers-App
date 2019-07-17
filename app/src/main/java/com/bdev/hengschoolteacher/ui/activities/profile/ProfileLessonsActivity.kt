@@ -85,7 +85,7 @@ open class ProfileLessonsActivity : BaseActivity() {
 
     private fun initLessonsList() {
         val lessons = lessonsService
-                .getTeacherLessons(me.id)
+                .getTeacherLessons(teacherId = me.id, weekIndex = weekIndex)
                 .filter {
                     !filterEnabled || !lessonStateService.isLessonFilled(it.lesson, weekIndex)
                 }

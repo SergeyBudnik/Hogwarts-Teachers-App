@@ -21,7 +21,7 @@ open class TeacherActionsService {
     fun getTeacherActions(teacherId: Long, weekIndex: Int): List<TeacherAction> {
         val teacherActions = ArrayList<TeacherAction>()
 
-        val teacherLessons = lessonsService.getTeacherLessons(teacherId)
+        val teacherLessons = lessonsService.getTeacherLessons(teacherId, weekIndex)
 
         for (dayOfWeek in DayOfWeek.values()) {
             val allDayTeacherLessons = teacherLessons.map { it.lesson }.filter { it.day == dayOfWeek }
