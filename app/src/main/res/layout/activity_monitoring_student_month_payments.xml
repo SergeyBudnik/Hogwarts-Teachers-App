@@ -1,55 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            android:id="@+id/monitoringStudentMonthPaymentsHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftIcon="@drawable/ic_arrow_left"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1"
 
-            <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-                android:id="@+id/monitoringStudentMonthPaymentsHeaderView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:leftIcon="@drawable/ic_arrow_left"/>
+            android:background="@color/fill_contrast_base">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/app_size_1"
-                android:paddingEnd="@dimen/app_size_1"
-
-                android:background="@color/fill_contrast_base">
-
-                <com.bdev.hengschoolteacher.ui.views.app.student.StudentInfoView_
-                    android:id="@+id/monitoringStudentMonthPaymentsStudentView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <com.bdev.hengschoolteacher.ui.views.app.monitoring.student.MonitoringStudentMonthHeaderView_
-                android:id="@+id/monitoringStudentMonthPaymentsSecondaryHeaderView"
+            <com.bdev.hengschoolteacher.ui.views.app.student.StudentInfoView_
+                android:id="@+id/monitoringStudentMonthPaymentsStudentView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsView_
-                android:id="@+id/monitoringStudentMonthPaymentsPaymentsView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
         </LinearLayout>
 
-    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
-    
-</LinearLayout>
+        <com.bdev.hengschoolteacher.ui.views.app.monitoring.student.MonitoringStudentMonthHeaderView_
+            android:id="@+id/monitoringStudentMonthPaymentsSecondaryHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsView_
+            android:id="@+id/monitoringStudentMonthPaymentsPaymentsView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>

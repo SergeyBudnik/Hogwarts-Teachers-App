@@ -1,82 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            android:id="@+id/monitoringStudentPaymentHeaderView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:title="Мониторинг. Студент"
+            app:leftIcon="@drawable/ic_arrow_left"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-                android:id="@+id/monitoringStudentPaymentHeaderView"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1"
+            android:paddingBottom="@dimen/app_size_1"
+            android:background="@color/fill_contrast_base">
+
+            <com.bdev.hengschoolteacher.ui.views.app.student.StudentInfoView_
+                android:id="@+id/monitoringStudentPaymentStudentView"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/app_size_1"
+            android:paddingBottom="@dimen/app_size_1"
+            android:paddingStart="@dimen/app_size_2"
+            android:paddingEnd="@dimen/app_size_2"
+            android:background="@color/fill_contrast_medium">
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:title="Мониторинг. Студент"
-                app:leftIcon="@drawable/ic_arrow_left"/>
+                android:text="Долг:"
+                android:textSize="@dimen/font_large"
+                android:textColor="@color/fill_text_basic"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/monitoringStudentPaymentDeptView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/app_size_1"
-                android:paddingEnd="@dimen/app_size_1"
-                android:paddingBottom="@dimen/app_size_1"
-                android:background="@color/fill_contrast_base">
+                android:layout_alignParentEnd="true"
+                android:text="1000 Р"
+                android:textSize="@dimen/font_large"
+                android:textColor="@color/fill_text_basic_accent"/>
 
-                <com.bdev.hengschoolteacher.ui.views.app.student.StudentInfoView_
-                    android:id="@+id/monitoringStudentPaymentStudentView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+        </RelativeLayout>
 
-            </RelativeLayout>
+        <ListView
+            android:id="@+id/monitoringStudentPaymentListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/app_size_0_75"
+            android:paddingBottom="@dimen/app_size_0_75"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:dividerHeight="0dp"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/app_size_1"
-                android:paddingBottom="@dimen/app_size_1"
-                android:paddingStart="@dimen/app_size_2"
-                android:paddingEnd="@dimen/app_size_2"
-                android:background="@color/fill_contrast_medium">
+    </LinearLayout>
 
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Долг:"
-                    android:textSize="@dimen/font_large"
-                    android:textColor="@color/fill_text_basic"/>
-
-                <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                    android:id="@+id/monitoringStudentPaymentDeptView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="1000 Р"
-                    android:textSize="@dimen/font_large"
-                    android:textColor="@color/fill_text_basic_accent"/>
-
-            </RelativeLayout>
-
-            <ListView
-                android:id="@+id/monitoringStudentPaymentListView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="@dimen/app_size_0_75"
-                android:paddingBottom="@dimen/app_size_0_75"
-                android:clipToPadding="false"
-                android:divider="@null"
-                android:dividerHeight="0dp"/>
-
-        </LinearLayout>
-
-    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
-
-</LinearLayout>
+</com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>

@@ -1,146 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/layout_background"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-        android:id="@+id/lessonTransferHeaderView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Занятие. Перенос"
-        app:leftIcon="@drawable/ic_arrow_left"/>
-
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            android:id="@+id/lessonTransferHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Занятие. Перенос"
+            app:leftIcon="@drawable/ic_arrow_left"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/app_size_1"
+            android:background="@color/fill_contrast_base">
+
+            <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonInfoView_
+                android:id="@+id/lessonTransferTimeView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"/>
+
+            <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
+                android:id="@+id/lessonTransferTeacherInfoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:layout_marginStart="@dimen/app_size_1"
+                android:layout_marginEnd="@dimen/app_size_1"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/app_size_1"
-                android:background="@color/fill_contrast_base">
+                android:paddingTop="@dimen/app_size_1"
+                android:paddingBottom="@dimen/app_size_1">
 
-                <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonInfoView_
-                    android:id="@+id/lessonTransferTimeView"
+                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/app_size_1"
-                    android:layout_marginEnd="@dimen/app_size_1"/>
+                    android:layout_marginEnd="@dimen/app_size_1"
+                    app:branded_edit_text_type="branded_edit_text_type_text"
+                    app:branded_edit_text_label="Дата переноса:"
+                    app:branded_edit_text_hint="ДД.ММ.ГГГГ"/>
 
-                <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
-                    android:id="@+id/lessonTransferTeacherInfoView"
+                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/app_size_0_5"
+                    android:layout_marginTop="@dimen/app_size_1"
                     android:layout_marginStart="@dimen/app_size_1"
-                    android:layout_marginEnd="@dimen/app_size_1"/>
+                    android:layout_marginEnd="@dimen/app_size_1"
+                    app:branded_edit_text_type="branded_edit_text_type_text"
+                    app:branded_edit_text_label="Время переноса:"
+                    app:branded_edit_text_hint="ЧЧ:ММ"/>
 
-            </LinearLayout>
+                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_size_1"
+                    android:layout_marginStart="@dimen/app_size_1"
+                    android:layout_marginEnd="@dimen/app_size_1"
+                    app:branded_edit_text_type="branded_edit_text_type_text"
+                    app:branded_edit_text_label="Длительность занятия:"
+                    app:branded_edit_text_hint="Длительность занятия"/>
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_size_1"
+                    android:layout_marginStart="@dimen/app_size_1"
+                    android:layout_marginEnd="@dimen/app_size_1"
+                    app:branded_edit_text_type="branded_edit_text_type_text"
+                    app:branded_edit_text_label="Причина:"
+                    app:branded_edit_text_hint="Кратко опишите причину переноса."/>
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/app_size_1"
-                    android:paddingBottom="@dimen/app_size_1">
+                    android:layout_marginTop="@dimen/app_size_1"
+                    android:layout_marginStart="@dimen/app_size_1"
+                    android:layout_marginEnd="@dimen/app_size_1">
 
-                    <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
+                    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Заменяющий преподаватель:"
+                        android:textSize="@dimen/font_large"
+                        android:textColor="@color/fill_text_basic"/>
+
+                    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/app_size_1"
-                        android:layout_marginEnd="@dimen/app_size_1"
-                        app:branded_edit_text_type="branded_edit_text_type_text"
-                        app:branded_edit_text_label="Дата переноса:"
-                        app:branded_edit_text_hint="ДД.ММ.ГГГГ"/>
-
-                    <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/app_size_1"
-                        android:layout_marginStart="@dimen/app_size_1"
-                        android:layout_marginEnd="@dimen/app_size_1"
-                        app:branded_edit_text_type="branded_edit_text_type_text"
-                        app:branded_edit_text_label="Время переноса:"
-                        app:branded_edit_text_hint="ЧЧ:ММ"/>
-
-                    <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/app_size_1"
-                        android:layout_marginStart="@dimen/app_size_1"
-                        android:layout_marginEnd="@dimen/app_size_1"
-                        app:branded_edit_text_type="branded_edit_text_type_text"
-                        app:branded_edit_text_label="Длительность занятия:"
-                        app:branded_edit_text_hint="Длительность занятия"/>
-
-                    <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/app_size_1"
-                        android:layout_marginStart="@dimen/app_size_1"
-                        android:layout_marginEnd="@dimen/app_size_1"
-                        app:branded_edit_text_type="branded_edit_text_type_text"
-                        app:branded_edit_text_label="Причина:"
-                        app:branded_edit_text_hint="Кратко опишите причину переноса."/>
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/app_size_1"
-                        android:layout_marginStart="@dimen/app_size_1"
-                        android:layout_marginEnd="@dimen/app_size_1">
-
-                        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Заменяющий преподаватель:"
-                            android:textSize="@dimen/font_large"
-                            android:textColor="@color/fill_text_basic"/>
-
-                        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/app_size_0_25"
-                            android:padding="@dimen/app_size_1"
-                            android:text="Надежда кропина"
-                            android:textSize="@dimen/font_large"
-                            android:textColor="@color/fill_text_basic"
-                            android:background="@drawable/layout_row"
-                            android:backgroundTint="@color/fill_contrast_base"/>
-
-                    </LinearLayout>
-
-                    <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/app_size_2"
-                        android:layout_marginStart="@dimen/app_size_1"
-                        android:layout_marginEnd="@dimen/app_size_1"
-                        app:button_text="Перенести"
-                        app:button_style="primary_style"/>
+                        android:layout_marginTop="@dimen/app_size_0_25"
+                        android:padding="@dimen/app_size_1"
+                        android:text="Надежда кропина"
+                        android:textSize="@dimen/font_large"
+                        android:textColor="@color/fill_text_basic"
+                        android:background="@drawable/layout_row"
+                        android:backgroundTint="@color/fill_contrast_base"/>
 
                 </LinearLayout>
 
-            </ScrollView>
+                <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_size_2"
+                    android:layout_marginStart="@dimen/app_size_1"
+                    android:layout_marginEnd="@dimen/app_size_1"
+                    app:button_text="Перенести"
+                    app:button_style="primary_style"/>
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+        </ScrollView>
 
-</LinearLayout>
+    </LinearLayout>
+
+</com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
