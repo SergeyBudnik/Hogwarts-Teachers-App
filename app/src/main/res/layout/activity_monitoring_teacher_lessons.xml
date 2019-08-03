@@ -1,48 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/monitoringTeacherPaymentsMenuLayoutView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-        android:id="@+id/monitoringTeacherLessonsHeaderView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Мониторинг. Учитель"
-        app:leftIcon="@drawable/ic_arrow_left"
-        app:firstRightIcon="@drawable/ic_filter"
-        app:secondRightIcon="@drawable/ic_calendar"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/app_size_1"
-        android:paddingEnd="@dimen/app_size_1"
-        android:background="@color/fill_contrast_base">
-
-        <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
-            android:id="@+id/monitoringTeacherLessonsTeacherInfoView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </RelativeLayout>
-
-    <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView_
-        android:id="@+id/monitoringTeacherLessonsSecondaryHeaderView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:monitoring_teacher_item="monitoring_teacher_lessons"/>
-
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
-        android:id="@+id/monitoringTeacherPaymentsMenuLayoutView"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            android:id="@+id/monitoringTeacherLessonsHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Мониторинг. Учитель"
+            app:leftIcon="@drawable/ic_arrow_left"
+            app:firstRightIcon="@drawable/ic_filter"
+            app:secondRightIcon="@drawable/ic_calendar"/>
+
         <RelativeLayout
-            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1"
+            android:background="@color/fill_contrast_base">
+
+            <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
+                android:id="@+id/monitoringTeacherLessonsTeacherInfoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView_
+            android:id="@+id/monitoringTeacherLessonsSecondaryHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:monitoring_teacher_item="monitoring_teacher_lessons"/>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -52,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:visibility="gone"/>
-            
+
             <com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsView_
                 android:id="@+id/monitoringTeacherLessonsListView"
                 android:layout_width="match_parent"
@@ -61,6 +60,6 @@
 
         </RelativeLayout>
 
-    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+    </LinearLayout>
 
-</LinearLayout>
+</com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
