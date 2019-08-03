@@ -4,8 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.alerts.monitoring.MonitoringAlertsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringStudentsActivity
@@ -17,9 +16,7 @@ import org.androidannotations.annotations.EViewGroup
 @EViewGroup(R.layout.view_header_monitoring)
 open class MonitoringHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
-    @Bean
-    lateinit var studentsPaymentsService: StudentsPaymentsService
+    lateinit var monitoringAlertsService: MonitoringAlertsService
 
     enum class Item(val id: Int) {
         LESSONS(1), SALARIES(2), PAYMENTS(3);
@@ -34,27 +31,36 @@ open class MonitoringHeaderView(context: Context, attrs: AttributeSet) : LinearL
             MonitoringLessonsActivity.redirectToSibling(context as BaseActivity)
         }
 
+        // ToDo: salaries -> teachers
         monitoringHeaderSalariesView.setOnClickListener {
             MonitoringTeachersActivity.redirectToSibling(context as BaseActivity)
         }
 
+        // ToDo: payments -> students
         monitoringHeaderPaymentsView.setOnClickListener {
             MonitoringStudentsActivity.redirectToSibling(context as BaseActivity)
         }
 
-        if (monitoringTeachersHasAlert()) {
+        if (monitoringAlertsService.lessonsHaveAlerts()) {
+            monitoringHeaderLessonsView.setIcon(
+                    iconId = R.drawable.ic_alert,
+                    colorId = R.color.fill_text_basic_negative
+            )
+        }
+
+        if (monitoringAlertsService.teachersHaveAlerts()) {
             monitoringHeaderSalariesView.setIcon(
                     iconId = R.drawable.ic_alert,
                     colorId = R.color.fill_text_basic_negative
             )
         }
-    }
 
-    private fun monitoringTeachersHasAlert(): Boolean {
-        return teacherStorageService
-                .getAllTeachers()
-                .map { !studentsPaymentsService.getPaymentsToTeacher(it.id, true).isEmpty() }
-                .fold(false) { res, notEmpty -> res || notEmpty }
+        if (monitoringAlertsService.studentsHaveAlerts()) {
+            monitoringHeaderPaymentsView.setIcon(
+                    iconId = R.drawable.ic_alert,
+                    colorId = R.color.fill_text_basic_negative
+            )
+        }
     }
 }
 
