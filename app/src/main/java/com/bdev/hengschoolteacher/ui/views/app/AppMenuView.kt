@@ -11,10 +11,9 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.UserPreferencesService
 import com.bdev.hengschoolteacher.service.alerts.monitoring.AlertsMonitoringService
 import com.bdev.hengschoolteacher.service.alerts.profile.AlertsProfileService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoadingActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity
@@ -77,9 +76,7 @@ open class AppMenuView : LinearLayout {
     lateinit var authService: AuthService
 
     @Bean
-    lateinit var userPreferencesService: UserPreferencesService
-    @Bean
-    lateinit var teacherStorageService: TeacherStorageService
+    lateinit var profileService: ProfileService
 
     @Bean
     lateinit var alertsProfileService: AlertsProfileService
@@ -91,11 +88,10 @@ open class AppMenuView : LinearLayout {
 
     @AfterViews
     fun init() {
-        val login = userPreferencesService.getUserLogin()
-        val teacher = login?.let { teacherStorageService.getTeacherByLogin(login) }
+        val me = profileService.getMe()
 
-        teacherNameView.text = teacher?.name ?: ""
-        teacherLoginView.text = login ?: ""
+        teacherNameView.text = me?.name ?: ""
+        teacherLoginView.text = me?.login ?: ""
 
         val activity = context as BaseActivity
 
