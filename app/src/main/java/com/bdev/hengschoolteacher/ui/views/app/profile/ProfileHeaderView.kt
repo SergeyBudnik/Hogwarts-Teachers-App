@@ -47,7 +47,7 @@ open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayo
         profileHeaderMySalaryView.setActive(item == Item.SALARY)
         profileHeaderMyPaymentsView.setActive(item == Item.PAYMENTS)
 
-        if (alertsProfileService.haveAlerts()) {
+        if (alertsProfileService.haveLessonsAlerts()) {
             profileHeaderMyLessonsView.setIcon(
                     iconId = R.drawable.ic_alert,
                     colorId = R.color.fill_text_basic_negative
