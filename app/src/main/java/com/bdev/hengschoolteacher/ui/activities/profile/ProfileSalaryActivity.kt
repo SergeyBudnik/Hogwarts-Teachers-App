@@ -11,6 +11,7 @@ import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
+import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
 import kotlinx.android.synthetic.main.activity_profile_salary.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -47,6 +48,8 @@ open class ProfileSalaryActivity : BaseActivity() {
                 .setLeftButtonAction { profileSalaryMenuLayoutView.openMenu() }
                 .setFirstRightButtonAction { toggleCalendar() }
                 .setFirstRightButtonActive(calendarEnabled)
+
+        profileSalarySecondaryHeaderView.bind(ProfileHeaderView.Item.SALARY)
 
         profileSalaryMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
 

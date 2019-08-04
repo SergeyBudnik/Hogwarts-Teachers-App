@@ -33,17 +33,15 @@ open class BrandedSecondaryHeaderItem(context: Context, attrs: AttributeSet) : L
         setActive(active)
     }
 
-    fun setIcon(iconId: Int, colorId: Int) {
-        brandedSecondaryHeaderItemIconView.visibility = View.VISIBLE
-
-        brandedSecondaryHeaderItemIconView.setImageDrawable(
-                resources.getDrawable(iconId)
-        )
-
-        brandedSecondaryHeaderItemIconView.setColorFilter(
-                resources.getColor(colorId),
-                PorterDuff.Mode.SRC_IN
-        )
+    fun setHasAlert(hasAlert: Boolean) {
+        if (hasAlert) {
+            showIcon(
+                    iconId = R.drawable.ic_alert,
+                    colorId = R.color.fill_text_basic_negative
+            )
+        } else {
+            hideIcon()
+        }
     }
 
     fun setActive(active: Boolean) {
@@ -58,5 +56,22 @@ open class BrandedSecondaryHeaderItem(context: Context, attrs: AttributeSet) : L
         } else {
             R.color.transparent
         }))
+    }
+
+    private fun showIcon(iconId: Int, colorId: Int) {
+        brandedSecondaryHeaderItemIconView.visibility = View.VISIBLE
+
+        brandedSecondaryHeaderItemIconView.setImageDrawable(
+                resources.getDrawable(iconId)
+        )
+
+        brandedSecondaryHeaderItemIconView.setColorFilter(
+                resources.getColor(colorId),
+                PorterDuff.Mode.SRC_IN
+        )
+    }
+
+    private fun hideIcon() {
+        brandedSecondaryHeaderItemIconView.visibility = View.GONE
     }
 }

@@ -92,7 +92,7 @@ open class MonitoringStudentsActivity : BaseActivity() {
         monitoringPaymentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
         monitoringPaymentsSecondaryHeaderView.bind(
-                currentItem = MonitoringHeaderView.Item.PAYMENTS
+                currentItem = MonitoringHeaderView.Item.STUDENTS
         )
 
         monitoringPaymentsHeaderSearchView.addOnTextChangeListener { filter ->

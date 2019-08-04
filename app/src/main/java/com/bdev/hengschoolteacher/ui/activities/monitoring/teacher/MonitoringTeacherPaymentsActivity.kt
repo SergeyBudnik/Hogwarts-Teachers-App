@@ -6,6 +6,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.teacher.TeacherPaymentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_payments.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -44,6 +45,7 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
                 .setFirstRightButtonActive(filterEnabled)
 
         monitoringTeacherPaymentsSecondaryHeaderView.bind(
+                currentItem = MonitoringTeacherHeaderView.Item.PAYMENTS,
                 teacherId = teacherId
         )
 

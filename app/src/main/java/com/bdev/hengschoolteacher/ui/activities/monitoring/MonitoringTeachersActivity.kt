@@ -75,7 +75,7 @@ open class MonitoringTeachersActivity : BaseActivity() {
         monitoringTeachersHeaderView
                 .setLeftButtonAction { monitoringTeachersMenuLayoutView.openMenu() }
 
-        monitoringTeachersSecondaryHeaderView.bind(currentItem = MonitoringHeaderView.Item.SALARIES)
+        monitoringTeachersSecondaryHeaderView.bind(currentItem = MonitoringHeaderView.Item.TEACHERS)
 
         monitoringTeachersMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
