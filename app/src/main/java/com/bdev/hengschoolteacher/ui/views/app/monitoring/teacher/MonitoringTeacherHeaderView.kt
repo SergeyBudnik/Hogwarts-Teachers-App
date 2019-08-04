@@ -4,12 +4,14 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.service.alerts.monitoring.AlertsMonitoringTeachersService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity
 import kotlinx.android.synthetic.main.view_monitoring_teacher_header.view.*
 import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
 
 @EViewGroup(R.layout.view_monitoring_teacher_header)
@@ -23,6 +25,9 @@ open class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : 
             }
         }
     }
+
+    @Bean
+    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
 
     private val item: Item
 
@@ -68,5 +73,19 @@ open class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : 
 
     fun bind(teacherId: Long) {
         this.teacherId = teacherId
+
+        if (alertsMonitoringTeachersService.haveLessonsAlerts(teacherId)) {
+            monitoringTeacherHeaderLessonsView.setIcon(
+                    iconId = R.drawable.ic_alert,
+                    colorId = R.color.fill_text_basic_negative
+            )
+        }
+
+        if (alertsMonitoringTeachersService.havePaymentsAlerts(teacherId)) {
+            monitoringTeacherHeaderPaymentsView.setIcon(
+                    iconId = R.drawable.ic_alert,
+                    colorId = R.color.fill_text_basic_negative
+            )
+        }
     }
  }

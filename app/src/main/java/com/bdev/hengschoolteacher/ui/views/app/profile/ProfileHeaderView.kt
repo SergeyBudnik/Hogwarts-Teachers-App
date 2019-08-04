@@ -4,12 +4,14 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.service.alerts.profile.AlertsProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfilePaymentsActivity
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileSalaryActivity
 import kotlinx.android.synthetic.main.view_profile_header.view.*
 import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
 
 @EViewGroup(R.layout.view_profile_header)
@@ -23,6 +25,9 @@ open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayo
             }
         }
     }
+
+    @Bean
+    lateinit var alertsProfileService: AlertsProfileService
 
     private val item: Item
 
@@ -41,6 +46,20 @@ open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayo
         profileHeaderMyLessonsView.setActive(item == Item.LESSONS)
         profileHeaderMySalaryView.setActive(item == Item.SALARY)
         profileHeaderMyPaymentsView.setActive(item == Item.PAYMENTS)
+
+        if (alertsProfileService.haveAlerts()) {
+            profileHeaderMyLessonsView.setIcon(
+                    iconId = R.drawable.ic_alert,
+                    colorId = R.color.fill_text_basic_negative
+            )
+        }
+
+        if (alertsProfileService.havePaymentsAlerts()) {
+            profileHeaderMyPaymentsView.setIcon(
+                    iconId = R.drawable.ic_alert,
+                    colorId = R.color.fill_text_basic_negative
+            )
+        }
 
         profileHeaderMyLessonsView.setOnClickListener {
             ProfileLessonsActivity.redirectToSibling(context as BaseActivity)

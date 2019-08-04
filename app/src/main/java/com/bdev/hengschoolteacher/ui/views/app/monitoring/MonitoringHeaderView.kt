@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.alerts.monitoring.MonitoringAlertsService
+import com.bdev.hengschoolteacher.service.alerts.monitoring.AlertsMonitoringService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringStudentsActivity
@@ -16,7 +16,7 @@ import org.androidannotations.annotations.EViewGroup
 @EViewGroup(R.layout.view_header_monitoring)
 open class MonitoringHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     @Bean
-    lateinit var monitoringAlertsService: MonitoringAlertsService
+    lateinit var alertsMonitoringService: AlertsMonitoringService
 
     enum class Item(val id: Int) {
         LESSONS(1), SALARIES(2), PAYMENTS(3);
@@ -41,21 +41,21 @@ open class MonitoringHeaderView(context: Context, attrs: AttributeSet) : LinearL
             MonitoringStudentsActivity.redirectToSibling(context as BaseActivity)
         }
 
-        if (monitoringAlertsService.lessonsHaveAlerts()) {
+        if (alertsMonitoringService.lessonsHaveAlerts()) {
             monitoringHeaderLessonsView.setIcon(
                     iconId = R.drawable.ic_alert,
                     colorId = R.color.fill_text_basic_negative
             )
         }
 
-        if (monitoringAlertsService.teachersHaveAlerts()) {
+        if (alertsMonitoringService.teachersHaveAlerts()) {
             monitoringHeaderSalariesView.setIcon(
                     iconId = R.drawable.ic_alert,
                     colorId = R.color.fill_text_basic_negative
             )
         }
 
-        if (monitoringAlertsService.studentsHaveAlerts()) {
+        if (alertsMonitoringService.studentsHaveAlerts()) {
             monitoringHeaderPaymentsView.setIcon(
                     iconId = R.drawable.ic_alert,
                     colorId = R.color.fill_text_basic_negative

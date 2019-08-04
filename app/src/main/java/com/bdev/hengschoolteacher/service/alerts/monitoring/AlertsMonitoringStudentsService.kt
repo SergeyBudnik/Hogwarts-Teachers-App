@@ -6,7 +6,7 @@ import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 
 @EBean
-open class MonitoringAlertsStudentsService {
+open class AlertsMonitoringStudentsService {
     @Bean
     lateinit var studentsService: StudentsService
     @Bean

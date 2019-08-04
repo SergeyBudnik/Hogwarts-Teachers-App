@@ -6,7 +6,7 @@ import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 
 @EBean
-open class MonitoringAlertsLessonsService {
+open class AlertsMonitoringLessonsService {
     private val monitoringWeeksAmount = 6
 
     @Bean

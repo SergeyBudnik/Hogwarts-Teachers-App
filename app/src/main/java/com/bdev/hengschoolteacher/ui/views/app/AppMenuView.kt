@@ -12,7 +12,8 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.AuthService
 import com.bdev.hengschoolteacher.service.UserPreferencesService
-import com.bdev.hengschoolteacher.service.alerts.monitoring.MonitoringAlertsService
+import com.bdev.hengschoolteacher.service.alerts.monitoring.AlertsMonitoringService
+import com.bdev.hengschoolteacher.service.alerts.profile.AlertsProfileService
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoadingActivity
@@ -79,8 +80,11 @@ open class AppMenuView : LinearLayout {
     lateinit var userPreferencesService: UserPreferencesService
     @Bean
     lateinit var teacherStorageService: TeacherStorageService
+
     @Bean
-    lateinit var monitoringAlertsSevice: MonitoringAlertsService
+    lateinit var alertsProfileService: AlertsProfileService
+    @Bean
+    lateinit var alertsMonitoringSevice: AlertsMonitoringService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -101,7 +105,8 @@ open class AppMenuView : LinearLayout {
         menuItemMonitoringView.setOnClickListener { MonitoringLessonsActivity.redirectToSibling(activity) }
         menuItemSettingsView.setOnClickListener { SettingsActivity.redirectToSibling(activity) }
 
-        menuItemMonitoringView.setHasAlerts(monitoringAlertsSevice.haveAlerts())
+        menuItemMyProfileView.setHasAlerts(alertsProfileService.haveAlerts())
+        menuItemMonitoringView.setHasAlerts(alertsMonitoringSevice.haveAlerts())
 
         refreshButtonView.setOnClickListener { LoadingActivity.redirectToSibling(activity) }
 
