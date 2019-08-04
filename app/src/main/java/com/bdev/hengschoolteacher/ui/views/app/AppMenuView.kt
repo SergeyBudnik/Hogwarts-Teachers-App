@@ -6,11 +6,14 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.AuthService
 import com.bdev.hengschoolteacher.service.UserPreferencesService
+import com.bdev.hengschoolteacher.service.alerts.monitoring.AlertsMonitoringService
+import com.bdev.hengschoolteacher.service.alerts.profile.AlertsProfileService
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoadingActivity
@@ -54,6 +57,14 @@ open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayou
         menuItemIconView.setColorFilter(context.resources.getColor(textColor), PorterDuff.Mode.SRC_IN)
         menuItemNameView.setTextColor(context.resources.getColor(textColor))
     }
+
+    fun setHasAlerts(hasAlerts: Boolean) {
+        menuItemAlertView.visibility = if (hasAlerts) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
 }
 
 @EViewGroup(R.layout.view_app_menu)
@@ -69,6 +80,11 @@ open class AppMenuView : LinearLayout {
     lateinit var userPreferencesService: UserPreferencesService
     @Bean
     lateinit var teacherStorageService: TeacherStorageService
+
+    @Bean
+    lateinit var alertsProfileService: AlertsProfileService
+    @Bean
+    lateinit var alertsMonitoringSevice: AlertsMonitoringService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -88,6 +104,9 @@ open class AppMenuView : LinearLayout {
         menuItemTeachersView.setOnClickListener { TeachersListActivity.redirectToSibling(activity) }
         menuItemMonitoringView.setOnClickListener { MonitoringLessonsActivity.redirectToSibling(activity) }
         menuItemSettingsView.setOnClickListener { SettingsActivity.redirectToSibling(activity) }
+
+        menuItemMyProfileView.setHasAlerts(alertsProfileService.haveAlerts())
+        menuItemMonitoringView.setHasAlerts(alertsMonitoringSevice.haveAlerts())
 
         refreshButtonView.setOnClickListener { LoadingActivity.redirectToSibling(activity) }
 
