@@ -15,6 +15,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
+import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
 import kotlinx.android.synthetic.main.activity_profile_lessons.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -60,6 +61,8 @@ open class ProfileLessonsActivity : BaseActivity() {
                 .setFirstRightButtonActive(filterEnabled)
                 .setSecondRightButtonAction { toggleCalendar() }
                 .setSecondRightButtonActive(calendarEnabled)
+
+        profileLessonsSecondaryHeaderView.bind(ProfileHeaderView.Item.LESSONS)
 
         profileLessonsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
 

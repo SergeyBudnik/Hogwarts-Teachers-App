@@ -21,9 +21,9 @@
             app:firstRightIcon="@drawable/ic_filter"/>
 
         <com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView_
+            android:id="@+id/profilePaymentsSecondaryHeaderView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:profile_item="profile_payments"/>
+            android:layout_height="wrap_content"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

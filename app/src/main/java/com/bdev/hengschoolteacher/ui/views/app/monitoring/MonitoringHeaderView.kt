@@ -15,51 +15,30 @@ import org.androidannotations.annotations.EViewGroup
 
 @EViewGroup(R.layout.view_header_monitoring)
 open class MonitoringHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+    enum class Item {
+        LESSONS, TEACHERS, STUDENTS;
+    }
+
     @Bean
     lateinit var alertsMonitoringService: AlertsMonitoringService
 
-    enum class Item(val id: Int) {
-        LESSONS(1), SALARIES(2), PAYMENTS(3);
-    }
-
     fun bind(currentItem: Item) {
-        monitoringHeaderLessonsView.setActive(currentItem == Item.LESSONS)
-        monitoringHeaderSalariesView.setActive(currentItem == Item.SALARIES)
-        monitoringHeaderPaymentsView.setActive(currentItem == Item.PAYMENTS)
-
-        monitoringHeaderLessonsView.setOnClickListener {
-            MonitoringLessonsActivity.redirectToSibling(context as BaseActivity)
+        monitoringHeaderLessonsView.let {
+            it.setActive(currentItem == Item.LESSONS)
+            it.setHasAlert(alertsMonitoringService.lessonsHaveAlerts())
+            it.setOnClickListener { MonitoringLessonsActivity.redirectToSibling(context as BaseActivity) }
         }
 
-        // ToDo: salaries -> teachers
-        monitoringHeaderSalariesView.setOnClickListener {
-            MonitoringTeachersActivity.redirectToSibling(context as BaseActivity)
+        monitoringHeaderTeachersView.let {
+            it.setActive(currentItem == Item.TEACHERS)
+            it.setHasAlert(alertsMonitoringService.teachersHaveAlerts())
+            it.setOnClickListener { MonitoringTeachersActivity.redirectToSibling(context as BaseActivity) }
         }
 
-        // ToDo: payments -> students
-        monitoringHeaderPaymentsView.setOnClickListener {
-            MonitoringStudentsActivity.redirectToSibling(context as BaseActivity)
-        }
-
-        if (alertsMonitoringService.lessonsHaveAlerts()) {
-            monitoringHeaderLessonsView.setIcon(
-                    iconId = R.drawable.ic_alert,
-                    colorId = R.color.fill_text_basic_negative
-            )
-        }
-
-        if (alertsMonitoringService.teachersHaveAlerts()) {
-            monitoringHeaderSalariesView.setIcon(
-                    iconId = R.drawable.ic_alert,
-                    colorId = R.color.fill_text_basic_negative
-            )
-        }
-
-        if (alertsMonitoringService.studentsHaveAlerts()) {
-            monitoringHeaderPaymentsView.setIcon(
-                    iconId = R.drawable.ic_alert,
-                    colorId = R.color.fill_text_basic_negative
-            )
+        monitoringHeaderStudentsView.let {
+            it.setActive(currentItem == Item.STUDENTS)
+            it.setHasAlert(alertsMonitoringService.studentsHaveAlerts())
+            it.setOnClickListener { MonitoringStudentsActivity.redirectToSibling(context as BaseActivity) }
         }
     }
 }

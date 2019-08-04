@@ -7,6 +7,7 @@ import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.service.teacher.TeacherPaymentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
 import kotlinx.android.synthetic.main.activity_profile_payments.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -37,6 +38,8 @@ open class ProfilePaymentsActivity : BaseActivity() {
                 .setLeftButtonAction { profilePaymentsMenuLayoutView.openMenu() }
                 .setFirstRightButtonAction { toggleFilter() }
                 .setFirstRightButtonActive(filterEnabled)
+
+        profilePaymentsSecondaryHeaderView.bind(ProfileHeaderView.Item.PAYMENTS)
 
         profilePaymentsEmptyWithFilterView.bind {
             toggleFilter()

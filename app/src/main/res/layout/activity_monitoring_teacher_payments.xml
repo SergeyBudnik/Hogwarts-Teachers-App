@@ -37,8 +37,7 @@
         <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView_
             android:id="@+id/monitoringTeacherPaymentsSecondaryHeaderView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:monitoring_teacher_item="monitoring_teacher_payments"/>
+            android:layout_height="wrap_content"/>
 
         <RelativeLayout
             android:orientation="vertical"
