@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+    <com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
         android:id="@+id/monitoringTeachersMenuLayoutView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -43,6 +43,6 @@
 
         </LinearLayout>
 
-    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+    </com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>
 
 </LinearLayout>

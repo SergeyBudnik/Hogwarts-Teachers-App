@@ -10,12 +10,12 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import kotlinx.android.synthetic.main.view_app_menu_layout.view.*
+import kotlinx.android.synthetic.main.view_app_layout.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_app_menu_layout)
-open class AppMenuLayoutView : DrawerLayout {
+@EViewGroup(R.layout.view_app_layout)
+open class AppLayoutView : DrawerLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
