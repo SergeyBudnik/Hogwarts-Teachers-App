@@ -14,6 +14,7 @@ import com.bdev.hengschoolteacher.service.AuthService
 import com.bdev.hengschoolteacher.service.alerts.monitoring.AlertsMonitoringService
 import com.bdev.hengschoolteacher.service.alerts.profile.AlertsProfileService
 import com.bdev.hengschoolteacher.service.profile.ProfileService
+import com.bdev.hengschoolteacher.service.updater.AppUpdateService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoadingActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity
@@ -83,6 +84,9 @@ open class AppMenuView : LinearLayout {
     @Bean
     lateinit var alertsMonitoringSevice: AlertsMonitoringService
 
+    @Bean
+    lateinit var appUpdateService: AppUpdateService
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
@@ -108,15 +112,7 @@ open class AppMenuView : LinearLayout {
 
         versionView.text = VersionUtils().getVersion()
 
-        menuUpdateAppView.setOnClickListener {
-            val appPackageName = activity.packageName
-
-            try {
-                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
-            } catch (e: ActivityNotFoundException) {
-                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
-            }
-        }
+        menuUpdateAppView.setOnClickListener { appUpdateService.goToGooglePlay() }
 
         setItemSelected(Item.NONE)
     }
