@@ -5,6 +5,7 @@ import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_salary.*
 import org.androidannotations.annotations.AfterViews
@@ -75,5 +76,9 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
         } else {
             View.GONE
         }
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

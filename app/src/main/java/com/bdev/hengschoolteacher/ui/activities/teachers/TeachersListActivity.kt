@@ -13,6 +13,7 @@ import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_teachers_list.*
 import kotlinx.android.synthetic.main.view_teachers_list_row_item.view.*
@@ -96,5 +97,9 @@ open class TeachersListActivity : BaseActivity() {
                     teacherId = teacher.id
             )
         }
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

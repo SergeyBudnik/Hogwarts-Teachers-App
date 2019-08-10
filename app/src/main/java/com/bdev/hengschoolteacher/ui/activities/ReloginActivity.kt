@@ -8,6 +8,7 @@ import com.bdev.hengschoolteacher.async.AuthAsyncService
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
 import com.bdev.hengschoolteacher.service.UserPreferencesService
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import kotlinx.android.synthetic.main.activity_relogin.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -73,5 +74,9 @@ open class ReloginActivity : BaseActivity() {
         reloginInProgressView.visibility = View.GONE
 
         reloginFailedView.visibility = View.VISIBLE
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

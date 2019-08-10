@@ -7,6 +7,7 @@ import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoginActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_settings.*
 import org.androidannotations.annotations.AfterViews
@@ -48,5 +49,9 @@ open class SettingsActivity : BaseActivity() {
         authService.clearAuthInfo()
 
         LoginActivity.redirectToSibling(this)
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

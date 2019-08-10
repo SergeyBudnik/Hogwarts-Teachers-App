@@ -22,6 +22,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.KeyboardUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import kotlinx.android.synthetic.main.activity_student_payment.*
 import kotlinx.android.synthetic.main.view_student_payment_item.view.*
 import org.androidannotations.annotations.*
@@ -195,5 +196,9 @@ open class StudentPaymentActivity : BaseActivity() {
     private fun doFinish() {
         finish()
         overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

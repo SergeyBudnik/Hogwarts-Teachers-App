@@ -13,6 +13,7 @@ import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
 import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
@@ -121,5 +122,9 @@ open class ProfileLessonsActivity : BaseActivity() {
         } else {
             View.GONE
         }
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return profileLessonsMenuLayoutView
     }
 }

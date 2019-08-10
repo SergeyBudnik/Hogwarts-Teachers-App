@@ -9,6 +9,7 @@ import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.PhoneUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import kotlinx.android.synthetic.main.activity_student_call.*
 import kotlinx.android.synthetic.main.view_item_student_phone.view.*
 import org.androidannotations.annotations.*
@@ -72,5 +73,9 @@ open class StudentCallActivity : BaseActivity() {
     private fun doFinish() {
         finish()
         overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }
