@@ -1,6 +1,7 @@
 package com.bdev.hengschoolteacher.ui.views.branded
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
@@ -15,9 +16,14 @@ data class BrandedPopupInfo(
         val buttons: List<BrandedPopupButtonInfo>
 )
 
+enum class BrandedPopupButtonStyle {
+    PRIMARY, DEFAULT
+}
+
 data class BrandedPopupButtonInfo(
         val text: String,
-        val action: () -> Unit
+        val action: () -> Unit,
+        val style: BrandedPopupButtonStyle
 )
 
 @EViewGroup(R.layout.view_branded_popup)
@@ -58,6 +64,11 @@ open class BrandedPopupView : RelativeLayout {
                 brandedPopupButtonInfo.action.invoke()
 
                 hide()
+            }
+
+            buttonView.typeface = when (brandedPopupButtonInfo.style) {
+                BrandedPopupButtonStyle.PRIMARY -> Typeface.DEFAULT_BOLD
+                BrandedPopupButtonStyle.DEFAULT -> Typeface.DEFAULT
             }
 
             View.VISIBLE

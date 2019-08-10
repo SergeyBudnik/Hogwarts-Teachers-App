@@ -7,6 +7,7 @@ import com.bdev.hengschoolteacher.service.LessonStateService
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_lessons.*
 import org.androidannotations.annotations.AfterViews
@@ -118,4 +119,9 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
             View.GONE
         }
     }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
+    }
+
 }

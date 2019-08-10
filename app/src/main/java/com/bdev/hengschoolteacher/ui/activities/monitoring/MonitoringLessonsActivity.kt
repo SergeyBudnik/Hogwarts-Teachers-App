@@ -9,6 +9,7 @@ import com.bdev.hengschoolteacher.service.LessonStateService
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
@@ -107,5 +108,9 @@ open class MonitoringLessonsActivity : BaseActivity() {
         } else {
             View.GONE
         }
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

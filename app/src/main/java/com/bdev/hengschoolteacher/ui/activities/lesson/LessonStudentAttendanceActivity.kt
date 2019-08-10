@@ -12,6 +12,7 @@ import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
 import kotlinx.android.synthetic.main.activity_lesson_student_attendance.*
 import org.androidannotations.annotations.AfterViews
@@ -175,5 +176,9 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
                 } }
                 .onAuthFail { /* ToDo */ }
                 .onOtherFail { /* ToDo */ }
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

@@ -2,6 +2,8 @@ package com.bdev.hengschoolteacher.ui.activities
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.service.AuthService
+import com.bdev.hengschoolteacher.service.updater.AppUpdateService
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import org.androidannotations.annotations.AfterInject
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
@@ -16,10 +18,16 @@ open class StartActivity : BaseActivity() {
     fun init() {
         val authInfo = authService.getAuthInfo()
 
+        appUpdateService.enqueueUpdate()
+
         if (authInfo == null) {
             LoginActivity.redirectToSibling(this)
         } else {
             LoadingActivity.redirectToSibling(this)
         }
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

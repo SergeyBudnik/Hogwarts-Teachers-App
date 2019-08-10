@@ -16,6 +16,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.student.MonitoringStudentMonthHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_student_month_attendance.*
 import kotlinx.android.synthetic.main.view_monitoring_student_month_attendance_item.view.*
@@ -152,5 +153,9 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
     private fun doFinish() {
         finish()
         overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

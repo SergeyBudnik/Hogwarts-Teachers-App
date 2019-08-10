@@ -14,6 +14,7 @@ import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_monitoring_student_payment.*
 import kotlinx.android.synthetic.main.view_monitoring_student_payment_item.view.*
@@ -200,5 +201,9 @@ open class MonitoringStudentActivity : BaseActivity() {
     private fun doFinish() {
         finish()
         overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

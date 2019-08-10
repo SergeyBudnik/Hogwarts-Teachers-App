@@ -7,6 +7,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.SchoolDataAsyncService
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -76,5 +77,9 @@ open class LoadingActivity : BaseActivity() {
         loadingInProgressView.visibility = View.GONE
 
         loadingFailedView.visibility = View.VISIBLE
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

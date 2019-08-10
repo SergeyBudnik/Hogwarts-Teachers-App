@@ -16,6 +16,7 @@ import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_students_groups.*
 import kotlinx.android.synthetic.main.view_list_item_students_groups.view.*
@@ -127,5 +128,9 @@ open class StudentsGroupsListActivity : BaseActivity() {
                 adapter.notifyDataSetChanged()
             }
         }
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }
