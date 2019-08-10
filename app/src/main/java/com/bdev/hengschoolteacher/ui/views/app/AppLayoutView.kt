@@ -10,6 +10,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.views.branded.BrandedPopupView
 import kotlinx.android.synthetic.main.view_app_layout.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup
@@ -19,52 +20,76 @@ open class AppLayoutView : DrawerLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    private val customViews: MutableSet<View> = HashSet()
-    private val customViewsWithParams: MutableSet<Pair<View, ViewGroup.LayoutParams>> = HashSet()
+    private var customView: Pair<View, ViewGroup.LayoutParams?>? = null
 
     @AfterViews
     fun init() {
-        layoutContainerView.setScrimColor(Color.TRANSPARENT)
+        appLayoutContainerView.setScrimColor(Color.TRANSPARENT)
 
         if (!isInEditMode) {
-            layoutContainerView.addDrawerListener(object : ActionBarDrawerToggle(context as BaseActivity, layoutContainerView, 0, 0) {
-                override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                    super.onDrawerSlide(drawerView, slideOffset)
+            appLayoutContainerView.addDrawerListener(
+                    object : ActionBarDrawerToggle(context as BaseActivity, appLayoutContainerView, 0, 0) {
+                        override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                            super.onDrawerSlide(drawerView, slideOffset)
 
-                    layoutContentView.translationX = drawerView.width * slideOffset
-                }
-            })
+                            appLayoutContentView.translationX = drawerView.width * slideOffset
+                        }
+                    }
+            )
         }
 
-        customViews.forEach { layoutContentView.addView(it) }
-        customViewsWithParams.forEach { layoutContentView.addView(it.first, it.second) }
+        customView?.let { customView ->
+            if (customView.second != null) {
+                appLayoutEmbeddedContentView.addView(customView.first, customView.second)
+            } else {
+                appLayoutEmbeddedContentView.addView(customView.first)
+            }
+        }
+    }
+
+    fun getPopupView(): BrandedPopupView {
+        return appLayoutPopupView
     }
 
     fun setCurrentMenuItem(item: AppMenuView.Item) {
-        layoutMenuView.setItemSelected(item)
+        appLayoutMenuView.setItemSelected(item)
     }
 
     fun openMenu() {
-        layoutContainerView.openDrawer(GravityCompat.START)
+        appLayoutContainerView.openDrawer(GravityCompat.START)
     }
 
     override fun addView(child: View) {
-        if (isCustomView(child)) {
-            customViews.add(child)
-        } else {
-            super.addView(child)
-        }
+        doAddView(child, null)
     }
 
     override fun addView(child: View, params: ViewGroup.LayoutParams) {
+        doAddView(child, params)
+    }
+
+    private fun doAddView(child: View, params: ViewGroup.LayoutParams?) {
         if (isCustomView(child)) {
-            customViewsWithParams.add(Pair(child, params))
+            if (customView == null) {
+                customView = Pair(child, params)
+            } else {
+                throw RuntimeException("Container can have only a single view")
+            }
         } else {
-            super.addView(child, params)
+            if (params != null) {
+                super.addView(child, params)
+            } else {
+                super.addView(child)
+            }
         }
     }
 
     private fun isCustomView(view: View): Boolean {
-        return !listOf(R.id.layoutContainerView, R.id.layoutContentView, R.id.layoutMenuView).contains(view.id)
+        return !listOf(
+                R.id.appLayoutContainerView,
+                R.id.appLayoutContentView,
+                appLayoutEmbeddedContentView,
+                R.id.appLayoutMenuView,
+                R.id.appLayoutPopupView
+        ).contains(view.id)
     }
 }
