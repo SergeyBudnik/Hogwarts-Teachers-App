@@ -80,7 +80,7 @@ open class MonitoringStudentsActivity : BaseActivity() {
 
     private var filterEnabled = true
 
-    private var filter = ""
+    private var search = ""
 
     @AfterViews
     fun init() {
@@ -96,8 +96,8 @@ open class MonitoringStudentsActivity : BaseActivity() {
                 currentItem = MonitoringHeaderView.Item.STUDENTS
         )
 
-        monitoringPaymentsHeaderSearchView.addOnTextChangeListener { filter ->
-            this.filter = filter
+        monitoringPaymentsHeaderSearchView.addOnTextChangeListener { search ->
+            this.search = search.trim()
 
             initList()
         }
@@ -116,12 +116,17 @@ open class MonitoringStudentsActivity : BaseActivity() {
                                     dept = studentPaymentsDeptService.getStudentDept(it.id).toLong()
                             )
                         }
-                        .filter { !filterEnabled || it.dept > 0 }
-                        .filter {
-                            val nameMatches = it.student.name.toLowerCase().contains(filter.toLowerCase())
-                            val phoneMatches = it.student.phones.filter { it.contains(filter) }.any()
+                        .filter { studentInfo ->
+                            return@filter if (search.isNotEmpty()) {
+                                val student = studentInfo.student
 
-                            return@filter nameMatches || phoneMatches
+                                val nameMatches = student.name.toLowerCase().contains(search.toLowerCase())
+                                val phoneMatches = student.phones.filter { phone -> phone.contains(search) }.any()
+
+                                nameMatches || phoneMatches
+                            } else {
+                                !filterEnabled || studentInfo.dept > 0
+                            }
                         }
                         .sortedBy { it.student.name }
         )
