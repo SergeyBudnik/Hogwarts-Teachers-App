@@ -12,10 +12,7 @@ import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
-import com.bdev.hengschoolteacher.service.LessonStatusService
-import com.bdev.hengschoolteacher.service.LessonsAttendancesService
-import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.StudentsAttendancesService
+import com.bdev.hengschoolteacher.service.*
 import kotlinx.android.synthetic.main.view_lesson_row.view.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
@@ -30,6 +27,8 @@ open class LessonRowView : LinearLayout {
     lateinit var lessonsAttendancesService: LessonsAttendancesService
     @Bean
     lateinit var lessonStatusService: LessonStatusService
+    @Bean
+    lateinit var lessonStateService: LessonStateService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -75,7 +74,7 @@ open class LessonRowView : LinearLayout {
     }
 
     private fun setLessonIcon(lesson: Lesson, weekIndex: Int) {
-        val isLessonFinished = lessonsService.isLessonFinished(
+        val isLessonFinished = lessonStateService.isLessonFinished(
                 lessonId = lesson.id,
                 weekIndex = weekIndex
         )

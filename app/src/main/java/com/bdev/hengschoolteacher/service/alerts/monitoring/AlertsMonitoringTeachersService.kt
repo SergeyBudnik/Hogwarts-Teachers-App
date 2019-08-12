@@ -30,8 +30,9 @@ open class AlertsMonitoringTeachersService {
         for (weekIndex in -monitoringWeeksAmount..0) {
             for (lesson in lessonsService.getTeacherLessons(teacherId, weekIndex)) {
                 val lessonIsFilled = lessonStateService.isLessonFilled(lesson.lesson, weekIndex)
+                val lessonIsFinished = lessonStateService.isLessonFinished(lesson.lesson.id, weekIndex)
 
-                haveAlerts = haveAlerts or !lessonIsFilled
+                haveAlerts = haveAlerts or (!lessonIsFilled and lessonIsFinished)
             }
         }
 
