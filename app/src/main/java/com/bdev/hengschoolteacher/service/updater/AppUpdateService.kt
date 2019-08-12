@@ -66,10 +66,12 @@ open class AppUpdateService {
         AppUpdaterUtils(context)
                 .setUpdateFrom(UpdateFrom.GOOGLE_PLAY)
                 .withListener(object : AppUpdaterUtils.UpdateListener {
-                    override fun onSuccess(update: Update, isUpdateAvailable: Boolean?) {
-                        appUpdateInfo = AppUpdateInfo(version = update.latestVersion)
+                    override fun onSuccess(update: Update, isUpdateAvailable: Boolean) {
+                        if (isUpdateAvailable) {
+                            appUpdateInfo = AppUpdateInfo(version = update.latestVersion)
 
-                        notifyUpdate()
+                            notifyUpdate()
+                        }
                     }
 
                     override fun onFailed(error: AppUpdaterError) {
