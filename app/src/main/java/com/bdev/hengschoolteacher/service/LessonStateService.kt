@@ -3,6 +3,7 @@ package com.bdev.hengschoolteacher.service
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
+import java.util.*
 
 @EBean
 open class LessonStateService {
@@ -25,5 +26,9 @@ open class LessonStateService {
         ) != null
 
         return attendanceFilled && statusFilled
+    }
+
+    fun isLessonFinished(lessonId: Long, weekIndex: Int): Boolean {
+        return Date(lessonsService.getLessonFinishTime(lessonId, weekIndex)).before(Date())
     }
 }
