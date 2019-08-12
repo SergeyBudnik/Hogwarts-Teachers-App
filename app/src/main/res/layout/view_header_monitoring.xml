@@ -16,7 +16,7 @@
         app:header_active="true"/>
 
     <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
-        android:id="@+id/monitoringHeaderSalariesView"
+        android:id="@+id/monitoringHeaderTeachersView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -24,7 +24,7 @@
         app:header_active="false"/>
 
     <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
-        android:id="@+id/monitoringHeaderPaymentsView"
+        android:id="@+id/monitoringHeaderStudentsView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

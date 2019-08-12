@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/monitoringLessonsMenuLayoutView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-        android:id="@+id/monitoringLessonsHeaderView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Мониторинг"
-        app:leftIcon="@drawable/ic_menu"
-        app:firstRightIcon="@drawable/ic_filter"
-        app:secondRightIcon="@drawable/ic_calendar"/>
-
-    <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView_
-        android:id="@+id/monitoringLessonsSecondaryHeaderView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
-        android:id="@+id/monitoringLessonsMenuLayoutView"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            android:id="@+id/monitoringLessonsHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Мониторинг"
+            app:leftIcon="@drawable/ic_menu"
+            app:firstRightIcon="@drawable/ic_filter"
+            app:secondRightIcon="@drawable/ic_calendar"/>
+
+        <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView_
+            android:id="@+id/monitoringLessonsSecondaryHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -52,6 +52,6 @@
 
         </RelativeLayout>
 
-    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+    </LinearLayout>
 
-</LinearLayout>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>

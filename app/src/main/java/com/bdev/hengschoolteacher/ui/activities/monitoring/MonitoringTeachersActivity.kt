@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.teacher.Teacher
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
+import com.bdev.hengschoolteacher.service.alerts.monitoring.AlertsMonitoringTeachersService
 import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_teachers.*
@@ -26,7 +27,7 @@ import org.androidannotations.annotations.EViewGroup
 @EViewGroup(R.layout.view_monitoring_teachers_item)
 open class MonitoringTeachersItemView : RelativeLayout {
     @Bean
-    lateinit var studentsPaymentsService: StudentsPaymentsService
+    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -34,16 +35,12 @@ open class MonitoringTeachersItemView : RelativeLayout {
     fun bind(teacher: Teacher): MonitoringTeachersItemView {
         monitoringTeachersItemNameView.text = teacher.name
 
-        val teacherHasUnprocessedPayments = studentsPaymentsService.getPaymentsToTeacher(
-                teacherId = teacher.id,
-                onlyUnprocessed = true
-        ).isNotEmpty()
-
-        monitoringTeachersItemAlertView.visibility = if (teacherHasUnprocessedPayments) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        monitoringTeachersItemAlertView.visibility =
+                if (alertsMonitoringTeachersService.haveAlerts(teacher.id)) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
 
         return this
     }
@@ -79,7 +76,7 @@ open class MonitoringTeachersActivity : BaseActivity() {
         monitoringTeachersHeaderView
                 .setLeftButtonAction { monitoringTeachersMenuLayoutView.openMenu() }
 
-        monitoringTeachersSecondaryHeaderView.bind(currentItem = MonitoringHeaderView.Item.SALARIES)
+        monitoringTeachersSecondaryHeaderView.bind(currentItem = MonitoringHeaderView.Item.TEACHERS)
 
         monitoringTeachersMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
@@ -97,5 +94,9 @@ open class MonitoringTeachersActivity : BaseActivity() {
                     teacherId = teacher.id
             )
         }
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

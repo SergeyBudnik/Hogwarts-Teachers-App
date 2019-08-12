@@ -6,12 +6,14 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.UserPreferencesService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.alerts.monitoring.AlertsMonitoringService
+import com.bdev.hengschoolteacher.service.alerts.profile.AlertsProfileService
+import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoadingActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity
@@ -54,6 +56,14 @@ open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayou
         menuItemIconView.setColorFilter(context.resources.getColor(textColor), PorterDuff.Mode.SRC_IN)
         menuItemNameView.setTextColor(context.resources.getColor(textColor))
     }
+
+    fun setHasAlerts(hasAlerts: Boolean) {
+        menuItemAlertView.visibility = if (hasAlerts) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
 }
 
 @EViewGroup(R.layout.view_app_menu)
@@ -66,20 +76,22 @@ open class AppMenuView : LinearLayout {
     lateinit var authService: AuthService
 
     @Bean
-    lateinit var userPreferencesService: UserPreferencesService
+    lateinit var profileService: ProfileService
+
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
+    lateinit var alertsProfileService: AlertsProfileService
+    @Bean
+    lateinit var alertsMonitoringSevice: AlertsMonitoringService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     @AfterViews
     fun init() {
-        val login = userPreferencesService.getUserLogin()
-        val teacher = login?.let { teacherStorageService.getTeacherByLogin(login) }
+        val me = profileService.getMe()
 
-        teacherNameView.text = teacher?.name ?: ""
-        teacherLoginView.text = login ?: ""
+        teacherNameView.text = me?.name ?: ""
+        teacherLoginView.text = me?.login ?: ""
 
         val activity = context as BaseActivity
 
@@ -88,6 +100,9 @@ open class AppMenuView : LinearLayout {
         menuItemTeachersView.setOnClickListener { TeachersListActivity.redirectToSibling(activity) }
         menuItemMonitoringView.setOnClickListener { MonitoringLessonsActivity.redirectToSibling(activity) }
         menuItemSettingsView.setOnClickListener { SettingsActivity.redirectToSibling(activity) }
+
+        menuItemMyProfileView.setHasAlerts(alertsProfileService.haveAlerts())
+        menuItemMonitoringView.setHasAlerts(alertsMonitoringSevice.haveAlerts())
 
         refreshButtonView.setOnClickListener { LoadingActivity.redirectToSibling(activity) }
 

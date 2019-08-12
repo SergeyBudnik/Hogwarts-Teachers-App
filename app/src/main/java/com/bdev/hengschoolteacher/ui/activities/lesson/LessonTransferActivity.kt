@@ -7,6 +7,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import kotlinx.android.synthetic.main.activity_lesson_transfer.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -85,5 +86,9 @@ open class LessonTransferActivity : BaseActivity() {
         setResult(Activity.RESULT_OK)
         finish()
         overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

@@ -1,63 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            android:id="@+id/teacherHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Учитель"
+            app:leftIcon="@drawable/ic_arrow_left"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1"
+            android:paddingBottom="@dimen/app_size_1"
+            android:background="@color/fill_contrast_base">
+
+            <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
+                android:id="@+id/teacherInfoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_0_5"
+            android:layout_marginStart="@dimen/app_size_2"
+            android:text="Телефоны:"
+            android:textSize="@dimen/font_large"
+            android:textColor="@color/fill_text_basic"/>
 
         <LinearLayout
+            android:id="@+id/teacherPhonesContainerView"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1"
+            android:layout_marginTop="@dimen/app_size_1"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-                android:id="@+id/teacherHeaderView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="Учитель"
-                app:leftIcon="@drawable/ic_arrow_left"/>
+    </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/app_size_1"
-                android:paddingEnd="@dimen/app_size_1"
-                android:paddingBottom="@dimen/app_size_1"
-                android:background="@color/fill_contrast_base">
-
-                <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
-                    android:id="@+id/teacherInfoView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </RelativeLayout>
-
-            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_0_5"
-                android:layout_marginStart="@dimen/app_size_2"
-                android:text="Телефоны:"
-                android:textSize="@dimen/font_large"
-                android:textColor="@color/fill_text_basic"/>
-
-            <LinearLayout
-                android:id="@+id/teacherPhonesContainerView"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/app_size_1"
-                android:paddingEnd="@dimen/app_size_1"
-                android:layout_marginTop="@dimen/app_size_1"/>
-
-        </LinearLayout>
-
-    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
-
-</LinearLayout>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>

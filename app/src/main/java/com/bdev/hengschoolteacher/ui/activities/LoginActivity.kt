@@ -6,6 +6,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.AuthAsyncService
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import kotlinx.android.synthetic.main.activity_login.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -47,5 +48,9 @@ open class LoginActivity : BaseActivity() {
 
     private fun onLoginFailure() {
         Toast.makeText(this, "FAIL", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

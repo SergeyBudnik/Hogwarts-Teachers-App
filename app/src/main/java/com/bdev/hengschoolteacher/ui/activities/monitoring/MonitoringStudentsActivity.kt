@@ -16,6 +16,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.student.MonitoringStudentActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_students.*
@@ -79,7 +80,7 @@ open class MonitoringStudentsActivity : BaseActivity() {
 
     private var filterEnabled = true
 
-    private var filter = ""
+    private var search = ""
 
     @AfterViews
     fun init() {
@@ -92,11 +93,11 @@ open class MonitoringStudentsActivity : BaseActivity() {
         monitoringPaymentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
         monitoringPaymentsSecondaryHeaderView.bind(
-                currentItem = MonitoringHeaderView.Item.PAYMENTS
+                currentItem = MonitoringHeaderView.Item.STUDENTS
         )
 
-        monitoringPaymentsHeaderSearchView.addOnTextChangeListener { filter ->
-            this.filter = filter
+        monitoringPaymentsHeaderSearchView.addOnTextChangeListener { search ->
+            this.search = search.trim()
 
             initList()
         }
@@ -115,12 +116,17 @@ open class MonitoringStudentsActivity : BaseActivity() {
                                     dept = studentPaymentsDeptService.getStudentDept(it.id).toLong()
                             )
                         }
-                        .filter { !filterEnabled || it.dept > 0 }
-                        .filter {
-                            val nameMatches = it.student.name.toLowerCase().contains(filter.toLowerCase())
-                            val phoneMatches = it.student.phones.filter { it.contains(filter) }.any()
+                        .filter { studentInfo ->
+                            return@filter if (search.isNotEmpty()) {
+                                val student = studentInfo.student
 
-                            return@filter nameMatches || phoneMatches
+                                val nameMatches = student.name.toLowerCase().contains(search.toLowerCase())
+                                val phoneMatches = student.phones.filter { phone -> phone.contains(search) }.any()
+
+                                nameMatches || phoneMatches
+                            } else {
+                                !filterEnabled || studentInfo.dept > 0
+                            }
                         }
                         .sortedBy { it.student.name }
         )
@@ -144,5 +150,9 @@ open class MonitoringStudentsActivity : BaseActivity() {
         monitoringPaymentsHeaderView.setSecondRightButtonActive(filterEnabled)
 
         initList()
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

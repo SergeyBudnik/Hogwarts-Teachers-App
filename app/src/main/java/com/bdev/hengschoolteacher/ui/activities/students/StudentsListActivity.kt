@@ -15,6 +15,7 @@ import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivi
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder.Companion.redirect
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_students_list.*
 import kotlinx.android.synthetic.main.view_students_list_row_item.view.*
@@ -90,5 +91,9 @@ open class StudentsListActivity : BaseActivity() {
             }
             studentsListAdapter.notifyDataSetChanged()
         }
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

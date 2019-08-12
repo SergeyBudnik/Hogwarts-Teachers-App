@@ -3,11 +3,11 @@ package com.bdev.hengschoolteacher.ui.activities.settings
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.UserPreferencesService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoginActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import kotlinx.android.synthetic.main.activity_settings.*
 import org.androidannotations.annotations.AfterViews
@@ -27,11 +27,9 @@ open class SettingsActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var userPreferencesService: UserPreferencesService
-    @Bean
-    lateinit var teacherStorageService: TeacherStorageService
-    @Bean
     lateinit var authService: AuthService
+    @Bean
+    lateinit var profileService: ProfileService
 
     @AfterViews
     fun init() {
@@ -39,11 +37,10 @@ open class SettingsActivity : BaseActivity() {
 
         settingsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.SETTINGS)
 
-        val login = userPreferencesService.getUserLogin() ?: throw RuntimeException()
-        val teacher = teacherStorageService.getTeacherByLogin(login) ?: throw RuntimeException()
+        val me = profileService.getMe()
 
-        settingsAccountNameView.text = teacher.name
-        settingsAccountLoginView.text = login
+        settingsAccountNameView.text = me?.name ?: ""
+        settingsAccountLoginView.text = me?.login ?: ""
 
         settingsLogoutView.setOnClickListener { logOut() }
     }
@@ -52,5 +49,9 @@ open class SettingsActivity : BaseActivity() {
         authService.clearAuthInfo()
 
         LoginActivity.redirectToSibling(this)
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

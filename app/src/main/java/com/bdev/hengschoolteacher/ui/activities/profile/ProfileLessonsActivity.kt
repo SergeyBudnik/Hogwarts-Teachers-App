@@ -6,12 +6,17 @@ import android.content.Intent
 import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.teacher.Teacher
-import com.bdev.hengschoolteacher.service.*
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.LessonStateService
+import com.bdev.hengschoolteacher.service.LessonStatusService
+import com.bdev.hengschoolteacher.service.LessonsService
+import com.bdev.hengschoolteacher.service.StudentsService
+import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
+import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
 import kotlinx.android.synthetic.main.activity_profile_lessons.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -34,15 +39,13 @@ open class ProfileLessonsActivity : BaseActivity() {
     @Bean
     lateinit var studentsService: StudentsService
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
-    @Bean
-    lateinit var userPreferencesService: UserPreferencesService
-    @Bean
     lateinit var lessonStatusService: LessonStatusService
     @Bean
     lateinit var lessonStateService: LessonStateService
+    @Bean
+    lateinit var profileService: ProfileService
 
-    private lateinit var me: Teacher
+    private var me: Teacher? = null
 
     private var filterEnabled = true
     private var calendarEnabled = false
@@ -51,9 +54,7 @@ open class ProfileLessonsActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        val login = userPreferencesService.getUserLogin() ?: throw RuntimeException()
-
-        me = teacherStorageService.getTeacherByLogin(login) ?: throw RuntimeException()
+        me = profileService.getMe()
 
         profileLessonsHeaderView
                 .setLeftButtonAction { profileLessonsMenuLayoutView.openMenu() }
@@ -61,6 +62,8 @@ open class ProfileLessonsActivity : BaseActivity() {
                 .setFirstRightButtonActive(filterEnabled)
                 .setSecondRightButtonAction { toggleCalendar() }
                 .setSecondRightButtonActive(calendarEnabled)
+
+        profileLessonsSecondaryHeaderView.bind(ProfileHeaderView.Item.LESSONS)
 
         profileLessonsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
 
@@ -84,18 +87,20 @@ open class ProfileLessonsActivity : BaseActivity() {
     }
 
     private fun initLessonsList() {
-        val lessons = lessonsService
-                .getTeacherLessons(teacherId = me.id, weekIndex = weekIndex)
-                .filter {
-                    !filterEnabled || !lessonStateService.isLessonFilled(it.lesson, weekIndex)
-                }
+        me?.let { me ->
+            val lessons = lessonsService
+                    .getTeacherLessons(teacherId = me.id, weekIndex = weekIndex)
+                    .filter {
+                        !filterEnabled || !lessonStateService.isLessonFilled(it.lesson, weekIndex)
+                    }
 
-        profileLessonsListView.fill(lessons, weekIndex)
+            profileLessonsListView.fill(lessons, weekIndex)
 
-        profileLessonsNoLessonsView.visibility = if (lessons.isEmpty() && filterEnabled) {
-            View.VISIBLE
-        } else {
-            View.GONE
+            profileLessonsNoLessonsView.visibility = if (lessons.isEmpty() && filterEnabled) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 
@@ -117,5 +122,9 @@ open class ProfileLessonsActivity : BaseActivity() {
         } else {
             View.GONE
         }
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return profileLessonsMenuLayoutView
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/profileLessonsMenuLayoutView"
@@ -22,9 +22,9 @@
             app:secondRightIcon="@drawable/ic_calendar"/>
 
         <com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView_
+            android:id="@+id/profileLessonsSecondaryHeaderView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:profile_item="profile_lessons"/>
+            android:layout_height="wrap_content"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -54,4 +54,4 @@
 
     </LinearLayout>
 
-</com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/profileSalaryMenuLayoutView"
@@ -21,9 +21,9 @@
             app:firstRightIcon="@drawable/ic_calendar"/>
 
         <com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView_
+            android:id="@+id/profileSalarySecondaryHeaderView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:profile_item="profile_salary"/>
+            android:layout_height="wrap_content"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -46,4 +46,4 @@
 
     </LinearLayout>
 
-</com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>

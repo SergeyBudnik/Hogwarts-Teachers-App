@@ -22,11 +22,7 @@ open class BrandedHeaderSearchView : RelativeLayout {
         visibility = View.GONE
 
         brandedHeaderSearchCancelView.setOnClickListener {
-            brandedHeaderSearchView.text.clear()
-
-            visibility = View.GONE
-
-            KeyboardUtils.hideKeyboard(context as BaseActivity)
+            hide()
         }
 
         brandedHeaderSearchView.setOnFocusChangeListener { _, focus ->
@@ -36,17 +32,25 @@ open class BrandedHeaderSearchView : RelativeLayout {
         }
     }
 
-    fun show() {
-        visibility = View.VISIBLE
-
-        brandedHeaderSearchView.requestFocus()
-    }
-
     fun addOnTextChangeListener(listener: (String) -> Unit) {
         brandedHeaderSearchView.addTextChangedListener(object: TextChangeAdapter() {
             override fun onTextChanged(value: String) {
                 listener.invoke(value)
             }
         })
+    }
+
+    fun show() {
+        visibility = View.VISIBLE
+
+        brandedHeaderSearchView.requestFocus()
+    }
+
+    private fun hide() {
+        KeyboardUtils.hideKeyboard(context as BaseActivity)
+
+        brandedHeaderSearchView.text.clear()
+
+        visibility = View.GONE
     }
 }

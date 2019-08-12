@@ -20,6 +20,7 @@ import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivi
 import com.bdev.hengschoolteacher.ui.activities.student.StudentPaymentActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
 import kotlinx.android.synthetic.main.activity_lesson.*
 import kotlinx.android.synthetic.main.view_item_lesson_student.view.*
@@ -232,5 +233,9 @@ open class LessonActivity : BaseActivity() {
         setResult(Activity.RESULT_OK)
         finish()
         overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
+    }
+
+    override fun getAppLayoutView(): AppLayoutView? {
+        return null
     }
 }

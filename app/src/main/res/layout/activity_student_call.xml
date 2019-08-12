@@ -1,58 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/studentCallMenuLayoutView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-        android:id="@+id/studentCallHeaderView"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Звонок студенту"
-        app:leftIcon="@drawable/ic_arrow_left"/>
+        android:layout_height="wrap_content">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_
-        android:id="@+id/studentCallMenuLayoutView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            android:id="@+id/studentCallHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Звонок студенту"
+            app:leftIcon="@drawable/ic_arrow_left"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/studentCallNameView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_1"
+            android:layout_marginStart="@dimen/app_size_1"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:paddingTop="@dimen/app_size_1"
+            android:paddingBottom="@dimen/app_size_1"
+            android:paddingStart="@dimen/app_size_2"
+            android:paddingEnd="@dimen/app_size_2"
+            android:textColor="@color/fill_text_basic_accent"
+            android:textSize="@dimen/font_large"
+            android:background="@drawable/layout_row"
+            android:backgroundTint="@color/alt_contrast_light"/>
 
         <LinearLayout
+            android:id="@+id/studentCallPhonesLayoutView"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-                android:id="@+id/studentCallNameView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_1"
-                android:layout_marginStart="@dimen/app_size_1"
-                android:layout_marginEnd="@dimen/app_size_1"
-                android:paddingTop="@dimen/app_size_1"
-                android:paddingBottom="@dimen/app_size_1"
-                android:paddingStart="@dimen/app_size_2"
-                android:paddingEnd="@dimen/app_size_2"
-                android:textColor="@color/fill_text_basic_accent"
-                android:textSize="@dimen/font_large"
-                android:background="@drawable/layout_row"
-                android:backgroundTint="@color/alt_contrast_light"/>
-
-            <LinearLayout
-                android:id="@+id/studentCallPhonesLayoutView"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_0_5"
-                android:paddingStart="@dimen/app_size_1"
-                android:paddingEnd="@dimen/app_size_1">
-
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_size_0_5"
+            android:paddingStart="@dimen/app_size_1"
+            android:paddingEnd="@dimen/app_size_1">
 
         </LinearLayout>
 
-    </com.bdev.hengschoolteacher.ui.views.app.AppMenuLayoutView_>
+    </LinearLayout>
 
-</LinearLayout>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>
