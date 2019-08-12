@@ -116,10 +116,6 @@ open class LessonsService {
         return lessonsAmount
     }
 
-    fun isLessonFinished(lessonId: Long, weekIndex: Int): Boolean {
-        return Date(getLessonFinishTime(lessonId, weekIndex)).before(Date())
-    }
-
     fun getLessonStartTime(lessonId: Long, weekIndex: Int): Long {
         val groupAndLesson = getLesson(lessonId) ?: throw RuntimeException()
 
