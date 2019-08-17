@@ -22,7 +22,7 @@ open class LoadingActivity : BaseActivity() {
             RedirectBuilder
                     .redirect(current)
                     .to(LoadingActivity_::class.java)
-                    .goAndCloseCurrent()
+                    .goAndCloseAll()
         }
     }
 

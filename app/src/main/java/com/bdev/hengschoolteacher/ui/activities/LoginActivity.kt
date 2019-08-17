@@ -20,7 +20,7 @@ open class LoginActivity : BaseActivity() {
             RedirectBuilder
                     .redirect(current)
                     .to(LoginActivity_::class.java)
-                    .goAndCloseCurrent()
+                    .goAndCloseAll()
         }
     }
 
