@@ -4,6 +4,10 @@ import android.content.Intent
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import java.io.Serializable
 
+private enum class RedirectFinishAction {
+    DO_NOT_FINISH, CLOSE_CURRENT, CLOSE_ALL
+}
+
 class RedirectBuilder private constructor(private val current: BaseActivity) {
     private lateinit var target: Class<out BaseActivity>
 
@@ -38,18 +42,22 @@ class RedirectBuilder private constructor(private val current: BaseActivity) {
     }
 
     fun go() {
-        execute(false, null)
+        execute(redirectFinishAction = RedirectFinishAction.DO_NOT_FINISH, requestCode = null)
     }
 
     fun goAndCloseCurrent() {
-        execute(true, null)
+        execute(redirectFinishAction = RedirectFinishAction.CLOSE_CURRENT, requestCode = null)
+    }
+
+    fun goAndCloseAll() {
+        execute(redirectFinishAction = RedirectFinishAction.CLOSE_ALL, requestCode = null)
     }
 
     fun goForResult(requestCode: Int) {
-        execute(false, requestCode)
+        execute(redirectFinishAction = RedirectFinishAction.DO_NOT_FINISH, requestCode = requestCode)
     }
 
-    private fun execute(closeCurrent: Boolean, requestCode: Int?) {
+    private fun execute(redirectFinishAction: RedirectFinishAction, requestCode: Int?) {
         val intent = Intent(current, target)
 
         extra.forEach { intent.putExtra(it.key, it.value) }
@@ -60,8 +68,10 @@ class RedirectBuilder private constructor(private val current: BaseActivity) {
             current.startActivity(intent)
         }
 
-        if (closeCurrent) {
-            current.finish()
+        when (redirectFinishAction) {
+            RedirectFinishAction.DO_NOT_FINISH -> { /* Do nothing */ }
+            RedirectFinishAction.CLOSE_CURRENT -> { current.finish() }
+            RedirectFinishAction.CLOSE_ALL -> { current.finishAffinity() }
         }
 
         current.overridePendingTransition(enterAnim, exitAnim)
