@@ -8,9 +8,10 @@ import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
+import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.service.StudentsService
-import com.bdev.hengschoolteacher.ui.activities.*
+import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -82,8 +83,7 @@ open class StudentInformationActivity : BaseActivity() {
     fun init() {
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
-        studentInformationHeaderView
-                .setLeftButtonAction { doFinish() }
+        studentInformationHeaderView.setLeftButtonAction { doFinish() }
 
         studentInformationStudentView.bind(student = student, clickable = false)
 
@@ -101,9 +101,19 @@ open class StudentInformationActivity : BaseActivity() {
             )
         }
 
+        initList(student)
+    }
+
+    private fun initList(student: Student) {
+        val currentTime = Date().time
+
         val adapter = StudentInformationTimetableListAdapter(this)
 
-        adapter.setItems(lessonsService.getStudentLessons(student.id))
+        adapter.setItems(lessonsService
+                .getStudentLessons(student.id)
+                .filter { it.lesson.creationTime <= currentTime }
+                .filter { it.lesson.deactivationTime == null || currentTime <= it.lesson.deactivationTime }
+        )
 
         studentInformationTimetableListView.adapter = adapter
     }
