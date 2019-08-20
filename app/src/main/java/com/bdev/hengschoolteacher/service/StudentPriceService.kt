@@ -26,7 +26,7 @@ open class StudentPriceService {
                 .fold(0L) { amount, value -> amount + value }
     }
 
-    private fun getAttendancePrice(attendance: StudentAttendance): Int {
+    fun getAttendancePrice(attendance: StudentAttendance): Int {
         val lengthInHalfOfHours = ((attendance.finishTime - attendance.startTime) / 1000 / 1800).toInt()
 
         return when (attendance.groupType) {

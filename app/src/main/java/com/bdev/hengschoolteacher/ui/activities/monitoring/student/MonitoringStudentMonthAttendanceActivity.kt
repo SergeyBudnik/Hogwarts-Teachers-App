@@ -10,6 +10,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.Month
 import com.bdev.hengschoolteacher.data.school.group.GroupType
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
+import com.bdev.hengschoolteacher.service.StudentPriceService
 import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
@@ -24,6 +25,9 @@ import org.androidannotations.annotations.*
 
 @EViewGroup(R.layout.view_monitoring_student_month_attendance_item)
 open class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
+    @Bean
+    lateinit var studentPriceService: StudentPriceService
+
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
 
@@ -42,21 +46,34 @@ open class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
             GroupType.GROUP -> "Групповое (${studentAttendance.studentsInGroup} чел)"
         }
 
-        monitoringStudentMonthAttendanceItemAttendanceTypeView.text = when (studentAttendance.type) {
+        monitoringStudentMonthAttendanceItemAttendanceTypeView.text = getAttendanceTypeName(studentAttendance)
+
+        monitoringStudentMonthAttendanceItemAttendanceTypeView.setTextColor(
+                getAttendanceColor(studentAttendance)
+        )
+
+        monitoringStudentMonthAttendanceItemPriceView.text =
+                "${studentPriceService.getAttendancePrice(studentAttendance)} Р"
+
+        return this
+    }
+
+    private fun getAttendanceTypeName(studentAttendance: StudentAttendance): String {
+        return when (studentAttendance.type) {
             StudentAttendance.Type.VISITED -> "Посещено"
             StudentAttendance.Type.VALID_SKIP -> "Ув. пропуск"
             StudentAttendance.Type.INVALID_SKIP -> "Неув. пропуск"
         }
+    }
 
-        monitoringStudentMonthAttendanceItemAttendanceTypeView.setTextColor(resources.getColor(
+    private fun getAttendanceColor(studentAttendance: StudentAttendance): Int {
+        return resources.getColor(
                 when (studentAttendance.type) {
                     StudentAttendance.Type.VISITED -> R.color.fill_text_basic_positive
                     StudentAttendance.Type.VALID_SKIP -> R.color.fill_text_basic_warning
                     StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_basic_negative
                 }
-        ))
-
-        return this
+        )
     }
 }
 
