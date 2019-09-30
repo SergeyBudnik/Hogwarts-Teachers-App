@@ -162,13 +162,12 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     private fun markButtonAttendance(group: Group, attendance: StudentAttendance.Type) {
         studentsAttendancesAsyncService
                 .addAttendance(StudentAttendance(
-                        null,
-                        studentId,
-                        group.type,
-                        lessonsService.getLessonStudents(lessonId, weekIndex).size,
-                        lessonsService.getLessonStartTime(lessonId, weekIndex),
-                        lessonsService.getLessonFinishTime(lessonId, weekIndex),
-                        attendance
+                        studentId = studentId,
+                        groupType = group.type,
+                        studentsInGroup = lessonsService.getLessonStudents(lessonId, weekIndex).size,
+                        startTime = lessonsService.getLessonStartTime(lessonId, weekIndex),
+                        finishTime = lessonsService.getLessonFinishTime(lessonId, weekIndex),
+                        type = attendance
                 ))
                 .onSuccess { runOnUiThread {
                     initButtons(group)
