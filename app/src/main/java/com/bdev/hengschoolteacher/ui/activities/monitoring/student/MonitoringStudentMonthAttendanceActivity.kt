@@ -10,6 +10,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.Month
 import com.bdev.hengschoolteacher.data.school.group.GroupType
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
+import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.service.StudentPriceService
 import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsService
@@ -60,18 +61,20 @@ open class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
 
     private fun getAttendanceTypeName(studentAttendance: StudentAttendance): String {
         return when (studentAttendance.type) {
-            StudentAttendance.Type.VISITED -> "Посещено"
-            StudentAttendance.Type.VALID_SKIP -> "Ув. пропуск"
-            StudentAttendance.Type.INVALID_SKIP -> "Неув. пропуск"
+            StudentAttendanceType.VISITED -> "Посещено"
+            StudentAttendanceType.VALID_SKIP -> "Ув. пропуск"
+            StudentAttendanceType.INVALID_SKIP -> "Неув. пропуск"
+            StudentAttendanceType.FREE_LESSON -> "Беспл. урок"
         }
     }
 
     private fun getAttendanceColor(studentAttendance: StudentAttendance): Int {
         return resources.getColor(
                 when (studentAttendance.type) {
-                    StudentAttendance.Type.VISITED -> R.color.fill_text_basic_positive
-                    StudentAttendance.Type.VALID_SKIP -> R.color.fill_text_basic_warning
-                    StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_basic_negative
+                    StudentAttendanceType.VISITED -> R.color.fill_text_basic_positive
+                    StudentAttendanceType.VALID_SKIP -> R.color.fill_text_basic_warning
+                    StudentAttendanceType.INVALID_SKIP -> R.color.fill_text_basic_negative
+                    StudentAttendanceType.FREE_LESSON -> R.color.fill_text_basic_action_link
                 }
         )
     }
