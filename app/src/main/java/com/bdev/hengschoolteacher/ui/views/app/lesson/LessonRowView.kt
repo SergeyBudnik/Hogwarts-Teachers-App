@@ -11,7 +11,7 @@ import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
+import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.service.*
 import kotlinx.android.synthetic.main.view_lesson_row.view.*
 import org.androidannotations.annotations.Bean
@@ -51,7 +51,7 @@ open class LessonRowView : LinearLayout {
         setLessonStatus(lesson, weekIndex)
     }
 
-    private fun setStudentIcon(student: Student?, attendanceType: StudentAttendance.Type?, studentView: ImageView) {
+    private fun setStudentIcon(student: Student?, attendanceType: StudentAttendanceType?, studentView: ImageView) {
         val icon = if (student == null) {
             R.drawable.ic_user_linear
         } else {
@@ -63,9 +63,10 @@ open class LessonRowView : LinearLayout {
         } else {
             when (attendanceType) {
                 null -> R.color.fill_text_basic
-                StudentAttendance.Type.VISITED -> R.color.fill_text_basic_positive
-                StudentAttendance.Type.VALID_SKIP -> R.color.fill_text_basic_warning
-                StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_basic_negative
+                StudentAttendanceType.VISITED -> R.color.fill_text_basic_positive
+                StudentAttendanceType.VALID_SKIP -> R.color.fill_text_basic_warning
+                StudentAttendanceType.INVALID_SKIP -> R.color.fill_text_basic_negative
+                StudentAttendanceType.FREE_LESSON -> R.color.fill_text_basic_action_link
             }
         }
 

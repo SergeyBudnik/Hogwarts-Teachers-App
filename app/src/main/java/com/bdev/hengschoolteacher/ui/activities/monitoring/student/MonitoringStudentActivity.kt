@@ -11,6 +11,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.Month
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
+import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -35,17 +36,20 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
             month: Int,
             allVisitedAttendances: List<StudentAttendance>,
             allValidSkipAttendances: List<StudentAttendance>,
-            allInvalidSkipAttendances: List<StudentAttendance>
+            allInvalidSkipAttendances: List<StudentAttendance>,
+            allFreeLessonAttendances: List<StudentAttendance>
     ) {
         val visitedLessonsAmount = getLessonsAmount(allVisitedAttendances, month)
         val validSkipLessonsAmount = getLessonsAmount(allValidSkipAttendances, month)
         val invalidSkipLessonsAmount = getLessonsAmount(allInvalidSkipAttendances, month)
+        val freeLessonsAmount = getLessonsAmount(allFreeLessonAttendances, month)
 
         monitoringStudentPaymentItemMonthView.text = resources.getString(Month.findByIndex(month).nameId)
 
         monitoringStudentPaymentItemVisitedLessonsAmountView.text = "$visitedLessonsAmount"
         monitoringStudentPaymentItemValidSkipLessonsAmountView.text = "$validSkipLessonsAmount"
         monitoringStudentPaymentItemInvalidSkipLessonsAmountView.text = "$invalidSkipLessonsAmount"
+        monitoringStudentPaymentItemFreeLessonLessonsAmountView.text = "$freeLessonsAmount"
 
         monitoringStudentPaymentItemPayedAmountView.text = "${studentsPaymentsService.getMonthPayments(
                 studentId = student.id,
@@ -87,18 +91,21 @@ open class MonitoringStudentPaymentListAdapter : BaseAdapter() {
     private lateinit var allVisitedAttendances: List<StudentAttendance>
     private lateinit var allValidSkipAttendances: List<StudentAttendance>
     private lateinit var allInvalidSkipAttendances: List<StudentAttendance>
+    private lateinit var allFreeLessonAttendances: List<StudentAttendance>
 
     fun bind(
             student: Student,
             allVisitedAttendances: List<StudentAttendance>,
             allValidSkipAttendances: List<StudentAttendance>,
-            allInvalidSkipAttendances: List<StudentAttendance>
+            allInvalidSkipAttendances: List<StudentAttendance>,
+            allFreeLessonAttendances: List<StudentAttendance>
     ) {
         this.student = student
 
         this.allVisitedAttendances = allVisitedAttendances
         this.allValidSkipAttendances = allValidSkipAttendances
         this.allInvalidSkipAttendances = allInvalidSkipAttendances
+        this.allFreeLessonAttendances = allFreeLessonAttendances
     }
 
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
@@ -113,7 +120,8 @@ open class MonitoringStudentPaymentListAdapter : BaseAdapter() {
                 month = getItem(position),
                 allVisitedAttendances = allVisitedAttendances,
                 allValidSkipAttendances = allValidSkipAttendances,
-                allInvalidSkipAttendances = allInvalidSkipAttendances
+                allInvalidSkipAttendances = allInvalidSkipAttendances,
+                allFreeLessonAttendances = allFreeLessonAttendances
         )
 
         return v
@@ -176,9 +184,10 @@ open class MonitoringStudentActivity : BaseActivity() {
         monitoringStudentPaymentDeptView.text = "${studentPaymentsDeptService.getStudentDept(studentId)}"
 
         val allAttendances = studentsAttendancesService.getAllStudentAttendances(studentId)
-        val allVisitedAttendances = allAttendances.filter { it.type == StudentAttendance.Type.VISITED }
-        val allValidSkipAttendances = allAttendances.filter { it.type == StudentAttendance.Type.VALID_SKIP }
-        val allInvalidSkipAttendances = allAttendances.filter { it.type == StudentAttendance.Type.INVALID_SKIP }
+        val allVisitedAttendances = allAttendances.filter { it.type == StudentAttendanceType.VISITED }
+        val allValidSkipAttendances = allAttendances.filter { it.type == StudentAttendanceType.VALID_SKIP }
+        val allInvalidSkipAttendances = allAttendances.filter { it.type == StudentAttendanceType.INVALID_SKIP }
+        val allFreeLessonAttendances = allAttendances.filter { it.type == StudentAttendanceType.FREE_LESSON }
 
         student?.let {
             monitoringStudentPaymentStudentView.bind(it)
@@ -187,7 +196,8 @@ open class MonitoringStudentActivity : BaseActivity() {
                     student = it,
                     allVisitedAttendances = allVisitedAttendances,
                     allValidSkipAttendances = allValidSkipAttendances,
-                    allInvalidSkipAttendances = allInvalidSkipAttendances
+                    allInvalidSkipAttendances = allInvalidSkipAttendances,
+                    allFreeLessonAttendances = allFreeLessonAttendances
             )
 
             monitoringStudentPaymentListView.adapter = monitoringStudentPaymentListAdapter

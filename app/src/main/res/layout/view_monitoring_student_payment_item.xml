@@ -70,6 +70,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/app_size_0_5"
+            android:text="Беспл. занятий:"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/fill_text_basic_subtle"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stroke_basic_base"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/app_size_0_5"
             android:text="Оплачено:"
             android:textSize="@dimen/font_normal"
             android:textColor="@color/fill_text_basic_subtle"/>
@@ -127,6 +140,19 @@
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:id="@+id/monitoringStudentPaymentItemInvalidSkipLessonsAmountView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/app_size_0_5"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/fill_text_basic"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stroke_basic_base"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/monitoringStudentPaymentItemFreeLessonLessonsAmountView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/app_size_0_5"

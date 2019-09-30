@@ -3,6 +3,7 @@ package com.bdev.hengschoolteacher.service
 import com.bdev.hengschoolteacher.dao.StudentsAttendancesDao
 import com.bdev.hengschoolteacher.dao.StudentsAttendancesModel
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
+import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
@@ -38,7 +39,7 @@ open class StudentsAttendancesService {
                 .toList()
     }
 
-    fun getAttendance(lessonId: Long, studentId: Long, weekIndex: Int): StudentAttendance.Type? {
+    fun getAttendance(lessonId: Long, studentId: Long, weekIndex: Int): StudentAttendanceType? {
         val attendance = studentsAttendancesDao
                 .readValue()
                 .studentsAttendances
