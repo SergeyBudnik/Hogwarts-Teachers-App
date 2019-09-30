@@ -29,10 +29,6 @@ open class StudentsAttendancesService {
                 .toList()
     }
 
-    fun getAllAttendances(): List<StudentAttendance> {
-        return studentsAttendancesDao.readValue().studentsAttendances
-    }
-
     fun getAllStudentAttendances(studentId: Long): List<StudentAttendance> {
         return studentsAttendancesDao
                 .readValue()
@@ -49,7 +45,7 @@ open class StudentsAttendancesService {
                 .asSequence()
                 .filter { it.studentId == studentId }
                 .filter { it.startTime == lessonsService.getLessonStartTime(lessonId, weekIndex) }
-                .maxBy { it.id ?: -1 }
+                .find { true }
 
         return attendance?.type
     }
@@ -61,8 +57,18 @@ open class StudentsAttendancesService {
     }
 
     fun addAttendance(attendance: StudentAttendance) {
-        studentsAttendancesDao.writeValue(StudentsAttendancesModel(
-                studentsAttendancesDao.readValue().studentsAttendances.union(listOf(attendance)).toList()
-        ))
+        val res = studentsAttendancesDao
+                .readValue()
+                .studentsAttendances
+                .filter {
+                    val studentIdMatches = it.studentId != attendance.studentId
+                    val startTimeMatches = it.startTime != attendance.startTime
+
+                    return@filter studentIdMatches && startTimeMatches
+                }
+                .union(listOf(attendance))
+                .toList()
+
+        studentsAttendancesDao.writeValue(StudentsAttendancesModel(res))
     }
 }

@@ -15,5 +15,5 @@ interface StudentsAttendancesRest : RestClientHeaders, RestClientSupport {
 
     @Post("/student-attendance")
     @RequiresHeader(RestConfiguration.HEADER_AUTHORIZATION)
-    fun addStudentAttendance(@Body attendance: StudentAttendance): Long?
+    fun addStudentAttendance(@Body attendance: StudentAttendance)
 }
