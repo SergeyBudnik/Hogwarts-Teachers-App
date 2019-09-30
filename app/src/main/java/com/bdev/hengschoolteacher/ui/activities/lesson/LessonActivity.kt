@@ -13,7 +13,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
+import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
@@ -70,9 +70,10 @@ open class LessonStudentItemView : RelativeLayout {
 
         val colorId = when (attendanceType) {
             null -> R.color.fill_text_basic
-            StudentAttendance.Type.VISITED -> R.color.fill_text_basic_positive
-            StudentAttendance.Type.VALID_SKIP -> R.color.fill_text_basic_warning
-            StudentAttendance.Type.INVALID_SKIP -> R.color.fill_text_basic_negative
+            StudentAttendanceType.VISITED -> R.color.fill_text_basic_positive
+            StudentAttendanceType.VALID_SKIP -> R.color.fill_text_basic_warning
+            StudentAttendanceType.INVALID_SKIP -> R.color.fill_text_basic_negative
+            StudentAttendanceType.FREE_LESSON -> R.color.fill_text_basic_action_link
         }
 
         lessonStudentItemAttendanceView.setColorFilter(resources.getColor(colorId), PorterDuff.Mode.SRC_IN)

@@ -3,6 +3,7 @@ package com.bdev.hengschoolteacher.service
 import com.bdev.hengschoolteacher.dao.StudentsAttendancesDao
 import com.bdev.hengschoolteacher.dao.StudentsAttendancesModel
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
+import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
@@ -29,10 +30,6 @@ open class StudentsAttendancesService {
                 .toList()
     }
 
-    fun getAllAttendances(): List<StudentAttendance> {
-        return studentsAttendancesDao.readValue().studentsAttendances
-    }
-
     fun getAllStudentAttendances(studentId: Long): List<StudentAttendance> {
         return studentsAttendancesDao
                 .readValue()
@@ -42,14 +39,14 @@ open class StudentsAttendancesService {
                 .toList()
     }
 
-    fun getAttendance(lessonId: Long, studentId: Long, weekIndex: Int): StudentAttendance.Type? {
+    fun getAttendance(lessonId: Long, studentId: Long, weekIndex: Int): StudentAttendanceType? {
         val attendance = studentsAttendancesDao
                 .readValue()
                 .studentsAttendances
                 .asSequence()
                 .filter { it.studentId == studentId }
                 .filter { it.startTime == lessonsService.getLessonStartTime(lessonId, weekIndex) }
-                .maxBy { it.id ?: -1 }
+                .find { true }
 
         return attendance?.type
     }
@@ -61,8 +58,18 @@ open class StudentsAttendancesService {
     }
 
     fun addAttendance(attendance: StudentAttendance) {
-        studentsAttendancesDao.writeValue(StudentsAttendancesModel(
-                studentsAttendancesDao.readValue().studentsAttendances.union(listOf(attendance)).toList()
-        ))
+        val res = studentsAttendancesDao
+                .readValue()
+                .studentsAttendances
+                .filter {
+                    val studentIdMatches = it.studentId != attendance.studentId
+                    val startTimeMatches = it.startTime != attendance.startTime
+
+                    return@filter studentIdMatches && startTimeMatches
+                }
+                .union(listOf(attendance))
+                .toList()
+
+        studentsAttendancesDao.writeValue(StudentsAttendancesModel(res))
     }
 }

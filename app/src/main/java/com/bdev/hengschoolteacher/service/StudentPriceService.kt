@@ -13,7 +13,7 @@ open class StudentPriceService {
     fun getTotalPrice(studentId: Long): Long {
         return studentsAttendancesService
                 .getAllStudentAttendances(studentId)
-                .filter { it.type != StudentAttendance.Type.VALID_SKIP }
+                .filter { it.type.isPayed }
                 .map { getAttendancePrice(it) }
                 .fold(0L) { amount, value -> amount + value }
     }
@@ -21,7 +21,7 @@ open class StudentPriceService {
     fun getMonthPrice(studentId: Long, month: Int): Long {
         return studentsAttendancesService
                 .getMonthlyAttendances(studentId, month)
-                .filter { it.type != StudentAttendance.Type.VALID_SKIP }
+                .filter { it.type.isPayed }
                 .map { getAttendancePrice(it) }
                 .fold(0L) { amount, value -> amount + value }
     }

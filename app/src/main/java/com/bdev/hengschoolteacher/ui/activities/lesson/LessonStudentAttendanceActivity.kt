@@ -6,6 +6,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.StudentsAttendancesAsyncService
 import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
+import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.service.GroupsService
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.service.StudentsAttendancesService
@@ -92,7 +93,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         initButton(
                 group = group,
                 actualAttendance = attendance,
-                buttonAttendance = StudentAttendance.Type.VISITED,
+                buttonAttendance = StudentAttendanceType.VISITED,
                 currentButtonView = studentAttendanceVisitButtonView,
                 allButtonsViews = allButtonsViews,
                 text = "Посетил",
@@ -102,7 +103,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         initButton(
                 group = group,
                 actualAttendance = attendance,
-                buttonAttendance = StudentAttendance.Type.VALID_SKIP,
+                buttonAttendance = StudentAttendanceType.VALID_SKIP,
                 currentButtonView = studentAttendanceValidSkipButtonView,
                 allButtonsViews = allButtonsViews,
                 text = "Уважительный пропуск",
@@ -112,18 +113,28 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         initButton(
                 group = group,
                 actualAttendance = attendance,
-                buttonAttendance = StudentAttendance.Type.INVALID_SKIP,
+                buttonAttendance = StudentAttendanceType.INVALID_SKIP,
                 currentButtonView = studentAttendanceInvalidSkipButtonView,
                 allButtonsViews = allButtonsViews,
                 text = "Неуважительный пропуск",
                 buttonColorId = R.color.fill_text_basic_negative
         )
+
+        initButton(
+                group = group,
+                actualAttendance = attendance,
+                buttonAttendance = StudentAttendanceType.FREE_LESSON,
+                currentButtonView = studentAttendanceInvalidSkipButtonView,
+                allButtonsViews = allButtonsViews,
+                text = "Бесплатное занятие",
+                buttonColorId = R.color.fill_text_basic_action_link
+        )
     }
 
     private fun initButton(
             group: Group,
-            actualAttendance: StudentAttendance.Type?,
-            buttonAttendance: StudentAttendance.Type,
+            actualAttendance: StudentAttendanceType?,
+            buttonAttendance: StudentAttendanceType,
             currentButtonView: BrandedActionButtonView,
             allButtonsViews: List<BrandedActionButtonView>,
             text: String,
@@ -134,7 +145,11 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         if (actualAttendance != null) {
             currentButtonView.setButtonIcon(
                     R.drawable.ic_ok,
-                    if (actualAttendance == buttonAttendance) { buttonColorId } else { R.color.fill_text_basic_light }
+                    if (actualAttendance == buttonAttendance) {
+                        buttonColorId
+                    } else {
+                        R.color.fill_text_basic_light
+                    }
             )
         }
 
@@ -159,16 +174,15 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
     }
 
-    private fun markButtonAttendance(group: Group, attendance: StudentAttendance.Type) {
+    private fun markButtonAttendance(group: Group, attendance: StudentAttendanceType) {
         studentsAttendancesAsyncService
                 .addAttendance(StudentAttendance(
-                        null,
-                        studentId,
-                        group.type,
-                        lessonsService.getLessonStudents(lessonId, weekIndex).size,
-                        lessonsService.getLessonStartTime(lessonId, weekIndex),
-                        lessonsService.getLessonFinishTime(lessonId, weekIndex),
-                        attendance
+                        studentId = studentId,
+                        groupType = group.type,
+                        studentsInGroup = lessonsService.getLessonStudents(lessonId, weekIndex).size,
+                        startTime = lessonsService.getLessonStartTime(lessonId, weekIndex),
+                        finishTime = lessonsService.getLessonFinishTime(lessonId, weekIndex),
+                        type = attendance
                 ))
                 .onSuccess { runOnUiThread {
                     initButtons(group)
