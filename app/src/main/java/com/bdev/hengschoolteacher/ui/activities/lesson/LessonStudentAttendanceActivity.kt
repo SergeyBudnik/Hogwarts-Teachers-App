@@ -124,7 +124,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
                 group = group,
                 actualAttendance = attendance,
                 buttonAttendance = StudentAttendanceType.FREE_LESSON,
-                currentButtonView = studentAttendanceInvalidSkipButtonView,
+                currentButtonView = studentAttendanceFreeLessonButtonView,
                 allButtonsViews = allButtonsViews,
                 text = "Бесплатное занятие",
                 buttonColorId = R.color.fill_text_basic_action_link
