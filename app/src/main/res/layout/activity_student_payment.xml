@@ -12,27 +12,15 @@
         android:layout_height="wrap_content">
 
         <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
-            android:id="@+id/lessonPaymentHeaderView"
+            android:id="@+id/studentPaymentsHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Студент. Оплата"
             app:leftIcon="@drawable/ic_arrow_left"/>
 
-        <LinearLayout
-            android:orientation="vertical"
+        <com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderView_
+            android:id="@+id/studentPaymentsSecondaryHeaderView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/app_size_1"
-            android:paddingLeft="@dimen/app_size_1"
-            android:paddingRight="@dimen/app_size_1"
-            android:background="@color/fill_contrast_base">
-
-            <com.bdev.hengschoolteacher.ui.views.app.student.StudentInfoView_
-                android:id="@+id/studentPaymentStudentInfoView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

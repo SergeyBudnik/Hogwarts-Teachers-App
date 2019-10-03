@@ -23,6 +23,7 @@ import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.KeyboardUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
 import kotlinx.android.synthetic.main.activity_student_payment.*
 import kotlinx.android.synthetic.main.view_student_payment_item.view.*
 import org.androidannotations.annotations.*
@@ -108,16 +109,23 @@ open class StudentPaymentActivity : BaseActivity() {
     companion object {
         private const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
 
-        fun redirectToChild(
-                current: BaseActivity,
-                studentId: Long
-        ) {
+        fun redirectToChild(current: BaseActivity, studentId: Long) {
+            return redirect(current, studentId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
+        }
+
+        fun redirectToSibling(current: BaseActivity, studentId: Long) {
+            return redirect(current, studentId)
+                    .withAnim(0, 0)
+                    .goAndCloseCurrent()
+        }
+
+        private fun redirect(current: BaseActivity, studentId: Long): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
                     .to(StudentPaymentActivity_::class.java)
                     .withExtra(EXTRA_STUDENT_ID, studentId)
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
         }
     }
 
@@ -146,11 +154,16 @@ open class StudentPaymentActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        lessonPaymentHeaderView.setLeftButtonAction { doFinish() }
-
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
-        studentPaymentStudentInfoView.bind(student)
+        studentPaymentsHeaderView
+                .setTitle("Студент. ${student.name}")
+                .setLeftButtonAction { doFinish() }
+
+        studentPaymentsSecondaryHeaderView.bind(
+                item = StudentHeaderItem.PAYMENTS,
+                studentId = studentId
+        )
 
         studentPaymentAddPaymentView.setOnClickListener { addPayment(student) }
 

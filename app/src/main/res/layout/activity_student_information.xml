@@ -19,49 +19,29 @@
             app:title="Студент"
             app:leftIcon="@drawable/ic_arrow_left"/>
 
-        <RelativeLayout
+        <com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderView_
+            android:id="@+id/studentInformationSecondaryHeaderView"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/app_size_1"
-            android:paddingEnd="@dimen/app_size_1"
-            android:background="@color/fill_contrast_base">
-
-            <com.bdev.hengschoolteacher.ui.views.app.student.StudentInfoView_
-                android:id="@+id/studentInformationStudentView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </RelativeLayout>
+            android:layout_marginTop="@dimen/app_size_1"
+            android:layout_marginStart="@dimen/app_size_1"
+            android:layout_marginEnd="@dimen/app_size_1"
+            android:text="Телефоны:"
+            android:textColor="@color/fill_text_basic_accent"
+            android:textSize="@dimen/font_large"/>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/studentInformationPhonesLayoutView"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/app_size_0_5"
-            android:paddingBottom="@dimen/app_size_0_5"
+            android:layout_marginTop="@dimen/app_size_0_5"
             android:paddingStart="@dimen/app_size_1"
-            android:paddingEnd="@dimen/app_size_1"
-            android:background="@color/fill_contrast_base">
-
-            <ImageView
-                android:id="@+id/studentInformationCallView"
-                android:layout_width="@dimen/app_size_4"
-                android:layout_height="@dimen/app_size_4"
-                android:layout_marginEnd="@dimen/app_size_0_5"
-                android:padding="@dimen/app_size_1"
-                android:src="@drawable/ic_phone"
-                android:tint="@color/fill_text_basic"
-                android:importantForAccessibility="no"/>
-
-            <ImageView
-                android:id="@+id/studentInformationPaymentView"
-                android:layout_width="@dimen/app_size_4"
-                android:layout_height="@dimen/app_size_4"
-                android:layout_marginEnd="@dimen/app_size_0_5"
-                android:padding="@dimen/app_size_1"
-                android:src="@drawable/ic_payment"
-                android:tint="@color/fill_text_basic"
-                android:importantForAccessibility="no"/>
+            android:paddingEnd="@dimen/app_size_1">
 
         </LinearLayout>
 
@@ -73,7 +53,7 @@
             android:layout_marginEnd="@dimen/app_size_1"
             android:text="Расписание:"
             android:textColor="@color/fill_text_basic_accent"
-            android:textSize="@dimen/font_very_large"/>
+            android:textSize="@dimen/font_large"/>
 
         <ListView
             android:id="@+id/studentInformationTimetableListView"

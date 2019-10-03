@@ -5,20 +5,30 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="2">
+    android:weightSum="3">
 
     <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
-        android:id="@+id/studentInformationView"
+        android:id="@+id/studentHeaderDetailsView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:header_title="Информация"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        app:header_title="Детали"
+        app:header_active="true"/>
 
     <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
-        android:id="@+id/studentPaymentView"
+        android:id="@+id/studentHeaderAttendanceView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         app:header_title="Посещаемость"
-        android:layout_weight="1"/>
+        app:header_active="false"/>
+
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+        android:id="@+id/studentHeaderPaymentsView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:header_title="Оплата"
+        app:header_active="false"/>
 
 </LinearLayout>

@@ -16,6 +16,7 @@ import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_monitoring_student_payment.*
 import kotlinx.android.synthetic.main.view_monitoring_student_payment_item.view.*
@@ -147,12 +148,22 @@ open class MonitoringStudentActivity : BaseActivity() {
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
 
         fun redirectToChild(current: BaseActivity, studentId: Long) {
-            RedirectBuilder
+            redirect(current, studentId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
+        }
+
+        fun redirectToSibling(current: BaseActivity, studentId: Long) {
+            redirect(current, studentId)
+                    .withAnim(0, 0)
+                    .goAndCloseCurrent()
+        }
+
+        private fun redirect(current: BaseActivity, studentId: Long): RedirectBuilder {
+            return RedirectBuilder
                     .redirect(current)
                     .to(MonitoringStudentActivity_::class.java)
                     .withExtra(EXTRA_STUDENT_ID, studentId)
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
         }
     }
 
@@ -179,7 +190,13 @@ open class MonitoringStudentActivity : BaseActivity() {
         val student = studentsService.getStudent(studentId)
 
         monitoringStudentPaymentHeaderView
+                .setTitle("Студент. ${student?.name}")
                 .setLeftButtonAction { doFinish() }
+
+        monitoringStudentPaymentSecondaryHeaderView.bind(
+                item = StudentHeaderItem.ATTENDANCE,
+                studentId = studentId
+        )
 
         monitoringStudentPaymentDeptView.text = "${studentPaymentsDeptService.getStudentDept(studentId)}"
 
@@ -190,8 +207,6 @@ open class MonitoringStudentActivity : BaseActivity() {
         val allFreeLessonAttendances = allAttendances.filter { it.type == StudentAttendanceType.FREE_LESSON }
 
         student?.let {
-            monitoringStudentPaymentStudentView.bind(it)
-
             monitoringStudentPaymentListAdapter.bind(
                     student = it,
                     allVisitedAttendances = allVisitedAttendances,
