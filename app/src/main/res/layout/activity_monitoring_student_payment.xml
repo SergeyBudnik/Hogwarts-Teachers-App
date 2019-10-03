@@ -18,20 +18,10 @@
             app:title="Мониторинг. Студент"
             app:leftIcon="@drawable/ic_arrow_left"/>
 
-        <RelativeLayout
+        <com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderView_
+            android:id="@+id/monitoringStudentPaymentSecondaryHeaderView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/app_size_1"
-            android:paddingEnd="@dimen/app_size_1"
-            android:paddingBottom="@dimen/app_size_1"
-            android:background="@color/fill_contrast_base">
-
-            <com.bdev.hengschoolteacher.ui.views.app.student.StudentInfoView_
-                android:id="@+id/monitoringStudentPaymentStudentView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </RelativeLayout>
+            android:layout_height="wrap_content"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
