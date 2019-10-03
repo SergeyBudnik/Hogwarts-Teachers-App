@@ -62,10 +62,10 @@ open class StudentsAttendancesService {
                 .readValue()
                 .studentsAttendances
                 .filter {
-                    val studentIdMatches = it.studentId != attendance.studentId
-                    val startTimeMatches = it.startTime != attendance.startTime
+                    val studentIdMatches = it.studentId == attendance.studentId
+                    val startTimeMatches = it.startTime == attendance.startTime
 
-                    return@filter studentIdMatches && startTimeMatches
+                    return@filter !studentIdMatches || !startTimeMatches
                 }
                 .union(listOf(attendance))
                 .toList()

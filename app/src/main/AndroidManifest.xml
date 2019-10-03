@@ -46,9 +46,8 @@
         <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity_"/>
         <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity_"/>
 
-        <activity android:name=".ui.activities.student.StudentPaymentActivity_"/>
-        <activity android:name=".ui.activities.student.StudentCallActivity_"/>
         <activity android:name=".ui.activities.student.StudentInformationActivity_"/>
+        <activity android:name=".ui.activities.student.StudentPaymentActivity_"/>
 
         <activity android:name=".ui.activities.lesson.LessonActivity_"/>
         <activity android:name=".ui.activities.lesson.LessonStatusActivity_"/>

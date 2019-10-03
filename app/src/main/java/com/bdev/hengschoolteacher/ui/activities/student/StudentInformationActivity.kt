@@ -15,6 +15,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
 import kotlinx.android.synthetic.main.activity_student_information.*
 import kotlinx.android.synthetic.main.view_list_item_student_information_timetable.view.*
 import org.androidannotations.annotations.*
@@ -60,13 +61,22 @@ open class StudentInformationActivity : BaseActivity() {
         const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
 
         fun redirectToChild(current: BaseActivity, studentId: Long) {
-            RedirectBuilder
+            redirect(current, studentId)
+                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
+                    .go()
+        }
+
+        fun redirectToSibling(current: BaseActivity, studentId: Long) {
+            redirect(current, studentId)
+                    .withAnim(0, 0)
+                    .goAndCloseCurrent()
+        }
+
+        private fun redirect(current: BaseActivity, studentId: Long): RedirectBuilder {
+            return RedirectBuilder
                     .redirect(current)
                     .to(StudentInformationActivity_::class.java)
                     .withExtra(EXTRA_STUDENT_ID, studentId)
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .go()
         }
     }
 
@@ -83,25 +93,24 @@ open class StudentInformationActivity : BaseActivity() {
     fun init() {
         val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
 
-        studentInformationHeaderView.setLeftButtonAction { doFinish() }
+        studentInformationHeaderView
+                .setTitle("Студент. ${student.name}")
+                .setLeftButtonAction { doFinish() }
 
-        studentInformationStudentView.bind(student = student, clickable = false)
+        studentInformationSecondaryHeaderView.bind(
+                item = StudentHeaderItem.DETAILS,
+                studentId = studentId
+        )
 
-        studentInformationCallView.setOnClickListener {
-            StudentCallActivity.redirectToChild(
-                    current = this,
-                    studentId = studentId
-            )
-        }
-
-        studentInformationPaymentView.setOnClickListener {
-            StudentPaymentActivity.redirectToChild(
-                    current = this,
-                    studentId = student.id
-            )
-        }
+        initPhonesList(student)
 
         initList(student)
+    }
+
+    private fun initPhonesList(student: Student) {
+        student.phones.forEach {
+            studentInformationPhonesLayoutView.addView(StudentPhoneItemView_.build(this).bind(it))
+        }
     }
 
     private fun initList(student: Student) {
