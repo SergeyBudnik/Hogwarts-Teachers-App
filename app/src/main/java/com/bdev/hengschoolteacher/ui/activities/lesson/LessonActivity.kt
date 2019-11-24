@@ -162,6 +162,8 @@ open class LessonActivity : BaseActivity() {
     lateinit var lessonsService: LessonsService
     @Bean
     lateinit var lessonStatusService: LessonStatusService
+    @Bean
+    lateinit var lessonStateService: LessonStateService
 
     @AfterViews
     fun init() {
@@ -173,8 +175,16 @@ open class LessonActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                REQUEST_CODE_LESSON_ATTENDANCE -> doInit()
-                REQUEST_CODE_LESSON_STATUS -> doInit()
+                REQUEST_CODE_LESSON_ATTENDANCE, REQUEST_CODE_LESSON_STATUS -> {
+                    val group = groupsService.getGroup(groupId) ?: throw RuntimeException()
+                    val lesson = group.lessons.find { it.id == lessonId } ?: throw RuntimeException()
+
+                    if (lessonStateService.isLessonFilled(lesson, weekIndex)) {
+                        doFinish()
+                    } else {
+                        doInit()
+                    }
+                }
             }
         }
     }
