@@ -10,10 +10,10 @@ open class TeacherPaymentsService {
     @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
 
-    fun getPayments(teacherId: Long, onlyUnprocessed: Boolean): List<StudentPayment> {
+    fun getPayments(teacherLogin: String, onlyUnprocessed: Boolean): List<StudentPayment> {
         return studentsPaymentsService
                 .getAllPayments()
-                .filter { it.teacherId == teacherId }
+                .filter { it.staffMemberLogin == teacherLogin }
                 .filter { !onlyUnprocessed || !it.processed }
                 .toList()
     }

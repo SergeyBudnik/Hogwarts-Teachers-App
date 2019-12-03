@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonProperty
 
 class Lesson @JsonCreator constructor(
         @JsonProperty("id") val id: Long,
-        @JsonProperty("teacherId") val teacherId: Long,
+        @JsonProperty("teacherLogin") val teacherLogin: String,
         @JsonProperty("day") val day: DayOfWeek,
         @JsonProperty("startTime") val startTime: Time,
         @JsonProperty("finishTime") val finishTime: Time,

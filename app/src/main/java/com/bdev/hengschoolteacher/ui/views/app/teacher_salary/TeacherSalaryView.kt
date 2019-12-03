@@ -78,9 +78,9 @@ open class TeacherSalaryView : LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun init(teacherId: Long, weekIndex: Int) {
+    fun init(teacherLogin: String, weekIndex: Int) {
         val teacherPayments = teacherSalaryService.getTeacherPayments(
-                teacherId = teacherId,
+                teacherLogin = teacherLogin,
                 weekIndex = weekIndex
         )
 

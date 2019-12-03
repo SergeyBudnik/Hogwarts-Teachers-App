@@ -5,7 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.data.school.teacher.Teacher
+import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.service.LessonStateService
 import com.bdev.hengschoolteacher.service.LessonStatusService
 import com.bdev.hengschoolteacher.service.LessonsService
@@ -45,7 +45,7 @@ open class ProfileLessonsActivity : BaseActivity() {
     @Bean
     lateinit var profileService: ProfileService
 
-    private var me: Teacher? = null
+    private var me: StaffMember? = null
 
     private var filterEnabled = true
     private var calendarEnabled = false
@@ -89,7 +89,7 @@ open class ProfileLessonsActivity : BaseActivity() {
     private fun initLessonsList() {
         me?.let { me ->
             val lessons = lessonsService
-                    .getTeacherLessons(teacherId = me.id, weekIndex = weekIndex)
+                    .getTeacherLessons(teacherLogin = me.login, weekIndex = weekIndex)
                     .filter {
                         !filterEnabled || !lessonStateService.isLessonFilled(it.lesson, weekIndex)
                     }

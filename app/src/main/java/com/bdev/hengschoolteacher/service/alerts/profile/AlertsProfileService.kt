@@ -15,19 +15,19 @@ open class AlertsProfileService {
 
     fun haveAlerts(): Boolean {
         return profileService.getMe()?.let {
-            alertsMonitoringTeacherService.haveAlerts(it.id)
+            alertsMonitoringTeacherService.haveAlerts(it.login)
         } ?: false
     }
 
     fun haveLessonsAlerts(): Boolean {
         return profileService.getMe()?.let {
-            alertsMonitoringTeacherService.haveLessonsAlerts(it.id)
+            alertsMonitoringTeacherService.haveLessonsAlerts(it.login)
         } ?: false
     }
 
     fun havePaymentsAlerts(): Boolean {
         return profileService.getMe()?.let {
-            alertsMonitoringTeacherService.havePaymentsAlerts(it.id)
+            alertsMonitoringTeacherService.havePaymentsAlerts(it.login)
         } ?: false
     }
 }

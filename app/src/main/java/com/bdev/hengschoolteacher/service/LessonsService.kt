@@ -54,9 +54,9 @@ open class LessonsService {
                 }
     }
 
-    fun getTeacherLessons(teacherId: Long, weekIndex: Int): List<GroupAndLesson> {
+    fun getTeacherLessons(teacherLogin: String, weekIndex: Int): List<GroupAndLesson> {
         return getLessonsByCondition { _, lesson ->
-            val teacherMatches = lesson.teacherId == teacherId
+            val teacherMatches = lesson.teacherLogin == teacherLogin
             val timeMatches = lessonTimeMatches(lesson, weekIndex)
 
             teacherMatches && timeMatches

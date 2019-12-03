@@ -2,7 +2,7 @@ package com.bdev.hengschoolteacher.ui.activities.teacher
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -17,37 +17,36 @@ import org.androidannotations.annotations.Extra
 @EActivity(R.layout.activity_teacher)
 open class TeacherActivity : BaseActivity() {
     companion object {
-        const val EXTRA_TEACHER_ID = "EXTRA_TEACHER_ID"
+        const val EXTRA_TEACHER_LOGIN = "EXTRA_TEACHER_LOGIN"
 
-        fun redirectToChild(current: BaseActivity, teacherId: Long) {
+        fun redirectToChild(current: BaseActivity, teacherLogin: String) {
             RedirectBuilder
                     .redirect(current)
                     .to(TeacherActivity_::class.java)
-                    .withExtra(EXTRA_TEACHER_ID, teacherId)
+                    .withExtra(EXTRA_TEACHER_LOGIN, teacherLogin)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }
     }
 
-    @Extra(EXTRA_TEACHER_ID)
-    @JvmField
-    var teacherId = 0L
+    @Extra(EXTRA_TEACHER_LOGIN)
+    lateinit var teacherLogin: String
 
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageService
 
     @AfterViews
     fun init() {
         teacherHeaderView.setLeftButtonAction { doFinish() }
 
-        val teacher = teacherStorageService.getTeacherById(teacherId) ?: throw RuntimeException()
+        val teacher = staffMembersStorageService.getStaffMember(teacherLogin) ?: throw RuntimeException()
 
-        teacherInfoView.bind(teacherId = teacherId, clickable = false)
+        teacherInfoView.bind(teacherLogin = teacherLogin, clickable = false)
 
         teacherPhonesContainerView.removeAllViews()
 
-        teacher.phones.forEach { phone ->
-            teacherPhonesContainerView.addView(BrandedPhoneView_.build(this).bind(phone))
+        teacher.person.contacts.phones.forEach { phone ->
+            teacherPhonesContainerView.addView(BrandedPhoneView_.build(this).bind(phone.value))
         }
     }
 

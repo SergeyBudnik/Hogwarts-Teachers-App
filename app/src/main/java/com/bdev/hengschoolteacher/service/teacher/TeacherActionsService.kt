@@ -18,10 +18,10 @@ open class TeacherActionsService {
     @Bean
     lateinit var lessonStatusService: LessonStatusService
 
-    fun getTeacherActions(teacherId: Long, weekIndex: Int): List<TeacherAction> {
+    fun getTeacherActions(teacherLogin: String, weekIndex: Int): List<TeacherAction> {
         val teacherActions = ArrayList<TeacherAction>()
 
-        val teacherLessons = lessonsService.getTeacherLessons(teacherId, weekIndex)
+        val teacherLessons = lessonsService.getTeacherLessons(teacherLogin, weekIndex)
 
         for (dayOfWeek in DayOfWeek.values()) {
             val allDayTeacherLessons = teacherLessons.map { it.lesson }.filter { it.day == dayOfWeek }

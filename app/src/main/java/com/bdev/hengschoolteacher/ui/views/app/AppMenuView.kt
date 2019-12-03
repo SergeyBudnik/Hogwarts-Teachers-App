@@ -90,7 +90,7 @@ open class AppMenuView : LinearLayout {
     fun init() {
         val me = profileService.getMe()
 
-        teacherNameView.text = me?.name ?: ""
+        teacherNameView.text = me?.person?.name ?: ""
         teacherLoginView.text = me?.login ?: ""
 
         val activity = context as BaseActivity

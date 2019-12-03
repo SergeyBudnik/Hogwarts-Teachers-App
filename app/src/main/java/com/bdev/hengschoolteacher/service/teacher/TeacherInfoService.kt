@@ -1,12 +1,12 @@
 package com.bdev.hengschoolteacher.service.teacher
 
-import com.bdev.hengschoolteacher.data.school.teacher.Teacher
+import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import org.androidannotations.annotations.EBean
 
 @EBean
 open class TeacherInfoService {
-    fun getTeachersName(teacher: Teacher): String {
-        val teacherNameAndSurname = teacher.name.split(" ")
+    fun getTeachersName(staffMember: StaffMember): String {
+        val teacherNameAndSurname = staffMember.person.name.split(" ")
 
         return if (teacherNameAndSurname.isEmpty()) {
             ""
@@ -15,8 +15,8 @@ open class TeacherInfoService {
         }
     }
 
-    fun getTeachersSurname(teacher: Teacher): String {
-        val teacherNameAndSurname = teacher.name.split(" ")
+    fun getTeachersSurname(staffMember: StaffMember): String {
+        val teacherNameAndSurname = staffMember.person.name.split(" ")
 
         return if (teacherNameAndSurname.size < 2) {
             ""
