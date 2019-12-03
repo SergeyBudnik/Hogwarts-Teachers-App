@@ -3,11 +3,11 @@ package com.bdev.hengschoolteacher.data.school.student_payment
 import org.codehaus.jackson.annotate.JsonCreator
 import org.codehaus.jackson.annotate.JsonProperty
 
-class StudentPayment @JsonCreator constructor(
+data class StudentPayment @JsonCreator constructor(
     @JsonProperty("id") val id: Long,
-    @JsonProperty("amount") amount: Long,
-    @JsonProperty("studentId") studentId: Long,
-    @JsonProperty("teacherId") teacherId: Long,
-    @JsonProperty("time") time: Long,
-    @JsonProperty("processed") processed: Boolean
-) : StudentPaymentInfo(amount, studentId, teacherId, time, processed)
+    @JsonProperty("amount") val amount: Long,
+    @JsonProperty("studentId") val studentId: Long,
+    @JsonProperty("staffMemberLogin") val staffMemberLogin: String,
+    @JsonProperty("time") val time: Long,
+    @JsonProperty("processed") val processed: Boolean
+)

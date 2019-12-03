@@ -19,30 +19,29 @@ import org.androidannotations.annotations.Extra
 @EActivity(R.layout.activity_monitoring_teacher_lessons)
 open class MonitoringTeacherLessonsActivity : BaseActivity() {
     companion object {
-        const val EXTRA_TEACHER_ID = "EXTRA_TEACHER_ID"
+        const val EXTRA_TEACHER_LOGIN = "EXTRA_TEACHER_LOGIN"
 
-        fun redirectToChild(current: BaseActivity, teacherId: Long) {
-            redirect(current = current, teacherId = teacherId)
+        fun redirectToChild(current: BaseActivity, teacherLogin: String) {
+            redirect(current = current, teacherLogin = teacherLogin)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }
 
-        fun redirectToSibling(current: BaseActivity, teacherId: Long) {
-            redirect(current = current, teacherId = teacherId)
+        fun redirectToSibling(current: BaseActivity, teacherLogin: String) {
+            redirect(current = current, teacherLogin = teacherLogin)
                     .goAndCloseCurrent()
         }
 
-        private fun redirect(current: BaseActivity, teacherId: Long): RedirectBuilder {
+        private fun redirect(current: BaseActivity, teacherLogin: String): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
                     .to(MonitoringTeacherLessonsActivity_::class.java)
-                    .withExtra(EXTRA_TEACHER_ID, teacherId)
+                    .withExtra(EXTRA_TEACHER_LOGIN, teacherLogin)
         }
     }
 
-    @Extra(EXTRA_TEACHER_ID)
-    @JvmField
-    var teacherId: Long = 0L
+    @Extra(EXTRA_TEACHER_LOGIN)
+    lateinit var teacherLogin: String
 
     @Bean
     lateinit var lessonsService: LessonsService
@@ -65,11 +64,11 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
 
         monitoringTeacherLessonsSecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.LESSONS,
-                teacherId = teacherId
+                teacherLogin = teacherLogin
         )
 
         monitoringTeacherLessonsTeacherInfoView.bind(
-                teacherId = teacherId
+                teacherLogin = teacherLogin
         )
 
         monitoringTeacherLessonsListView.bind(showTeacher = false)
@@ -92,7 +91,7 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
 
     private fun initLessonsList() {
         val lessons = lessonsService
-                .getTeacherLessons(teacherId = teacherId, weekIndex = weekIndex)
+                .getTeacherLessons(teacherLogin = teacherLogin, weekIndex = weekIndex)
                 .filter {
                     !filterEnabled || !lessonStateService.isLessonFilled(it.lesson, weekIndex)
                 }

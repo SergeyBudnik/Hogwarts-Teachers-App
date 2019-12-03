@@ -5,7 +5,6 @@ import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.LessonStatusService
 import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.service.UserPreferencesService
 import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
@@ -33,8 +32,6 @@ open class ProfileSalaryActivity : BaseActivity() {
     @Bean
     lateinit var userPreferencesService: UserPreferencesService
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
-    @Bean
     lateinit var profileService: ProfileService
     @Bean
     lateinit var lessonStatusService: LessonStatusService
@@ -58,7 +55,7 @@ open class ProfileSalaryActivity : BaseActivity() {
 
         if (me != null) {
             profileSalaryWeekSelectionBarView.init { weekIndex ->
-                profileSalaryTeacherSalaryView.init(me.id, weekIndex)
+                profileSalaryTeacherSalaryView.init(me.login, weekIndex)
             }
         }
     }

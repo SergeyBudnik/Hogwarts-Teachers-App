@@ -12,7 +12,7 @@ import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
@@ -33,7 +33,7 @@ open class LessonItemView : RelativeLayout {
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageService
     @Bean
     lateinit var studentsService: StudentsService
 
@@ -50,7 +50,7 @@ open class LessonItemView : RelativeLayout {
 
         lessonItemRowView.bind(group, lesson, students, weekIndex)
 
-        lessonItemTeacherView.text = teacherStorageService.getTeacherById(lesson.teacherId)?.name ?: ""
+        lessonItemTeacherView.text = staffMembersStorageService.getStaffMember(lesson.teacherLogin)?.person?.name ?: ""
         lessonItemTeacherView.visibility = if (showTeacher) { View.VISIBLE } else { View.GONE }
 
         return this

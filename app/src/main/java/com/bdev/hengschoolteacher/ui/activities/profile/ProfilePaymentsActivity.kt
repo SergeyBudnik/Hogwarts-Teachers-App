@@ -58,11 +58,11 @@ open class ProfilePaymentsActivity : BaseActivity() {
     }
 
     private fun initList() {
-        val teacherId = profileService.getMe()?.id
+        val teacherLogin = profileService.getMe()?.login
 
-        val allPayments = teacherId?.let {
+        val allPayments = teacherLogin?.let {
             teacherPaymentsService.getPayments(
-                    teacherId = teacherId,
+                    teacherLogin = teacherLogin,
                     onlyUnprocessed = false
             )
         } ?: emptyList()

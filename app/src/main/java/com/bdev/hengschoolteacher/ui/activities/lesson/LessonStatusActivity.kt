@@ -67,7 +67,7 @@ open class LessonStatusActivity : BaseActivity() {
         val lesson = lessonsService.getLesson(lessonId)?.lesson ?: throw RuntimeException()
 
         lessonStatusLessonTimeView.bind(lesson, weekIndex)
-        lessonStatusTeacherInfoView.bind(lesson.teacherId)
+        lessonStatusTeacherInfoView.bind(lesson.teacherLogin)
 
         initButtons()
     }

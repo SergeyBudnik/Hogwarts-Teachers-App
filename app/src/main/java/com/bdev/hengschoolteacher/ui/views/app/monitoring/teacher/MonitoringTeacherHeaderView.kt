@@ -22,14 +22,14 @@ open class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : 
     @Bean
     lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
 
-    fun bind(currentItem: Item, teacherId: Long) {
+    fun bind(currentItem: Item, teacherLogin: String) {
         monitoringTeacherHeaderLessonsView.let {
             it.setActive(currentItem == Item.LESSONS)
-            it.setHasAlert(alertsMonitoringTeachersService.haveLessonsAlerts(teacherId))
+            it.setHasAlert(alertsMonitoringTeachersService.haveLessonsAlerts(teacherLogin))
             it.setOnClickListener {
                 MonitoringTeacherLessonsActivity.redirectToSibling(
                         current = context as BaseActivity,
-                        teacherId = teacherId
+                        teacherLogin = teacherLogin
                 )
             }
         }
@@ -40,18 +40,18 @@ open class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : 
             it.setOnClickListener {
                 MonitoringTeacherSalaryActivity.redirectToSibling(
                         current = context as BaseActivity,
-                        teacherId = teacherId
+                        teacherLogin = teacherLogin
                 )
             }
         }
 
         monitoringTeacherHeaderPaymentsView.let {
             it.setActive(currentItem == Item.PAYMENTS)
-            it.setHasAlert(alertsMonitoringTeachersService.havePaymentsAlerts(teacherId))
+            it.setHasAlert(alertsMonitoringTeachersService.havePaymentsAlerts(teacherLogin))
             it.setOnClickListener {
                 MonitoringTeacherPaymentsActivity.redirectToSibling(
                         current = context as BaseActivity,
-                        teacherId = teacherId
+                        teacherLogin = teacherLogin
                 )
             }
         }

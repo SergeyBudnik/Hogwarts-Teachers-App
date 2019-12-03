@@ -12,7 +12,6 @@ import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.service.GroupsService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.profile.ProfileService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -29,8 +28,6 @@ import org.androidannotations.annotations.EViewGroup
 open class StudentsGroupsListItemView : LinearLayout {
     @Bean
     lateinit var studentsService: StudentsService
-    @Bean
-    lateinit var teacherStorageService: TeacherStorageService
     @Bean
     lateinit var profileService: ProfileService
 
@@ -56,7 +53,7 @@ open class StudentsGroupsListItemView : LinearLayout {
         val me = profileService.getMe()
 
         if (me != null) {
-            val isMyGroup = group.lessons.filter { it.teacherId == me.id }.any()
+            val isMyGroup = group.lessons.filter { it.teacherLogin == me.login }.any()
 
             val colorId = if (isMyGroup) { R.color.status_info_subtle } else { R.color.alt_contrast_light }
 
@@ -94,8 +91,6 @@ open class StudentsGroupsListActivity : BaseActivity() {
     @Bean
     lateinit var studentsService: StudentsService
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
-    @Bean
     lateinit var profileService: ProfileService
 
     @AfterViews
@@ -113,7 +108,7 @@ open class StudentsGroupsListActivity : BaseActivity() {
 
             adapter.setItems(groupsService
                     .getGroups()
-                    .sortedByDescending { group -> group.lessons.filter { it.teacherId == me.id }.any() }
+                    .sortedByDescending { group -> group.lessons.filter { it.teacherLogin == me.login }.any() }
             )
 
             studentsGroupsListView.adapter = adapter

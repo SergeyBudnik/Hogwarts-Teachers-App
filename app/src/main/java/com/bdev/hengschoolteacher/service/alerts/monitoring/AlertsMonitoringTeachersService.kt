@@ -3,7 +3,6 @@ package com.bdev.hengschoolteacher.service.alerts.monitoring
 import com.bdev.hengschoolteacher.service.LessonStateService
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 
@@ -12,23 +11,21 @@ open class AlertsMonitoringTeachersService {
     private val monitoringWeeksAmount = 6
 
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
-    @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean
     lateinit var lessonStateService: LessonStateService
 
-    fun haveAlerts(teacherId: Long): Boolean {
-        return haveLessonsAlerts(teacherId) || havePaymentsAlerts(teacherId)
+    fun haveAlerts(teacherLogin: String): Boolean {
+        return haveLessonsAlerts(teacherLogin) || havePaymentsAlerts(teacherLogin)
     }
 
-    fun haveLessonsAlerts(teacherId: Long): Boolean {
+    fun haveLessonsAlerts(teacherLogin: String): Boolean {
         var haveAlerts = false
 
         for (weekIndex in -monitoringWeeksAmount..0) {
-            for (lesson in lessonsService.getTeacherLessons(teacherId, weekIndex)) {
+            for (lesson in lessonsService.getTeacherLessons(teacherLogin, weekIndex)) {
                 val lessonIsFilled = lessonStateService.isLessonFilled(lesson.lesson, weekIndex)
                 val lessonIsFinished = lessonStateService.isLessonFinished(lesson.lesson.id, weekIndex)
 
@@ -39,7 +36,7 @@ open class AlertsMonitoringTeachersService {
         return haveAlerts
     }
 
-    fun havePaymentsAlerts(teacherId: Long): Boolean {
-        return studentsPaymentsService.getPaymentsToTeacher(teacherId, true).isNotEmpty()
+    fun havePaymentsAlerts(teacherLogin: String): Boolean {
+        return studentsPaymentsService.getPaymentsToTeacher(teacherLogin, true).isNotEmpty()
     }
 }

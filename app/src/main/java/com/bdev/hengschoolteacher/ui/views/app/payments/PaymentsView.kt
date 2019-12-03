@@ -10,7 +10,7 @@ import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
 import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
 import kotlinx.android.synthetic.main.view_payments.view.*
@@ -25,7 +25,7 @@ open class PaymentsItemView : RelativeLayout {
     @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
     @Bean
-    lateinit var teachersService: TeacherStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageService
 
     @Bean
     lateinit var studentsPaymentsAsyncService: StudentsPaymentAsyncService
@@ -43,9 +43,9 @@ open class PaymentsItemView : RelativeLayout {
                 studentPayment.studentId
         )?.name ?: "?"
 
-        paymentsItemTeacherView.text = teachersService.getTeacherById(
-                studentPayment.teacherId
-        )?.name ?: "?"
+        paymentsItemTeacherView.text = staffMembersStorageService.getStaffMember(
+                studentPayment.staffMemberLogin
+        )?.person?.name ?: "?"
 
         paymentsItemDateView.text = TimeFormatUtils.format(studentPayment.time)
 

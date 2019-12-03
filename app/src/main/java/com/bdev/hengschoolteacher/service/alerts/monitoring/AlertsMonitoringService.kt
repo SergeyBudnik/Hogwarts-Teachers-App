@@ -1,13 +1,13 @@
 package com.bdev.hengschoolteacher.service.alerts.monitoring
 
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 
 @EBean
 open class AlertsMonitoringService {
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageService
 
     @Bean
     lateinit var alertsMonitoringLessonsService: AlertsMonitoringLessonsService
@@ -25,9 +25,9 @@ open class AlertsMonitoringService {
     }
 
     fun teachersHaveAlerts(): Boolean {
-        return teacherStorageService
-                .getAllTeachers()
-                .map { alertsMonitoringTeachersService.haveAlerts(it.id) }
+        return staffMembersStorageService
+                .getAllStaffMembers()
+                .map { alertsMonitoringTeachersService.haveAlerts(it.login) }
                 .fold(false) { result, value -> result or value }
     }
 

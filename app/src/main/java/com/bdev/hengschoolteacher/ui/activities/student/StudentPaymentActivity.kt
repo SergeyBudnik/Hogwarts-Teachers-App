@@ -17,7 +17,7 @@ import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.profile.ProfileService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.KeyboardUtils
@@ -33,7 +33,7 @@ import java.util.*
 @EViewGroup(R.layout.view_student_payment_item)
 open class StudentPaymentItemView : RelativeLayout {
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageService
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -47,10 +47,10 @@ open class StudentPaymentItemView : RelativeLayout {
     }
 
     private fun initTeachers(studentPayment: StudentPayment) {
-        val teacher = teacherStorageService.getTeacherById(studentPayment.teacherId)
+        val teacher = staffMembersStorageService.getStaffMember(studentPayment.staffMemberLogin)
 
         studentPaymentItemTeacherView.text = teacher
-                ?.name
+                ?.person?.name
                 ?.split(" ")
                 ?.map { it.substring(0, 1) }
                 ?.fold("") { r, t -> r + t }
@@ -60,7 +60,7 @@ open class StudentPaymentItemView : RelativeLayout {
             studentPaymentItemTeacherView.setOnClickListener {
                 TeacherActivity.redirectToChild(
                         current = context as BaseActivity,
-                        teacherId = teacher.id
+                        teacherLogin = teacher.login
                 )
             }
         }
@@ -138,8 +138,6 @@ open class StudentPaymentActivity : BaseActivity() {
     @Bean
     lateinit var studentPaymentsService: StudentsPaymentsService
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
-    @Bean
     lateinit var profileService: ProfileService
 
     @Bean
@@ -188,7 +186,7 @@ open class StudentPaymentActivity : BaseActivity() {
                     .addPayment(StudentPaymentInfo(
                             amount,
                             student.id,
-                            me.id,
+                            me.login,
                             lessonStartTime,
                             false
                     ))

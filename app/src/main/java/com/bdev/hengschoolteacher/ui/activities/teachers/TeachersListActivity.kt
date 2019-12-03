@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.data.school.teacher.Teacher
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.data.school.staff.StaffMember
+import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -24,8 +24,8 @@ open class TeachersListRowItemView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(teacher: Teacher): TeachersListRowItemView {
-        teachersNameView.text = teacher.name
+    fun bind(staffMember: StaffMember): TeachersListRowItemView {
+        teachersNameView.text = staffMember.person.name
 
         return this
     }
@@ -36,10 +36,10 @@ open class TeachersListAdapter : BaseAdapter() {
     @RootContext
     lateinit var context: Context
 
-    private var teachers: List<Teacher> = ArrayList()
+    private var teachers: List<StaffMember> = ArrayList()
 
-    fun setTeachers(students: List<Teacher>) {
-        this.teachers = students.sortedBy { it.name }
+    fun setTeachers(teachers: List<StaffMember>) {
+        this.teachers = teachers.sortedBy { it.login }
     }
 
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
@@ -50,7 +50,7 @@ open class TeachersListAdapter : BaseAdapter() {
         }.bind(getItem(position))
     }
 
-    override fun getItem(position: Int): Teacher {
+    override fun getItem(position: Int): StaffMember {
         return teachers[position]
     }
 
@@ -76,7 +76,7 @@ open class TeachersListActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageService
 
     @Bean
     lateinit var teachersListAdapter: TeachersListAdapter
@@ -86,15 +86,15 @@ open class TeachersListActivity : BaseActivity() {
         teachersHeaderView.setLeftButtonAction { teachersMenuLayoutView.openMenu() }
         teachersMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.TEACHERS)
 
-        teachersListAdapter.setTeachers(teacherStorageService.getAllTeachers())
+        teachersListAdapter.setTeachers(staffMembersStorageService.getAllStaffMembers())
 
         teachersListView.adapter = teachersListAdapter
         teachersListView.setOnItemClickListener { adapterView, _, position, _ ->
-            val teacher = adapterView.getItemAtPosition(position) as Teacher
+            val teacher = adapterView.getItemAtPosition(position) as StaffMember
 
             TeacherActivity.redirectToChild(
                     current = this,
-                    teacherId = teacher.id
+                    teacherLogin = teacher.login
             )
         }
     }
