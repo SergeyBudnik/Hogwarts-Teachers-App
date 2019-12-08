@@ -37,7 +37,7 @@ open class StudentsPaymentAsyncService : CommonAsyncService() {
                             id = studentPaymentId,
                             amount = studentPaymentInfo.amount,
                             studentId = studentPaymentInfo.studentId,
-                            teacherId = studentPaymentInfo.teacherId,
+                            staffMemberLogin = studentPaymentInfo.staffMemberLogin,
                             time = studentPaymentInfo.time,
                             processed = studentPaymentInfo.processed
                     )
@@ -59,12 +59,7 @@ open class StudentsPaymentAsyncService : CommonAsyncService() {
                     processed = !oldStudentPayment.processed
             )
 
-            val newStudentPayment = StudentPayment(
-                    id = oldStudentPayment.id,
-                    amount = oldStudentPayment.amount,
-                    studentId = oldStudentPayment.studentId,
-                    teacherId = oldStudentPayment.teacherId,
-                    time = oldStudentPayment.time,
+            val newStudentPayment = oldStudentPayment.copy(
                     processed = !oldStudentPayment.processed
             )
 

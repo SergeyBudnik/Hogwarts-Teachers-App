@@ -18,7 +18,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.2'
     }
 }
 
@@ -29,8 +29,8 @@ android {
         applicationId "com.bdev.hengschoolteacher"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 24
-        versionName "1.22.0"
+        versionCode 25
+        versionName "1.23.0"
         multiDexEnabled true
     }
 
@@ -69,11 +69,11 @@ dependencies {
     kapt "org.androidannotations:rest-spring:$AAVersion"
     implementation "org.androidannotations:rest-spring-api:$AAVersion"
 
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
 
-    implementation "androidx.appcompat:appcompat:1.0.2"
+    implementation "androidx.appcompat:appcompat:1.1.0"
 
     implementation 'nl.komponents.kovenant:kovenant:3.3.0'
 

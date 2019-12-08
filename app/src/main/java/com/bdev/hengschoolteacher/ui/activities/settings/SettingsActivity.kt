@@ -39,7 +39,7 @@ open class SettingsActivity : BaseActivity() {
 
         val me = profileService.getMe()
 
-        settingsAccountNameView.text = me?.name ?: ""
+        settingsAccountNameView.text = me?.person?.name ?: ""
         settingsAccountLoginView.text = me?.login ?: ""
 
         settingsLogoutView.setOnClickListener { logOut() }

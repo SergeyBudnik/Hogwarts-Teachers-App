@@ -45,12 +45,12 @@ open class StudentsPaymentsService {
                 .toList()
     }
 
-    fun getPaymentsToTeacher(teacherId: Long, onlyUnprocessed: Boolean): List<StudentPayment> {
+    fun getPaymentsToTeacher(teacherLogin: String, onlyUnprocessed: Boolean): List<StudentPayment> {
         return studentsPaymentsDao
                 .readValue()
                 .studentsPayments
                 .values
-                .filter { it.teacherId == teacherId }
+                .filter { it.staffMemberLogin == teacherLogin }
                 .filter { !onlyUnprocessed || !it.processed }
                 .toList()
     }

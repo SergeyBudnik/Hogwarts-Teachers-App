@@ -16,20 +16,19 @@ import org.androidannotations.annotations.Extra
 @EActivity(R.layout.activity_monitoring_teacher_salary)
 open class MonitoringTeacherSalaryActivity : BaseActivity() {
     companion object {
-        const val EXTRA_TEACHER_ID = "EXTRA_TEACHER_ID"
+        const val EXTRA_TEACHER_LOGIN = "EXTRA_TEACHER_LOGIN"
 
-        fun redirectToSibling(current: BaseActivity, teacherId: Long) {
+        fun redirectToSibling(current: BaseActivity, teacherLogin: String) {
             return RedirectBuilder
                     .redirect(current)
                     .to(MonitoringTeacherSalaryActivity_::class.java)
-                    .withExtra(EXTRA_TEACHER_ID, teacherId)
+                    .withExtra(EXTRA_TEACHER_LOGIN, teacherLogin)
                     .goAndCloseCurrent()
         }
     }
 
-    @Extra(EXTRA_TEACHER_ID)
-    @JvmField
-    var teacherId: Long = 0
+    @Extra(EXTRA_TEACHER_LOGIN)
+    lateinit var teacherLogin: String
 
     private var calendarEnabled = false
 
@@ -42,16 +41,16 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
 
         monitoringTeacherSalarySecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.SALARY,
-                teacherId = teacherId
+                teacherLogin = teacherLogin
         )
 
         monitoringTeacherSalaryTeacherInfoView.bind(
-                teacherId = teacherId
+                teacherLogin = teacherLogin
         )
 
         monitoringTeacherSalaryWeekSelectionBarView.init { weekIndex ->
             monitoringTeacherSalaryTeacherSalaryView.init(
-                    teacherId = teacherId,
+                    teacherLogin = teacherLogin,
                     weekIndex = weekIndex
             )
         }

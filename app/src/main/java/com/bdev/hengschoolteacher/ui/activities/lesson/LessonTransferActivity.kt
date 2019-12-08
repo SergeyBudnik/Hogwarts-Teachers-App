@@ -76,7 +76,7 @@ open class LessonTransferActivity : BaseActivity() {
             )
 
             lessonTransferTeacherInfoView.bind(
-                    teacherId = lesson.teacherId
+                    teacherLogin = lesson.teacherLogin
             )
         }
 

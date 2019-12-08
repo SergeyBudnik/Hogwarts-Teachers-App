@@ -1,8 +1,8 @@
 package com.bdev.hengschoolteacher.service.profile
 
-import com.bdev.hengschoolteacher.data.school.teacher.Teacher
+import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.service.UserPreferencesService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 
@@ -11,13 +11,13 @@ open class ProfileService {
     @Bean
     lateinit var userPreferencesService: UserPreferencesService
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageService
 
-    fun getMe(): Teacher? {
+    fun getMe(): StaffMember? {
         val login = userPreferencesService.getUserLogin()
 
         return if (login != null) {
-            teacherStorageService.getTeacherByLogin(login)
+            staffMembersStorageService.getStaffMember(login)
         } else {
             null
         }

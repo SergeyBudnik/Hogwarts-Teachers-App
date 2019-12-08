@@ -18,13 +18,13 @@ import org.androidannotations.annotations.Extra
 @EActivity(R.layout.activity_monitoring_teacher_payments)
 open class MonitoringTeacherPaymentsActivity : BaseActivity() {
     companion object {
-        const val EXTRA_TEACHER_ID = "EXTRA_TEACHER_ID"
+        const val EXTRA_TEACHER_LOGIN = "EXTRA_TEACHER_LOGIN"
 
-        fun redirectToSibling(current: BaseActivity, teacherId: Long) {
+        fun redirectToSibling(current: BaseActivity, teacherLogin: String) {
             RedirectBuilder
                     .redirect(current)
                     .to(MonitoringTeacherPaymentsActivity_::class.java)
-                    .withExtra(EXTRA_TEACHER_ID, teacherId)
+                    .withExtra(EXTRA_TEACHER_LOGIN, teacherLogin)
                     .goAndCloseCurrent()
         }
     }
@@ -32,9 +32,8 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
     @Bean
     lateinit var teacherPaymentsService: TeacherPaymentsService
 
-    @Extra(EXTRA_TEACHER_ID)
-    @JvmField
-    var teacherId: Long = 0
+    @Extra(EXTRA_TEACHER_LOGIN)
+    lateinit var teacherLogin: String
 
     private var filterEnabled: Boolean = true
 
@@ -47,11 +46,11 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
 
         monitoringTeacherPaymentsSecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.PAYMENTS,
-                teacherId = teacherId
+                teacherLogin = teacherLogin
         )
 
         monitoringTeacherPaymentsTeacherInfoView.bind(
-                teacherId = teacherId
+                teacherLogin = teacherLogin
         )
 
         monitoringTeacherPaymentsEmptyWithFilterView.bind {
@@ -71,7 +70,7 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
 
     private fun initList() {
         val allPayments = teacherPaymentsService.getPayments(
-                teacherId = teacherId,
+                teacherLogin = teacherLogin,
                 onlyUnprocessed = false
         )
 

@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.data.school.teacher.Teacher
+import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.service.alerts.monitoring.AlertsMonitoringTeachersService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
@@ -32,11 +32,11 @@ open class MonitoringTeachersItemView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(teacher: Teacher): MonitoringTeachersItemView {
-        monitoringTeachersItemNameView.text = teacher.name
+    fun bind(staffMember: StaffMember): MonitoringTeachersItemView {
+        monitoringTeachersItemNameView.text = staffMember.person.name
 
         monitoringTeachersItemAlertView.visibility =
-                if (alertsMonitoringTeachersService.haveAlerts(teacher.id)) {
+                if (alertsMonitoringTeachersService.haveAlerts(staffMember.login)) {
                     View.VISIBLE
                 } else {
                     View.GONE
@@ -46,7 +46,7 @@ open class MonitoringTeachersItemView : RelativeLayout {
     }
 }
 
-class MonitoringTeachersListAdapter(context: Context) : BaseItemsListAdapter<Teacher>(context) {
+class MonitoringTeachersListAdapter(context: Context) : BaseItemsListAdapter<StaffMember>(context) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
         return if (convertView == null) {
             MonitoringTeachersItemView_.build(context)
@@ -69,7 +69,7 @@ open class MonitoringTeachersActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageService
 
     @AfterViews
     fun init() {
@@ -82,7 +82,7 @@ open class MonitoringTeachersActivity : BaseActivity() {
 
         val adapter = MonitoringTeachersListAdapter(this)
 
-        adapter.setItems(teacherStorageService.getAllTeachers())
+        adapter.setItems(staffMembersStorageService.getAllStaffMembers())
 
         monitoringTeachersListView.adapter = adapter
 
@@ -91,7 +91,7 @@ open class MonitoringTeachersActivity : BaseActivity() {
 
             MonitoringTeacherLessonsActivity.redirectToChild(
                     current = this,
-                    teacherId = teacher.id
+                    teacherLogin = teacher.login
             )
         }
     }

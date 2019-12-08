@@ -6,7 +6,7 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.teacher.TeacherStorageService
+import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.service.teacher.TeacherInfoService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
@@ -20,7 +20,7 @@ open class LessonInfoView : RelativeLayout {
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean
-    lateinit var teacherStorageService: TeacherStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageService
     @Bean
     lateinit var teacherInfoService: TeacherInfoService
 
@@ -38,11 +38,11 @@ open class LessonInfoView : RelativeLayout {
         lessonInfoTeacherView.setOnClickListener {
             TeacherActivity.redirectToChild(
                     current = context as BaseActivity,
-                    teacherId = lesson.teacherId
+                    teacherLogin = lesson.teacherLogin
             )
         }
 
-        val teacher = teacherStorageService.getTeacherById(lesson.teacherId)
+        val teacher = staffMembersStorageService.getStaffMember(lesson.teacherLogin)
 
         lessonInfoTeacherNameView.text = teacher?.let { teacherInfoService.getTeachersName(it) } ?: ""
         lessonInfoTeacherSurnameView.text = teacher?.let { teacherInfoService.getTeachersSurname(it) } ?: ""
