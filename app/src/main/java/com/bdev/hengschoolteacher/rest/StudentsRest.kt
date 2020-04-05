@@ -11,7 +11,7 @@ import org.androidannotations.rest.spring.api.RestClientSupport
 
 @Rest(rootUrl = RestConfiguration.ROOT_URL, converters = [JsonConverter::class])
 interface StudentsRest : RestClientHeaders, RestClientSupport {
-    @Get("/students")
+    @Get("/admin/students/management")
     @RequiresHeader(RestConfiguration.HEADER_AUTHORIZATION)
     fun getAllStudents(): List<Student>
 }

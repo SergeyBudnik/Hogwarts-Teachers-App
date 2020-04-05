@@ -1,15 +1,15 @@
 package com.bdev.hengschoolteacher.data.school.student
 
+import com.bdev.hengschoolteacher.data.school.education_info.EducationInfo
+import com.bdev.hengschoolteacher.data.school.education_info.EducationLevel
+import com.bdev.hengschoolteacher.data.school.person.Person
 import org.codehaus.jackson.annotate.JsonCreator
 import org.codehaus.jackson.annotate.JsonProperty
 
 class Student @JsonCreator constructor(
-        @JsonProperty("id") val id: Long,
+        @JsonProperty("login") val login: String,
+        @JsonProperty("person") val person: Person,
+        @JsonProperty("educationInfo") val educationInfo: EducationInfo,
         @JsonProperty("statusType") val statusType: StudentStatusType,
-        @JsonProperty("studentGroups") val studentGroups: List<StudentGroup>,
-        @JsonProperty("name") val name: String,
-        @JsonProperty("phones") val phones: List<String>,
-        @JsonProperty("emails") val emails: List<String>,
-        @JsonProperty("age") val age: StudentAge,
-        @JsonProperty("educationLevel") val educationLevel: StudentEducationLevel
+        @JsonProperty("studentGroups") val studentGroups: List<StudentGroup>
 )

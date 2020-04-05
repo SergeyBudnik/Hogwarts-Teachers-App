@@ -15,7 +15,7 @@ open class StudentsAttendancesService {
     @Bean
     lateinit var lessonsService: LessonsService
 
-    fun getMonthlyAttendances(studentId: Long, month: Int): List<StudentAttendance> {
+    fun getMonthlyAttendances(studentLogin: String, month: Int): List<StudentAttendance> {
         val startTime = TimeUtils().getMonthStart(month)
         val finishTime = TimeUtils().getMonthFinish(month)
 
@@ -23,28 +23,28 @@ open class StudentsAttendancesService {
                 .readValue()
                 .studentsAttendances
                 .asSequence()
-                .filter { it.studentId == studentId }
+                .filter { it.studentLogin == studentLogin }
                 .filter { it.startTime <= finishTime }
                 .filter { it.startTime >= startTime }
                 .sortedBy { it.startTime }
                 .toList()
     }
 
-    fun getAllStudentAttendances(studentId: Long): List<StudentAttendance> {
+    fun getAllStudentAttendances(studentLogin: String): List<StudentAttendance> {
         return studentsAttendancesDao
                 .readValue()
                 .studentsAttendances
                 .asSequence()
-                .filter { it.studentId == studentId }
+                .filter { it.studentLogin == studentLogin }
                 .toList()
     }
 
-    fun getAttendance(lessonId: Long, studentId: Long, weekIndex: Int): StudentAttendanceType? {
+    fun getAttendance(lessonId: Long, studentLogin: String, weekIndex: Int): StudentAttendanceType? {
         val attendance = studentsAttendancesDao
                 .readValue()
                 .studentsAttendances
                 .asSequence()
-                .filter { it.studentId == studentId }
+                .filter { it.studentLogin == studentLogin }
                 .filter { it.startTime == lessonsService.getLessonStartTime(lessonId, weekIndex) }
                 .find { true }
 
@@ -62,10 +62,10 @@ open class StudentsAttendancesService {
                 .readValue()
                 .studentsAttendances
                 .filter {
-                    val studentIdMatches = it.studentId == attendance.studentId
+                    val studentLoginMatches = it.studentLogin == attendance.studentLogin
                     val startTimeMatches = it.startTime == attendance.startTime
 
-                    return@filter !studentIdMatches || !startTimeMatches
+                    return@filter !studentLoginMatches || !startTimeMatches
                 }
                 .union(listOf(attendance))
                 .toList()

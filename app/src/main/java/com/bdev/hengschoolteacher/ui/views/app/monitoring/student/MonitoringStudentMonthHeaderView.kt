@@ -19,11 +19,11 @@ open class MonitoringStudentMonthHeaderView : LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(studentId: Long, monthIndex: Int): MonitoringStudentMonthHeaderView {
+    fun bind(studentLogin: String, monthIndex: Int): MonitoringStudentMonthHeaderView {
         monitoringStudentMonthHeaderItemAttendanceView.setOnClickListener {
             MonitoringStudentMonthAttendanceActivity.redirectToSibling(
                     current = context as BaseActivity,
-                    studentId = studentId,
+                    studentLogin = studentLogin,
                     monthIndex = monthIndex
             )
         }
@@ -31,7 +31,7 @@ open class MonitoringStudentMonthHeaderView : LinearLayout {
         monitoringStudentMonthHeaderItemPaymentsView.setOnClickListener {
             MonitoringStudentMonthPaymentsActivity.redirectToSibling(
                     current = context as BaseActivity,
-                    studentId = studentId,
+                    studentLogin = studentLogin,
                     monthIndex = monthIndex
             )
         }

@@ -15,7 +15,7 @@ open class AlertsMonitoringStudentsService {
     fun haveAlerts(): Boolean {
         return studentsService
                 .getAllStudents()
-                .map { studentPaymentsDeptService.getStudentDept(it.id) > 0 }
+                .map { studentPaymentsDeptService.getStudentDept(it.login) > 0 }
                 .fold(false) { amount, value -> amount or value }
     }
 }

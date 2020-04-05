@@ -26,15 +26,15 @@ import org.androidannotations.annotations.Extra
 open class LessonStudentAttendanceActivity : BaseActivity() {
     companion object {
         const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
-        const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+        const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
         const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
 
-        fun redirectToChild(current: BaseActivity, lessonId: Long, studentId: Long, weekIndex: Int) {
+        fun redirectToChild(current: BaseActivity, lessonId: Long, studentLogin: String, weekIndex: Int) {
             RedirectBuilder
                     .redirect(current)
                     .to(LessonStudentAttendanceActivity_::class.java)
                     .withExtra(EXTRA_LESSON_ID, lessonId)
-                    .withExtra(EXTRA_STUDENT_ID, studentId)
+                    .withExtra(EXTRA_STUDENT_LOGIN, studentLogin)
                     .withExtra(EXTRA_WEEK_INDEX, weekIndex)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .goForResult(LessonActivity.REQUEST_CODE_LESSON_ATTENDANCE)
@@ -57,9 +57,8 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     @JvmField
     var lessonId: Long = 0
 
-    @Extra(EXTRA_STUDENT_ID)
-    @JvmField
-    var studentId: Long = 0
+    @Extra(EXTRA_STUDENT_LOGIN)
+    lateinit var studentLogin: String
 
     @Extra(EXTRA_WEEK_INDEX)
     @JvmField
@@ -73,7 +72,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
 
         val group = groupAndLesson.group
         val lesson = groupAndLesson.lesson
-        val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
+        val student = studentsService.getStudent(studentLogin) ?: throw RuntimeException()
 
         lessonStudentAttendanceLessonTimeView.bind(lesson, weekIndex)
         lessonStudentAttendanceStudentInfoView.bind(student)
@@ -82,7 +81,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     }
 
     private fun initButtons(group: Group) {
-        val attendance = studentsAttendancesService.getAttendance(lessonId, studentId, weekIndex)
+        val attendance = studentsAttendancesService.getAttendance(lessonId, studentLogin, weekIndex)
 
         val allButtonsViews = listOf(
                 studentAttendanceVisitButtonView,
@@ -177,7 +176,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     private fun markButtonAttendance(group: Group, attendance: StudentAttendanceType) {
         studentsAttendancesAsyncService
                 .addAttendance(StudentAttendance(
-                        studentId = studentId,
+                        studentLogin = studentLogin,
                         groupType = group.type,
                         studentsInGroup = lessonsService.getLessonStudents(lessonId, weekIndex).size,
                         startTime = lessonsService.getLessonStartTime(lessonId, weekIndex),

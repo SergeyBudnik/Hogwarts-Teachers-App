@@ -10,7 +10,8 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
+import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
+import com.bdev.hengschoolteacher.data.school.student_payment.NewStudentPayment
 import com.bdev.hengschoolteacher.data.school.student_payment.StudentPaymentInfo
 import com.bdev.hengschoolteacher.service.GroupsService
 import com.bdev.hengschoolteacher.service.LessonsService
@@ -38,16 +39,16 @@ open class StudentPaymentItemView : RelativeLayout {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
 
-    fun bind(studentPayment: StudentPayment) {
-        studentPaymentItemValueView.text = "${studentPayment.amount} Р"
-        studentPaymentItemTimeView.text = SimpleDateFormat("dd.MM.yyyy", Locale.US).format(studentPayment.time)
+    fun bind(existingStudentPayment: ExistingStudentPayment) {
+        studentPaymentItemValueView.text = "${existingStudentPayment.info.amount} Р"
+        studentPaymentItemTimeView.text = SimpleDateFormat("dd.MM.yyyy", Locale.US)
+                .format(existingStudentPayment.info.time)
 
-
-        initTeachers(studentPayment)
+        initTeachers(existingStudentPayment)
     }
 
-    private fun initTeachers(studentPayment: StudentPayment) {
-        val teacher = staffMembersStorageService.getStaffMember(studentPayment.staffMemberLogin)
+    private fun initTeachers(existingStudentPayment: ExistingStudentPayment) {
+        val teacher = staffMembersStorageService.getStaffMember(existingStudentPayment.info.staffMemberLogin)
 
         studentPaymentItemTeacherView.text = teacher
                 ?.person?.name
@@ -72,10 +73,10 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
     @RootContext
     lateinit var context: Context
 
-    private var payments: List<StudentPayment> = emptyList()
+    private var paymentExistings: List<ExistingStudentPayment> = emptyList()
 
-    fun setItems(payments: List<StudentPayment>) {
-        this.payments = payments.sortedBy { -(it.id ?: 0) }
+    fun setItems(paymentExistings: List<ExistingStudentPayment>) {
+        this.paymentExistings = paymentExistings.sortedBy { -(it.id ?: 0) }
     }
 
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
@@ -90,8 +91,8 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
         return v
     }
 
-    override fun getItem(position: Int): StudentPayment {
-        return payments[position]
+    override fun getItem(position: Int): ExistingStudentPayment {
+        return paymentExistings[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -99,7 +100,7 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
     }
 
     override fun getCount(): Int {
-        return payments.size
+        return paymentExistings.size
     }
 }
 
@@ -107,25 +108,25 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
 @EActivity(R.layout.activity_student_payment)
 open class StudentPaymentActivity : BaseActivity() {
     companion object {
-        private const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+        private const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
 
-        fun redirectToChild(current: BaseActivity, studentId: Long) {
-            return redirect(current, studentId)
+        fun redirectToChild(current: BaseActivity, studentLogin: String) {
+            return redirect(current, studentLogin)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }
 
-        fun redirectToSibling(current: BaseActivity, studentId: Long) {
-            return redirect(current, studentId)
+        fun redirectToSibling(current: BaseActivity, studentLogin: String) {
+            return redirect(current, studentLogin)
                     .withAnim(0, 0)
                     .goAndCloseCurrent()
         }
 
-        private fun redirect(current: BaseActivity, studentId: Long): RedirectBuilder {
+        private fun redirect(current: BaseActivity, studentLogin: String): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
                     .to(StudentPaymentActivity_::class.java)
-                    .withExtra(EXTRA_STUDENT_ID, studentId)
+                    .withExtra(EXTRA_STUDENT_LOGIN, studentLogin)
         }
     }
 
@@ -146,29 +147,28 @@ open class StudentPaymentActivity : BaseActivity() {
     @Bean
     lateinit var studentPaymentsListAdapter: StudentPaymentsListAdapter
 
-    @Extra(EXTRA_STUDENT_ID)
-    @JvmField
-    var studentId: Long = 0
+    @Extra(EXTRA_STUDENT_LOGIN)
+    lateinit var studentLogin: String
 
     @AfterViews
     fun init() {
-        val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
+        val student = studentsService.getStudent(studentLogin) ?: throw RuntimeException()
 
         studentPaymentsHeaderView
-                .setTitle("Студент. ${student.name}")
+                .setTitle("Студент. ${student.person.name}")
                 .setLeftButtonAction { doFinish() }
 
         studentPaymentsSecondaryHeaderView.bind(
                 item = StudentHeaderItem.PAYMENTS,
-                studentId = studentId
+                studentLogin = studentLogin
         )
 
         studentPaymentAddPaymentView.setOnClickListener { addPayment(student) }
 
         studentPaymentsListAdapter.setItems(
                 studentPaymentsService
-                        .getPayments(studentId)
-                        .sortedBy { it.time }
+                        .getPayments(studentLogin)
+                        .sortedBy { it.info.time }
         )
 
         studentPaymentItemsListView.adapter = studentPaymentsListAdapter
@@ -183,12 +183,13 @@ open class StudentPaymentActivity : BaseActivity() {
 
         if (me != null) {
             studentsPaymentAsyncService
-                    .addPayment(StudentPaymentInfo(
-                            amount,
-                            student.id,
-                            me.login,
-                            lessonStartTime,
-                            false
+                    .addPayment(NewStudentPayment(
+                            info = StudentPaymentInfo(
+                                    studentLogin = student.login,
+                                    staffMemberLogin = me.login,
+                                    amount = amount,
+                                    time = lessonStartTime
+                            )
                     ))
                     .onSuccess { runOnUiThread { onPaymentMarkSuccess() } }
                     .onAuthFail { println("AUTH") }

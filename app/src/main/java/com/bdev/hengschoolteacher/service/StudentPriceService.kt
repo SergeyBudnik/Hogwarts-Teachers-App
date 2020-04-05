@@ -10,17 +10,17 @@ open class StudentPriceService {
     @Bean
     lateinit var studentsAttendancesService: StudentsAttendancesService
 
-    fun getTotalPrice(studentId: Long): Long {
+    fun getTotalPrice(studentLogin: String): Long {
         return studentsAttendancesService
-                .getAllStudentAttendances(studentId)
+                .getAllStudentAttendances(studentLogin)
                 .filter { it.type.isPayed }
                 .map { getAttendancePrice(it) }
                 .fold(0L) { amount, value -> amount + value }
     }
 
-    fun getMonthPrice(studentId: Long, month: Int): Long {
+    fun getMonthPrice(studentLogin: String, month: Int): Long {
         return studentsAttendancesService
-                .getMonthlyAttendances(studentId, month)
+                .getMonthlyAttendances(studentLogin, month)
                 .filter { it.type.isPayed }
                 .map { getAttendancePrice(it) }
                 .fold(0L) { amount, value -> amount + value }

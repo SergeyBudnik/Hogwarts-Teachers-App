@@ -2,8 +2,8 @@ package com.bdev.hengschoolteacher.async
 
 import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
-import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
-import com.bdev.hengschoolteacher.data.school.student_payment.StudentPaymentInfo
+import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
+import com.bdev.hengschoolteacher.data.school.student_payment.NewStudentPayment
 import com.bdev.hengschoolteacher.rest.StudentsPaymentsRest
 import com.bdev.hengschoolteacher.service.AuthService
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
@@ -23,29 +23,26 @@ open class StudentsPaymentAsyncService : CommonAsyncService() {
     @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
 
-    fun addPayment(studentPaymentInfo: StudentPaymentInfo): SmartPromise<Unit, Exception> {
+    fun addPayment(newStudentPayment: NewStudentPayment): SmartPromise<Unit, Exception> {
         return smartTask {
             authenticateAll(
                     listOf(studentsPaymentsRest),
                     authService.getAuthInfo()
             )
 
-            val studentPaymentId = studentsPaymentsRest.addStudentPayment(studentPaymentInfo)!!
+            val studentPaymentId = studentsPaymentsRest.addStudentPayment(newStudentPayment)!!
 
             studentsPaymentsService.addPayment(
-                    StudentPayment(
+                    ExistingStudentPayment(
                             id = studentPaymentId,
-                            amount = studentPaymentInfo.amount,
-                            studentId = studentPaymentInfo.studentId,
-                            staffMemberLogin = studentPaymentInfo.staffMemberLogin,
-                            time = studentPaymentInfo.time,
-                            processed = studentPaymentInfo.processed
+                            info = newStudentPayment.info,
+                            processed = false
                     )
             )
         }
     }
 
-    fun setPaymentProcessed(paymentId: Long): SmartPromise<StudentPayment, Exception> {
+    fun setPaymentProcessed(paymentId: Long): SmartPromise<ExistingStudentPayment, Exception> {
         return smartTask {
             val oldStudentPayment = studentsPaymentsService.getPayment(paymentId) ?: throw RuntimeException()
 

@@ -15,7 +15,7 @@ open class LessonsAttendancesService {
     fun isLessonAttendanceFilled(lessonId: Long, weekIndex: Int): Boolean {
         return lessonsService
                 .getLessonStudents(lessonId = lessonId, weekIndex = weekIndex)
-                .map { studentsAttendancesService.getAttendance(lessonId, it.id, weekIndex) }
+                .map { studentsAttendancesService.getAttendance(lessonId, it.login, weekIndex) }
                 .filter { it == null }
                 .none()
     }

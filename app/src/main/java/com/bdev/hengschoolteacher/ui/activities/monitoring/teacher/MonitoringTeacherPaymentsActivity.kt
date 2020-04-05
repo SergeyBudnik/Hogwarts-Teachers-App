@@ -91,7 +91,7 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
                 }
 
         monitoringTeacherPaymentsView.bind(
-                payments = filteredPayments,
+                paymentExistings = filteredPayments,
                 singleTeacher = true,
                 editable = true
         )

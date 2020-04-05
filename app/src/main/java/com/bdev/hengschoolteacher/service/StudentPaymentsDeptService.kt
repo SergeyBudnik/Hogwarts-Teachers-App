@@ -10,13 +10,13 @@ open class StudentPaymentsDeptService {
     @Bean
     lateinit var studentPriceService: StudentPriceService
 
-    fun getStudentDept(studentId: Long): Int {
+    fun getStudentDept(studentLogin: String): Int {
         val payed = studentPaymentsService
-                .getPayments(studentId)
-                .fold(0L) { amount, value -> amount + value.amount }
+                .getPayments(studentLogin)
+                .fold(0L) { amount, value -> amount + value.info.amount }
                 .toInt()
 
-        val price = studentPriceService.getTotalPrice(studentId)
+        val price = studentPriceService.getTotalPrice(studentLogin)
 
         return (price - payed).toInt()
     }
