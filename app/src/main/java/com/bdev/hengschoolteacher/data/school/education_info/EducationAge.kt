@@ -1,9 +1,9 @@
-package com.bdev.hengschoolteacher.data.school.student
+package com.bdev.hengschoolteacher.data.school.education_info
 
 import android.content.Context
 import com.bdev.hengschoolteacher.R
 
-enum class StudentAge(
+enum class EducationAge(
         val order: Int,
         private val nameId: Int
 ) {

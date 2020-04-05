@@ -9,11 +9,11 @@ import org.androidannotations.rest.spring.api.RestClientSupport
 
 @Rest(rootUrl = RestConfiguration.ROOT_URL, converters = [JsonConverter::class])
 interface StudentsAttendancesRest : RestClientHeaders, RestClientSupport {
-    @Get("/student-attendance")
+    @Get("/admin/students/attendances")
     @RequiresHeader(RestConfiguration.HEADER_AUTHORIZATION)
     fun getStudentsAttendances(): List<StudentAttendance>
 
-    @Post("/student-attendance")
+    @Post("/admin/students/attendances")
     @RequiresHeader(RestConfiguration.HEADER_AUTHORIZATION)
     fun addStudentAttendance(@Body attendance: StudentAttendance)
 }

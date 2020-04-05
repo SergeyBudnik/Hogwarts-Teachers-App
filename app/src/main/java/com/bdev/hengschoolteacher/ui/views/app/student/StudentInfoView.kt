@@ -19,13 +19,13 @@ open class StudentInfoView : LinearLayout {
             student: Student,
             clickable: Boolean = true
     ) {
-        studentInfoNameView.text = student.name
+        studentInfoNameView.text = student.person.name
 
         setOnClickListener {
             if (clickable) {
                 StudentInformationActivity.redirectToChild(
                         current = context as BaseActivity,
-                        studentId = student.id
+                        studentLogin = student.login
                 )
             } else {
                 /* Do nothing */

@@ -45,7 +45,7 @@ open class StudentsGroupsListItemView : LinearLayout {
         val groupStudents = studentsService.getGroupStudents(group.id)
 
         studentsGroupsItemNameView.text = groupStudents.foldRight("") {
-            student, sum -> "${student.name.split(" ")[0]}; $sum"
+            student, sum -> "${student.person.name.split(" ")[0]}; $sum"
         }
     }
 
@@ -117,7 +117,7 @@ open class StudentsGroupsListActivity : BaseActivity() {
                 adapter.setFilter { group ->
                     val groupStudents = studentsService.getGroupStudents(group.id)
 
-                    return@setFilter groupStudents.filter { it.name.toLowerCase().contains(filter.toLowerCase()) }.any()
+                    return@setFilter groupStudents.filter { it.person.name.toLowerCase().contains(filter.toLowerCase()) }.any()
                 }
 
                 adapter.notifyDataSetChanged()

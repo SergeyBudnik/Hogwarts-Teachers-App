@@ -1,13 +1,13 @@
 package com.bdev.hengschoolteacher.dao
 
-import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
+import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
 import org.androidannotations.annotations.EBean
 import org.codehaus.jackson.annotate.JsonCreator
 import org.codehaus.jackson.annotate.JsonProperty
 import org.codehaus.jackson.map.ObjectMapper
 
 class StudentsPaymentsModel @JsonCreator constructor(
-    @JsonProperty("studentsPayments") val studentsPayments: Map<Long, StudentPayment>
+    @JsonProperty("studentsPayments") val studentsPayments: Map<Long, ExistingStudentPayment>
 )
 
 @EBean(scope = EBean.Scope.Singleton)

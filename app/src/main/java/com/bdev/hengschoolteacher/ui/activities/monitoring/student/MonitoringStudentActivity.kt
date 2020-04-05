@@ -53,19 +53,19 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
         monitoringStudentPaymentItemFreeLessonLessonsAmountView.text = "$freeLessonsAmount"
 
         monitoringStudentPaymentItemPayedAmountView.text = "${studentsPaymentsService.getMonthPayments(
-                studentId = student.id,
+                studentLogin = student.login,
                 month = month
-        ).map { it.amount }.fold(0L) { p1, p2 -> p1 + p2 }}"
+        ).map { it.info.amount }.fold(0L) { p1, p2 -> p1 + p2 }}"
 
         monitoringStudentPaymentItemSpentAmountView.text = "${studentPriceService.getMonthPrice(
-                studentId = student.id,
+                studentLogin = student.login,
                 month = month
         )}"
 
         setOnClickListener {
             MonitoringStudentMonthAttendanceActivity.redirectToChild(
                     current = context as BaseActivity,
-                    studentId = student.id,
+                    studentLogin = student.login,
                     monthIndex = month
             )
         }
@@ -145,25 +145,25 @@ open class MonitoringStudentPaymentListAdapter : BaseAdapter() {
 @EActivity(R.layout.activity_monitoring_student_payment)
 open class MonitoringStudentActivity : BaseActivity() {
     companion object {
-        const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+        const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
 
-        fun redirectToChild(current: BaseActivity, studentId: Long) {
-            redirect(current, studentId)
+        fun redirectToChild(current: BaseActivity, studentLogin: String) {
+            redirect(current, studentLogin)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }
 
-        fun redirectToSibling(current: BaseActivity, studentId: Long) {
-            redirect(current, studentId)
+        fun redirectToSibling(current: BaseActivity, studentLogin: String) {
+            redirect(current, studentLogin)
                     .withAnim(0, 0)
                     .goAndCloseCurrent()
         }
 
-        private fun redirect(current: BaseActivity, studentId: Long): RedirectBuilder {
+        private fun redirect(current: BaseActivity, studentLogin: String): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
                     .to(MonitoringStudentActivity_::class.java)
-                    .withExtra(EXTRA_STUDENT_ID, studentId)
+                    .withExtra(EXTRA_STUDENT_LOGIN, studentLogin)
         }
     }
 
@@ -181,26 +181,25 @@ open class MonitoringStudentActivity : BaseActivity() {
     @Bean
     lateinit var monitoringStudentPaymentListAdapter: MonitoringStudentPaymentListAdapter
 
-    @Extra(EXTRA_STUDENT_ID)
-    @JvmField
-    var studentId: Long = 0
+    @Extra(EXTRA_STUDENT_LOGIN)
+    lateinit var studentLogin: String
 
     @AfterViews
     fun init() {
-        val student = studentsService.getStudent(studentId)
+        val student = studentsService.getStudent(studentLogin)
 
         monitoringStudentPaymentHeaderView
-                .setTitle("Студент. ${student?.name}")
+                .setTitle("Студент. ${student?.person?.name ?: "?"}")
                 .setLeftButtonAction { doFinish() }
 
         monitoringStudentPaymentSecondaryHeaderView.bind(
                 item = StudentHeaderItem.ATTENDANCE,
-                studentId = studentId
+                studentLogin = studentLogin
         )
 
-        monitoringStudentPaymentDeptView.text = "${studentPaymentsDeptService.getStudentDept(studentId)}"
+        monitoringStudentPaymentDeptView.text = "${studentPaymentsDeptService.getStudentDept(studentLogin)}"
 
-        val allAttendances = studentsAttendancesService.getAllStudentAttendances(studentId)
+        val allAttendances = studentsAttendancesService.getAllStudentAttendances(studentLogin)
         val allVisitedAttendances = allAttendances.filter { it.type == StudentAttendanceType.VISITED }
         val allValidSkipAttendances = allAttendances.filter { it.type == StudentAttendanceType.VALID_SKIP }
         val allInvalidSkipAttendances = allAttendances.filter { it.type == StudentAttendanceType.INVALID_SKIP }

@@ -21,17 +21,17 @@ open class StudentHeaderView : LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(item: StudentHeaderItem, studentId: Long) {
+    fun bind(item: StudentHeaderItem, studentLogin: String) {
         initTab(v = studentHeaderDetailsView, isActive = item == StudentHeaderItem.DETAILS) {
-            StudentInformationActivity.redirectToSibling(current = getActivity(), studentId = studentId)
+            StudentInformationActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
         }
 
         initTab(v = studentHeaderAttendanceView, isActive = item == StudentHeaderItem.ATTENDANCE) {
-            MonitoringStudentActivity.redirectToSibling(current = getActivity(), studentId = studentId)
+            MonitoringStudentActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
         }
 
         initTab(v = studentHeaderPaymentsView, isActive = item == StudentHeaderItem.PAYMENTS) {
-            StudentPaymentActivity.redirectToSibling(current = getActivity(), studentId = studentId)
+            StudentPaymentActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
         }
     }
 

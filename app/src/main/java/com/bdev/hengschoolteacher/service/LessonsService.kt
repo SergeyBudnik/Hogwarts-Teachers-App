@@ -64,8 +64,8 @@ open class LessonsService {
     }
 
     // ToDo: add info about time
-    fun getStudentLessons(studentId: Long): List<GroupAndLesson> {
-        val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
+    fun getStudentLessons(studentLogin: String): List<GroupAndLesson> {
+        val student = studentsService.getStudent(studentLogin) ?: throw RuntimeException()
 
         return getLessonsByCondition { group, _ -> student.studentGroups.map { it.groupId }.contains(group.id) }
     }

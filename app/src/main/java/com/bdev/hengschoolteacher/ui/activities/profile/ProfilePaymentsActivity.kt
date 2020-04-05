@@ -84,7 +84,7 @@ open class ProfilePaymentsActivity : BaseActivity() {
                 }
 
         profilePaymentsTeacherPaymentsView.bind(
-                payments = filteredPayments,
+                paymentExistings = filteredPayments,
                 singleTeacher = true,
                 editable = false
         )

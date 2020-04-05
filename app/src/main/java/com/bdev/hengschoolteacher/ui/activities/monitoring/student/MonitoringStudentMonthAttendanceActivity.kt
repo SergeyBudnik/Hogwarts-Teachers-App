@@ -100,32 +100,31 @@ private class MonitoringStudentMonthAttendanceListAdapter(
 @EActivity(R.layout.activity_monitoring_student_month_attendance)
 open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
     companion object {
-        const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+        const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
         const val EXTRA_MONTH_INDEX = "EXTRA_MONTH_INDEX"
 
-        fun redirectToChild(current: BaseActivity, studentId: Long, monthIndex: Int) {
-            redirect(current = current, studentId = studentId, monthIndex = monthIndex)
+        fun redirectToChild(current: BaseActivity, studentLogin: String, monthIndex: Int) {
+            redirect(current = current, studentLogin = studentLogin, monthIndex = monthIndex)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }
 
-        fun redirectToSibling(current: BaseActivity, studentId: Long, monthIndex: Int) {
-            redirect(current = current, studentId = studentId, monthIndex = monthIndex)
+        fun redirectToSibling(current: BaseActivity, studentLogin: String, monthIndex: Int) {
+            redirect(current = current, studentLogin = studentLogin, monthIndex = monthIndex)
                     .goAndCloseCurrent()
         }
 
-        private fun redirect(current: BaseActivity, studentId: Long, monthIndex: Int): RedirectBuilder {
+        private fun redirect(current: BaseActivity, studentLogin: String, monthIndex: Int): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
                     .to(MonitoringStudentMonthAttendanceActivity_::class.java)
-                    .withExtra(EXTRA_STUDENT_ID, studentId)
+                    .withExtra(EXTRA_STUDENT_LOGIN, studentLogin)
                     .withExtra(EXTRA_MONTH_INDEX, monthIndex)
         }
     }
 
-    @Extra(EXTRA_STUDENT_ID)
-    @JvmField
-    var studentId: Long = 0
+    @Extra(EXTRA_STUDENT_LOGIN)
+    lateinit var studentLogin: String
 
     @Extra(EXTRA_MONTH_INDEX)
     @JvmField
@@ -145,10 +144,10 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
                 .setLeftButtonAction { doFinish() }
 
         monitoringStudentMonthAttendanceSecondaryHeaderView
-                .bind(studentId = studentId, monthIndex = monthIndex)
+                .bind(studentLogin = studentLogin, monthIndex = monthIndex)
                 .setItem(MonitoringStudentMonthHeaderView.Item.ATTENDANCE)
 
-        val student = studentsService.getStudent(studentId)
+        val student = studentsService.getStudent(studentLogin)
 
         student?.let { monitoringStudentMonthAttendanceStudentView.bind(it) }
 
@@ -159,7 +158,7 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
         val adapter = MonitoringStudentMonthAttendanceListAdapter(this)
 
         adapter.setItems(studentsAttendancesService.getMonthlyAttendances(
-                studentId = studentId,
+                studentLogin = studentLogin,
                 month = monthIndex
         ))
 
