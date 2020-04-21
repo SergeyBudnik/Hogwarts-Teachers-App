@@ -58,31 +58,30 @@ class StudentInformationTimetableListAdapter(context: Context) : BaseWeekItemsLi
 @EActivity(R.layout.activity_student_information)
 open class StudentInformationActivity : BaseActivity() {
     companion object {
-        const val EXTRA_STUDENT_ID = "EXTRA_STUDENT_ID"
+        const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
 
-        fun redirectToChild(current: BaseActivity, studentId: Long) {
-            redirect(current, studentId)
+        fun redirectToChild(current: BaseActivity, studentLogin: String) {
+            redirect(current, studentLogin)
                     .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                     .go()
         }
 
-        fun redirectToSibling(current: BaseActivity, studentId: Long) {
-            redirect(current, studentId)
+        fun redirectToSibling(current: BaseActivity, studentLogin: String) {
+            redirect(current, studentLogin)
                     .withAnim(0, 0)
                     .goAndCloseCurrent()
         }
 
-        private fun redirect(current: BaseActivity, studentId: Long): RedirectBuilder {
+        private fun redirect(current: BaseActivity, studentLogin: String): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
                     .to(StudentInformationActivity_::class.java)
-                    .withExtra(EXTRA_STUDENT_ID, studentId)
+                    .withExtra(EXTRA_STUDENT_LOGIN, studentLogin)
         }
     }
 
-    @Extra(EXTRA_STUDENT_ID)
-    @JvmField
-    var studentId = 0L
+    @Extra(EXTRA_STUDENT_LOGIN)
+    lateinit var studentLogin: String
 
     @Bean
     lateinit var studentsService: StudentsService
@@ -91,15 +90,15 @@ open class StudentInformationActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        val student = studentsService.getStudent(studentId) ?: throw RuntimeException()
+        val student = studentsService.getStudent(studentLogin) ?: throw RuntimeException()
 
         studentInformationHeaderView
-                .setTitle("Студент. ${student.name}")
+                .setTitle("Студент. ${student.person.name}")
                 .setLeftButtonAction { doFinish() }
 
         studentInformationSecondaryHeaderView.bind(
                 item = StudentHeaderItem.DETAILS,
-                studentId = studentId
+                studentLogin = studentLogin
         )
 
         initPhonesList(student)
@@ -108,8 +107,8 @@ open class StudentInformationActivity : BaseActivity() {
     }
 
     private fun initPhonesList(student: Student) {
-        student.phones.forEach {
-            studentInformationPhonesLayoutView.addView(StudentPhoneItemView_.build(this).bind(it))
+        student.person.contacts.phones.forEach {
+            studentInformationPhonesLayoutView.addView(StudentPhoneItemView_.build(this).bind(it.value))
         }
     }
 
@@ -119,7 +118,7 @@ open class StudentInformationActivity : BaseActivity() {
         val adapter = StudentInformationTimetableListAdapter(this)
 
         adapter.setItems(lessonsService
-                .getStudentLessons(student.id)
+                .getStudentLessons(student.login)
                 .filter { it.lesson.creationTime <= currentTime }
                 .filter { it.lesson.deactivationTime == null || currentTime <= it.lesson.deactivationTime }
         )

@@ -16,8 +16,8 @@ open class StudentsService {
         return studentsDao.readValue().students
     }
 
-    fun getStudent(studentId: Long): Student? {
-        return studentsDao.readValue().students.find { it.id == studentId }
+    fun getStudent(studentLogin: String): Student? {
+        return studentsDao.readValue().students.find { it.login == studentLogin }
     }
 
     fun getGroupStudents(groupId: Long): List<Student> {

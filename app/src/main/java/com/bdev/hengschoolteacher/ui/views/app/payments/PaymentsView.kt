@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
-import com.bdev.hengschoolteacher.data.school.student_payment.StudentPayment
+import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
@@ -33,31 +33,31 @@ open class PaymentsItemView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(studentPayment: StudentPayment, singleTeacher: Boolean, editable: Boolean): PaymentsItemView {
+    fun bind(existingStudentPayment: ExistingStudentPayment, singleTeacher: Boolean, editable: Boolean): PaymentsItemView {
         paymentsItemAmountView.text = context.getString(
                 R.string.amount_in_rub,
-                studentPayment.amount
+                existingStudentPayment.info.amount
         )
 
         paymentsItemStudentView.text = studentsService.getStudent(
-                studentPayment.studentId
-        )?.name ?: "?"
-
-        paymentsItemTeacherView.text = staffMembersStorageService.getStaffMember(
-                studentPayment.staffMemberLogin
+                existingStudentPayment.info.studentLogin
         )?.person?.name ?: "?"
 
-        paymentsItemDateView.text = TimeFormatUtils.format(studentPayment.time)
+        paymentsItemTeacherView.text = staffMembersStorageService.getStaffMember(
+                existingStudentPayment.info.staffMemberLogin
+        )?.person?.name ?: "?"
+
+        paymentsItemDateView.text = TimeFormatUtils.format(existingStudentPayment.info.time)
 
         paymentsItemTeacherView.visibility = if (singleTeacher) { View.GONE } else { View.VISIBLE }
 
         renderProcessed(
-                studentsPaymentsService.getPayment(studentPayment.id)?.processed ?: false
+                studentsPaymentsService.getPayment(existingStudentPayment.id)?.processed ?: false
         )
 
         setOnClickListener {
             if (editable) {
-                process(studentPayment.id)
+                process(existingStudentPayment.id)
             } else { /* Do nothing */ }
         }
 
@@ -93,14 +93,14 @@ class PaymentsListAdapter(
         private val singleTeacher: Boolean,
         private val editable: Boolean,
         context: Context
-) : BaseItemsListAdapter<StudentPayment>(context) {
+) : BaseItemsListAdapter<ExistingStudentPayment>(context) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         return if (convertView == null) {
             PaymentsItemView_.build(context)
         } else {
             convertView as PaymentsItemView
         }.bind(
-                studentPayment = getItem(position),
+                existingStudentPayment = getItem(position),
                 singleTeacher = singleTeacher,
                 editable = editable
         )
@@ -113,7 +113,7 @@ open class PaymentsView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(
-            payments: List<StudentPayment>,
+            paymentExistings: List<ExistingStudentPayment>,
             singleTeacher: Boolean,
             editable: Boolean
     ) {
@@ -122,7 +122,7 @@ open class PaymentsView : RelativeLayout {
                 editable = editable,
                 context = context
         ).let {
-            it.setItems(payments.sortedByDescending { payment -> payment.time })
+            it.setItems(paymentExistings.sortedByDescending { payment -> payment.info.time })
 
             paymentsListView.adapter = it
         }

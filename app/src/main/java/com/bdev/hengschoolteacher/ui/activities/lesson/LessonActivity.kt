@@ -40,7 +40,7 @@ open class LessonStudentItemView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(student: Student, lesson: Lesson, weekIndex: Int): LessonStudentItemView {
-        lessonStudentItemNameView.text = student.name
+        lessonStudentItemNameView.text = student.person.name
 
         bindAttendance(student, lesson, weekIndex)
         bindPayment(student)
@@ -49,7 +49,7 @@ open class LessonStudentItemView : RelativeLayout {
         setOnClickListener {
             StudentInformationActivity.redirectToChild(
                     current = context as BaseActivity,
-                    studentId = student.id
+                    studentLogin = student.login
             )
         }
 
@@ -60,13 +60,13 @@ open class LessonStudentItemView : RelativeLayout {
         lessonStudentItemPaymentView.setOnClickListener {
             StudentPaymentActivity.redirectToChild(
                     current = context as BaseActivity,
-                    studentId = student.id
+                    studentLogin = student.login
             )
         }
     }
 
     private fun bindAttendance(student: Student, lesson: Lesson, weekIndex: Int) {
-        val attendanceType = studentsAttendanceService.getAttendance(lesson.id, student.id, weekIndex)
+        val attendanceType = studentsAttendanceService.getAttendance(lesson.id, student.login, weekIndex)
 
         val colorId = when (attendanceType) {
             null -> R.color.fill_text_basic
@@ -82,14 +82,14 @@ open class LessonStudentItemView : RelativeLayout {
             LessonStudentAttendanceActivity.redirectToChild(
                     current = context as BaseActivity,
                     lessonId = lesson.id,
-                    studentId = student.id,
+                    studentLogin = student.login,
                     weekIndex = weekIndex
             )
         }
     }
 
     private fun bindDept(student: Student) {
-        val dept = studentPaymentsDeptService.getStudentDept(student.id)
+        val dept = studentPaymentsDeptService.getStudentDept(student.login)
 
         lessonStudentItemNoDeptView.visibility = if (dept > 0) { View.GONE } else { View.VISIBLE }
         lessonStudentItemDeptView.visibility = if (dept > 0) { View.VISIBLE } else { View.GONE }
@@ -173,6 +173,8 @@ open class LessonActivity : BaseActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_CODE_LESSON_ATTENDANCE, REQUEST_CODE_LESSON_STATUS -> {

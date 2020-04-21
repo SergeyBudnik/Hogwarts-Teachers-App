@@ -42,7 +42,7 @@ open class LessonRowView : LinearLayout {
         listOf(lessonRowStudent1View, lessonRowStudent2View, lessonRowStudent3View, lessonRowStudent4View, lessonRowStudent5View, lessonRowStudent6View)
                 .forEachIndexed { index, it ->
                     val student = if (students.size > index) { students[index] } else { null }
-                    val attendance = if (student != null) { studentsAttendancesService.getAttendance(lesson.id, student.id, weekIndex) } else { null }
+                    val attendance = if (student != null) { studentsAttendancesService.getAttendance(lesson.id, student.login, weekIndex) } else { null }
 
                     setStudentIcon(student, attendance, it)
                 }

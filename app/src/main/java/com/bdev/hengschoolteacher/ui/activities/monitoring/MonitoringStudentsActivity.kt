@@ -37,7 +37,7 @@ open class MonitoringStudentsItemView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(studentInfo: StudentInfo) {
-        monitoringStudentsItemNameView.text = studentInfo.student.name
+        monitoringStudentsItemNameView.text = studentInfo.student.person.name
 
         monitoringStudentsItemMarkView.visibility = if (studentInfo.dept > 0) { View.VISIBLE } else { View.GONE }
     }
@@ -113,34 +113,34 @@ open class MonitoringStudentsActivity : BaseActivity() {
                         .map {
                             StudentInfo(
                                     student = it,
-                                    dept = studentPaymentsDeptService.getStudentDept(it.id).toLong()
+                                    dept = studentPaymentsDeptService.getStudentDept(it.login).toLong()
                             )
                         }
                         .filter { studentInfo ->
                             return@filter if (search.isNotEmpty()) {
                                 val student = studentInfo.student
 
-                                val nameMatches = student.name.toLowerCase().contains(search.toLowerCase())
-                                val phoneMatches = student.phones.filter { phone -> phone.contains(search) }.any()
+                                val nameMatches = student.person.name.toLowerCase().contains(search.toLowerCase())
+                                val phoneMatches = student.person.contacts.phones.filter { phone -> phone.value.contains(search) }.any()
 
                                 nameMatches || phoneMatches
                             } else {
                                 !filterEnabled || studentInfo.dept > 0
                             }
                         }
-                        .sortedBy { it.student.name }
+                        .sortedBy { it.student.person.name }
         )
 
         monitoringPaymentsListView.adapter = adapter
         monitoringPaymentsListView.setOnItemClickListener { _, _, position, _ ->
-            openStudentPayment(adapter.getItem(position).student.id)
+            openStudentPayment(adapter.getItem(position).student.login)
         }
     }
 
-    private fun openStudentPayment(studentId: Long) {
+    private fun openStudentPayment(studentLogin: String) {
         MonitoringStudentActivity.redirectToChild(
                 current = this,
-                studentId = studentId
+                studentLogin = studentLogin
         )
     }
 

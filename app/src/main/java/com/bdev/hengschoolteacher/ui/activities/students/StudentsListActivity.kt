@@ -30,7 +30,7 @@ open class StudentsListRowItemView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(student: Student): StudentsListRowItemView {
-        studentNameView.text = student.name
+        studentNameView.text = student.person.name
 
         return this
     }
@@ -71,21 +71,21 @@ open class StudentsListActivity : BaseActivity() {
 
         studentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.STUDENTS)
 
-        studentsListAdapter.setItems(studentsService.getAllStudents().sortedBy { it.name })
+        studentsListAdapter.setItems(studentsService.getAllStudents().sortedBy { it.person.name })
         studentsListView.adapter = studentsListAdapter
         studentsListView.setOnItemClickListener { adapterView, _, position, _ ->
             val student = adapterView.getItemAtPosition(position) as Student
 
             StudentInformationActivity.redirectToChild(
                     current = this,
-                    studentId = student.id
+                    studentLogin = student.login
             )
         }
 
         studentsListHeaderSearchView.addOnTextChangeListener { filter ->
             studentsListAdapter.setFilter { student ->
-                val nameMatches = student.name.toLowerCase().contains(filter.toLowerCase())
-                val phoneMatches = student.phones.filter { it.contains(filter) }.any()
+                val nameMatches = student.person.name.toLowerCase().contains(filter.toLowerCase())
+                val phoneMatches = student.person.contacts.phones.filter { it.value.contains(filter) }.any()
 
                 return@setFilter nameMatches || phoneMatches
             }
