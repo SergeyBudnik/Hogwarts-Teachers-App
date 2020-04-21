@@ -2,16 +2,17 @@ package com.bdev.hengschoolteacher.service
 
 import com.bdev.hengschoolteacher.data.school.group.GroupType
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 
 @EBean
 open class StudentPriceService {
     @Bean
-    lateinit var studentsAttendancesService: StudentsAttendancesService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
 
     fun getTotalPrice(studentLogin: String): Long {
-        return studentsAttendancesService
+        return studentsAttendancesProviderService
                 .getAllStudentAttendances(studentLogin)
                 .filter { it.type.isPayed }
                 .map { getAttendancePrice(it) }
@@ -19,7 +20,7 @@ open class StudentPriceService {
     }
 
     fun getMonthPrice(studentLogin: String, month: Int): Long {
-        return studentsAttendancesService
+        return studentsAttendancesProviderService
                 .getMonthlyAttendances(studentLogin, month)
                 .filter { it.type.isPayed }
                 .map { getAttendancePrice(it) }

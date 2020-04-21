@@ -9,7 +9,7 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.service.StudentPaymentsDeptService
-import com.bdev.hengschoolteacher.service.StudentsAttendancesService
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
@@ -74,7 +74,7 @@ open class MonitoringStudentsActivity : BaseActivity() {
     @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
     @Bean
-    lateinit var studentsAttendancesService: StudentsAttendancesService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
     @Bean
     lateinit var studentPaymentsDeptService: StudentPaymentsDeptService
 

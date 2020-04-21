@@ -15,6 +15,7 @@ import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.service.*
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentPaymentActivity
@@ -29,7 +30,7 @@ import org.androidannotations.annotations.*
 @EViewGroup(R.layout.view_item_lesson_student)
 open class LessonStudentItemView : RelativeLayout {
     @Bean
-    lateinit var studentsAttendanceService: StudentsAttendancesService
+    lateinit var studentsAttendanceProviderService: StudentsAttendancesProviderService
     @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
 
@@ -66,7 +67,7 @@ open class LessonStudentItemView : RelativeLayout {
     }
 
     private fun bindAttendance(student: Student, lesson: Lesson, weekIndex: Int) {
-        val attendanceType = studentsAttendanceService.getAttendance(lesson.id, student.login, weekIndex)
+        val attendanceType = studentsAttendanceProviderService.getAttendance(lesson.id, student.login, weekIndex)
 
         val colorId = when (attendanceType) {
             null -> R.color.fill_text_basic

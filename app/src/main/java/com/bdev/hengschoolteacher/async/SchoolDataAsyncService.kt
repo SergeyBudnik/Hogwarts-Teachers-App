@@ -4,6 +4,7 @@ import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
 import com.bdev.hengschoolteacher.rest.*
 import com.bdev.hengschoolteacher.service.*
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.rest.spring.annotations.RestService
@@ -31,7 +32,7 @@ open class SchoolDataAsyncService : CommonAsyncService() {
     @Bean
     lateinit var studentsService: StudentsService
     @Bean
-    lateinit var studentsAttendancesService: StudentsAttendancesService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
     @Bean
     lateinit var studentsPaymentsService: StudentsPaymentsService
     @Bean
@@ -78,16 +79,6 @@ open class SchoolDataAsyncService : CommonAsyncService() {
 
             studentsPaymentsService.setPayments(
                     studentsPaymentsRest.getStudentsPayments()
-            )
-        }
-    }
-
-    fun loadStudentsAttendances(): SmartPromise<Unit, Exception> {
-        return smartTask {
-            authenticateAll(listOf(studentsAttendancesRest), authService.getAuthInfo())
-
-            studentsAttendancesService.setAttendances(
-                    studentsAttendancesRest.getStudentsAttendances()
             )
         }
     }
