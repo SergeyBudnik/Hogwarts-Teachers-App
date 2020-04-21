@@ -41,6 +41,13 @@
     <string name="teacher_payments_no_payments_filter_enabled_title">Вся оплата обработана.</string>
     <string name="teacher_payments_no_payments_filter_enabled_warning">Отключите фильтр, чтобы посмотреть всю сданную оплату</string>
 
+    <!-- Payments -->
+
+    <string name="payments_summary_label">Суммарно:</string>
+    <string name="payments_summary_period">%1$s - %2$s</string>
+
+    <!-- Other -->
+
     <string name="disable_filter">Отключить фильтр</string>
 
     <string name="amount_in_rub">%1$d ₽</string>

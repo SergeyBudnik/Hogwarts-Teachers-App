@@ -65,7 +65,7 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
         student?.let { monitoringStudentMonthPaymentsStudentView.bind(it) }
 
         monitoringStudentMonthPaymentsPaymentsView.bind(
-                paymentExistings = studentPaymentsService.getMonthPayments(studentLogin, monthIndex),
+                payments = studentPaymentsService.getMonthPayments(studentLogin, monthIndex),
                 singleTeacher = false,
                 editable = false
         )
