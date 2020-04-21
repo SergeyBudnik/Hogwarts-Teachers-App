@@ -15,8 +15,46 @@ import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
 import kotlinx.android.synthetic.main.view_payments.view.*
 import kotlinx.android.synthetic.main.view_payments_item.view.*
+import kotlinx.android.synthetic.main.view_payments_summary.view.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
+
+@EViewGroup(R.layout.view_payments_summary)
+open class PaymentsSummaryView : RelativeLayout {
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    fun bind(payments: List<ExistingStudentPayment>) {
+        bindAmount(payments = payments)
+        bindPeriod(payments = payments)
+    }
+
+    private fun bindAmount(payments: List<ExistingStudentPayment>) {
+        val amount = payments
+                .filter { !it.processed }
+                .map { it.info.amount }
+                .fold(0L) { res, value -> res + value }
+
+        paymentsSummaryAmountView.text = context.getString(R.string.amount_in_rub, amount)
+    }
+
+    private fun bindPeriod(payments: List<ExistingStudentPayment>) {
+        val earliestPayment = payments.minBy { it.info.time }
+        val latestPayment = payments.maxBy { it.info.time }
+
+        if (earliestPayment != null && latestPayment != null) {
+            paymentsSummaryPeriodView.visibility = View.VISIBLE
+
+            paymentsSummaryPeriodView.text = context.getString(
+                    R.string.payments_summary_period,
+                    TimeFormatUtils.formatOnlyDate(earliestPayment.info.time),
+                    TimeFormatUtils.formatOnlyDate(latestPayment.info.time)
+            )
+        } else {
+            paymentsSummaryPeriodView.visibility = View.GONE
+        }
+    }
+}
 
 @EViewGroup(R.layout.view_payments_item)
 open class PaymentsItemView : RelativeLayout {
@@ -58,7 +96,7 @@ open class PaymentsItemView : RelativeLayout {
         setOnClickListener {
             if (editable) {
                 process(existingStudentPayment.id)
-            } else { /* Do nothing */ }
+            }
         }
 
         return this
@@ -113,16 +151,18 @@ open class PaymentsView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(
-            paymentExistings: List<ExistingStudentPayment>,
+            payments: List<ExistingStudentPayment>,
             singleTeacher: Boolean,
             editable: Boolean
     ) {
+        paymentsSummaryView.bind(payments = payments)
+
         PaymentsListAdapter(
                 singleTeacher = singleTeacher,
                 editable = editable,
                 context = context
         ).let {
-            it.setItems(paymentExistings.sortedByDescending { payment -> payment.info.time })
+            it.setItems(payments.sortedByDescending { payment -> payment.info.time })
 
             paymentsListView.adapter = it
         }
