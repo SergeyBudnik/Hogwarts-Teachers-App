@@ -13,6 +13,7 @@ import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.service.*
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import kotlinx.android.synthetic.main.view_lesson_row.view.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
@@ -20,7 +21,7 @@ import org.androidannotations.annotations.EViewGroup
 @EViewGroup(R.layout.view_lesson_row)
 open class LessonRowView : LinearLayout {
     @Bean
-    lateinit var studentsAttendancesService: StudentsAttendancesService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean
@@ -42,7 +43,7 @@ open class LessonRowView : LinearLayout {
         listOf(lessonRowStudent1View, lessonRowStudent2View, lessonRowStudent3View, lessonRowStudent4View, lessonRowStudent5View, lessonRowStudent6View)
                 .forEachIndexed { index, it ->
                     val student = if (students.size > index) { students[index] } else { null }
-                    val attendance = if (student != null) { studentsAttendancesService.getAttendance(lesson.id, student.login, weekIndex) } else { null }
+                    val attendance = if (student != null) { studentsAttendancesProviderService.getAttendance(lesson.id, student.login, weekIndex) } else { null }
 
                     setStudentIcon(student, attendance, it)
                 }

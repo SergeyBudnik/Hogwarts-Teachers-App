@@ -12,7 +12,7 @@ import com.bdev.hengschoolteacher.data.school.group.GroupType
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.service.StudentPriceService
-import com.bdev.hengschoolteacher.service.StudentsAttendancesService
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
@@ -133,7 +133,7 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
     @Bean
     lateinit var studentsService: StudentsService
     @Bean
-    lateinit var studentsAttendancesService: StudentsAttendancesService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
 
     @AfterViews
     fun init() {
@@ -157,7 +157,7 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
     private fun fillList() {
         val adapter = MonitoringStudentMonthAttendanceListAdapter(this)
 
-        adapter.setItems(studentsAttendancesService.getMonthlyAttendances(
+        adapter.setItems(studentsAttendancesProviderService.getMonthlyAttendances(
                 studentLogin = studentLogin,
                 month = monthIndex
         ))

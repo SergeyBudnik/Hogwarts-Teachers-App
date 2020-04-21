@@ -10,7 +10,7 @@ import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.StudentsAttendancesService
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
@@ -29,7 +29,7 @@ open class LessonItemView : RelativeLayout {
     }
 
     @Bean
-    lateinit var studentsAttendancesService: StudentsAttendancesService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean
