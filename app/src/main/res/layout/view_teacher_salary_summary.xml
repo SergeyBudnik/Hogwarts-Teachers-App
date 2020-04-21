@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/app_size_1"
+    android:paddingBottom="@dimen/app_size_1"
+    android:paddingStart="@dimen/app_size_2"
+    android:paddingEnd="@dimen/app_size_2"
+    android:background="@color/fill_contrast_medium">
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/app_size_0_5"
+        android:text="@string/teacher_salary_summary_label"
+        android:textColor="@color/fill_text_basic"
+        android:textSize="@dimen/font_normal"/>
+
+    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+        android:id="@+id/teacherSalarySummaryWeekSumView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/fill_text_basic_accent"
+        android:textSize="@dimen/font_normal"/>
+
+</LinearLayout>

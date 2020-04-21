@@ -46,6 +46,10 @@
     <string name="payments_summary_label">Суммарно:</string>
     <string name="payments_summary_period">%1$s - %2$s</string>
 
+    <!-- Teacher. Salary -->
+
+    <string name="teacher_salary_summary_label">Суммарно:</string>
+
     <!-- Other -->
 
     <string name="disable_filter">Отключить фильтр</string>

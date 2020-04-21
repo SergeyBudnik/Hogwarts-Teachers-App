@@ -5,31 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <com.bdev.hengschoolteacher.ui.views.app.teacher_salary.TeacherSalarySummaryView_
+        android:id="@+id/teacherSalarySummaryView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/app_size_1"
-        android:paddingBottom="@dimen/app_size_1"
-        android:paddingStart="@dimen/app_size_2"
-        android:paddingEnd="@dimen/app_size_2"
-        android:background="@color/fill_contrast_medium">
-
-        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Суммарно за неделю:"
-            android:textColor="@color/fill_text_basic"
-            android:textSize="@dimen/font_large"/>
-
-        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-            android:id="@+id/teacherSalaryWeekSumView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:textColor="@color/fill_text_basic"
-            android:textSize="@dimen/font_large"/>
-
-    </RelativeLayout>
+        android:layout_height="wrap_content"/>
 
     <ListView
         android:id="@+id/teacherSalaryListView"

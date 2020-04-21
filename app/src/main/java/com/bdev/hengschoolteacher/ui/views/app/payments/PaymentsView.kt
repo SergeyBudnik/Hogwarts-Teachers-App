@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
@@ -31,7 +32,6 @@ open class PaymentsSummaryView : RelativeLayout {
 
     private fun bindAmount(payments: List<ExistingStudentPayment>) {
         val amount = payments
-                .filter { !it.processed }
                 .map { it.info.amount }
                 .fold(0L) { res, value -> res + value }
 
@@ -146,7 +146,7 @@ class PaymentsListAdapter(
 }
 
 @EViewGroup(R.layout.view_payments)
-open class PaymentsView : RelativeLayout {
+open class PaymentsView : LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 

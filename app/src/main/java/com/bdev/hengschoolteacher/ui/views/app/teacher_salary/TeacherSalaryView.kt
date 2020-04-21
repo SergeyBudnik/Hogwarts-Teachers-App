@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherActionType
@@ -12,6 +13,7 @@ import com.bdev.hengschoolteacher.service.teacher.TeacherSalaryService
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import kotlinx.android.synthetic.main.view_teacher_salary.view.*
 import kotlinx.android.synthetic.main.view_teacher_salary_item.view.*
+import kotlinx.android.synthetic.main.view_teacher_salary_summary.view.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
 
@@ -31,7 +33,10 @@ open class TeacherSalaryItemView : LinearLayout {
 
         teacherSalaryItemTimeView.text = "$startTime - $finishTime"
 
-        teacherSalaryItemAmountView.text = "${teacherPayment.amount} Р"
+        teacherSalaryItemAmountView.text = context.getString(
+                R.string.amount_in_rub,
+                teacherPayment.amount
+        )
     }
 }
 
@@ -53,20 +58,35 @@ class TeacherSalaryListAdapter(context: Context) : BaseWeekItemsListAdapter<Teac
     }
 
     override fun getElementComparator(): Comparator<TeacherPayment> {
-        return object: Comparator<TeacherPayment> {
-            override fun compare(tp1: TeacherPayment, tp2: TeacherPayment): Int {
-                val dayComparision = tp1.teacherAction.dayOfWeek.compareTo(tp2.teacherAction.dayOfWeek)
-                val startTimeComparision = tp1.teacherAction.startTime.order.compareTo(tp2.teacherAction.startTime.ordinal)
-                val finishTimeComparision = tp1.teacherAction.finishTime.order.compareTo(tp2.teacherAction.finishTime.order)
+        return Comparator { tp1, tp2 ->
+            val dayComparision = tp1.teacherAction.dayOfWeek.compareTo(tp2.teacherAction.dayOfWeek)
+            val startTimeComparision = tp1.teacherAction.startTime.order.compareTo(tp2.teacherAction.startTime.ordinal)
+            val finishTimeComparision = tp1.teacherAction.finishTime.order.compareTo(tp2.teacherAction.finishTime.order)
 
-                return when {
-                    dayComparision != 0 -> dayComparision
-                    startTimeComparision != 0 -> startTimeComparision
-                    finishTimeComparision != 0 -> finishTimeComparision
-                    else -> 0
-                }
+            when {
+                dayComparision != 0 -> dayComparision
+                startTimeComparision != 0 -> startTimeComparision
+                finishTimeComparision != 0 -> finishTimeComparision
+                else -> 0
             }
         }
+    }
+}
+
+@EViewGroup(R.layout.view_teacher_salary_summary)
+open class TeacherSalarySummaryView : RelativeLayout {
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    fun bind(teacherPayments: List<TeacherPayment>) {
+        val amount = teacherPayments
+                .map { it.amount }
+                .fold(0) { res, value -> res + value }
+
+        teacherSalarySummaryWeekSumView.text = context.getString(
+                R.string.amount_in_rub,
+                amount
+        )
     }
 }
 
@@ -84,12 +104,12 @@ open class TeacherSalaryView : LinearLayout {
                 weekIndex = weekIndex
         )
 
-        teacherSalaryWeekSumView.text = "${teacherPayments.fold(0) {v, tp -> v + tp.amount}} Р"
+        teacherSalarySummaryView.bind(teacherPayments = teacherPayments)
 
-        val adapter = TeacherSalaryListAdapter(context)
+        TeacherSalaryListAdapter(context).let {
+            it.setItems(teacherPayments)
 
-        adapter.setItems(teacherPayments)
-
-        teacherSalaryListView.adapter = adapter
+            teacherSalaryListView.adapter = it
+        }
     }
 }
