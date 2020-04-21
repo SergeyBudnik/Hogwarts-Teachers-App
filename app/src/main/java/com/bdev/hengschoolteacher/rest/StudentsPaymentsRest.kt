@@ -18,7 +18,7 @@ interface StudentsPaymentsRest : RestClientHeaders, RestClientSupport {
     @RequiresHeader(RestConfiguration.HEADER_AUTHORIZATION)
     fun addStudentPayment(@Body paymentNew: NewStudentPayment): Long?
 
-    @Put("/processed/{paymentId}/{processed}")
+    @Put("/{paymentId}/processed/{processed}")
     @RequiresHeader(RestConfiguration.HEADER_AUTHORIZATION)
     fun setStudentPaymentsProcessed(@Path paymentId: Long, @Path processed: Boolean)
 }
