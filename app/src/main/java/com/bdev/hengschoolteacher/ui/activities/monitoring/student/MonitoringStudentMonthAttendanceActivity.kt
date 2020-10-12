@@ -143,9 +143,11 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
                 .setTitle("Мониторинг. Студент. ${getString(month.nameId)}")
                 .setLeftButtonAction { doFinish() }
 
-        monitoringStudentMonthAttendanceSecondaryHeaderView
-                .bind(studentLogin = studentLogin, monthIndex = monthIndex)
-                .setItem(MonitoringStudentMonthHeaderView.Item.ATTENDANCE)
+        monitoringStudentMonthAttendanceSecondaryHeaderView.bind(
+                studentLogin = studentLogin,
+                monthIndex = monthIndex,
+                item = MonitoringStudentMonthHeaderView.Item.ATTENDANCE
+        )
 
         val student = studentsService.getStudent(studentLogin)
 

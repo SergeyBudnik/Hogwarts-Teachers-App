@@ -19,29 +19,30 @@ open class MonitoringStudentMonthHeaderView : LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(studentLogin: String, monthIndex: Int): MonitoringStudentMonthHeaderView {
-        monitoringStudentMonthHeaderItemAttendanceView.setOnClickListener {
-            MonitoringStudentMonthAttendanceActivity.redirectToSibling(
-                    current = context as BaseActivity,
-                    studentLogin = studentLogin,
-                    monthIndex = monthIndex
-            )
-        }
+    fun bind(studentLogin: String, monthIndex: Int, item: Item): MonitoringStudentMonthHeaderView {
+        monitoringStudentMonthHeaderItemAttendanceView.bind(
+                active = item == Item.ATTENDANCE,
+                hasAlert = false,
+                clickAction = {
+                    MonitoringStudentMonthAttendanceActivity.redirectToSibling(
+                            current = context as BaseActivity,
+                            studentLogin = studentLogin,
+                            monthIndex = monthIndex
+                    )
+                }
+        )
 
-        monitoringStudentMonthHeaderItemPaymentsView.setOnClickListener {
-            MonitoringStudentMonthPaymentsActivity.redirectToSibling(
-                    current = context as BaseActivity,
-                    studentLogin = studentLogin,
-                    monthIndex = monthIndex
-            )
-        }
-
-        return this
-    }
-
-    fun setItem(item: Item): MonitoringStudentMonthHeaderView {
-        monitoringStudentMonthHeaderItemAttendanceView.setActive(item == Item.ATTENDANCE)
-        monitoringStudentMonthHeaderItemPaymentsView.setActive(item == Item.PAYMENTS)
+        monitoringStudentMonthHeaderItemPaymentsView.bind(
+                active = item == Item.PAYMENTS,
+                hasAlert = false,
+                clickAction = {
+                    MonitoringStudentMonthPaymentsActivity.redirectToSibling(
+                            current = context as BaseActivity,
+                            studentLogin = studentLogin,
+                            monthIndex = monthIndex
+                    )
+                }
+        )
 
         return this
     }

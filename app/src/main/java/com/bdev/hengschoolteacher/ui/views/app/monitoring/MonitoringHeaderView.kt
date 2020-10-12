@@ -23,23 +23,23 @@ open class MonitoringHeaderView(context: Context, attrs: AttributeSet) : LinearL
     lateinit var alertsMonitoringService: AlertsMonitoringService
 
     fun bind(currentItem: Item) {
-        monitoringHeaderLessonsView.let {
-            it.setActive(currentItem == Item.LESSONS)
-            it.setHasAlert(alertsMonitoringService.lessonsHaveAlerts())
-            it.setOnClickListener { MonitoringLessonsActivity.redirectToSibling(context as BaseActivity) }
-        }
+        monitoringHeaderLessonsView.bind(
+                active = currentItem == Item.LESSONS,
+                hasAlert = alertsMonitoringService.lessonsHaveAlerts(),
+                clickAction = { MonitoringLessonsActivity.redirectToSibling(context as BaseActivity) }
+        )
 
-        monitoringHeaderTeachersView.let {
-            it.setActive(currentItem == Item.TEACHERS)
-            it.setHasAlert(alertsMonitoringService.teachersHaveAlerts())
-            it.setOnClickListener { MonitoringTeachersActivity.redirectToSibling(context as BaseActivity) }
-        }
+        monitoringHeaderTeachersView.bind(
+                active = currentItem == Item.TEACHERS,
+                hasAlert = alertsMonitoringService.teachersHaveAlerts(),
+                clickAction = { MonitoringTeachersActivity.redirectToSibling(context as BaseActivity) }
+        )
 
-        monitoringHeaderStudentsView.let {
-            it.setActive(currentItem == Item.STUDENTS)
-            it.setHasAlert(alertsMonitoringService.studentsHaveAlerts())
-            it.setOnClickListener { MonitoringStudentsActivity.redirectToSibling(context as BaseActivity) }
-        }
+        monitoringHeaderStudentsView.bind(
+            active = currentItem == Item.STUDENTS,
+            hasAlert = alertsMonitoringService.studentsHaveAlerts(),
+            clickAction = { MonitoringStudentsActivity.redirectToSibling(context as BaseActivity) }
+        )
     }
 }
 

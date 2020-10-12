@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bdev.hengschoolteacher.ui.views.branded.BrandedListItemView_
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/studentsWithDebtsItemNameView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/studentsWithDebtsItemIconView"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/fill_text_basic"/>
+
+        <ImageView
+            android:id="@+id/studentsWithDebtsItemIconView"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_marginStart="@dimen/app_size_1"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_alert"
+            android:tint="@color/fill_text_basic_negative"
+            android:importantForAccessibility="no"/>
+
+    </RelativeLayout>
+
+</com.bdev.hengschoolteacher.ui.views.branded.BrandedListItemView_>

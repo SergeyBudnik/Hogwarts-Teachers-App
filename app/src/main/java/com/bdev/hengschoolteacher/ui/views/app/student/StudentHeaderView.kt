@@ -8,7 +8,6 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.student.MonitoringStudentActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentPaymentActivity
-import com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem
 import kotlinx.android.synthetic.main.view_student_header.view.*
 import org.androidannotations.annotations.EViewGroup
 
@@ -22,26 +21,29 @@ open class StudentHeaderView : LinearLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(item: StudentHeaderItem, studentLogin: String) {
-        initTab(v = studentHeaderDetailsView, isActive = item == StudentHeaderItem.DETAILS) {
-            StudentInformationActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
-        }
+        studentHeaderDetailsView.bind(
+                active = item == StudentHeaderItem.DETAILS,
+                hasAlert = false,
+                clickAction = {
+                    StudentInformationActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
+                }
+        )
 
-        initTab(v = studentHeaderAttendanceView, isActive = item == StudentHeaderItem.ATTENDANCE) {
-            MonitoringStudentActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
-        }
+        studentHeaderAttendanceView.bind(
+                active = item == StudentHeaderItem.ATTENDANCE,
+                hasAlert = false,
+                clickAction = {
+                    MonitoringStudentActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
+                }
+        )
 
-        initTab(v = studentHeaderPaymentsView, isActive = item == StudentHeaderItem.PAYMENTS) {
-            StudentPaymentActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
-        }
-    }
-
-    private fun initTab(
-            v: BrandedSecondaryHeaderItem,
-            isActive: Boolean,
-            action: () -> Unit
-    ) {
-        v.setActive(isActive)
-        v.setOnClickListener { action.invoke() }
+        studentHeaderPaymentsView.bind(
+                active = item == StudentHeaderItem.PAYMENTS,
+                hasAlert = false,
+                clickAction = {
+                    StudentPaymentActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
+                }
+        )
     }
 
     private fun getActivity(): BaseActivity {

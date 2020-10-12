@@ -20,7 +20,7 @@
             android:id="@+id/brandedSecondaryHeaderItemTitleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_normal"
+            android:textSize="@dimen/font_small"
             app:app_font="regular"/>
 
         <ImageView

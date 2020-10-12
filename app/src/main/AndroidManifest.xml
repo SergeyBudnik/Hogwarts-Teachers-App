@@ -28,6 +28,7 @@
         <activity android:name=".ui.activities.profile.ProfileLessonsActivity_"/>
         <activity android:name=".ui.activities.profile.ProfileSalaryActivity_"/>
         <activity android:name=".ui.activities.profile.ProfilePaymentsActivity_"/>
+        <activity android:name=".ui.activities.profile.ProfileDebtsActivity_"/>
 
         <activity android:name=".ui.activities.students.StudentsListActivity_"/>
         <activity android:name=".ui.activities.students.StudentsGroupsListActivity_"/>
