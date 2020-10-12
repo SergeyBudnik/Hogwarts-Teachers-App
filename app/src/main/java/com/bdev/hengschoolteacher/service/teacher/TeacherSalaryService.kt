@@ -4,15 +4,14 @@ import com.bdev.hengschoolteacher.data.school.teacher.TeacherActionType
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherPayment
 import com.bdev.hengschoolteacher.service.LessonStatusService
 import com.bdev.hengschoolteacher.service.LessonsService
+import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 
 @EBean
 open class TeacherSalaryService {
-    companion object {
-        const val TEACHER_HALF_HOUR_RATE = 180
-    }
-
+    @Bean
+    lateinit var staffMembersStorageService: StaffMembersStorageService
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean
@@ -24,22 +23,28 @@ open class TeacherSalaryService {
     fun getTeacherPayments(teacherLogin: String, weekIndex: Int): List<TeacherPayment> {
         val teacherPayments = ArrayList<TeacherPayment>()
 
-        val teacherActions = teacherActionsService.getTeacherActions(teacherLogin, weekIndex)
+        val staffMember = staffMembersStorageService.getStaffMember(login = teacherLogin)
 
-        for (teacherAction in teacherActions) {
-            when (teacherAction.type) {
-                TeacherActionType.ROAD -> teacherPayments.add(TeacherPayment(
-                        TEACHER_HALF_HOUR_RATE,
-                        teacherAction
-                ))
+        return if (staffMember != null) {
+            val teacherActions = teacherActionsService.getTeacherActions(teacherLogin, weekIndex)
 
-                TeacherActionType.LESSON -> teacherPayments.add(TeacherPayment(
-                        3 * TEACHER_HALF_HOUR_RATE * (teacherAction.finishTime.order - teacherAction.startTime.order) / 2,
-                        teacherAction
-                ))
+            for (teacherAction in teacherActions) {
+                when (teacherAction.type) {
+                    TeacherActionType.ROAD -> teacherPayments.add(TeacherPayment(
+                            staffMember.salaryIn30m,
+                            teacherAction
+                    ))
+                    TeacherActionType.LESSON,
+                    TeacherActionType.ONLINE_LESSON -> teacherPayments.add(TeacherPayment(
+                            3 * staffMember.salaryIn30m * (teacherAction.finishTime.order - teacherAction.startTime.order) / 2,
+                            teacherAction
+                    ))
+                }
             }
-        }
 
-        return teacherPayments
+            teacherPayments
+        } else {
+            emptyList()
+        }
     }
 }
