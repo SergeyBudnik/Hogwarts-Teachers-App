@@ -34,7 +34,7 @@ open class BrandedButtonView(context: Context, attrs: AttributeSet) : RelativeLa
         val ta = context.obtainStyledAttributes(attrs, R.styleable.BrandedButtonView, 0, 0)
 
         try {
-            text = ta.getString(R.styleable.BrandedButtonView_button_text)
+            text = ta.getString(R.styleable.BrandedButtonView_button_text) ?: ""
             style = Style.findById(ta.getInteger(R.styleable.BrandedButtonView_button_style, -1)) ?: Style.PRIMARY
         } finally {
             ta.recycle()
