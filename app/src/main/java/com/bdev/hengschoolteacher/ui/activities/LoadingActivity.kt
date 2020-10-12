@@ -6,6 +6,7 @@ import android.view.animation.Animation
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.SchoolDataAsyncService
 import com.bdev.hengschoolteacher.service.staff.StaffMembersLoadingService
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesLoadingService
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -31,6 +32,8 @@ open class LoadingActivity : BaseActivity() {
     lateinit var schoolDataAsyncService: SchoolDataAsyncService
 
     @Bean
+    lateinit var studentsAttendancesLoadingService: StudentsAttendancesLoadingService
+    @Bean
     lateinit var staffMembersLoadingService: StaffMembersLoadingService
 
     @AnimationRes(R.anim.spinner)
@@ -53,7 +56,7 @@ open class LoadingActivity : BaseActivity() {
         val loadPromise = schoolDataAsyncService.load()
         val loadStudentsPromise = schoolDataAsyncService.loadStudents()
         val loadGroupsPromise = schoolDataAsyncService.loadGroups()
-        val loadStudentsAttendancesPromise = schoolDataAsyncService.loadStudentsAttendances()
+        val loadStudentsAttendancesPromise = studentsAttendancesLoadingService.load()
         val loadStudentsPaymentsPromise = schoolDataAsyncService.loadStudentsPayments()
         val loadStaffMembersPromise = staffMembersLoadingService.load()
 

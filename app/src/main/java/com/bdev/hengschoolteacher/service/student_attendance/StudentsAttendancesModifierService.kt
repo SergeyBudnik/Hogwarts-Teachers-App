@@ -1,17 +1,18 @@
-package com.bdev.hengschoolteacher.async
+package com.bdev.hengschoolteacher.service.student_attendance
 
+import com.bdev.hengschoolteacher.async.CommonAsyncService
 import com.bdev.hengschoolteacher.async.common.SmartPromise
+import com.bdev.hengschoolteacher.async.common.SmartTask
 import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.rest.StudentsAttendancesRest
 import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.rest.spring.annotations.RestService
 
-@EBean
-open class StudentsAttendancesAsyncService : CommonAsyncService() {
+@EBean(scope = EBean.Scope.Singleton)
+open class StudentsAttendancesModifierService : CommonAsyncService() {
     @RestService
     lateinit var studentsAttendancesRest: StudentsAttendancesRest
 
@@ -19,7 +20,7 @@ open class StudentsAttendancesAsyncService : CommonAsyncService() {
     lateinit var authService: AuthService
 
     @Bean
-    lateinit var studentsAttendancesService: StudentsAttendancesService
+    lateinit var studentsAttendancesStorageService: StudentsAttendancesStorageService
 
     fun addAttendance(attendance: StudentAttendance): SmartPromise<Unit, Exception> {
         return smartTask {
@@ -28,9 +29,9 @@ open class StudentsAttendancesAsyncService : CommonAsyncService() {
                     authService.getAuthInfo()
             )
 
-            studentsAttendancesRest.addStudentAttendance(attendance)
+            studentsAttendancesRest.addStudentAttendance(attendance = attendance)
 
-            studentsAttendancesService.addAttendance(attendance)
+            studentsAttendancesStorageService.add(studentAttendance = attendance)
         }
     }
 }

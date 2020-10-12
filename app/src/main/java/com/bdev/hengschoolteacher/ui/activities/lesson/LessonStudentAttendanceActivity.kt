@@ -3,14 +3,14 @@ package com.bdev.hengschoolteacher.ui.activities.lesson
 import android.annotation.SuppressLint
 import android.app.Activity
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.async.StudentsAttendancesAsyncService
 import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.service.GroupsService
 import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.StudentsAttendancesService
 import com.bdev.hengschoolteacher.service.StudentsService
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesModifierService
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -48,10 +48,9 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean
-    lateinit var studentsAttendancesService: StudentsAttendancesService
-
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
     @Bean
-    lateinit var studentsAttendancesAsyncService: StudentsAttendancesAsyncService
+    lateinit var studentsAttendancesModifierService: StudentsAttendancesModifierService
 
     @Extra(EXTRA_LESSON_ID)
     @JvmField
@@ -81,7 +80,7 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     }
 
     private fun initButtons(group: Group) {
-        val attendance = studentsAttendancesService.getAttendance(lessonId, studentLogin, weekIndex)
+        val attendance = studentsAttendancesProviderService.getAttendance(lessonId, studentLogin, weekIndex)
 
         val allButtonsViews = listOf(
                 studentAttendanceVisitButtonView,
@@ -174,14 +173,17 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     }
 
     private fun markButtonAttendance(group: Group, attendance: StudentAttendanceType) {
-        studentsAttendancesAsyncService
+        val lesson = lessonsService.getLesson(lessonId = lessonId)
+
+        studentsAttendancesModifierService
                 .addAttendance(StudentAttendance(
                         studentLogin = studentLogin,
                         groupType = group.type,
                         studentsInGroup = lessonsService.getLessonStudents(lessonId, weekIndex).size,
                         startTime = lessonsService.getLessonStartTime(lessonId, weekIndex),
                         finishTime = lessonsService.getLessonFinishTime(lessonId, weekIndex),
-                        type = attendance
+                        type = attendance,
+                        ignoreSingleStudentPricing = lesson?.lesson?.ignoreSingleStudentPricing ?: false
                 ))
                 .onSuccess { runOnUiThread {
                     initButtons(group)

@@ -40,7 +40,11 @@ open class TeacherActionsService {
                 }
 
                 teacherActions.add(TeacherAction(
-                        TeacherActionType.LESSON,
+                        if (lesson.isOnline) {
+                            TeacherActionType.ONLINE_LESSON
+                        } else {
+                            TeacherActionType.LESSON
+                        },
                         dayOfWeek,
                         lesson.startTime,
                         lesson.finishTime
@@ -68,10 +72,12 @@ open class TeacherActionsService {
     }
 
     private fun teacherShouldDoTrip(previousLesson: Lesson?, currentLesson: Lesson): Boolean {
-        if (previousLesson == null) {
-            return true
+        return if (currentLesson.isOnline) {
+            false
+        } else if (previousLesson == null || previousLesson.isOnline) {
+            true
+        } else {
+            currentLesson.startTime.order - previousLesson.finishTime.order > 2
         }
-
-        return currentLesson.startTime.order - previousLesson.finishTime.order > 2
     }
 }

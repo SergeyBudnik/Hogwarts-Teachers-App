@@ -13,6 +13,7 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.service.*
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -168,7 +169,7 @@ open class MonitoringStudentActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var studentsAttendancesService: StudentsAttendancesService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean
@@ -199,7 +200,7 @@ open class MonitoringStudentActivity : BaseActivity() {
 
         monitoringStudentPaymentDeptView.text = "${studentPaymentsDeptService.getStudentDept(studentLogin)}"
 
-        val allAttendances = studentsAttendancesService.getAllStudentAttendances(studentLogin)
+        val allAttendances = studentsAttendancesProviderService.getAllStudentAttendances(studentLogin)
         val allVisitedAttendances = allAttendances.filter { it.type == StudentAttendanceType.VISITED }
         val allValidSkipAttendances = allAttendances.filter { it.type == StudentAttendanceType.VALID_SKIP }
         val allInvalidSkipAttendances = allAttendances.filter { it.type == StudentAttendanceType.INVALID_SKIP }
