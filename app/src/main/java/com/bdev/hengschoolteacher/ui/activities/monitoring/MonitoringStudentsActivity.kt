@@ -1,61 +1,20 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.util.AttributeSet
-import android.view.View
-import android.view.ViewGroup
-import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.service.StudentPaymentsDeptService
-import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.student.MonitoringStudentActivity
-import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_students.*
-import kotlinx.android.synthetic.main.view_monitoring_students.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.EViewGroup
-
-class StudentInfo(
-    val student: Student,
-    val dept: Long
-)
-
-@EViewGroup(R.layout.view_monitoring_students)
-open class MonitoringStudentsItemView : RelativeLayout {
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-    fun bind(studentInfo: StudentInfo) {
-        monitoringStudentsItemNameView.text = studentInfo.student.person.name
-
-        monitoringStudentsItemMarkView.visibility = if (studentInfo.dept > 0) { View.VISIBLE } else { View.GONE }
-    }
-}
-
-private class MonitoringStudentsListAdapter(context: Context) : BaseItemsListAdapter<StudentInfo>(context) {
-    override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
-        val v = if (convertView == null) {
-            MonitoringStudentsItemView_.build(context)
-        } else {
-            convertView as MonitoringStudentsItemView
-        }
-
-        v.bind(getItem(position))
-
-        return v
-    }
-}
 
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_monitoring_students)
@@ -106,41 +65,10 @@ open class MonitoringStudentsActivity : BaseActivity() {
     }
 
     private fun initList() {
-        val adapter = MonitoringStudentsListAdapter(this)
-
-        adapter.setItems(
-                studentsService.getAllStudents()
-                        .map {
-                            StudentInfo(
-                                    student = it,
-                                    dept = studentPaymentsDeptService.getStudentDept(it.login).toLong()
-                            )
-                        }
-                        .filter { studentInfo ->
-                            return@filter if (search.isNotEmpty()) {
-                                val student = studentInfo.student
-
-                                val nameMatches = student.person.name.toLowerCase().contains(search.toLowerCase())
-                                val phoneMatches = student.person.contacts.phones.filter { phone -> phone.value.contains(search) }.any()
-
-                                nameMatches || phoneMatches
-                            } else {
-                                !filterEnabled || studentInfo.dept > 0
-                            }
-                        }
-                        .sortedBy { it.student.person.name }
-        )
-
-        monitoringPaymentsListView.adapter = adapter
-        monitoringPaymentsListView.setOnItemClickListener { _, _, position, _ ->
-            openStudentPayment(adapter.getItem(position).student.login)
-        }
-    }
-
-    private fun openStudentPayment(studentLogin: String) {
-        MonitoringStudentActivity.redirectToChild(
-                current = this,
-                studentLogin = studentLogin
+        monitoringPaymentsListView.bind(
+                students = studentsService.getAllStudents(),
+                searchQuery = search,
+                withDebtsOnly = filterEnabled
         )
     }
 

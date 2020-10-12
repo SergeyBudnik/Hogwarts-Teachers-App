@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profileDebtsLayoutView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            android:id="@+id/profileDebtsHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Профиль"
+            app:leftIcon="@drawable/ic_menu"/>
+
+        <com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView_
+            android:id="@+id/profileDebtsSecondaryHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.bdev.hengschoolteacher.ui.views.app.students.StudentsWithDebtsListView_
+            android:id="@+id/profileDebtsListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>

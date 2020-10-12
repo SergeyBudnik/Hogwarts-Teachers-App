@@ -39,15 +39,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <ListView
+        <com.bdev.hengschoolteacher.ui.views.app.students.StudentsWithDebtsListView_
             android:id="@+id/monitoringPaymentsListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/app_size_0_75"
-            android:paddingBottom="@dimen/app_size_0_75"
-            android:clipToPadding="false"
-            android:divider="@null"
-            android:dividerHeight="0dp"/>
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

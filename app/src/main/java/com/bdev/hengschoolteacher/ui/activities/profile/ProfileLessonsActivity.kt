@@ -79,6 +79,8 @@ open class ProfileLessonsActivity : BaseActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == LessonItemView.REQUEST_CODE_LESSON) {
             if (resultCode == Activity.RESULT_OK) {
                 initLessonsList()
