@@ -52,7 +52,7 @@ open class AppLayoutView : DrawerLayout {
     }
 
     fun setCurrentMenuItem(item: AppMenuView.Item) {
-        appLayoutMenuView.setItemSelected(item)
+        appLayoutMenuView.bind(item)
     }
 
     fun openMenu() {

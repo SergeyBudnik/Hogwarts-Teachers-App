@@ -22,7 +22,6 @@ import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity
 import com.bdev.hengschoolteacher.ui.activities.teachers.TeachersListActivity
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.VersionUtils
-import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_app_menu.view.*
 import kotlinx.android.synthetic.main.view_app_menu_row.view.*
 import org.androidannotations.annotations.AfterViews
@@ -47,37 +46,79 @@ open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayou
 
     @AfterViews
     fun init() {
-        menuItemIconView.setImageDrawable(
+        appMenuItemIconView.setImageDrawable(
                 AppResources.getDrawable(
                         context = context,
                         drawableId = itemIcon
                 )
         )
 
-        menuItemNameView.text = itemName
+        appMenuItemNameView.text = itemName
     }
 
-    fun setCurrentItem(isCurrent: Boolean) {
-        val textColor = if (isCurrent) { R.color.fill_text_basic } else { R.color.fill_text_basic_action_link }
+    fun bind(isCurrent: Boolean, hasAlerts: Boolean) {
+        initActiveMarkerColor(isCurrent = isCurrent, hasAlerts = hasAlerts)
+        initIconColor(isCurrent = isCurrent, hasAlerts = hasAlerts)
+        initNameColor(isCurrent = isCurrent, hasAlerts = hasAlerts)
+    }
 
-        menuItemIconView.setColorFilter(
+    private fun initActiveMarkerColor(isCurrent: Boolean, hasAlerts: Boolean) {
+        appMenuItemActiveMarkerView.setBackgroundColor(
                 AppResources.getColor(
                         context = context,
-                        colorId = textColor
-                ),
-                PorterDuff.Mode.SRC_IN
-        )
-
-        menuItemNameView.setTextColor(
-                AppResources.getColor(
-                        context = context,
-                        colorId = textColor
+                        colorId = when {
+                            isCurrent -> {
+                                if (hasAlerts) {
+                                    R.color.fill_text_basic_negative
+                                } else {
+                                    R.color.fill_text_basic_accent
+                                }
+                            }
+                            else -> {
+                                R.color.transparent
+                            }
+                        }
                 )
         )
     }
 
-    fun setHasAlerts(hasAlerts: Boolean) {
-        menuItemAlertView.visibility = visibleElseGone(visible = hasAlerts)
+    private fun initIconColor(isCurrent: Boolean, hasAlerts: Boolean) {
+        appMenuItemIconView.setColorFilter(
+                AppResources.getColor(
+                        context = context,
+                        colorId = when {
+                            isCurrent -> {
+                                R.color.fill_text_basic_accent
+                            }
+                            hasAlerts -> {
+                                R.color.fill_text_basic_negative
+                            }
+                            else -> {
+                                R.color.fill_text_basic
+                            }
+                        }
+                ),
+                PorterDuff.Mode.SRC_IN
+        )
+    }
+
+    private fun initNameColor(isCurrent: Boolean, hasAlerts: Boolean) {
+        appMenuItemNameView.setTextColor(
+                AppResources.getColor(
+                        context = context,
+                        colorId = when {
+                            isCurrent -> {
+                                R.color.fill_text_basic_accent
+                            }
+                            hasAlerts -> {
+                                R.color.fill_text_basic_negative
+                            }
+                            else -> {
+                                R.color.fill_text_basic
+                            }
+                        }
+                )
+        )
     }
 }
 
@@ -116,9 +157,6 @@ open class AppMenuView : LinearLayout {
         menuItemMonitoringView.setOnClickListener { MonitoringLessonsActivity.redirectToSibling(activity) }
         menuItemSettingsView.setOnClickListener { SettingsActivity.redirectToSibling(activity) }
 
-        menuItemMyProfileView.setHasAlerts(alertsProfileService.haveAlerts())
-        menuItemMonitoringView.setHasAlerts(alertsMonitoringSevice.haveAlerts())
-
         refreshButtonView.setOnClickListener { LoadingActivity.redirectToSibling(activity) }
 
         versionView.text = VersionUtils().getVersion()
@@ -133,14 +171,33 @@ open class AppMenuView : LinearLayout {
             }
         }
 
-        setItemSelected(Item.NONE)
+        bind(Item.NONE)
     }
 
-    fun setItemSelected(item: Item) {
-        menuItemMyProfileView.setCurrentItem(item == Item.MY_PROFILE)
-        menuItemStudentsView.setCurrentItem(item == Item.STUDENTS)
-        menuItemTeachersView.setCurrentItem(item == Item.TEACHERS)
-        menuItemMonitoringView.setCurrentItem(item == Item.MONITORING)
-        menuItemSettingsView.setCurrentItem(item == Item.SETTINGS)
+    fun bind(item: Item) {
+        menuItemMyProfileView.bind(
+                isCurrent = item == Item.MY_PROFILE,
+                hasAlerts = alertsProfileService.haveAlerts()
+        )
+
+        menuItemStudentsView.bind(
+                isCurrent = item == Item.STUDENTS,
+                hasAlerts = false
+        )
+
+        menuItemTeachersView.bind(
+                isCurrent = item == Item.TEACHERS,
+                hasAlerts = false
+        )
+
+        menuItemMonitoringView.bind(
+                isCurrent = item == Item.MONITORING,
+                hasAlerts = alertsMonitoringSevice.haveAlerts()
+        )
+
+        menuItemSettingsView.bind(
+                item == Item.SETTINGS,
+                hasAlerts = false
+        )
     }
 }
