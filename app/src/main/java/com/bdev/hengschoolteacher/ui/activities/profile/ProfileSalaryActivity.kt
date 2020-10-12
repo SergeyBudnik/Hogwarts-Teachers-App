@@ -1,7 +1,6 @@
 package com.bdev.hengschoolteacher.ui.activities.profile
 
 import android.annotation.SuppressLint
-import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.LessonStatusService
 import com.bdev.hengschoolteacher.service.LessonsService
@@ -9,6 +8,7 @@ import com.bdev.hengschoolteacher.service.UserPreferencesService
 import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
@@ -65,11 +65,7 @@ open class ProfileSalaryActivity : BaseActivity() {
 
         profileSalaryHeaderView.setFirstRightButtonActive(calendarEnabled)
 
-        profileSalaryWeekSelectionBarView.visibility = if (calendarEnabled) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        profileSalaryWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
     }
 
     override fun getAppLayoutView(): AppLayoutView? {

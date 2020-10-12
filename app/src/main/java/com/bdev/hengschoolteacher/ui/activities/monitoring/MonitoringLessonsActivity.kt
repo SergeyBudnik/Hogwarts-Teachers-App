@@ -3,12 +3,12 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.LessonStateService
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
@@ -67,6 +67,8 @@ open class MonitoringLessonsActivity : BaseActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == LessonItemView.REQUEST_CODE_LESSON) {
             if (resultCode == Activity.RESULT_OK) {
                 initLessonsList()
@@ -83,11 +85,7 @@ open class MonitoringLessonsActivity : BaseActivity() {
 
         monitoringLessonsListView.fill(lessons, weekIndex)
 
-        monitoringLessonsNoLessonsView.visibility = if (lessons.isEmpty() && filterEnabled) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        monitoringLessonsNoLessonsView.visibility = visibleElseGone(visible = (lessons.isEmpty() && filterEnabled))
     }
 
     private fun toggleFilter() {
@@ -103,11 +101,7 @@ open class MonitoringLessonsActivity : BaseActivity() {
 
         monitoringLessonsHeaderView.setSecondRightButtonActive(calendarEnabled)
 
-        monitoringLessonsWeekSelectionBarView.visibility = if (calendarEnabled) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        monitoringLessonsWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
     }
 
     override fun getAppLayoutView(): AppLayoutView? {

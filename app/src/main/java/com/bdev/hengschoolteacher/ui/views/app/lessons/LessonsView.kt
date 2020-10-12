@@ -16,6 +16,7 @@ import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_lesson_item.view.*
 import kotlinx.android.synthetic.main.view_lessons.view.*
 import org.androidannotations.annotations.Bean
@@ -51,7 +52,7 @@ open class LessonItemView : RelativeLayout {
         lessonItemRowView.bind(group, lesson, students, weekIndex)
 
         lessonItemTeacherView.text = staffMembersStorageService.getStaffMember(lesson.teacherLogin)?.person?.name ?: ""
-        lessonItemTeacherView.visibility = if (showTeacher) { View.VISIBLE } else { View.GONE }
+        lessonItemTeacherView.visibility = visibleElseGone(visible = showTeacher)
 
         return this
     }

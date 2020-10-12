@@ -1,11 +1,11 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
-import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.teacher.TeacherPaymentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_payments.*
@@ -76,19 +76,8 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
 
         val filteredPayments = allPayments.filter { payment -> !filterEnabled || !payment.processed }
 
-        monitoringTeacherPaymentsEmptyView.visibility =
-                if (allPayments.isEmpty()) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
-
-        monitoringTeacherPaymentsEmptyWithFilterView.visibility =
-                if (!allPayments.isEmpty() && filteredPayments.isEmpty()) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
+        monitoringTeacherPaymentsEmptyView.visibility = visibleElseGone(visible = allPayments.isEmpty())
+        monitoringTeacherPaymentsEmptyWithFilterView.visibility = visibleElseGone(visible = (allPayments.isNotEmpty() && filteredPayments.isEmpty()))
 
         monitoringTeacherPaymentsView.bind(
                 payments = filteredPayments,

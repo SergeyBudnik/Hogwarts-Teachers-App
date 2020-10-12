@@ -12,7 +12,9 @@ import com.bdev.hengschoolteacher.service.StudentsPaymentsService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_payments.view.*
 import kotlinx.android.synthetic.main.view_payments_item.view.*
 import kotlinx.android.synthetic.main.view_payments_summary.view.*
@@ -87,7 +89,7 @@ open class PaymentsItemView : RelativeLayout {
 
         paymentsItemDateView.text = TimeFormatUtils.format(existingStudentPayment.info.time)
 
-        paymentsItemTeacherView.visibility = if (singleTeacher) { View.GONE } else { View.VISIBLE }
+        paymentsItemTeacherView.visibility = visibleElseGone(visible = !singleTeacher)
 
         renderProcessed(
                 studentsPaymentsService.getPayment(existingStudentPayment.id)?.processed ?: false
@@ -110,19 +112,25 @@ open class PaymentsItemView : RelativeLayout {
 
     private fun renderProcessed(processed: Boolean) {
         paymentsItemProcessedView.setImageDrawable(
-                context.resources.getDrawable(if (processed) {
-                    R.drawable.ic_tick
-                } else {
-                    R.drawable.ic_question
-                })
+                AppResources.getDrawable(
+                        context = context,
+                        drawableId = if (processed) {
+                            R.drawable.ic_tick
+                        } else {
+                            R.drawable.ic_question
+                        }
+                )
         )
 
         paymentsItemProcessedView.setColorFilter(
-                context.resources.getColor(if (processed) {
-                    R.color.fill_text_basic_positive
-                } else {
-                    R.color.fill_text_basic_negative
-                })
+                AppResources.getColor(
+                        context = context,
+                        colorId = if (processed) {
+                            R.color.fill_text_basic_positive
+                        } else {
+                            R.color.fill_text_basic_negative
+                        }
+                )
         )
     }
 }
