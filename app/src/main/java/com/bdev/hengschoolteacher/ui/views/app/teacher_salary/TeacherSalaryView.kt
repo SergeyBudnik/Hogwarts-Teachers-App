@@ -24,6 +24,7 @@ open class TeacherSalaryItemView : LinearLayout {
         teacherSalaryItemTypeView.text = when (teacherPayment.teacherAction.type) {
             TeacherActionType.ROAD -> "Дорога"
             TeacherActionType.LESSON -> "Занятие"
+            TeacherActionType.ONLINE_LESSON -> "О.Занятие"
         }
 
         val startTime = resources.getString(teacherPayment.teacherAction.startTime.translationId)
@@ -53,18 +54,16 @@ class TeacherSalaryListAdapter(context: Context) : BaseWeekItemsListAdapter<Teac
     }
 
     override fun getElementComparator(): Comparator<TeacherPayment> {
-        return object: Comparator<TeacherPayment> {
-            override fun compare(tp1: TeacherPayment, tp2: TeacherPayment): Int {
-                val dayComparision = tp1.teacherAction.dayOfWeek.compareTo(tp2.teacherAction.dayOfWeek)
-                val startTimeComparision = tp1.teacherAction.startTime.order.compareTo(tp2.teacherAction.startTime.ordinal)
-                val finishTimeComparision = tp1.teacherAction.finishTime.order.compareTo(tp2.teacherAction.finishTime.order)
+        return Comparator { tp1, tp2 ->
+            val dayComparision = tp1.teacherAction.dayOfWeek.compareTo(tp2.teacherAction.dayOfWeek)
+            val startTimeComparision = tp1.teacherAction.startTime.order.compareTo(tp2.teacherAction.startTime.ordinal)
+            val finishTimeComparision = tp1.teacherAction.finishTime.order.compareTo(tp2.teacherAction.finishTime.order)
 
-                return when {
-                    dayComparision != 0 -> dayComparision
-                    startTimeComparision != 0 -> startTimeComparision
-                    finishTimeComparision != 0 -> finishTimeComparision
-                    else -> 0
-                }
+            when {
+                dayComparision != 0 -> dayComparision
+                startTimeComparision != 0 -> startTimeComparision
+                finishTimeComparision != 0 -> finishTimeComparision
+                else -> 0
             }
         }
     }

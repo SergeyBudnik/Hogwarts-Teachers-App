@@ -31,7 +31,7 @@ open class StudentPriceService {
         val lengthInHalfOfHours = ((attendance.finishTime - attendance.startTime) / 1000 / 1800).toInt()
 
         return when (attendance.groupType) {
-            GroupType.GROUP -> if (attendance.studentsInGroup == 1) {
+            GroupType.GROUP -> if (attendance.studentsInGroup == 1 && !attendance.ignoreSingleStudentPricing) {
                  when (lengthInHalfOfHours) {
                     1 -> 350
                     2 -> 700
@@ -49,11 +49,11 @@ open class StudentPriceService {
                 }
             }
             GroupType.INDIVIDUAL -> when (lengthInHalfOfHours) {
-                1 -> 550
-                2 -> 1100
-                3 -> 1650
-                4 -> 2200
-                else -> 1100 /* ToDO: log */
+                1 -> 600
+                2 -> 1200
+                3 -> 1800
+                4 -> 2400
+                else -> 1200 /* ToDO: log */
             }
         }
     }

@@ -173,6 +173,8 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     }
 
     private fun markButtonAttendance(group: Group, attendance: StudentAttendanceType) {
+        val lesson = lessonsService.getLesson(lessonId = lessonId)
+
         studentsAttendancesModifierService
                 .addAttendance(StudentAttendance(
                         studentLogin = studentLogin,
@@ -180,7 +182,8 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
                         studentsInGroup = lessonsService.getLessonStudents(lessonId, weekIndex).size,
                         startTime = lessonsService.getLessonStartTime(lessonId, weekIndex),
                         finishTime = lessonsService.getLessonFinishTime(lessonId, weekIndex),
-                        type = attendance
+                        type = attendance,
+                        ignoreSingleStudentPricing = lesson?.lesson?.ignoreSingleStudentPricing ?: false
                 ))
                 .onSuccess { runOnUiThread {
                     initButtons(group)

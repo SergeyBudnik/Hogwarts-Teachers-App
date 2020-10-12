@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonCreator
 import org.codehaus.jackson.annotate.JsonProperty
 
 enum class TeacherActionType {
-    ROAD, LESSON
+    ROAD, LESSON, ONLINE_LESSON
 }
 
 class TeacherAction @JsonCreator constructor(
