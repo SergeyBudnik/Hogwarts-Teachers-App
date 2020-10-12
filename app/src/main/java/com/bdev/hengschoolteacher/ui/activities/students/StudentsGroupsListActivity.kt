@@ -14,6 +14,7 @@ import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
@@ -23,6 +24,7 @@ import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
 import org.androidannotations.annotations.EViewGroup
+import java.util.*
 
 @EViewGroup(R.layout.view_list_item_students_groups)
 open class StudentsGroupsListItemView : LinearLayout {
@@ -58,7 +60,10 @@ open class StudentsGroupsListItemView : LinearLayout {
             val colorId = if (isMyGroup) { R.color.status_info_subtle } else { R.color.alt_contrast_light }
 
             studentsGroupsItemView.backgroundTintList = ColorStateList.valueOf(
-                    resources.getColor(colorId)
+                    AppResources.getColor(
+                            context = context,
+                            colorId = colorId
+                    )
             )
         }
     }
@@ -117,7 +122,9 @@ open class StudentsGroupsListActivity : BaseActivity() {
                 adapter.setFilter { group ->
                     val groupStudents = studentsService.getGroupStudents(group.id)
 
-                    return@setFilter groupStudents.filter { it.person.name.toLowerCase().contains(filter.toLowerCase()) }.any()
+                    return@setFilter groupStudents.filter {
+                        it.person.name.toLowerCase(Locale.getDefault()).contains(filter.toLowerCase(Locale.getDefault()))
+                    }.any()
                 }
 
                 adapter.notifyDataSetChanged()

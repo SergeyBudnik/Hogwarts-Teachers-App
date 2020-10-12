@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
@@ -21,7 +20,9 @@ import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
 import com.bdev.hengschoolteacher.ui.activities.settings.SettingsActivity
 import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity
 import com.bdev.hengschoolteacher.ui.activities.teachers.TeachersListActivity
+import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.VersionUtils
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_app_menu.view.*
 import kotlinx.android.synthetic.main.view_app_menu_row.view.*
 import org.androidannotations.annotations.AfterViews
@@ -46,23 +47,37 @@ open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayou
 
     @AfterViews
     fun init() {
-        menuItemIconView.setImageDrawable(resources.getDrawable(itemIcon))
+        menuItemIconView.setImageDrawable(
+                AppResources.getDrawable(
+                        context = context,
+                        drawableId = itemIcon
+                )
+        )
+
         menuItemNameView.text = itemName
     }
 
     fun setCurrentItem(isCurrent: Boolean) {
         val textColor = if (isCurrent) { R.color.fill_text_basic } else { R.color.fill_text_basic_action_link }
 
-        menuItemIconView.setColorFilter(context.resources.getColor(textColor), PorterDuff.Mode.SRC_IN)
-        menuItemNameView.setTextColor(context.resources.getColor(textColor))
+        menuItemIconView.setColorFilter(
+                AppResources.getColor(
+                        context = context,
+                        colorId = textColor
+                ),
+                PorterDuff.Mode.SRC_IN
+        )
+
+        menuItemNameView.setTextColor(
+                AppResources.getColor(
+                        context = context,
+                        colorId = textColor
+                )
+        )
     }
 
     fun setHasAlerts(hasAlerts: Boolean) {
-        menuItemAlertView.visibility = if (hasAlerts) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        menuItemAlertView.visibility = visibleElseGone(visible = hasAlerts)
     }
 }
 

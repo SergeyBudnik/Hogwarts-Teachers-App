@@ -1,10 +1,10 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
-import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_salary.*
@@ -70,11 +70,7 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
 
         monitoringTeacherSalaryHeaderView.setFirstRightButtonActive(calendarEnabled)
 
-        monitoringTeacherSalaryWeekSelectionBarView.visibility = if (calendarEnabled) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        monitoringTeacherSalaryWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
     }
 
     override fun getAppLayoutView(): AppLayoutView? {

@@ -14,6 +14,7 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.service.*
 import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.ui.resources.AppResources
 import kotlinx.android.synthetic.main.view_lesson_row.view.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
@@ -71,8 +72,19 @@ open class LessonRowView : LinearLayout {
             }
         }
 
-        studentView.setImageDrawable(resources.getDrawable(icon))
-        studentView.setColorFilter(resources.getColor(color))
+        studentView.setImageDrawable(
+                AppResources.getDrawable(
+                        context = context,
+                        drawableId = icon
+                )
+        )
+
+        studentView.setColorFilter(
+                AppResources.getColor(
+                        context = context,
+                        colorId = color
+                )
+        )
     }
 
     private fun setLessonIcon(lesson: Lesson, weekIndex: Int) {
@@ -111,8 +123,20 @@ open class LessonRowView : LinearLayout {
             R.color.fill_text_basic_warning
         }
 
-        lessonRowStatusView.setImageDrawable(resources.getDrawable(iconId))
-        lessonRowStatusView.setColorFilter(resources.getColor(colorId), PorterDuff.Mode.SRC_IN)
+        lessonRowStatusView.setImageDrawable(
+                AppResources.getDrawable(
+                        context = context,
+                        drawableId = iconId
+                )
+        )
+
+        lessonRowStatusView.setColorFilter(
+                AppResources.getColor(
+                        context = context,
+                        colorId = colorId
+                ),
+                PorterDuff.Mode.SRC_IN
+        )
     }
 
     private fun setLessonStatus(lesson: Lesson, weekIndex: Int) {

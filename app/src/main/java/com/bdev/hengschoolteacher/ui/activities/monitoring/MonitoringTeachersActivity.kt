@@ -14,6 +14,7 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
@@ -35,12 +36,7 @@ open class MonitoringTeachersItemView : RelativeLayout {
     fun bind(staffMember: StaffMember): MonitoringTeachersItemView {
         monitoringTeachersItemNameView.text = staffMember.person.name
 
-        monitoringTeachersItemAlertView.visibility =
-                if (alertsMonitoringTeachersService.haveAlerts(staffMember.login)) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
+        monitoringTeachersItemAlertView.visibility = visibleElseGone(visible = alertsMonitoringTeachersService.haveAlerts(staffMember.login))
 
         return this
     }

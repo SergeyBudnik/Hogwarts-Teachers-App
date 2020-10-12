@@ -6,6 +6,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.ui.resources.AppResources
 import kotlinx.android.synthetic.main.view_branded_action_button.view.*
 import org.androidannotations.annotations.EViewGroup
 import org.androidannotations.annotations.res.AnimationRes
@@ -31,8 +32,18 @@ open class BrandedActionButtonView : RelativeLayout {
 
     fun setButtonIcon(iconId: Int, colorId: Int) {
         brandedActionButtonIconView.visibility = View.VISIBLE
-        brandedActionButtonIconView.setImageDrawable(resources.getDrawable(iconId))
-        brandedActionButtonIconView.setColorFilter(resources.getColor(colorId))
+        brandedActionButtonIconView.setImageDrawable(
+                AppResources.getDrawable(
+                        context = context,
+                        drawableId = iconId
+                )
+        )
+        brandedActionButtonIconView.setColorFilter(
+                AppResources.getColor(
+                        context = context,
+                        colorId = colorId
+                )
+        )
 
         brandedActionButtonProgressView.clearAnimation()
         brandedActionButtonProgressView.visibility = View.GONE

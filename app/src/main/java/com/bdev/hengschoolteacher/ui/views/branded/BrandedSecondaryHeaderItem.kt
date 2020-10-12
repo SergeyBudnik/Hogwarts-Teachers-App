@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.ui.resources.AppResources
 import kotlinx.android.synthetic.main.view_branded_secondary_header_item.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup
@@ -32,30 +33,40 @@ open class BrandedSecondaryHeaderItem(context: Context, attrs: AttributeSet) : L
     }
 
     fun bind(active: Boolean, hasAlert: Boolean, clickAction: () -> Unit) {
-        brandedSecondaryHeaderItemTitleView.setTextColor(resources.getColor(when {
-            hasAlert -> {
-                R.color.fill_text_basic_negative
-            }
-            active -> {
-                R.color.fill_text_basic_accent
-            }
-            else -> {
-                R.color.fill_text_basic
-            }
-        }))
+        brandedSecondaryHeaderItemTitleView.setTextColor(
+                AppResources.getColor(
+                        context = context,
+                        colorId = when {
+                            hasAlert -> {
+                                R.color.fill_text_basic_negative
+                            }
+                            active -> {
+                                R.color.fill_text_basic_accent
+                            }
+                            else -> {
+                                R.color.fill_text_basic
+                            }
+                        }
+                )
+        )
 
-        activeMarkView.setBackgroundColor(resources.getColor(when {
-            active -> {
-                if (hasAlert) {
-                    R.color.fill_text_basic_negative
-                } else {
-                    R.color.fill_text_basic_accent
-                }
-            }
-            else -> {
-                R.color.transparent
-            }
-        }))
+        activeMarkView.setBackgroundColor(
+                AppResources.getColor(
+                        context = context,
+                        colorId = when {
+                            active -> {
+                                if (hasAlert) {
+                                    R.color.fill_text_basic_negative
+                                } else {
+                                    R.color.fill_text_basic_accent
+                                }
+                            }
+                            else -> {
+                                R.color.transparent
+                            }
+                        }
+                )
+        )
 
         setOnClickListener { clickAction() }
     }

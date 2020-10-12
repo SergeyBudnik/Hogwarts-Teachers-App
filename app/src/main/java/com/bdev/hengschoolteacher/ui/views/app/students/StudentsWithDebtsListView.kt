@@ -11,6 +11,7 @@ import com.bdev.hengschoolteacher.service.StudentPaymentsDeptService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_students_with_debts.view.*
 import kotlinx.android.synthetic.main.view_students_with_debts_item.view.*
 import org.androidannotations.annotations.Bean
@@ -71,7 +72,7 @@ open class StudentsWithDebtsItemView : RelativeLayout {
 
     fun bind(studentInfo: StudentInfo): StudentsWithDebtsItemView {
         studentsWithDebtsItemNameView.text = studentInfo.student.person.name
-        studentsWithDebtsItemIconView.visibility = if (studentInfo.dept > 0) { View.VISIBLE } else { View.GONE }
+        studentsWithDebtsItemIconView.visibility = visibleElseGone(visible = studentInfo.dept > 0)
 
         return this
     }
