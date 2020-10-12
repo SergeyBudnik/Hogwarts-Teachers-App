@@ -33,21 +33,28 @@ open class BrandedSecondaryHeaderItem(context: Context, attrs: AttributeSet) : L
 
     fun bind(active: Boolean, hasAlert: Boolean, clickAction: () -> Unit) {
         brandedSecondaryHeaderItemTitleView.setTextColor(resources.getColor(when {
-            active -> {
-                R.color.fill_text_basic_accent
-            }
             hasAlert -> {
                 R.color.fill_text_basic_negative
+            }
+            active -> {
+                R.color.fill_text_basic_accent
             }
             else -> {
                 R.color.fill_text_basic
             }
         }))
 
-        activeMarkView.setBackgroundColor(resources.getColor(if (active) {
-            R.color.fill_text_basic_accent
-        } else {
-            R.color.transparent
+        activeMarkView.setBackgroundColor(resources.getColor(when {
+            active -> {
+                if (hasAlert) {
+                    R.color.fill_text_basic_negative
+                } else {
+                    R.color.fill_text_basic_accent
+                }
+            }
+            else -> {
+                R.color.transparent
+            }
         }))
 
         setOnClickListener { clickAction() }
