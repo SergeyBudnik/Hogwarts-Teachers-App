@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-def AAVersion = '4.6.0'
+def AAVersion = '4.7.0'
 
 repositories {
     mavenCentral()
@@ -18,19 +18,19 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.android.tools.build:gradle:4.0.2'
     }
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "com.bdev.hengschoolteacher"
         minSdkVersion 23
-        targetSdkVersion 29
-        versionCode 27
-        versionName "1.25.0"
+        targetSdkVersion 30
+        versionCode 28
+        versionName "1.26.0"
         multiDexEnabled true
     }
 
@@ -73,7 +73,7 @@ dependencies {
     implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
 
-    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation "androidx.appcompat:appcompat:1.2.0"
 
     implementation 'nl.komponents.kovenant:kovenant:3.3.0'
 
