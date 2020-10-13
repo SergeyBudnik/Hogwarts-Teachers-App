@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,6 +9,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/app_size_1"
+        android:paddingBottom="@dimen/app_size_0_5"
+        android:paddingStart="@dimen/app_size_2"
+        android:paddingEnd="@dimen/app_size_2"
+        android:background="@color/fill_contrast_medium">
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ставка за 30м:"
+            android:textColor="@color/fill_text_basic"
+            android:textSize="@dimen/font_normal"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/teacherSalarySalaryIn30mView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/fill_text_basic_accent"
+            android:textSize="@dimen/font_normal"
+            app:app_font="bold"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/app_size_0_5"
         android:paddingBottom="@dimen/app_size_1"
         android:paddingStart="@dimen/app_size_2"
         android:paddingEnd="@dimen/app_size_2"
@@ -19,15 +46,16 @@
             android:layout_height="wrap_content"
             android:text="Суммарно за неделю:"
             android:textColor="@color/fill_text_basic"
-            android:textSize="@dimen/font_large"/>
+            android:textSize="@dimen/font_normal"/>
 
         <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
             android:id="@+id/teacherSalaryWeekSumView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:textColor="@color/fill_text_basic"
-            android:textSize="@dimen/font_large"/>
+            android:textColor="@color/fill_text_basic_accent"
+            android:textSize="@dimen/font_normal"
+            app:app_font="bold"/>
 
     </RelativeLayout>
 

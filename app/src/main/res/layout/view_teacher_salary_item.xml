@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:weightSum="9"
-    android:paddingTop="@dimen/app_size_1"
-    android:paddingBottom="@dimen/app_size_1"
+    android:paddingTop="@dimen/app_size_0_75"
+    android:paddingBottom="@dimen/app_size_0_75"
     android:paddingStart="@dimen/app_size_2"
     android:paddingEnd="@dimen/app_size_2">
 
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="3"
         android:textColor="@color/fill_text_basic_light"
-        android:textSize="@dimen/font_large"/>
+        android:textSize="@dimen/font_normal"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
         android:id="@+id/teacherSalaryItemTimeView"
@@ -25,7 +25,7 @@
         android:layout_weight="3"
         android:gravity="center"
         android:textColor="@color/fill_text_basic"
-        android:textSize="@dimen/font_large"/>
+        android:textSize="@dimen/font_normal"/>
 
     <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
         android:id="@+id/teacherSalaryItemAmountView"
@@ -34,6 +34,6 @@
         android:layout_weight="3"
         android:gravity="end"
         android:textColor="@color/fill_text_basic_accent"
-        android:textSize="@dimen/font_large"/>
+        android:textSize="@dimen/font_normal"/>
 
 </LinearLayout>
