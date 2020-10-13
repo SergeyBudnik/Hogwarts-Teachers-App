@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<com.bdev.hengschoolteacher.ui.views.branded.BrandedListItemView_
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="@dimen/app_size_1"
-    android:paddingBottom="@dimen/app_size_1"
-    android:paddingStart="@dimen/app_size_2"
-    android:paddingEnd="@dimen/app_size_2"
-    android:background="@drawable/layout_row"
-    android:backgroundTint="@color/alt_contrast_light">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="@dimen/app_size_1_5"
-        android:layout_height="@dimen/app_size_1_5"
-        android:layout_marginEnd="@dimen/app_size_1_5"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_phone"
-        android:importantForAccessibility="no"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
-        android:id="@+id/brandedPhoneTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:textSize="@dimen/font_large"
-        android:textColor="@color/fill_text_basic"
-        app:app_font="bold"/>
+        <ImageView
+            android:id="@+id/brandedPhoneIconView"
+            android:layout_width="@dimen/app_size_1_5"
+            android:layout_height="@dimen/app_size_1_5"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_phone"
+            android:importantForAccessibility="no"/>
 
-</RelativeLayout>
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/brandedPhoneNameView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/brandedPhoneIconView"
+            android:layout_toStartOf="@id/brandedPhoneValueView"
+            android:layout_marginStart="@dimen/app_size_1_5"
+            android:layout_marginEnd="@dimen/app_size_1_5"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/fill_text_basic"/>
+
+        <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+            android:id="@+id/brandedPhoneValueView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/fill_text_basic"
+            app:app_font="bold"/>
+
+    </RelativeLayout>
+
+</com.bdev.hengschoolteacher.ui.views.branded.BrandedListItemView_>
