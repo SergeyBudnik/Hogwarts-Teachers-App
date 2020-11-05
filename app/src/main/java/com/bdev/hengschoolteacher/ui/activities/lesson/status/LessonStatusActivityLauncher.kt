@@ -9,7 +9,7 @@ object LessonStatusActivityLauncher {
         RedirectBuilder
                 .redirect(from)
                 .to(LessonStatusActivity_::class.java)
-                .withExtra(LessonStatusActivity.EXTRA_DATA, data)
+                .withExtra(LessonStatusActivityParams.EXTRA_DATA, data)
                 .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                 .goForResult(requestCode)
     }
