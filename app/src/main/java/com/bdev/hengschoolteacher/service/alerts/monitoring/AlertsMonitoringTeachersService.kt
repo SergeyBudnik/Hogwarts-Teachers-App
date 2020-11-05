@@ -1,8 +1,6 @@
 package com.bdev.hengschoolteacher.service.alerts.monitoring
 
-import com.bdev.hengschoolteacher.service.LessonStateService
-import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
+import com.bdev.hengschoolteacher.service.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 
@@ -16,6 +14,10 @@ open class AlertsMonitoringTeachersService {
     lateinit var lessonsService: LessonsService
     @Bean
     lateinit var lessonStateService: LessonStateService
+    @Bean
+    lateinit var studentsService: StudentsService
+    @Bean
+    lateinit var studentsPaymentsDeptService: StudentPaymentsDeptService
 
     fun haveAlerts(teacherLogin: String): Boolean {
         return haveLessonsAlerts(teacherLogin) || havePaymentsAlerts(teacherLogin)
@@ -38,5 +40,12 @@ open class AlertsMonitoringTeachersService {
 
     fun havePaymentsAlerts(teacherLogin: String): Boolean {
         return studentsPaymentsService.getPaymentsToTeacher(teacherLogin, true).isNotEmpty()
+    }
+
+    fun haveDebtsAlerts(teacherLogin: String): Boolean {
+        return studentsService
+                .getAllStudents()
+                .filter { it.managerLogin == teacherLogin }
+                .any { student -> studentsPaymentsDeptService.getStudentDept(student.login) > 0 }
     }
 }
