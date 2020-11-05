@@ -1,7 +1,6 @@
-package com.bdev.hengschoolteacher.ui.activities.lesson
+package com.bdev.hengschoolteacher.ui.activities.lesson.status
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.LessonStatusAsyncService
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
@@ -9,7 +8,7 @@ import com.bdev.hengschoolteacher.service.GroupsService
 import com.bdev.hengschoolteacher.service.LessonStatusService
 import com.bdev.hengschoolteacher.service.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.activities.lesson.status.LessonStatusActivityParams.EXTRA_DATA
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
 import kotlinx.android.synthetic.main.activity_lesson_status.*
@@ -22,26 +21,6 @@ import java.util.*
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_lesson_status)
 open class LessonStatusActivity : BaseActivity() {
-    companion object {
-        const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
-        const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
-
-        fun redirectToChild(
-                current: BaseActivity,
-                lessonId: Long,
-                weekIndex: Int,
-                requestCode: Int
-        ) {
-            RedirectBuilder
-                    .redirect(current)
-                    .to(LessonStatusActivity_::class.java)
-                    .withExtra(EXTRA_LESSON_ID, lessonId)
-                    .withExtra(EXTRA_WEEK_INDEX, weekIndex)
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .goForResult(requestCode)
-        }
-    }
-
     @Bean
     lateinit var groupsService: GroupsService
     @Bean
@@ -52,28 +31,29 @@ open class LessonStatusActivity : BaseActivity() {
     @Bean
     lateinit var lessonsStatusAsyncService: LessonStatusAsyncService
 
-    @Extra(EXTRA_LESSON_ID)
-    @JvmField
-    var lessonId: Long = 0
-
-    @Extra(EXTRA_WEEK_INDEX)
-    @JvmField
-    var weekIndex: Int = 0
+    @Extra(EXTRA_DATA)
+    lateinit var activityData: LessonStatusActivityData
 
     @AfterViews
     fun init() {
         lessonStatusHeaderView.setLeftButtonAction { doFinish() }
 
-        val lesson = lessonsService.getLesson(lessonId)?.lesson ?: throw RuntimeException()
+        val lesson = lessonsService.getLesson(activityData.lessonId)?.lesson ?: throw RuntimeException()
 
-        lessonStatusLessonTimeView.bind(lesson, weekIndex)
+        lessonStatusLessonTimeView.bind(lesson, activityData.weekIndex)
         lessonStatusTeacherInfoView.bind(lesson.teacherLogin)
 
         initButtons()
     }
 
     private fun initButtons() {
-        val status = lessonStatusService.getLessonStatus(lessonId, lessonsService.getLessonStartTime(lessonId, weekIndex))
+        val status = lessonStatusService.getLessonStatus(
+                activityData.lessonId,
+                lessonsService.getLessonStartTime(
+                        activityData.lessonId,
+                        activityData.weekIndex
+                )
+        )
 
         initButton(
                 lessonStatusPassedView,
@@ -121,9 +101,12 @@ open class LessonStatusActivity : BaseActivity() {
 
             lessonsStatusAsyncService.addLessonStatus(LessonStatus(
                     null,
-                    lessonId,
+                    activityData.lessonId,
                     buttonStatus,
-                    lessonsService.getLessonStartTime(lessonId, weekIndex),
+                    lessonsService.getLessonStartTime(
+                            activityData.lessonId,
+                            activityData.weekIndex
+                    ),
                     Date().time
             ))
                     .onSuccess { runOnUiThread {
@@ -135,15 +118,9 @@ open class LessonStatusActivity : BaseActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        doFinish()
-    }
+    override fun onBackPressed() = LessonStatusActivityNavigation.goBackWithCancel(from = this)
 
-    private fun doFinish() {
-        setResult(Activity.RESULT_OK)
-        finish()
-        overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
-    }
+    private fun doFinish() = LessonStatusActivityNavigation.goBackWithSuccess(from = this)
 
     override fun getAppLayoutView(): AppLayoutView? {
         return null

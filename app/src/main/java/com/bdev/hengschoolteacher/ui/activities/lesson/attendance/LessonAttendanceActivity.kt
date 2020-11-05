@@ -1,7 +1,6 @@
-package com.bdev.hengschoolteacher.ui.activities.lesson
+package com.bdev.hengschoolteacher.ui.activities.lesson.attendance
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
@@ -12,7 +11,7 @@ import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesModifierService
 import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityParams.EXTRA_DATA
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
 import kotlinx.android.synthetic.main.activity_lesson_student_attendance.*
@@ -23,24 +22,7 @@ import org.androidannotations.annotations.Extra
 
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_lesson_student_attendance)
-open class LessonStudentAttendanceActivity : BaseActivity() {
-    companion object {
-        const val EXTRA_LESSON_ID = "EXTRA_LESSON_ID"
-        const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
-        const val EXTRA_WEEK_INDEX = "EXTRA_WEEK_INDEX"
-
-        fun redirectToChild(current: BaseActivity, lessonId: Long, studentLogin: String, weekIndex: Int) {
-            RedirectBuilder
-                    .redirect(current)
-                    .to(LessonStudentAttendanceActivity_::class.java)
-                    .withExtra(EXTRA_LESSON_ID, lessonId)
-                    .withExtra(EXTRA_STUDENT_LOGIN, studentLogin)
-                    .withExtra(EXTRA_WEEK_INDEX, weekIndex)
-                    .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
-                    .goForResult(LessonActivity.REQUEST_CODE_LESSON_ATTENDANCE)
-        }
-    }
-
+open class LessonAttendanceActivity : BaseActivity() {
     @Bean
     lateinit var groupsService: GroupsService
     @Bean
@@ -52,35 +34,31 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
     @Bean
     lateinit var studentsAttendancesModifierService: StudentsAttendancesModifierService
 
-    @Extra(EXTRA_LESSON_ID)
-    @JvmField
-    var lessonId: Long = 0
-
-    @Extra(EXTRA_STUDENT_LOGIN)
-    lateinit var studentLogin: String
-
-    @Extra(EXTRA_WEEK_INDEX)
-    @JvmField
-    var weekIndex: Int = 0
+    @Extra(EXTRA_DATA)
+    lateinit var activityData: LessonAttendanceActivityData
 
     @AfterViews
     fun init() {
         lessonAttendanceHeaderView.setLeftButtonAction { doFinish() }
 
-        val groupAndLesson = lessonsService.getLesson(lessonId) ?: throw RuntimeException()
+        val groupAndLesson = lessonsService.getLesson(activityData.lessonId) ?: throw RuntimeException()
 
         val group = groupAndLesson.group
         val lesson = groupAndLesson.lesson
-        val student = studentsService.getStudent(studentLogin) ?: throw RuntimeException()
+        val student = studentsService.getStudent(activityData.studentLogin) ?: throw RuntimeException()
 
-        lessonStudentAttendanceLessonTimeView.bind(lesson, weekIndex)
+        lessonStudentAttendanceLessonTimeView.bind(lesson, activityData.weekIndex)
         lessonStudentAttendanceStudentInfoView.bind(student)
 
         initButtons(group)
     }
 
     private fun initButtons(group: Group) {
-        val attendance = studentsAttendancesProviderService.getAttendance(lessonId, studentLogin, weekIndex)
+        val attendance = studentsAttendancesProviderService.getAttendance(
+                lessonId = activityData.lessonId,
+                studentLogin = activityData.studentLogin,
+                weekIndex = activityData.weekIndex
+        )
 
         val allButtonsViews = listOf(
                 studentAttendanceVisitButtonView,
@@ -162,26 +140,20 @@ open class LessonStudentAttendanceActivity : BaseActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        doFinish()
-    }
+    override fun onBackPressed() = LessonAttendanceActivityNavigation.goBackWithCancel(from = this)
 
-    private fun doFinish() {
-        setResult(Activity.RESULT_OK)
-        finish()
-        overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
-    }
+    private fun doFinish() = LessonAttendanceActivityNavigation.goBackWithSuccess(from = this)
 
     private fun markButtonAttendance(group: Group, attendance: StudentAttendanceType) {
-        val lesson = lessonsService.getLesson(lessonId = lessonId)
+        val lesson = lessonsService.getLesson(lessonId = activityData.lessonId)
 
         studentsAttendancesModifierService
                 .addAttendance(StudentAttendance(
-                        studentLogin = studentLogin,
+                        studentLogin = activityData.studentLogin,
                         groupType = group.type,
-                        studentsInGroup = lessonsService.getLessonStudents(lessonId, weekIndex).size,
-                        startTime = lessonsService.getLessonStartTime(lessonId, weekIndex),
-                        finishTime = lessonsService.getLessonFinishTime(lessonId, weekIndex),
+                        studentsInGroup = lessonsService.getLessonStudents(activityData.lessonId, activityData.weekIndex).size,
+                        startTime = lessonsService.getLessonStartTime(activityData.lessonId, activityData.weekIndex),
+                        finishTime = lessonsService.getLessonFinishTime(activityData.lessonId, activityData.weekIndex),
                         type = attendance,
                         ignoreSingleStudentPricing = lesson?.lesson?.ignoreSingleStudentPricing ?: false
                 ))
