@@ -16,6 +16,8 @@ import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
+import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView
+import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView_
 import kotlinx.android.synthetic.main.activity_student_information.*
 import kotlinx.android.synthetic.main.view_list_item_student_information_timetable.view.*
 import org.androidannotations.annotations.*
@@ -108,7 +110,7 @@ open class StudentInformationActivity : BaseActivity() {
 
     private fun initPhonesList(student: Student) {
         student.person.contacts.phones.forEach {
-            studentInformationPhonesLayoutView.addView(StudentPhoneItemView_.build(this).bind(it.value))
+            studentInformationPhonesLayoutView.addView(BrandedPhoneView_.build(this).bind(it))
         }
     }
 

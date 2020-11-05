@@ -46,7 +46,7 @@ open class TeacherActivity : BaseActivity() {
         teacherPhonesContainerView.removeAllViews()
 
         teacher.person.contacts.phones.forEach { phone ->
-            teacherPhonesContainerView.addView(BrandedPhoneView_.build(this).bind(phone.value))
+            teacherPhonesContainerView.addView(BrandedPhoneView_.build(this).bind(personContact = phone))
         }
     }
 

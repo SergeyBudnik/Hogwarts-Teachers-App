@@ -1,11 +1,10 @@
 package com.bdev.hengschoolteacher.ui.views.branded
 
 import android.content.Context
-import android.graphics.PorterDuff
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.ui.resources.AppResources
 import kotlinx.android.synthetic.main.view_branded_secondary_header_item.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup
@@ -19,7 +18,7 @@ open class BrandedSecondaryHeaderItem(context: Context, attrs: AttributeSet) : L
         val ta = context.obtainStyledAttributes(attrs, R.styleable.BrandedSecondaryHeaderItem, 0, 0)
 
         try {
-            title = ta.getString(R.styleable.BrandedSecondaryHeaderItem_header_title)
+            title = ta.getString(R.styleable.BrandedSecondaryHeaderItem_header_title) ?: ""
             active = ta.getBoolean(R.styleable.BrandedSecondaryHeaderItem_header_active, false)
         } finally {
             ta.recycle()
@@ -30,48 +29,45 @@ open class BrandedSecondaryHeaderItem(context: Context, attrs: AttributeSet) : L
     fun init() {
         brandedSecondaryHeaderItemTitleView.text = title
 
-        setActive(active)
+        bind(active = active, hasAlert = false, clickAction = {})
     }
 
-    fun setHasAlert(hasAlert: Boolean) {
-        if (hasAlert) {
-            showIcon(
-                    iconId = R.drawable.ic_alert,
-                    colorId = R.color.fill_text_basic_negative
-            )
-        } else {
-            hideIcon()
-        }
-    }
-
-    fun setActive(active: Boolean) {
-        brandedSecondaryHeaderItemTitleView.setTextColor(resources.getColor(if (active) {
-            R.color.fill_text_basic
-        } else {
-            R.color.fill_text_basic_action_link
-        }))
-
-        activeMarkView.setBackgroundColor(resources.getColor(if (active) {
-            R.color.fill_accent_strong
-        } else {
-            R.color.transparent
-        }))
-    }
-
-    private fun showIcon(iconId: Int, colorId: Int) {
-        brandedSecondaryHeaderItemIconView.visibility = View.VISIBLE
-
-        brandedSecondaryHeaderItemIconView.setImageDrawable(
-                resources.getDrawable(iconId)
+    fun bind(active: Boolean, hasAlert: Boolean, clickAction: () -> Unit) {
+        brandedSecondaryHeaderItemTitleView.setTextColor(
+                AppResources.getColor(
+                        context = context,
+                        colorId = when {
+                            hasAlert -> {
+                                R.color.fill_text_basic_negative
+                            }
+                            active -> {
+                                R.color.fill_text_basic_accent
+                            }
+                            else -> {
+                                R.color.fill_text_basic
+                            }
+                        }
+                )
         )
 
-        brandedSecondaryHeaderItemIconView.setColorFilter(
-                resources.getColor(colorId),
-                PorterDuff.Mode.SRC_IN
+        activeMarkView.setBackgroundColor(
+                AppResources.getColor(
+                        context = context,
+                        colorId = when {
+                            active -> {
+                                if (hasAlert) {
+                                    R.color.fill_text_basic_negative
+                                } else {
+                                    R.color.fill_text_basic_accent
+                                }
+                            }
+                            else -> {
+                                R.color.transparent
+                            }
+                        }
+                )
         )
-    }
 
-    private fun hideIcon() {
-        brandedSecondaryHeaderItemIconView.visibility = View.GONE
+        setOnClickListener { clickAction() }
     }
 }

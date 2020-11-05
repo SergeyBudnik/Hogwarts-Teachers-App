@@ -16,6 +16,7 @@ import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendances
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -53,8 +54,7 @@ open class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
                 getAttendanceColor(studentAttendance)
         )
 
-        monitoringStudentMonthAttendanceItemPriceView.text =
-                "${studentPriceService.getAttendancePrice(studentAttendance)} Р"
+        monitoringStudentMonthAttendanceItemPriceView.text = "${studentPriceService.getAttendancePrice(studentAttendance)} Р"
 
         return this
     }
@@ -69,8 +69,9 @@ open class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
     }
 
     private fun getAttendanceColor(studentAttendance: StudentAttendance): Int {
-        return resources.getColor(
-                when (studentAttendance.type) {
+        return AppResources.getColor(
+                context = context,
+                colorId = when (studentAttendance.type) {
                     StudentAttendanceType.VISITED -> R.color.fill_text_basic_positive
                     StudentAttendanceType.VALID_SKIP -> R.color.fill_text_basic_warning
                     StudentAttendanceType.INVALID_SKIP -> R.color.fill_text_basic_negative
@@ -143,9 +144,11 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
                 .setTitle("Мониторинг. Студент. ${getString(month.nameId)}")
                 .setLeftButtonAction { doFinish() }
 
-        monitoringStudentMonthAttendanceSecondaryHeaderView
-                .bind(studentLogin = studentLogin, monthIndex = monthIndex)
-                .setItem(MonitoringStudentMonthHeaderView.Item.ATTENDANCE)
+        monitoringStudentMonthAttendanceSecondaryHeaderView.bind(
+                studentLogin = studentLogin,
+                monthIndex = monthIndex,
+                item = MonitoringStudentMonthHeaderView.Item.ATTENDANCE
+        )
 
         val student = studentsService.getStudent(studentLogin)
 

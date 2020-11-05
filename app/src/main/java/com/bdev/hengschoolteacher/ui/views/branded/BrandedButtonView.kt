@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.ui.resources.AppResources
 import kotlinx.android.synthetic.main.view_branded_button.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup
@@ -34,7 +35,7 @@ open class BrandedButtonView(context: Context, attrs: AttributeSet) : RelativeLa
         val ta = context.obtainStyledAttributes(attrs, R.styleable.BrandedButtonView, 0, 0)
 
         try {
-            text = ta.getString(R.styleable.BrandedButtonView_button_text)
+            text = ta.getString(R.styleable.BrandedButtonView_button_text) ?: ""
             style = Style.findById(ta.getInteger(R.styleable.BrandedButtonView_button_style, -1)) ?: Style.PRIMARY
         } finally {
             ta.recycle()
@@ -59,10 +60,28 @@ open class BrandedButtonView(context: Context, attrs: AttributeSet) : RelativeLa
     }
 
     private fun doInit() {
-        brandedButtonView.setImageDrawable(resources.getDrawable(style.backgroundId))
-        brandedButtonView.setColorFilter(resources.getColor(style.backgroundColorId), PorterDuff.Mode.SRC_IN)
+        brandedButtonView.setImageDrawable(
+                AppResources.getDrawable(
+                        context = context,
+                        drawableId = style.backgroundId
+                )
+        )
+
+        brandedButtonView.setColorFilter(
+                AppResources.getColor(
+                        context = context,
+                        colorId = style.backgroundColorId
+                ),
+                PorterDuff.Mode.SRC_IN
+        )
 
         brandedButtonTextView.text = text
-        brandedButtonTextView.setTextColor(resources.getColor(style.textColorId))
+
+        brandedButtonTextView.setTextColor(
+                AppResources.getColor(
+                        context = context,
+                        colorId = style.textColorId
+                )
+        )
     }
 }

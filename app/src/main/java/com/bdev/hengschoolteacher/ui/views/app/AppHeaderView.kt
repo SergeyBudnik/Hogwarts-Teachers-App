@@ -3,10 +3,11 @@ package com.bdev.hengschoolteacher.ui.views.app
 import android.content.Context
 import android.graphics.PorterDuff
 import android.util.AttributeSet
-import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.ui.resources.AppResources
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_app_header.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup
@@ -41,10 +42,15 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
     }
 
     private fun setActionButton(actionButtonView: ImageView, drawableId: Int) {
-        actionButtonView.visibility = if (drawableId != -1) { View.VISIBLE } else { View.GONE }
+        actionButtonView.visibility = visibleElseGone(visible = (drawableId != -1))
 
         if (drawableId != -1) {
-            actionButtonView.setImageDrawable(context.getDrawable(drawableId))
+            actionButtonView.setImageDrawable(
+                    AppResources.getDrawable(
+                            context = context,
+                            drawableId = drawableId
+                    )
+            )
         }
     }
 
@@ -91,10 +97,13 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
     }
 
     private fun getButtonColor(active: Boolean): Int {
-        return context.resources.getColor(if (active) {
-            R.color.fill_text_basic_accent
-        } else {
-            R.color.fill_text_basic
-        })
+        return AppResources.getColor(
+                context = context,
+                colorId = if (active) {
+                    R.color.fill_text_basic_accent
+                } else {
+                    R.color.fill_text_basic
+                }
+        )
     }
 }

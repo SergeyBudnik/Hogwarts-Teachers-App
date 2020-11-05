@@ -1,13 +1,14 @@
 package com.bdev.hengschoolteacher.ui.activities.profile
 
 import android.annotation.SuppressLint
-import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.service.teacher.TeacherPaymentsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
 import kotlinx.android.synthetic.main.activity_profile_payments.*
 import org.androidannotations.annotations.AfterViews
@@ -35,6 +36,8 @@ open class ProfilePaymentsActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
+        profilePaymentsMenuLayoutView.setCurrentMenuItem(item = AppMenuView.Item.MY_PROFILE)
+
         profilePaymentsHeaderView
                 .setLeftButtonAction { profilePaymentsMenuLayoutView.openMenu() }
                 .setFirstRightButtonAction { toggleFilter() }
@@ -69,19 +72,8 @@ open class ProfilePaymentsActivity : BaseActivity() {
 
         val filteredPayments = allPayments.filter { payment -> !filterEnabled || !payment.processed }
 
-        profilePaymentsEmptyView.visibility =
-                if (allPayments.isEmpty()) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
-
-        profilePaymentsEmptyWithFilterView.visibility =
-                if (allPayments.isNotEmpty() && filteredPayments.isEmpty()) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
+        profilePaymentsEmptyView.visibility = visibleElseGone(visible = allPayments.isEmpty())
+        profilePaymentsEmptyWithFilterView.visibility = visibleElseGone(visible = (allPayments.isNotEmpty() && filteredPayments.isEmpty()))
 
         profilePaymentsTeacherPaymentsView.bind(
                 payments = filteredPayments,

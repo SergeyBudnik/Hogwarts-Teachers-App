@@ -20,7 +20,9 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentPaymentActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
 import kotlinx.android.synthetic.main.activity_lesson.*
@@ -77,7 +79,13 @@ open class LessonStudentItemView : RelativeLayout {
             StudentAttendanceType.FREE_LESSON -> R.color.fill_text_basic_action_link
         }
 
-        lessonStudentItemAttendanceView.setColorFilter(resources.getColor(colorId), PorterDuff.Mode.SRC_IN)
+        lessonStudentItemAttendanceView.setColorFilter(
+                AppResources.getColor(
+                        context = context,
+                        colorId = colorId
+                ),
+                PorterDuff.Mode.SRC_IN
+        )
 
         lessonStudentItemAttendanceView.setOnClickListener {
             LessonStudentAttendanceActivity.redirectToChild(
@@ -92,8 +100,8 @@ open class LessonStudentItemView : RelativeLayout {
     private fun bindDept(student: Student) {
         val dept = studentPaymentsDeptService.getStudentDept(student.login)
 
-        lessonStudentItemNoDeptView.visibility = if (dept > 0) { View.GONE } else { View.VISIBLE }
-        lessonStudentItemDeptView.visibility = if (dept > 0) { View.VISIBLE } else { View.GONE }
+        lessonStudentItemNoDeptView.visibility = visibleElseGone(visible = dept <= 0)
+        lessonStudentItemDeptView.visibility = visibleElseGone(visible = dept > 0)
 
         lessonStudentItemDeptView.text = "Долг: $dept Р"
     }

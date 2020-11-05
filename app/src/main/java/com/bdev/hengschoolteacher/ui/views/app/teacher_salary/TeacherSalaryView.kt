@@ -8,6 +8,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherActionType
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherPayment
+import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.service.teacher.TeacherSalaryService
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import kotlinx.android.synthetic.main.view_teacher_salary.view.*
@@ -73,16 +74,21 @@ class TeacherSalaryListAdapter(context: Context) : BaseWeekItemsListAdapter<Teac
 open class TeacherSalaryView : LinearLayout {
     @Bean
     lateinit var teacherSalaryService: TeacherSalaryService
+    @Bean
+    lateinit var staffMembersStorageService: StaffMembersStorageService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun init(teacherLogin: String, weekIndex: Int) {
+        val teacher = staffMembersStorageService.getStaffMember(login = teacherLogin)
+
         val teacherPayments = teacherSalaryService.getTeacherPayments(
                 teacherLogin = teacherLogin,
                 weekIndex = weekIndex
         )
 
+        teacherSalarySalaryIn30mView.text = "${teacher?.salaryIn30m ?: 0} Р"
         teacherSalaryWeekSumView.text = "${teacherPayments.fold(0) {v, tp -> v + tp.amount}} Р"
 
         val adapter = TeacherSalaryListAdapter(context)

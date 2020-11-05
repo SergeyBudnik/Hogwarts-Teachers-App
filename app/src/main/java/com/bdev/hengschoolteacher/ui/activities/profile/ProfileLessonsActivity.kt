@@ -3,7 +3,6 @@ package com.bdev.hengschoolteacher.ui.activities.profile
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.view.View
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.service.LessonStateService
@@ -13,6 +12,7 @@ import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
+import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
@@ -79,6 +79,8 @@ open class ProfileLessonsActivity : BaseActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == LessonItemView.REQUEST_CODE_LESSON) {
             if (resultCode == Activity.RESULT_OK) {
                 initLessonsList()
@@ -96,11 +98,7 @@ open class ProfileLessonsActivity : BaseActivity() {
 
             profileLessonsListView.fill(lessons, weekIndex)
 
-            profileLessonsNoLessonsView.visibility = if (lessons.isEmpty() && filterEnabled) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+            profileLessonsNoLessonsView.visibility = visibleElseGone(visible = (lessons.isEmpty() && filterEnabled))
         }
     }
 
@@ -117,11 +115,7 @@ open class ProfileLessonsActivity : BaseActivity() {
 
         profileLessonsHeaderView.setSecondRightButtonActive(calendarEnabled)
 
-        profileLessonsWeekSelectionBarView.visibility = if (calendarEnabled) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        profileLessonsWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
     }
 
     override fun getAppLayoutView(): AppLayoutView? {

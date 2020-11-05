@@ -16,7 +16,7 @@ open class BrandedEditTextView(context: Context, attrs: AttributeSet) : LinearLa
         TEXT(1), PASSWORD(2);
 
         companion object {
-            fun findById(id: Int): BrandedEditTextView.Style? {
+            fun findById(id: Int): Style? {
                 return values().find { it.id == id }
             }
         }
@@ -34,9 +34,9 @@ open class BrandedEditTextView(context: Context, attrs: AttributeSet) : LinearLa
             val hintStyleable = R.styleable.BrandedEditTextView_branded_edit_text_hint
             val styleStyleable = R.styleable.BrandedEditTextView_branded_edit_text_type
 
-            label = ta.getString(labelStyleable)
-            hint = ta.getString(hintStyleable)
-            style = BrandedEditTextView.Style.findById(ta.getInteger(styleStyleable, -1)) ?: BrandedEditTextView.Style.TEXT
+            label = ta.getString(labelStyleable) ?: ""
+            hint = ta.getString(hintStyleable) ?: ""
+            style = Style.findById(ta.getInteger(styleStyleable, -1)) ?: Style.TEXT
         } finally {
             ta.recycle()
         }

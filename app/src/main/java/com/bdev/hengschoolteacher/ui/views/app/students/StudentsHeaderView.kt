@@ -37,16 +37,21 @@ open class StudentsHeaderView(context: Context, attrs: AttributeSet) : LinearLay
 
     @AfterViews
     fun init() {
-        studentsHeaderListView.setActive(item == Item.LIST)
-        studentsHeaderGroupsView.setActive(item == Item.GROUPS)
+        studentsHeaderListView.bind(
+                active = item == Item.LIST,
+                hasAlert = false,
+                clickAction = {
+                    StudentsListActivity.redirectToSibling(context as BaseActivity)
+                }
+        )
 
-        studentsHeaderListView.setOnClickListener {
-            StudentsListActivity.redirectToSibling(context as BaseActivity)
-        }
-
-        studentsHeaderGroupsView.setOnClickListener {
-            StudentsGroupsListActivity.redirectToSibling(context as BaseActivity)
-        }
+        studentsHeaderGroupsView.bind(
+                active = item == Item.GROUPS,
+                hasAlert = false,
+                clickAction = {
+                    StudentsGroupsListActivity.redirectToSibling(context as BaseActivity)
+                }
+        )
     }
 }
 

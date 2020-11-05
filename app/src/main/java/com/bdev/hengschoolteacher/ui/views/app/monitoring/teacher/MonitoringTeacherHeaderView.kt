@@ -23,37 +23,37 @@ open class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : 
     lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
 
     fun bind(currentItem: Item, teacherLogin: String) {
-        monitoringTeacherHeaderLessonsView.let {
-            it.setActive(currentItem == Item.LESSONS)
-            it.setHasAlert(alertsMonitoringTeachersService.haveLessonsAlerts(teacherLogin))
-            it.setOnClickListener {
+        monitoringTeacherHeaderLessonsView.bind(
+            active = currentItem == Item.LESSONS,
+            hasAlert = alertsMonitoringTeachersService.haveLessonsAlerts(teacherLogin),
+            clickAction = {
                 MonitoringTeacherLessonsActivity.redirectToSibling(
                         current = context as BaseActivity,
                         teacherLogin = teacherLogin
                 )
             }
-        }
+        )
 
-        monitoringTeacherHeaderSalaryView.let {
-            it.setActive(currentItem == Item.SALARY)
-            it.setHasAlert(false)
-            it.setOnClickListener {
+        monitoringTeacherHeaderSalaryView.bind(
+            active = currentItem == Item.SALARY,
+            hasAlert = false,
+            clickAction = {
                 MonitoringTeacherSalaryActivity.redirectToSibling(
                         current = context as BaseActivity,
                         teacherLogin = teacherLogin
                 )
             }
-        }
+        )
 
-        monitoringTeacherHeaderPaymentsView.let {
-            it.setActive(currentItem == Item.PAYMENTS)
-            it.setHasAlert(alertsMonitoringTeachersService.havePaymentsAlerts(teacherLogin))
-            it.setOnClickListener {
+        monitoringTeacherHeaderPaymentsView.bind(
+            active = currentItem == Item.PAYMENTS,
+            hasAlert = alertsMonitoringTeachersService.havePaymentsAlerts(teacherLogin),
+            clickAction = {
                 MonitoringTeacherPaymentsActivity.redirectToSibling(
                         current = context as BaseActivity,
                         teacherLogin = teacherLogin
                 )
             }
-        }
+        )
     }
  }
