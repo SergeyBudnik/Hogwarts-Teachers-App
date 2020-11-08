@@ -30,4 +30,12 @@
         app:header_title="Оплата"
         app:header_active="false"/>
 
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+        android:id="@+id/monitoringTeacherHeaderDebtsView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:header_title="Долги"
+        app:header_active="false"/>
+
 </LinearLayout>

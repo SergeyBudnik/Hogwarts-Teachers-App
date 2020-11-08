@@ -10,11 +10,12 @@ import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.service.StudentsService
 import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.lesson.LessonActivity
+import com.bdev.hengschoolteacher.ui.activities.lesson.info.LessonInfoActivityData
+import com.bdev.hengschoolteacher.ui.activities.lesson.info.LessonInfoActivityLauncher
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_lesson_item.view.*
@@ -109,11 +110,13 @@ open class LessonsView : RelativeLayout {
 
         lessonsListView.setOnItemClickListener { _, _, position, _ ->
             adapter.getItem(position).second?.let { groupAndLesson ->
-                LessonActivity.redirectToChild(
-                        current = context as BaseActivity,
-                        groupId = groupAndLesson.group.id,
-                        lessonId = groupAndLesson.lesson.id,
-                        weekIndex = weekIndex,
+                LessonInfoActivityLauncher.launchAsChild(
+                        from = context as BaseActivity,
+                        data = LessonInfoActivityData(
+                                groupId = groupAndLesson.group.id,
+                                lessonId = groupAndLesson.lesson.id,
+                                weekIndex = weekIndex
+                        ),
                         requestCode = LessonItemView.REQUEST_CODE_LESSON
                 )
             }
