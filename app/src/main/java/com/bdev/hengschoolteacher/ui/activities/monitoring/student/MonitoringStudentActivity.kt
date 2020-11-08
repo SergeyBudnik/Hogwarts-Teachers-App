@@ -12,7 +12,7 @@ import com.bdev.hengschoolteacher.data.school.Month
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.services.StudentPaymentsDeptService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
 import com.bdev.hengschoolteacher.services.lessons.LessonsService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
@@ -182,10 +182,13 @@ open class MonitoringStudentActivity : BaseActivity() {
     @Bean(StudentsStorageServiceImpl::class)
     lateinit var studentsStorageService: StudentsStorageService
     @Bean
-    lateinit var studentPaymentsDeptService: StudentPaymentsDeptService
+    lateinit var studentDebtsService: StudentDebtsService
 
     @Bean
     lateinit var monitoringStudentPaymentListAdapter: MonitoringStudentPaymentListAdapter
+
+    @Bean(StudentsPricingServiceImpl::class)
+    lateinit var studentPricingService: StudentsPricingService
 
     @Extra(EXTRA_STUDENT_LOGIN)
     lateinit var studentLogin: String
@@ -203,7 +206,12 @@ open class MonitoringStudentActivity : BaseActivity() {
                 studentLogin = studentLogin
         )
 
-        monitoringStudentPaymentDeptView.text = "${studentPaymentsDeptService.getStudentDept(studentLogin)}"
+        monitoringStudentPaymentDeptView.text = "${studentDebtsService.getStudentDept(studentLogin)}"
+
+        monitoringStudentExpectedMonthlyDebtView.text = "${studentPricingService.getMonthExpectedPrice(
+                studentLogin = studentLogin, 
+                month = TimeUtils().getCurrentMonth()
+        )}"
 
         val allAttendances = studentsAttendancesProviderService.getAllStudentAttendances(studentLogin)
         val allVisitedAttendances = allAttendances.filter { it.type == StudentAttendanceType.VISITED }

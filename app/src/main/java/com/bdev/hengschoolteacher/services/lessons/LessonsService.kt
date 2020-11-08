@@ -38,6 +38,68 @@ open class LessonsService {
         return null
     }
 
+    fun getAllStudentLessonsInMonth(studentLogin: String, month: Int): List<Pair<GroupAndLesson, Long>> {
+        val lessons = ArrayList<Pair<GroupAndLesson, Long>>()
+
+        val student = studentsStorageService.getByLogin(studentLogin)
+
+        student?.studentGroups?.forEach { studentGroup ->
+            val group = groupsStorageService.getById(groupId = studentGroup.groupId)
+
+            group?.lessons?.forEach { lesson ->
+                val lessonTimes = getLessonTimesInMonth(
+                        lesson = lesson,
+                        month = month,
+                        startTime = studentGroup.startTime
+                )
+
+                lessonTimes.forEach { lessonTime ->
+                    lessons.add(
+                            Pair(
+                                    GroupAndLesson(group, lesson),
+                                    lessonTime
+                            )
+                    )
+                }
+            }
+        }
+
+        return lessons.sortedBy { it.second }
+    }
+
+    private fun getLessonTimesInMonth(lesson: Lesson, month: Int, startTime: Long): List<Long> {
+        val lessonTimes = ArrayList<Long>()
+
+        val c1 = getCalendarSinceMonthStart(month = month)
+        val c2 = getCalendarSinceTime(time = startTime)
+
+        val c = if (c1.time.time > c2.time.time) { c1 } else { c2 }
+
+        val daysInMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val currentDayInMonth = c.get(Calendar.DAY_OF_MONTH)
+
+        for (day in currentDayInMonth..daysInMonth) {
+            c.set(Calendar.DAY_OF_MONTH, day)
+
+            val dayOfWeek = TimeUtils().getDayOfWeek(c)
+
+            if (lesson.day == dayOfWeek) {
+                val lessonCalendar = Calendar.getInstance()
+
+                lessonCalendar.set(Calendar.MONTH, month)
+                lessonCalendar.set(Calendar.DAY_OF_MONTH, day)
+                lessonCalendar.set(Calendar.HOUR_OF_DAY, TimeUtils().getCalendarHour(lesson.startTime))
+                lessonCalendar.set(Calendar.MINUTE,      TimeUtils().getCalendarMinute(lesson.startTime))
+                lessonCalendar.set(Calendar.SECOND,      0)
+                lessonCalendar.set(Calendar.MILLISECOND, 0)
+
+                lessonTimes.add(lessonCalendar.time.time)
+            }
+        }
+
+        return lessonTimes
+    }
+
     fun getAllLessons(weekIndex: Int): List<GroupAndLesson> {
         return getLessonsByCondition { _, lesson -> lessonTimeMatches(lesson, weekIndex) }
     }
@@ -88,17 +150,40 @@ open class LessonsService {
         return lessons
     }
 
-    fun getLessonsAmountInMonth(groupId: Long, month: Int): Int {
-        val calendar = Calendar.getInstance()
+    fun getLessonsAmountInMonthSinceTime(groupId: Long, time: Long): Int {
+        val monthCalendar = getCalendarSinceCurrentMonthStart()
+        val timeCalendar = getCalendarSinceTime(time = time)
 
-        with (calendar) {
-            set(Calendar.MONTH, month)
-            set(Calendar.DAY_OF_MONTH, 0)
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE,      0)
-            set(Calendar.SECOND,      0)
-            set(Calendar.MILLISECOND, 0)
+        val calendar = if (monthCalendar.time.time < timeCalendar.time.time) {
+            monthCalendar
+        } else {
+            timeCalendar
         }
+
+        val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val group = groupsStorageService.getById(groupId) ?: throw RuntimeException()
+
+        var lessonsAmount = 0
+
+        val currentDayInMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+        for (i in currentDayInMonth until (daysInMonth + 1)) {
+            calendar.set(Calendar.DAY_OF_MONTH, i)
+
+            val calendarDayOfWeek = TimeUtils().getDayOfWeek(calendar)
+
+            for (lesson in group.lessons) {
+                if (lesson.day == calendarDayOfWeek) {
+                    lessonsAmount++
+                }
+            }
+        }
+
+        return lessonsAmount
+    }
+
+    fun getLessonsAmountInMonth(groupId: Long, month: Int): Int {
+        val calendar = getCalendarSinceMonthStart(month = month)
 
         val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         val group = groupsStorageService.getById(groupId) ?: throw RuntimeException()
@@ -160,5 +245,43 @@ open class LessonsService {
         calendar.set(Calendar.MILLISECOND, 0)
 
         return calendar.timeInMillis
+    }
+
+    private fun getCalendarSinceCurrentMonthStart(): Calendar {
+        val calendar = Calendar.getInstance()
+
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE,      0)
+        calendar.set(Calendar.SECOND,      0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+        return calendar
+    }
+
+    private fun getCalendarSinceMonthStart(month: Int): Calendar {
+        val calendar = Calendar.getInstance()
+
+        calendar.set(Calendar.MONTH, month)
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE,      0)
+        calendar.set(Calendar.SECOND,      0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+        return calendar
+    }
+
+    private fun getCalendarSinceTime(time: Long): Calendar {
+        val calendar = Calendar.getInstance()
+
+        calendar.time = Date(time)
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE,      0)
+        calendar.set(Calendar.SECOND,      0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+        return calendar
     }
 }

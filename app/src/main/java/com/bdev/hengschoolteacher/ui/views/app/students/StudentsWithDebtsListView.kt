@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.services.StudentPaymentsDeptService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
@@ -24,7 +24,7 @@ open class StudentsWithDebtsListView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     @Bean
-    lateinit var studentPaymentsDeptService: StudentPaymentsDeptService
+    lateinit var studentDebtsService: StudentDebtsService
 
     fun bind(students: List<Student>, searchQuery: String, withDebtsOnly: Boolean) {
         val adapter = StudentsListAdapter(context)
@@ -34,7 +34,7 @@ open class StudentsWithDebtsListView : RelativeLayout {
                         .map {
                             StudentInfo(
                                     student = it,
-                                    dept = studentPaymentsDeptService.getStudentDept(it.login).toLong()
+                                    dept = studentDebtsService.getExpectedDebt(studentLogin = it.login).toLong()
                             )
                         }
                         .filter { studentInfo ->

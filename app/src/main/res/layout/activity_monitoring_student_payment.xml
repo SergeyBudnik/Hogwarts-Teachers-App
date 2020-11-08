@@ -50,6 +50,33 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/app_size_1"
+            android:paddingBottom="@dimen/app_size_1"
+            android:paddingStart="@dimen/app_size_2"
+            android:paddingEnd="@dimen/app_size_2"
+            android:background="@color/fill_contrast_medium">
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ожидаемый долг за месяц:"
+                android:textSize="@dimen/font_large"
+                android:textColor="@color/fill_text_basic"/>
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/monitoringStudentExpectedMonthlyDebtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="1000 Р"
+                android:textSize="@dimen/font_large"
+                android:textColor="@color/fill_text_basic_accent"/>
+
+        </RelativeLayout>
+
         <ListView
             android:id="@+id/monitoringStudentPaymentListView"
             android:layout_width="match_parent"
