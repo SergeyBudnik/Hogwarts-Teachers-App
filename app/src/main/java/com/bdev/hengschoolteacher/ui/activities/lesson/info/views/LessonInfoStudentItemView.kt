@@ -8,8 +8,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.services.StudentPaymentsDeptService
-import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsStorageService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
 import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityData
 import com.bdev.hengschoolteacher.ui.resources.AppResources
@@ -24,7 +23,7 @@ open class LessonInfoStudentItemView : RelativeLayout {
     lateinit var studentsAttendanceProviderService: StudentsAttendancesProviderService
 
     @Bean
-    lateinit var studentPaymentsDeptService: StudentPaymentsDeptService
+    lateinit var studentDebtsService: StudentDebtsService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -103,11 +102,15 @@ open class LessonInfoStudentItemView : RelativeLayout {
     }
 
     private fun bindDept(student: Student) {
-        val dept = studentPaymentsDeptService.getStudentDept(student.login)
+        val dept = studentDebtsService.getStudentDept(student.login)
+        val expectedDebt = studentDebtsService.getExpectedDebt(studentLogin = student.login)
 
-        lessonStudentItemNoDeptView.visibility = visibleElseGone(visible = dept <= 0)
-        lessonStudentItemDeptView.visibility = visibleElseGone(visible = dept > 0)
+        lessonStudentItemNoDeptView.visibility = visibleElseGone(visible = expectedDebt <= 0)
+
+        lessonStudentItemDeptView.visibility = visibleElseGone(visible = expectedDebt > 0)
+        lessonStudentItemExpectedDebtView.visibility = visibleElseGone(visible = expectedDebt > 0)
 
         lessonStudentItemDeptView.text = "Долг: $dept Р"
+        lessonStudentItemExpectedDebtView.text = "Ожидаемый долг: $expectedDebt Р"
     }
 }

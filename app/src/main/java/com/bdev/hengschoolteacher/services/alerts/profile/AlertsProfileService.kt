@@ -1,6 +1,6 @@
 package com.bdev.hengschoolteacher.services.alerts.profile
 
-import com.bdev.hengschoolteacher.services.StudentPaymentsDeptService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringTeachersService
 import com.bdev.hengschoolteacher.services.profile.ProfileService
@@ -16,7 +16,7 @@ open class AlertsProfileService {
     @Bean(StudentsStorageServiceImpl::class)
     lateinit var studentsStorageService: StudentsStorageService
     @Bean
-    lateinit var studentsPaymentsDeptService: StudentPaymentsDeptService
+    lateinit var studentsDebtsService: StudentDebtsService
     @Bean
     lateinit var profileService: ProfileService
 
@@ -44,7 +44,7 @@ open class AlertsProfileService {
             studentsStorageService
                     .getAll()
                     .filter { it.managerLogin == me.login }
-                    .any { student -> studentsPaymentsDeptService.getStudentDept(student.login) > 0 }
+                    .any { student -> studentsDebtsService.getStudentDept(student.login) > 0 }
         } ?: false
     }
 }

@@ -20,8 +20,8 @@ open class GroupStudentsProviderServiceImpl : GroupStudentsProviderService {
                 .getAll()
                 .filter { student ->
                     student.studentGroups
-                            .filter { it.startTime < time }
-                            .filter { it.finishTime > time }
+                            .filter { it.startTime <= time }
+                            .filter { it.finishTime >= time }
                             .map { it.groupId }
                             .contains(groupId)
                 }

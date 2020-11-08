@@ -15,4 +15,8 @@ class Lesson @JsonCreator constructor(
         @JsonProperty("finishTime") val finishTime: Time,
         @JsonProperty("creationTime") val creationTime: Long,
         @JsonProperty("deactivationTime") val deactivationTime: Long?
-)
+) {
+    fun durationIn30m(): Int {
+        return finishTime.order - startTime.order
+    }
+}

@@ -1,7 +1,7 @@
 package com.bdev.hengschoolteacher.services.alerts.monitoring
 
 import com.bdev.hengschoolteacher.services.LessonStateService
-import com.bdev.hengschoolteacher.services.StudentPaymentsDeptService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
 import com.bdev.hengschoolteacher.services.lessons.LessonsService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
@@ -23,7 +23,7 @@ open class AlertsMonitoringTeachersService {
     @Bean(StudentsStorageServiceImpl::class)
     lateinit var studentsStorageService: StudentsStorageService
     @Bean
-    lateinit var studentsPaymentsDeptService: StudentPaymentsDeptService
+    lateinit var studentsDebtsService: StudentDebtsService
 
     fun haveAlerts(teacherLogin: String): Boolean {
         return haveLessonsAlerts(teacherLogin) || havePaymentsAlerts(teacherLogin)
@@ -55,6 +55,6 @@ open class AlertsMonitoringTeachersService {
         return studentsStorageService
                 .getAll()
                 .filter { it.managerLogin == teacherLogin }
-                .any { student -> studentsPaymentsDeptService.getStudentDept(student.login) > 0 }
+                .any { student -> studentsDebtsService.getStudentDept(student.login) > 0 }
     }
 }
