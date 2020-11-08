@@ -5,8 +5,8 @@ import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
 import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
 import com.bdev.hengschoolteacher.data.school.student_payment.NewStudentPayment
 import com.bdev.hengschoolteacher.rest.StudentsPaymentsRest
-import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
+import com.bdev.hengschoolteacher.services.auth.AuthService
+import com.bdev.hengschoolteacher.services.students_payments.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.rest.spring.annotations.RestService
@@ -20,8 +20,11 @@ open class StudentsPaymentAsyncService : CommonAsyncService() {
     @Bean
     lateinit var authService: AuthService
 
-    @Bean
-    lateinit var studentsPaymentsService: StudentsPaymentsService
+    @Bean(StudentsPaymentsModifierServiceImpl::class)
+    lateinit var studentsPaymentsModifierService: StudentsPaymentsModifierService
+
+    @Bean(StudentsPaymentsProviderServiceImpl::class)
+    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
 
     fun addPayment(newStudentPayment: NewStudentPayment): SmartPromise<Unit, Exception> {
         return smartTask {
@@ -32,8 +35,8 @@ open class StudentsPaymentAsyncService : CommonAsyncService() {
 
             val studentPaymentId = studentsPaymentsRest.addStudentPayment(newStudentPayment)!!
 
-            studentsPaymentsService.addPayment(
-                    ExistingStudentPayment(
+            studentsPaymentsModifierService.add(
+                    payment = ExistingStudentPayment(
                             id = studentPaymentId,
                             info = newStudentPayment.info,
                             processed = false
@@ -44,7 +47,9 @@ open class StudentsPaymentAsyncService : CommonAsyncService() {
 
     fun setPaymentProcessed(paymentId: Long): SmartPromise<ExistingStudentPayment, Exception> {
         return smartTask {
-            val oldStudentPayment = studentsPaymentsService.getPayment(paymentId) ?: throw RuntimeException()
+            val oldStudentPayment = studentsPaymentsProviderService.getByPaymentId(
+                    paymentId = paymentId
+            ) ?: throw RuntimeException()
 
             authenticateAll(
                     rests = listOf(studentsPaymentsRest),
@@ -60,7 +65,7 @@ open class StudentsPaymentAsyncService : CommonAsyncService() {
                     processed = !oldStudentPayment.processed
             )
 
-            studentsPaymentsService.addPayment(newStudentPayment)
+            studentsPaymentsModifierService.add(payment = newStudentPayment)
 
             return@smartTask newStudentPayment
         }

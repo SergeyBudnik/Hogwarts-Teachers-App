@@ -1,13 +1,16 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.LessonStateService
-import com.bdev.hengschoolteacher.service.LessonsService
+import com.bdev.hengschoolteacher.services.LessonStateService
+import com.bdev.hengschoolteacher.services.lessons.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_lessons.*
 import org.androidannotations.annotations.AfterViews
@@ -82,6 +85,16 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
 
     override fun onBackPressed() {
         doFinish()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == LessonItemView.REQUEST_CODE_LESSON) {
+            if (resultCode == Activity.RESULT_OK) {
+                initLessonsList()
+            }
+        }
     }
 
     private fun doFinish() {

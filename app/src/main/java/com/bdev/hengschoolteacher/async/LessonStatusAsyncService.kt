@@ -4,8 +4,8 @@ import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.rest.LessonStatusRest
-import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.LessonStatusService
+import com.bdev.hengschoolteacher.services.auth.AuthService
+import com.bdev.hengschoolteacher.services.LessonStatusService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.rest.spring.annotations.RestService

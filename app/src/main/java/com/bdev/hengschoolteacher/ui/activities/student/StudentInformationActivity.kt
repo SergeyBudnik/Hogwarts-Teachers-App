@@ -9,14 +9,14 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.StudentsService
+import com.bdev.hengschoolteacher.services.lessons.LessonsService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
-import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView_
 import kotlinx.android.synthetic.main.activity_student_information.*
 import kotlinx.android.synthetic.main.view_list_item_student_information_timetable.view.*
@@ -85,14 +85,14 @@ open class StudentInformationActivity : BaseActivity() {
     @Extra(EXTRA_STUDENT_LOGIN)
     lateinit var studentLogin: String
 
-    @Bean
-    lateinit var studentsService: StudentsService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
     @Bean
     lateinit var lessonsService: LessonsService
 
     @AfterViews
     fun init() {
-        val student = studentsService.getStudent(studentLogin) ?: throw RuntimeException()
+        val student = studentsStorageService.getByLogin(studentLogin) ?: throw RuntimeException()
 
         studentInformationHeaderView
                 .setTitle("Студент. ${student.person.name}")

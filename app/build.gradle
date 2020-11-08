@@ -29,8 +29,8 @@ android {
         applicationId "com.bdev.hengschoolteacher"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 28
-        versionName "1.26.0"
+        versionCode 29
+        versionName "1.27.0"
         multiDexEnabled true
     }
 

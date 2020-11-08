@@ -46,14 +46,14 @@
         <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity_"/>
         <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity_"/>
         <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity_"/>
+        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherDebtsActivity_"/>
 
         <activity android:name=".ui.activities.student.StudentInformationActivity_"/>
         <activity android:name=".ui.activities.student.StudentPaymentActivity_"/>
 
-        <activity android:name=".ui.activities.lesson.LessonActivity_"/>
-        <activity android:name=".ui.activities.lesson.LessonStatusActivity_"/>
-        <activity android:name=".ui.activities.lesson.LessonTransferActivity_"/>
-        <activity android:name=".ui.activities.lesson.LessonStudentAttendanceActivity_"/>
+        <activity android:name=".ui.activities.lesson.info.LessonInfoActivity_"/>
+        <activity android:name=".ui.activities.lesson.status.LessonStatusActivity_"/>
+        <activity android:name=".ui.activities.lesson.attendance.LessonAttendanceActivity_"/>
 
         <activity android:name=".ui.activities.LoginActivity_" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.activities.LoadingActivity_"/>

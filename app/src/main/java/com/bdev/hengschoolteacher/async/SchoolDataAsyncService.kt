@@ -3,8 +3,17 @@ package com.bdev.hengschoolteacher.async
 import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
 import com.bdev.hengschoolteacher.rest.*
-import com.bdev.hengschoolteacher.service.*
-import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.auth.AuthService
+import com.bdev.hengschoolteacher.services.LessonStatusService
+import com.bdev.hengschoolteacher.services.groups.GroupsLoadingService
+import com.bdev.hengschoolteacher.services.groups.GroupsLoadingServiceImpl
+import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
+import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsModifierService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsModifierServiceImpl
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.rest.spring.annotations.RestService
@@ -27,18 +36,16 @@ open class SchoolDataAsyncService : CommonAsyncService() {
     @Bean
     lateinit var authService: AuthService
 
-    @Bean
-    lateinit var groupsService: GroupsService
-    @Bean
-    lateinit var studentsService: StudentsService
+    @Bean(GroupsLoadingServiceImpl::class)
+    lateinit var groupsLoadingService: GroupsLoadingService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
     @Bean
     lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
-    @Bean
-    lateinit var studentsPaymentsService: StudentsPaymentsService
+    @Bean(StudentsPaymentsModifierServiceImpl::class)
+    lateinit var studentsPaymentsModifierService: StudentsPaymentsModifierService
     @Bean
     lateinit var lessonStatusService: LessonStatusService
-    @Bean
-    lateinit var lessonsTransferStorageService: LessonsTransferStorageService
 
     fun load(): SmartPromise<Unit, Exception> {
         return smartTask {
@@ -57,38 +64,20 @@ open class SchoolDataAsyncService : CommonAsyncService() {
         return smartTask {
             authenticateAll(listOf(studentsRest), authService.getAuthInfo())
 
-            studentsService.setStudents(
+            studentsStorageService.setAll(
                     studentsRest.getAllStudents()
             )
         }
     }
 
-    fun loadGroups(): SmartPromise<Unit, Exception> {
-        return smartTask {
-            authenticateAll(listOf(groupsRest), authService.getAuthInfo())
-
-            groupsService.setGroups(
-                    groupsRest.getAllGroups()
-            )
-        }
-    }
+    fun loadGroups(): SmartPromise<Unit, Exception> = groupsLoadingService.load()
 
     fun loadStudentsPayments(): SmartPromise<Unit, Exception> {
         return smartTask {
             authenticateAll(listOf(studentsPaymentsRest), authService.getAuthInfo())
 
-            studentsPaymentsService.setPayments(
-                    studentsPaymentsRest.getStudentsPayments()
-            )
-        }
-    }
-
-    fun loadLessonsTransfers(): SmartPromise<Unit, Exception> {
-        return smartTask {
-            authenticateAll(listOf(lessonsTransferRest), authService.getAuthInfo())
-
-            lessonsTransferStorageService.setLessonsTransfers(
-                lessonsTransferRest.getAllLessonsTransfers()
+            studentsPaymentsModifierService.setAll(
+                    payments = studentsPaymentsRest.getStudentsPayments()
             )
         }
     }

@@ -2,8 +2,9 @@ package com.bdev.hengschoolteacher.ui.activities.profile
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.profile.ProfileService
-import com.bdev.hengschoolteacher.service.teacher.TeacherPaymentsService
+import com.bdev.hengschoolteacher.services.profile.ProfileService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
@@ -29,8 +30,8 @@ open class ProfilePaymentsActivity : BaseActivity() {
 
     @Bean
     lateinit var profileService: ProfileService
-    @Bean
-    lateinit var teacherPaymentsService: TeacherPaymentsService
+    @Bean(StudentsPaymentsProviderServiceImpl::class)
+    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
 
     private var filterEnabled: Boolean = true
 
@@ -64,7 +65,7 @@ open class ProfilePaymentsActivity : BaseActivity() {
         val teacherLogin = profileService.getMe()?.login
 
         val allPayments = teacherLogin?.let {
-            teacherPaymentsService.getPayments(
+            studentsPaymentsProviderService.getForTeacher(
                     teacherLogin = teacherLogin,
                     onlyUnprocessed = false
             )

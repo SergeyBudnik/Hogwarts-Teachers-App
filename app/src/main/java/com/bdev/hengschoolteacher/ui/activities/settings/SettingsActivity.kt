@@ -2,8 +2,8 @@ package com.bdev.hengschoolteacher.ui.activities.settings
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.profile.ProfileService
+import com.bdev.hengschoolteacher.services.auth.AuthService
+import com.bdev.hengschoolteacher.services.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoginActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder

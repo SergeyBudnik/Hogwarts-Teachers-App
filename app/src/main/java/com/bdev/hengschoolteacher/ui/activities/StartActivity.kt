@@ -1,7 +1,7 @@
 package com.bdev.hengschoolteacher.ui.activities
 
 import android.annotation.SuppressLint
-import com.bdev.hengschoolteacher.service.AuthService
+import com.bdev.hengschoolteacher.services.auth.AuthService
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import org.androidannotations.annotations.AfterInject
 import org.androidannotations.annotations.Bean

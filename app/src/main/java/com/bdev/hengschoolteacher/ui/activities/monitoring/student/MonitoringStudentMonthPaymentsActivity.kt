@@ -3,8 +3,10 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.student
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.Month
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
-import com.bdev.hengschoolteacher.service.StudentsService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -43,10 +45,10 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
     @JvmField
     var monthIndex: Int = 0
 
-    @Bean
-    lateinit var studentsService: StudentsService
-    @Bean
-    lateinit var studentPaymentsService: StudentsPaymentsService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
+    @Bean(StudentsPaymentsProviderServiceImpl::class)
+    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
 
     @AfterViews
     fun init() {
@@ -62,12 +64,15 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
                 item = MonitoringStudentMonthHeaderView.Item.PAYMENTS
         )
 
-        val student = studentsService.getStudent(studentLogin)
+        val student = studentsStorageService.getByLogin(studentLogin)
 
         student?.let { monitoringStudentMonthPaymentsStudentView.bind(it) }
 
         monitoringStudentMonthPaymentsPaymentsView.bind(
-                payments = studentPaymentsService.getMonthPayments(studentLogin, monthIndex),
+                payments = studentsPaymentsProviderService.getForStudentForMonth(
+                        studentLogin = studentLogin,
+                        monthIndex = monthIndex
+                ),
                 singleTeacher = false,
                 editable = false
         )

@@ -12,8 +12,15 @@ import com.bdev.hengschoolteacher.data.school.Month
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.service.*
-import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.StudentPaymentsDeptService
+import com.bdev.hengschoolteacher.services.lessons.LessonsService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
+import com.bdev.hengschoolteacher.services.students_pricing.StudentsPricingService
+import com.bdev.hengschoolteacher.services.students_pricing.StudentsPricingServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -25,10 +32,10 @@ import org.androidannotations.annotations.*
 
 @EViewGroup(R.layout.view_monitoring_student_payment_item)
 open class MonitoringStudentPaymentItemView : RelativeLayout {
-    @Bean
-    lateinit var studentsPaymentsService: StudentsPaymentsService
-    @Bean
-    lateinit var studentPriceService: StudentPriceService
+    @Bean(StudentsPaymentsProviderServiceImpl::class)
+    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
+    @Bean(StudentsPricingServiceImpl::class)
+    lateinit var studentsPricingService: StudentsPricingService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -53,12 +60,12 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
         monitoringStudentPaymentItemInvalidSkipLessonsAmountView.text = "$invalidSkipLessonsAmount"
         monitoringStudentPaymentItemFreeLessonLessonsAmountView.text = "$freeLessonsAmount"
 
-        monitoringStudentPaymentItemPayedAmountView.text = "${studentsPaymentsService.getMonthPayments(
+        monitoringStudentPaymentItemPayedAmountView.text = "${studentsPaymentsProviderService.getForStudentForMonth(
                 studentLogin = student.login,
-                month = month
+                monthIndex = month
         ).map { it.info.amount }.fold(0L) { p1, p2 -> p1 + p2 }}"
 
-        monitoringStudentPaymentItemSpentAmountView.text = "${studentPriceService.getMonthPrice(
+        monitoringStudentPaymentItemSpentAmountView.text = "${studentsPricingService.getMonthPrice(
                 studentLogin = student.login,
                 month = month
         )}"
@@ -172,10 +179,8 @@ open class MonitoringStudentActivity : BaseActivity() {
     lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
     @Bean
     lateinit var lessonsService: LessonsService
-    @Bean
-    lateinit var studentsService: StudentsService
-    @Bean
-    lateinit var studentsPaymentsService: StudentsPaymentsService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
     @Bean
     lateinit var studentPaymentsDeptService: StudentPaymentsDeptService
 
@@ -187,7 +192,7 @@ open class MonitoringStudentActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        val student = studentsService.getStudent(studentLogin)
+        val student = studentsStorageService.getByLogin(studentLogin)
 
         monitoringStudentPaymentHeaderView
                 .setTitle("Студент. ${student?.person?.name ?: "?"}")
