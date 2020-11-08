@@ -9,10 +9,10 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.alerts.monitoring.AlertsMonitoringService
-import com.bdev.hengschoolteacher.service.alerts.profile.AlertsProfileService
-import com.bdev.hengschoolteacher.service.profile.ProfileService
+import com.bdev.hengschoolteacher.services.auth.AuthService
+import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringService
+import com.bdev.hengschoolteacher.services.alerts.profile.AlertsProfileService
+import com.bdev.hengschoolteacher.services.profile.ProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoadingActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.service.StudentPaymentsDeptService
+import com.bdev.hengschoolteacher.services.StudentPaymentsDeptService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter

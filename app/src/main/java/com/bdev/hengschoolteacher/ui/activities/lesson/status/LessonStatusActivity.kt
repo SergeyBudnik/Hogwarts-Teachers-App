@@ -4,9 +4,10 @@ import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.LessonStatusAsyncService
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
-import com.bdev.hengschoolteacher.service.GroupsService
-import com.bdev.hengschoolteacher.service.LessonStatusService
-import com.bdev.hengschoolteacher.service.LessonsService
+import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
+import com.bdev.hengschoolteacher.services.LessonStatusService
+import com.bdev.hengschoolteacher.services.lessons.LessonsService
+import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.status.LessonStatusActivityParams.EXTRA_DATA
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -21,8 +22,8 @@ import java.util.*
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_lesson_status)
 open class LessonStatusActivity : BaseActivity() {
-    @Bean
-    lateinit var groupsService: GroupsService
+    @Bean(GroupsStorageServiceImpl::class)
+    lateinit var groupsStorageService: GroupsStorageService
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean

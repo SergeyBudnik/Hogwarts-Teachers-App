@@ -8,9 +8,9 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.service.StudentPaymentsDeptService
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
-import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.StudentPaymentsDeptService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsStorageService
+import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityData
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
@@ -22,8 +22,6 @@ import org.androidannotations.annotations.EViewGroup
 open class LessonInfoStudentItemView : RelativeLayout {
     @Bean
     lateinit var studentsAttendanceProviderService: StudentsAttendancesProviderService
-    @Bean
-    lateinit var studentsPaymentsService: StudentsPaymentsService
 
     @Bean
     lateinit var studentPaymentsDeptService: StudentPaymentsDeptService

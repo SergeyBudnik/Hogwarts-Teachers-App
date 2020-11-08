@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.alerts.monitoring.AlertsMonitoringService
+import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringStudentsActivity

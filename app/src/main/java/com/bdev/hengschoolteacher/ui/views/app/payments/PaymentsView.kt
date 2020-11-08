@@ -8,9 +8,11 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
 import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
-import com.bdev.hengschoolteacher.service.StudentsService
-import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
@@ -60,10 +62,10 @@ open class PaymentsSummaryView : RelativeLayout {
 
 @EViewGroup(R.layout.view_payments_item)
 open class PaymentsItemView : RelativeLayout {
-    @Bean
-    lateinit var studentsService: StudentsService
-    @Bean
-    lateinit var studentsPaymentsService: StudentsPaymentsService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
+    @Bean(StudentsPaymentsProviderServiceImpl::class)
+    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
     @Bean
     lateinit var staffMembersStorageService: StaffMembersStorageService
 
@@ -79,7 +81,7 @@ open class PaymentsItemView : RelativeLayout {
                 existingStudentPayment.info.amount
         )
 
-        paymentsItemStudentView.text = studentsService.getStudent(
+        paymentsItemStudentView.text = studentsStorageService.getByLogin(
                 existingStudentPayment.info.studentLogin
         )?.person?.name ?: "?"
 
@@ -92,7 +94,7 @@ open class PaymentsItemView : RelativeLayout {
         paymentsItemTeacherView.visibility = visibleElseGone(visible = !singleTeacher)
 
         renderProcessed(
-                studentsPaymentsService.getPayment(existingStudentPayment.id)?.processed ?: false
+                studentsPaymentsProviderService.getByPaymentId(existingStudentPayment.id)?.processed ?: false
         )
 
         setOnClickListener {

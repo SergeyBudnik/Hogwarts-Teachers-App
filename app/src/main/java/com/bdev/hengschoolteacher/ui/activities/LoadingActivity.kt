@@ -5,8 +5,8 @@ import android.view.View
 import android.view.animation.Animation
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.SchoolDataAsyncService
-import com.bdev.hengschoolteacher.service.staff.StaffMembersLoadingService
-import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesLoadingService
+import com.bdev.hengschoolteacher.services.staff.StaffMembersLoadingService
+import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesLoadingService
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView

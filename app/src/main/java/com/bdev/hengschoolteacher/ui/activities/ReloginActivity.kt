@@ -6,7 +6,7 @@ import android.view.animation.Animation
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.AuthAsyncService
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
-import com.bdev.hengschoolteacher.service.UserPreferencesService
+import com.bdev.hengschoolteacher.services.UserPreferencesService
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import kotlinx.android.synthetic.main.activity_relogin.*

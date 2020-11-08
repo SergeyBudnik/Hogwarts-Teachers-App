@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.alerts.profile.AlertsProfileService
+import com.bdev.hengschoolteacher.services.alerts.profile.AlertsProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileDebtsActivity
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
