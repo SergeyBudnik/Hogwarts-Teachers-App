@@ -6,6 +6,7 @@ import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.student.Student
+import com.bdev.hengschoolteacher.data.school.student.StudentGroup
 import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
 import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
@@ -49,6 +50,7 @@ open class LessonsService {
             group?.lessons?.forEach { lesson ->
                 val lessonTimes = getLessonTimesInMonth(
                         lesson = lesson,
+                        studentGroup = studentGroup,
                         month = month,
                         startTime = studentGroup.startTime
                 )
@@ -67,7 +69,12 @@ open class LessonsService {
         return lessons.sortedBy { it.second }
     }
 
-    private fun getLessonTimesInMonth(lesson: Lesson, month: Int, startTime: Long): List<Long> {
+    private fun getLessonTimesInMonth(
+            lesson: Lesson,
+            studentGroup: StudentGroup,
+            month: Int,
+            startTime: Long
+    ): List<Long> {
         val lessonTimes = ArrayList<Long>()
 
         val c1 = getCalendarSinceMonthStart(month = month)
@@ -75,15 +82,17 @@ open class LessonsService {
 
         val c = if (c1.time.time > c2.time.time) { c1 } else { c2 }
 
-        val daysInMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH)
-        val currentDayInMonth = c.get(Calendar.DAY_OF_MONTH)
+        if (c.get(Calendar.MONTH) != month) {
+            return emptyList()
+        } else {
+            val daysInMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH)
+            val currentDayInMonth = c.get(Calendar.DAY_OF_MONTH)
 
-        for (day in currentDayInMonth..daysInMonth) {
-            c.set(Calendar.DAY_OF_MONTH, day)
+            for (day in currentDayInMonth..daysInMonth) {
+                c.set(Calendar.DAY_OF_MONTH, day)
 
-            val dayOfWeek = TimeUtils().getDayOfWeek(c)
+                val dayOfWeek = TimeUtils().getDayOfWeek(c)
 
-            if (lesson.day == dayOfWeek) {
                 val lessonCalendar = Calendar.getInstance()
 
                 lessonCalendar.set(Calendar.MONTH, month)
@@ -93,11 +102,15 @@ open class LessonsService {
                 lessonCalendar.set(Calendar.SECOND,      0)
                 lessonCalendar.set(Calendar.MILLISECOND, 0)
 
-                lessonTimes.add(lessonCalendar.time.time)
-            }
-        }
+                val lessonTime = lessonCalendar.time.time
 
-        return lessonTimes
+                if (lesson.day == dayOfWeek && lesson.creationTime <= lessonTime && lessonTime <= lesson.deactivationTime && studentGroup.startTime <= lessonTime && lessonTime <= studentGroup.finishTime) {
+                    lessonTimes.add(lessonTime)
+                }
+            }
+
+            return lessonTimes
+        }
     }
 
     fun getAllLessons(weekIndex: Int): List<GroupAndLesson> {

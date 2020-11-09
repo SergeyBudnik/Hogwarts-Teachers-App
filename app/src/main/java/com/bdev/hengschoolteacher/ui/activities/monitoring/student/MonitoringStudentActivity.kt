@@ -17,6 +17,7 @@ import com.bdev.hengschoolteacher.services.lessons.LessonsService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.services.students_pricing.StudentsPricingService
@@ -36,6 +37,8 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
     lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
     @Bean(StudentsPricingServiceImpl::class)
     lateinit var studentsPricingService: StudentsPricingService
+    @Bean
+    lateinit var lessonsService: LessonsService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -48,6 +51,11 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
             allInvalidSkipAttendances: List<StudentAttendance>,
             allFreeLessonAttendances: List<StudentAttendance>
     ) {
+        val totalLessonsAmount = lessonsService.getAllStudentLessonsInMonth(
+                studentLogin = student.login,
+                month = month
+        ).size
+
         val visitedLessonsAmount = getLessonsAmount(allVisitedAttendances, month)
         val validSkipLessonsAmount = getLessonsAmount(allValidSkipAttendances, month)
         val invalidSkipLessonsAmount = getLessonsAmount(allInvalidSkipAttendances, month)
@@ -55,6 +63,7 @@ open class MonitoringStudentPaymentItemView : RelativeLayout {
 
         monitoringStudentPaymentItemMonthView.text = resources.getString(Month.findByIndex(month).nameId)
 
+        monitoringStudentPaymentItemTotalLessonsAmountView.text = "$totalLessonsAmount"
         monitoringStudentPaymentItemVisitedLessonsAmountView.text = "$visitedLessonsAmount"
         monitoringStudentPaymentItemValidSkipLessonsAmountView.text = "$validSkipLessonsAmount"
         monitoringStudentPaymentItemInvalidSkipLessonsAmountView.text = "$invalidSkipLessonsAmount"
@@ -181,8 +190,8 @@ open class MonitoringStudentActivity : BaseActivity() {
     lateinit var lessonsService: LessonsService
     @Bean(StudentsStorageServiceImpl::class)
     lateinit var studentsStorageService: StudentsStorageService
-    @Bean
-    lateinit var studentDebtsService: StudentDebtsService
+    @Bean(StudentDebtsServiceImpl::class)
+    lateinit var studentsDebtsService: StudentDebtsService
 
     @Bean
     lateinit var monitoringStudentPaymentListAdapter: MonitoringStudentPaymentListAdapter
@@ -206,12 +215,9 @@ open class MonitoringStudentActivity : BaseActivity() {
                 studentLogin = studentLogin
         )
 
-        monitoringStudentPaymentDeptView.text = "${studentDebtsService.getStudentDept(studentLogin)}"
+        monitoringStudentPaymentDeptView.text = "${studentsDebtsService.getDebt(studentLogin)}"
 
-        monitoringStudentExpectedMonthlyDebtView.text = "${studentPricingService.getMonthExpectedPrice(
-                studentLogin = studentLogin, 
-                month = TimeUtils().getCurrentMonth()
-        )}"
+        monitoringStudentExpectedMonthlyDebtView.text = "${studentsDebtsService.getExpectedDebt(studentLogin = studentLogin)}"
 
         val allAttendances = studentsAttendancesProviderService.getAllStudentAttendances(studentLogin)
         val allVisitedAttendances = allAttendances.filter { it.type == StudentAttendanceType.VISITED }
