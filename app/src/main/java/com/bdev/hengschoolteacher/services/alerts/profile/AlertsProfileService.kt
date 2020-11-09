@@ -5,6 +5,7 @@ import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringTeachersService
 import com.bdev.hengschoolteacher.services.profile.ProfileService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 
@@ -15,7 +16,7 @@ open class AlertsProfileService {
 
     @Bean(StudentsStorageServiceImpl::class)
     lateinit var studentsStorageService: StudentsStorageService
-    @Bean
+    @Bean(StudentDebtsServiceImpl::class)
     lateinit var studentsDebtsService: StudentDebtsService
     @Bean
     lateinit var profileService: ProfileService
@@ -44,7 +45,7 @@ open class AlertsProfileService {
             studentsStorageService
                     .getAll()
                     .filter { it.managerLogin == me.login }
-                    .any { student -> studentsDebtsService.getStudentDept(student.login) > 0 }
+                    .any { student -> studentsDebtsService.getExpectedDebt(student.login) > 0 }
         } ?: false
     }
 }

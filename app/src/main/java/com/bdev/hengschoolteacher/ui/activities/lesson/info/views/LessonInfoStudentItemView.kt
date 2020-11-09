@@ -10,6 +10,7 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
 import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityData
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
@@ -22,8 +23,8 @@ open class LessonInfoStudentItemView : RelativeLayout {
     @Bean
     lateinit var studentsAttendanceProviderService: StudentsAttendancesProviderService
 
-    @Bean
-    lateinit var studentDebtsService: StudentDebtsService
+    @Bean(StudentDebtsServiceImpl::class)
+    lateinit var studentsDebtsService: StudentDebtsService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -102,8 +103,8 @@ open class LessonInfoStudentItemView : RelativeLayout {
     }
 
     private fun bindDept(student: Student) {
-        val dept = studentDebtsService.getStudentDept(student.login)
-        val expectedDebt = studentDebtsService.getExpectedDebt(studentLogin = student.login)
+        val dept = studentsDebtsService.getDebt(student.login)
+        val expectedDebt = studentsDebtsService.getExpectedDebt(studentLogin = student.login)
 
         lessonStudentItemNoDeptView.visibility = visibleElseGone(visible = expectedDebt <= 0)
 

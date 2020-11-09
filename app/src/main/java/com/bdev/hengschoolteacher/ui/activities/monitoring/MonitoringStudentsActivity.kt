@@ -2,7 +2,6 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
@@ -32,8 +31,6 @@ open class MonitoringStudentsActivity : BaseActivity() {
     lateinit var studentsStorageService: StudentsStorageService
     @Bean
     lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
-    @Bean
-    lateinit var studentDebtsService: StudentDebtsService
 
     private var filterEnabled = true
 

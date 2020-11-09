@@ -8,6 +8,7 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
@@ -23,8 +24,8 @@ open class StudentsWithDebtsListView : RelativeLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    @Bean
-    lateinit var studentDebtsService: StudentDebtsService
+    @Bean(StudentDebtsServiceImpl::class)
+    lateinit var studentsDebtsService: StudentDebtsService
 
     fun bind(students: List<Student>, searchQuery: String, withDebtsOnly: Boolean) {
         val adapter = StudentsListAdapter(context)
@@ -34,7 +35,7 @@ open class StudentsWithDebtsListView : RelativeLayout {
                         .map {
                             StudentInfo(
                                     student = it,
-                                    dept = studentDebtsService.getExpectedDebt(studentLogin = it.login).toLong()
+                                    dept = studentsDebtsService.getExpectedDebt(studentLogin = it.login).toLong()
                             )
                         }
                         .filter { studentInfo ->
@@ -72,7 +73,9 @@ open class StudentsWithDebtsItemView : RelativeLayout {
 
     fun bind(studentInfo: StudentInfo): StudentsWithDebtsItemView {
         studentsWithDebtsItemNameView.text = studentInfo.student.person.name
-        studentsWithDebtsItemIconView.visibility = visibleElseGone(visible = studentInfo.dept > 0)
+
+        studentsWithDebtsItemDebtView.text = resources.getString(R.string.amount_in_rub, studentInfo.dept)
+        studentsWithDebtsItemDebtView.visibility = visibleElseGone(visible = studentInfo.dept > 0)
 
         return this
     }

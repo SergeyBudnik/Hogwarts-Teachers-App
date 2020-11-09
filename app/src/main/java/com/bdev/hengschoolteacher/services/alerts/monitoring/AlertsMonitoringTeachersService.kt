@@ -5,6 +5,7 @@ import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
 import com.bdev.hengschoolteacher.services.lessons.LessonsService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import org.androidannotations.annotations.Bean
@@ -22,7 +23,7 @@ open class AlertsMonitoringTeachersService {
     lateinit var lessonStateService: LessonStateService
     @Bean(StudentsStorageServiceImpl::class)
     lateinit var studentsStorageService: StudentsStorageService
-    @Bean
+    @Bean(StudentDebtsServiceImpl::class)
     lateinit var studentsDebtsService: StudentDebtsService
 
     fun haveAlerts(teacherLogin: String): Boolean {
@@ -55,6 +56,6 @@ open class AlertsMonitoringTeachersService {
         return studentsStorageService
                 .getAll()
                 .filter { it.managerLogin == teacherLogin }
-                .any { student -> studentsDebtsService.getStudentDept(student.login) > 0 }
+                .any { student -> studentsDebtsService.getExpectedDebt(student.login) > 0 }
     }
 }
