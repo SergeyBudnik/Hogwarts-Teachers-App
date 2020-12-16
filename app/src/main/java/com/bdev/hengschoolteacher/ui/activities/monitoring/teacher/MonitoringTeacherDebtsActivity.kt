@@ -5,6 +5,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
@@ -47,15 +48,10 @@ open class MonitoringTeacherDebtsActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        monitoringTeacherDebtsHeaderView
-                .setLeftButtonAction { doFinish() }
+        initHeader()
 
         monitoringTeacherDebtsSecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.DEBTS,
-                teacherLogin = teacherLogin
-        )
-
-        monitoringTeacherDebtsTeacherInfoView.bind(
                 teacherLogin = teacherLogin
         )
 
@@ -67,6 +63,19 @@ open class MonitoringTeacherDebtsActivity : BaseActivity() {
     }
 
     override fun getAppLayoutView(): AppLayoutView = monitoringTeacherDebtsRootView
+
+    private fun initHeader() {
+        monitoringTeacherDebtsHeaderView
+                .setLeftButtonAction { doFinish() }
+
+        monitoringTeacherDebtsHeaderView.getFirstButtonHandler()
+                .setAction(action = {
+                    TeacherActivity.redirectToChild(
+                            current = this,
+                            teacherLogin = teacherLogin
+                    )
+                })
+    }
 
     private fun doFinish() {
         finish()

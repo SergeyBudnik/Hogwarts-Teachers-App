@@ -3,6 +3,7 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -34,17 +35,10 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        monitoringTeacherSalaryHeaderView
-                .setLeftButtonAction { doFinish() }
-                .setFirstRightButtonAction { toggleCalendar() }
-                .setFirstRightButtonActive(calendarEnabled)
+        initHeader()
 
         monitoringTeacherSalarySecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.SALARY,
-                teacherLogin = teacherLogin
-        )
-
-        monitoringTeacherSalaryTeacherInfoView.bind(
                 teacherLogin = teacherLogin
         )
 
@@ -65,10 +59,27 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
         overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
     }
 
+    private fun initHeader() {
+        monitoringTeacherSalaryHeaderView
+                .setLeftButtonAction { doFinish() }
+
+        monitoringTeacherSalaryHeaderView.getFirstButtonHandler()
+                .setAction(action = { toggleCalendar() })
+                .setToggled(toggled = calendarEnabled)
+
+        monitoringTeacherSalaryHeaderView.getSecondButtonHandler()
+                .setAction(action = {
+                    TeacherActivity.redirectToChild(
+                            current = this,
+                            teacherLogin = teacherLogin
+                    )
+                })
+    }
+
     private fun toggleCalendar() {
         calendarEnabled = !calendarEnabled
 
-        monitoringTeacherSalaryHeaderView.setFirstRightButtonActive(calendarEnabled)
+        monitoringTeacherSalaryHeaderView.getFirstButtonHandler().setToggled(toggled = calendarEnabled)
 
         monitoringTeacherSalaryWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
     }

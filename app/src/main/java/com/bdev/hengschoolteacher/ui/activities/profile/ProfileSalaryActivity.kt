@@ -42,10 +42,7 @@ open class ProfileSalaryActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        profileSalaryHeaderView
-                .setLeftButtonAction { profileSalaryMenuLayoutView.openMenu() }
-                .setFirstRightButtonAction { toggleCalendar() }
-                .setFirstRightButtonActive(calendarEnabled)
+        initHeader()
 
         profileSalarySecondaryHeaderView.bind(ProfileHeaderView.Item.SALARY)
 
@@ -60,10 +57,19 @@ open class ProfileSalaryActivity : BaseActivity() {
         }
     }
 
+    private fun initHeader() {
+        profileSalaryHeaderView
+                .setLeftButtonAction { profileSalaryMenuLayoutView.openMenu() }
+
+        profileSalaryHeaderView.getFirstButtonHandler()
+                .setAction(action = { toggleCalendar() })
+                .setToggled(toggled = calendarEnabled)
+    }
+
     private fun toggleCalendar() {
         calendarEnabled = !calendarEnabled
 
-        profileSalaryHeaderView.setFirstRightButtonActive(calendarEnabled)
+        profileSalaryHeaderView.getFirstButtonHandler().setToggled(toggled = calendarEnabled)
 
         profileSalaryWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
     }

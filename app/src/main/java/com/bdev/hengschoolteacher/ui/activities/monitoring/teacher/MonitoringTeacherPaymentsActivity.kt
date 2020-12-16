@@ -5,6 +5,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -40,17 +41,10 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        monitoringTeacherPaymentsHeaderView
-                .setLeftButtonAction { doFinish() }
-                .setFirstRightButtonAction { toggleFilter() }
-                .setFirstRightButtonActive(filterEnabled)
+        initHeader()
 
         monitoringTeacherPaymentsSecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.PAYMENTS,
-                teacherLogin = teacherLogin
-        )
-
-        monitoringTeacherPaymentsTeacherInfoView.bind(
                 teacherLogin = teacherLogin
         )
 
@@ -61,10 +55,27 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
         initList()
     }
 
+    private fun initHeader() {
+        monitoringTeacherPaymentsHeaderView
+                .setLeftButtonAction { doFinish() }
+
+        monitoringTeacherPaymentsHeaderView.getFirstButtonHandler()
+                .setAction(action = { toggleFilter() })
+                .setToggled(toggled = filterEnabled)
+
+        monitoringTeacherPaymentsHeaderView.getSecondButtonHandler()
+                .setAction(action = {
+                    TeacherActivity.redirectToChild(
+                            current = this,
+                            teacherLogin = teacherLogin
+                    )
+                })
+    }
+
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        monitoringTeacherPaymentsHeaderView.setFirstRightButtonActive(filterEnabled)
+        monitoringTeacherPaymentsHeaderView.getFirstButtonHandler().setToggled(toggled = filterEnabled)
 
         initList()
     }

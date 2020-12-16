@@ -42,12 +42,7 @@ open class MonitoringLessonsActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        monitoringLessonsHeaderView
-                .setLeftButtonAction { monitoringLessonsMenuLayoutView.openMenu() }
-                .setFirstRightButtonAction { toggleFilter() }
-                .setFirstRightButtonActive(filterEnabled)
-                .setSecondRightButtonAction { toggleCalendar() }
-                .setSecondRightButtonActive(calendarEnabled)
+        initHeader()
 
         monitoringLessonsSecondaryHeaderView.bind(currentItem = MonitoringHeaderView.Item.LESSONS)
 
@@ -76,6 +71,19 @@ open class MonitoringLessonsActivity : BaseActivity() {
         }
     }
 
+    private fun initHeader() {
+        monitoringLessonsHeaderView
+                .setLeftButtonAction { monitoringLessonsMenuLayoutView.openMenu() }
+
+        monitoringLessonsHeaderView.getFirstButtonHandler()
+                .setAction(action = { toggleFilter() })
+                .setToggled(toggled = filterEnabled)
+
+        monitoringLessonsHeaderView.getSecondButtonHandler()
+                .setAction(action = { toggleCalendar() } )
+                .setToggled(toggled = calendarEnabled)
+    }
+
     private fun initLessonsList() {
         val lessons = lessonsService
                 .getAllLessons(weekIndex)
@@ -91,7 +99,7 @@ open class MonitoringLessonsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        monitoringLessonsHeaderView.setFirstRightButtonActive(filterEnabled)
+        monitoringLessonsHeaderView.getFirstButtonHandler().setToggled(toggled = filterEnabled)
 
         initLessonsList()
     }
@@ -99,7 +107,7 @@ open class MonitoringLessonsActivity : BaseActivity() {
     private fun toggleCalendar() {
         calendarEnabled = !calendarEnabled
 
-        monitoringLessonsHeaderView.setSecondRightButtonActive(calendarEnabled)
+        monitoringLessonsHeaderView.getSecondButtonHandler().setToggled(toggled = calendarEnabled)
 
         monitoringLessonsWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
     }

@@ -119,9 +119,7 @@ open class StudentsGroupsListActivity : BaseActivity() {
     fun init() {
         val currentTime = Date().time
 
-        studentsGroupsHeaderView
-                .setLeftButtonAction { studentsGroupsMenuLayoutView.openMenu() }
-                .setFirstRightButtonAction { studentsGroupsHeaderSearchView.show() }
+        initHeader()
 
         studentsGroupsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.STUDENTS)
 
@@ -155,6 +153,14 @@ open class StudentsGroupsListActivity : BaseActivity() {
                 adapter.notifyDataSetChanged()
             }
         }
+    }
+
+    private fun initHeader() {
+        studentsGroupsHeaderView
+                .setLeftButtonAction { studentsGroupsMenuLayoutView.openMenu() }
+
+        studentsGroupsHeaderView.getFirstButtonHandler()
+                .setAction(action = { studentsGroupsHeaderSearchView.show() })
     }
 
     override fun getAppLayoutView(): AppLayoutView? {

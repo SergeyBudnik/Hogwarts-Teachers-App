@@ -7,6 +7,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.services.LessonStateService
 import com.bdev.hengschoolteacher.services.lessons.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -58,19 +59,10 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        monitoringTeacherLessonsHeaderView
-                .setLeftButtonAction { doFinish() }
-                .setFirstRightButtonAction { toggleFilter() }
-                .setFirstRightButtonActive(filterEnabled)
-                .setSecondRightButtonAction { toggleCalendar() }
-                .setSecondRightButtonActive(calendarEnabled)
+        initHeader()
 
         monitoringTeacherLessonsSecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.LESSONS,
-                teacherLogin = teacherLogin
-        )
-
-        monitoringTeacherLessonsTeacherInfoView.bind(
                 teacherLogin = teacherLogin
         )
 
@@ -97,6 +89,27 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
         }
     }
 
+    private fun initHeader() {
+        monitoringTeacherLessonsHeaderView
+                .setLeftButtonAction { doFinish() }
+
+        monitoringTeacherLessonsHeaderView.getFirstButtonHandler()
+                .setAction(action = { toggleFilter() })
+                .setToggled(toggled = filterEnabled)
+
+        monitoringTeacherLessonsHeaderView.getSecondButtonHandler()
+                .setAction(action = { toggleCalendar() })
+                .setToggled(toggled = calendarEnabled)
+
+        monitoringTeacherLessonsHeaderView.getThirdButtonHandler()
+                .setAction(action = {
+                    TeacherActivity.redirectToChild(
+                            current = this,
+                            teacherLogin = teacherLogin
+                    )
+                })
+    }
+
     private fun doFinish() {
         finish()
         overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
@@ -115,7 +128,7 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        monitoringTeacherLessonsHeaderView.setFirstRightButtonActive(filterEnabled)
+        monitoringTeacherLessonsHeaderView.getFirstButtonHandler().setToggled(toggled = filterEnabled)
 
         initLessonsList()
     }
@@ -123,7 +136,7 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
     private fun toggleCalendar() {
         calendarEnabled = !calendarEnabled
 
-        monitoringTeacherLessonsHeaderView.setSecondRightButtonActive(calendarEnabled)
+        monitoringTeacherLessonsHeaderView.getSecondButtonHandler().setToggled(toggled = calendarEnabled)
 
         monitoringTeacherLessonsWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
     }

@@ -64,9 +64,7 @@ open class StudentsListActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        studentsHeaderView
-                .setLeftButtonAction { studentsMenuLayoutView.openMenu() }
-                .setFirstRightButtonAction { studentsListHeaderSearchView.show() }
+        initHeader()
 
         studentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.STUDENTS)
 
@@ -94,5 +92,13 @@ open class StudentsListActivity : BaseActivity() {
 
     override fun getAppLayoutView(): AppLayoutView? {
         return null
+    }
+
+    private fun initHeader() {
+        studentsHeaderView
+                .setLeftButtonAction { studentsMenuLayoutView.openMenu() }
+
+        studentsHeaderView.getFirstButtonHandler()
+                .setAction(action = { studentsListHeaderSearchView.show() })
     }
 }

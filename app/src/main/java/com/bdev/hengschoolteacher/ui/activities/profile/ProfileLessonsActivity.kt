@@ -57,12 +57,7 @@ open class ProfileLessonsActivity : BaseActivity() {
     fun init() {
         me = profileService.getMe()
 
-        profileLessonsHeaderView
-                .setLeftButtonAction { profileLessonsMenuLayoutView.openMenu() }
-                .setFirstRightButtonAction { toggleFilter() }
-                .setFirstRightButtonActive(filterEnabled)
-                .setSecondRightButtonAction { toggleCalendar() }
-                .setSecondRightButtonActive(calendarEnabled)
+        initHeader()
 
         profileLessonsSecondaryHeaderView.bind(ProfileHeaderView.Item.LESSONS)
 
@@ -89,6 +84,19 @@ open class ProfileLessonsActivity : BaseActivity() {
         }
     }
 
+    private fun initHeader() {
+        profileLessonsHeaderView
+                .setLeftButtonAction { profileLessonsMenuLayoutView.openMenu() }
+
+        profileLessonsHeaderView.getFirstButtonHandler()
+                .setAction(action = { toggleFilter() })
+                .setToggled(toggled = filterEnabled)
+
+        profileLessonsHeaderView.getSecondButtonHandler()
+                .setAction(action = { toggleCalendar() })
+                .setToggled(toggled = calendarEnabled)
+    }
+
     private fun initLessonsList() {
         me?.let { me ->
             val lessons = lessonsService
@@ -106,7 +114,7 @@ open class ProfileLessonsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        profileLessonsHeaderView.setFirstRightButtonActive(filterEnabled)
+        profileLessonsHeaderView.getFirstButtonHandler().setToggled(toggled = filterEnabled)
 
         initLessonsList()
     }
@@ -114,7 +122,7 @@ open class ProfileLessonsActivity : BaseActivity() {
     private fun toggleCalendar() {
         calendarEnabled = !calendarEnabled
 
-        profileLessonsHeaderView.setSecondRightButtonActive(calendarEnabled)
+        profileLessonsHeaderView.getSecondButtonHandler().setToggled(toggled = calendarEnabled)
 
         profileLessonsWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
     }
