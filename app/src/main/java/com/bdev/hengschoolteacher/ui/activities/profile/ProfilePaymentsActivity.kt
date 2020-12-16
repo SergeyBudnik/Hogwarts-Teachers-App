@@ -39,10 +39,7 @@ open class ProfilePaymentsActivity : BaseActivity() {
     fun init() {
         profilePaymentsMenuLayoutView.setCurrentMenuItem(item = AppMenuView.Item.MY_PROFILE)
 
-        profilePaymentsHeaderView
-                .setLeftButtonAction { profilePaymentsMenuLayoutView.openMenu() }
-                .setFirstRightButtonAction { toggleFilter() }
-                .setFirstRightButtonActive(filterEnabled)
+        initHeader()
 
         profilePaymentsSecondaryHeaderView.bind(ProfileHeaderView.Item.PAYMENTS)
 
@@ -53,10 +50,19 @@ open class ProfilePaymentsActivity : BaseActivity() {
         initList()
     }
 
+    private fun initHeader() {
+        profilePaymentsHeaderView
+                .setLeftButtonAction { profilePaymentsMenuLayoutView.openMenu() }
+
+        profilePaymentsHeaderView.getFirstButtonHandler()
+                .setAction(action = { toggleFilter() })
+                .setToggled(toggled = filterEnabled)
+    }
+
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        profilePaymentsHeaderView.setFirstRightButtonActive(filterEnabled)
+        profilePaymentsHeaderView.getFirstButtonHandler().setToggled(toggled = filterEnabled)
 
         initList()
     }

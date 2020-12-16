@@ -38,11 +38,7 @@ open class MonitoringStudentsActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        monitoringPaymentsHeaderView
-                .setLeftButtonAction { monitoringPaymentsMenuLayoutView.openMenu() }
-                .setFirstRightButtonAction { monitoringPaymentsHeaderSearchView.show() }
-                .setSecondRightButtonAction { toggleFilter() }
-                .setSecondRightButtonActive(filterEnabled)
+        initHeader()
 
         monitoringPaymentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
@@ -59,6 +55,18 @@ open class MonitoringStudentsActivity : BaseActivity() {
         initList()
     }
 
+    private fun initHeader() {
+        monitoringPaymentsHeaderView
+                .setLeftButtonAction { monitoringPaymentsMenuLayoutView.openMenu() }
+
+        monitoringPaymentsHeaderView.getFirstButtonHandler()
+                .setAction(action = { monitoringPaymentsHeaderSearchView.show() })
+
+        monitoringPaymentsHeaderView.getSecondButtonHandler()
+                .setAction(action = { toggleFilter() })
+                .setToggled(toggled = filterEnabled)
+    }
+
     private fun initList() {
         monitoringPaymentsListView.bind(
                 students = studentsStorageService.getAll(),
@@ -70,7 +78,7 @@ open class MonitoringStudentsActivity : BaseActivity() {
     private fun toggleFilter() {
         filterEnabled = !filterEnabled
 
-        monitoringPaymentsHeaderView.setSecondRightButtonActive(filterEnabled)
+        monitoringPaymentsHeaderView.getSecondButtonHandler().setToggled(toggled = filterEnabled)
 
         initList()
     }

@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/leftActionButtonView"
         android:layout_centerVertical="true"
-        android:textSize="@dimen/font_normal"
+        android:textSize="@dimen/font_small"
         android:textColor="@color/fill_text_basic"
         app:app_font="bold"/>
 
@@ -44,6 +44,16 @@
 
         <ImageView
             android:id="@+id/secondRightActionButtonView"
+            android:layout_width="@dimen/app_size_3_5"
+            android:layout_height="@dimen/app_size_4_5"
+            android:paddingTop="@dimen/app_size_1_5"
+            android:paddingBottom="@dimen/app_size_1_5"
+            android:tint="@color/fill_text_basic"
+            android:visibility="gone"
+            android:importantForAccessibility="no"/>
+
+        <ImageView
+            android:id="@+id/thirdRightActionButtonView"
             android:layout_width="@dimen/app_size_3_5"
             android:layout_height="@dimen/app_size_4_5"
             android:paddingTop="@dimen/app_size_1_5"

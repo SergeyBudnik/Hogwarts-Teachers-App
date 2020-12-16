@@ -54,6 +54,7 @@
         <attr name="leftIcon" format="reference"/>
         <attr name="firstRightIcon" format="reference"/>
         <attr name="secondRightIcon" format="reference"/>
+        <attr name="thirdRightIcon" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="AppMenuRowView">
