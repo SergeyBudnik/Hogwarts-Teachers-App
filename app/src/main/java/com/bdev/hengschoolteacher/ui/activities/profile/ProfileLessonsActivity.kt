@@ -5,11 +5,12 @@ import android.app.Activity
 import android.content.Intent
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
-import com.bdev.hengschoolteacher.service.LessonStateService
-import com.bdev.hengschoolteacher.service.LessonStatusService
-import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.StudentsService
-import com.bdev.hengschoolteacher.service.profile.ProfileService
+import com.bdev.hengschoolteacher.services.LessonStateService
+import com.bdev.hengschoolteacher.services.LessonStatusService
+import com.bdev.hengschoolteacher.services.lessons.LessonsService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.profile.ProfileService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
@@ -36,8 +37,8 @@ open class ProfileLessonsActivity : BaseActivity() {
 
     @Bean
     lateinit var lessonsService: LessonsService
-    @Bean
-    lateinit var studentsService: StudentsService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
     @Bean
     lateinit var lessonStatusService: LessonStatusService
     @Bean

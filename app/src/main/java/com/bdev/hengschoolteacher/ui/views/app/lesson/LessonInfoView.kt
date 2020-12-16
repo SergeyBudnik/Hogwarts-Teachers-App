@@ -5,9 +5,9 @@ import android.util.AttributeSet
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
-import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
-import com.bdev.hengschoolteacher.service.teacher.TeacherInfoService
+import com.bdev.hengschoolteacher.services.lessons.LessonsService
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.services.teacher.TeacherInfoService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils

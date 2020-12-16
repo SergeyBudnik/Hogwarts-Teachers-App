@@ -8,9 +8,9 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.service.StudentPaymentsDeptService
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
-import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
+import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityData
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
@@ -22,11 +22,9 @@ import org.androidannotations.annotations.EViewGroup
 open class LessonInfoStudentItemView : RelativeLayout {
     @Bean
     lateinit var studentsAttendanceProviderService: StudentsAttendancesProviderService
-    @Bean
-    lateinit var studentsPaymentsService: StudentsPaymentsService
 
-    @Bean
-    lateinit var studentPaymentsDeptService: StudentPaymentsDeptService
+    @Bean(StudentDebtsServiceImpl::class)
+    lateinit var studentsDebtsService: StudentDebtsService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -105,11 +103,15 @@ open class LessonInfoStudentItemView : RelativeLayout {
     }
 
     private fun bindDept(student: Student) {
-        val dept = studentPaymentsDeptService.getStudentDept(student.login)
+        val dept = studentsDebtsService.getDebt(student.login)
+        val expectedDebt = studentsDebtsService.getExpectedDebt(studentLogin = student.login)
 
-        lessonStudentItemNoDeptView.visibility = visibleElseGone(visible = dept <= 0)
-        lessonStudentItemDeptView.visibility = visibleElseGone(visible = dept > 0)
+        lessonStudentItemNoDeptView.visibility = visibleElseGone(visible = expectedDebt <= 0)
+
+        lessonStudentItemDeptView.visibility = visibleElseGone(visible = expectedDebt > 0)
+        lessonStudentItemExpectedDebtView.visibility = visibleElseGone(visible = expectedDebt > 0)
 
         lessonStudentItemDeptView.text = "Долг: $dept Р"
+        lessonStudentItemExpectedDebtView.text = "Ожидаемый долг: $expectedDebt Р"
     }
 }

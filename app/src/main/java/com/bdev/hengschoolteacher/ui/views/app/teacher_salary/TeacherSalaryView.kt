@@ -8,8 +8,8 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherActionType
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherPayment
-import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
-import com.bdev.hengschoolteacher.service.teacher.TeacherSalaryService
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.services.teacher.TeacherSalaryService
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import kotlinx.android.synthetic.main.view_teacher_salary.view.*
 import kotlinx.android.synthetic.main.view_teacher_salary_item.view.*

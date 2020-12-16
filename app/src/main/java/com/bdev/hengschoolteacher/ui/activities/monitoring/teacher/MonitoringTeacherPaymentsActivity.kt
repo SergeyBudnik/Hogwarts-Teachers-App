@@ -2,7 +2,8 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.teacher.TeacherPaymentsService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
@@ -29,8 +30,8 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
         }
     }
 
-    @Bean
-    lateinit var teacherPaymentsService: TeacherPaymentsService
+    @Bean(StudentsPaymentsProviderServiceImpl::class)
+    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
 
     @Extra(EXTRA_TEACHER_LOGIN)
     lateinit var teacherLogin: String
@@ -69,7 +70,7 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
     }
 
     private fun initList() {
-        val allPayments = teacherPaymentsService.getPayments(
+        val allPayments = studentsPaymentsProviderService.getForTeacher(
                 teacherLogin = teacherLogin,
                 onlyUnprocessed = false
         )

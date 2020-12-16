@@ -2,8 +2,9 @@ package com.bdev.hengschoolteacher.ui.activities.profile
 
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
-import com.bdev.hengschoolteacher.service.StudentsService
-import com.bdev.hengschoolteacher.service.profile.ProfileService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.profile.ProfileService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -27,8 +28,8 @@ open class ProfileDebtsActivity : BaseActivity() {
 
     @Bean
     lateinit var profileService: ProfileService
-    @Bean
-    lateinit var studentsService: StudentsService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
 
     private var me: StaffMember? = null
 
@@ -42,7 +43,7 @@ open class ProfileDebtsActivity : BaseActivity() {
         profileDebtsSecondaryHeaderView.bind(ProfileHeaderView.Item.DEBTS)
 
         profileDebtsListView.bind(
-                students = studentsService.getAllStudents().filter { it.managerLogin == me?.login },
+                students = studentsStorageService.getAll().filter { it.managerLogin == me?.login },
                 searchQuery = "",
                 withDebtsOnly = true
         )

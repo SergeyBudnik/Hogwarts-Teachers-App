@@ -31,6 +31,15 @@
                 android:textColor="@color/fill_text_basic_negative"/>
 
             <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
+                android:id="@+id/lessonStudentItemExpectedDebtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_size_0_5"
+                android:text="Ожидаемый долг: 2500 Р"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/fill_text_basic_negative"/>
+
+            <com.bdev.hengschoolteacher.ui.views.common.CommonFontableTextView
                 android:id="@+id/lessonStudentItemNoDeptView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

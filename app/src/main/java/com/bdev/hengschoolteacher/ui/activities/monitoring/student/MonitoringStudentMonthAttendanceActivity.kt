@@ -11,9 +11,11 @@ import com.bdev.hengschoolteacher.data.school.Month
 import com.bdev.hengschoolteacher.data.school.group.GroupType
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.service.StudentPriceService
-import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
-import com.bdev.hengschoolteacher.service.StudentsService
+import com.bdev.hengschoolteacher.services.students_pricing.StudentsPricingService
+import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_pricing.StudentsPricingServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.resources.AppResources
@@ -27,8 +29,8 @@ import org.androidannotations.annotations.*
 
 @EViewGroup(R.layout.view_monitoring_student_month_attendance_item)
 open class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
-    @Bean
-    lateinit var studentPriceService: StudentPriceService
+    @Bean(StudentsPricingServiceImpl::class)
+    lateinit var studentsPricingService: StudentsPricingService
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -54,7 +56,7 @@ open class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
                 getAttendanceColor(studentAttendance)
         )
 
-        monitoringStudentMonthAttendanceItemPriceView.text = "${studentPriceService.getAttendancePrice(studentAttendance)} Р"
+        monitoringStudentMonthAttendanceItemPriceView.text = "${studentsPricingService.getAttendancePrice(studentAttendance)} Р"
 
         return this
     }
@@ -131,8 +133,8 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
     @JvmField
     var monthIndex: Int = 0
 
-    @Bean
-    lateinit var studentsService: StudentsService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
     @Bean
     lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
 
@@ -150,7 +152,7 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
                 item = MonitoringStudentMonthHeaderView.Item.ATTENDANCE
         )
 
-        val student = studentsService.getStudent(studentLogin)
+        val student = studentsStorageService.getByLogin(studentLogin)
 
         student?.let { monitoringStudentMonthAttendanceStudentView.bind(it) }
 

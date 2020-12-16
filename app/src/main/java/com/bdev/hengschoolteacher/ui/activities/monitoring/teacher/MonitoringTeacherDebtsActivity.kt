@@ -2,7 +2,8 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.StudentsService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -41,8 +42,8 @@ open class MonitoringTeacherDebtsActivity : BaseActivity() {
     @Extra(EXTRA_TEACHER_LOGIN)
     lateinit var teacherLogin: String
 
-    @Bean
-    lateinit var studentsService: StudentsService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
 
     @AfterViews
     fun init() {
@@ -59,7 +60,7 @@ open class MonitoringTeacherDebtsActivity : BaseActivity() {
         )
 
         monitoringTeacherDebtsListView.bind(
-                students = studentsService.getAllStudents().filter { it.managerLogin == teacherLogin },
+                students = studentsStorageService.getAll().filter { it.managerLogin == teacherLogin },
                 searchQuery = "",
                 withDebtsOnly = true
         )

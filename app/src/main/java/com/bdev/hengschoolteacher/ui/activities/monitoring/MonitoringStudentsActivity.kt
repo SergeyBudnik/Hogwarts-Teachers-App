@@ -2,10 +2,9 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.StudentPaymentsDeptService
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
-import com.bdev.hengschoolteacher.service.StudentsService
-import com.bdev.hengschoolteacher.service.student_attendance.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -28,14 +27,10 @@ open class MonitoringStudentsActivity : BaseActivity() {
         }
     }
 
-    @Bean
-    lateinit var studentsService: StudentsService
-    @Bean
-    lateinit var studentsPaymentsService: StudentsPaymentsService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
     @Bean
     lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
-    @Bean
-    lateinit var studentPaymentsDeptService: StudentPaymentsDeptService
 
     private var filterEnabled = true
 
@@ -66,7 +61,7 @@ open class MonitoringStudentsActivity : BaseActivity() {
 
     private fun initList() {
         monitoringPaymentsListView.bind(
-                students = studentsService.getAllStudents(),
+                students = studentsStorageService.getAll(),
                 searchQuery = search,
                 withDebtsOnly = filterEnabled
         )

@@ -5,6 +5,10 @@ import com.bdev.hengschoolteacher.data.school.Time
 import java.util.*
 
 class TimeUtils {
+    fun getCurrentMonth(): Int {
+        return Calendar.getInstance().get(Calendar.MONTH)
+    }
+
     fun getMonthStart(month: Int): Long {
         val calendar = Calendar.getInstance()
 

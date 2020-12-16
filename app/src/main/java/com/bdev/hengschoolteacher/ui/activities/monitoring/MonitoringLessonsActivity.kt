@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.service.LessonStateService
-import com.bdev.hengschoolteacher.service.LessonsService
+import com.bdev.hengschoolteacher.services.LessonStateService
+import com.bdev.hengschoolteacher.services.lessons.LessonsService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone

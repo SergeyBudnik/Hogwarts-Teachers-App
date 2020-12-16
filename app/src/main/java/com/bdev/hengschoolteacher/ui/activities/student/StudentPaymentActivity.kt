@@ -13,12 +13,15 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
 import com.bdev.hengschoolteacher.data.school.student_payment.NewStudentPayment
 import com.bdev.hengschoolteacher.data.school.student_payment.StudentPaymentInfo
-import com.bdev.hengschoolteacher.service.GroupsService
-import com.bdev.hengschoolteacher.service.LessonsService
-import com.bdev.hengschoolteacher.service.StudentsPaymentsService
-import com.bdev.hengschoolteacher.service.StudentsService
-import com.bdev.hengschoolteacher.service.profile.ProfileService
-import com.bdev.hengschoolteacher.service.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
+import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.lessons.LessonsService
+import com.bdev.hengschoolteacher.services.profile.ProfileService
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
+import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.KeyboardUtils
@@ -76,7 +79,7 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
     private var paymentExistings: List<ExistingStudentPayment> = emptyList()
 
     fun setItems(paymentExistings: List<ExistingStudentPayment>) {
-        this.paymentExistings = paymentExistings.sortedBy { -(it.id ?: 0) }
+        this.paymentExistings = paymentExistings.sortedBy { -(it.id) }
     }
 
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
@@ -130,14 +133,14 @@ open class StudentPaymentActivity : BaseActivity() {
         }
     }
 
-    @Bean
-    lateinit var groupsService: GroupsService
-    @Bean
-    lateinit var studentsService: StudentsService
+    @Bean(GroupsStorageServiceImpl::class)
+    lateinit var groupsStorageService: GroupsStorageService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
     @Bean
     lateinit var lessonsService: LessonsService
-    @Bean
-    lateinit var studentPaymentsService: StudentsPaymentsService
+    @Bean(StudentsPaymentsProviderServiceImpl::class)
+    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
     @Bean
     lateinit var profileService: ProfileService
 
@@ -152,7 +155,7 @@ open class StudentPaymentActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        val student = studentsService.getStudent(studentLogin) ?: throw RuntimeException()
+        val student = studentsStorageService.getByLogin(studentLogin) ?: throw RuntimeException()
 
         studentPaymentsHeaderView
                 .setTitle("Студент. ${student.person.name}")
@@ -166,8 +169,8 @@ open class StudentPaymentActivity : BaseActivity() {
         studentPaymentAddPaymentView.setOnClickListener { addPayment(student) }
 
         studentPaymentsListAdapter.setItems(
-                studentPaymentsService
-                        .getPayments(studentLogin)
+                studentsPaymentsProviderService
+                        .getForStudent(studentLogin = studentLogin)
                         .sortedBy { it.info.time }
         )
 

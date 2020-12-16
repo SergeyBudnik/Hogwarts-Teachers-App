@@ -5,8 +5,8 @@ import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
 import com.bdev.hengschoolteacher.data.auth.AuthInfo
 import com.bdev.hengschoolteacher.rest.AuthRest
-import com.bdev.hengschoolteacher.service.AuthService
-import com.bdev.hengschoolteacher.service.UserPreferencesService
+import com.bdev.hengschoolteacher.services.auth.AuthService
+import com.bdev.hengschoolteacher.services.UserPreferencesService
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.rest.spring.annotations.RestService

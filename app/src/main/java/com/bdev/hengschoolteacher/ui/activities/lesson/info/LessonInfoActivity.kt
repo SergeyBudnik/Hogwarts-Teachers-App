@@ -6,7 +6,12 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.service.*
+import com.bdev.hengschoolteacher.services.*
+import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
+import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.lessons.LessonsService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityHandler
 import com.bdev.hengschoolteacher.ui.activities.lesson.info.LessonInfoActivityParams.EXTRA_DATA
@@ -26,10 +31,10 @@ open class LessonInfoActivity : BaseActivity() {
     @Extra(EXTRA_DATA)
     lateinit var activityData: LessonInfoActivityData
 
-    @Bean
-    lateinit var groupsService: GroupsService
-    @Bean
-    lateinit var studentsService: StudentsService
+    @Bean(GroupsStorageServiceImpl::class)
+    lateinit var groupsStorageService: GroupsStorageService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
     @Bean
     lateinit var lessonsService: LessonsService
     @Bean
@@ -62,7 +67,7 @@ open class LessonInfoActivity : BaseActivity() {
     }
 
     private fun handleUpdate() {
-        val group = groupsService.getGroup(activityData.groupId) ?: throw RuntimeException()
+        val group = groupsStorageService.getById(activityData.groupId) ?: throw RuntimeException()
         val lesson = group.lessons.find { it.id == activityData.lessonId } ?: throw RuntimeException()
 
         if (lessonStateService.isLessonFilled(lesson, activityData.weekIndex)) {
@@ -73,7 +78,7 @@ open class LessonInfoActivity : BaseActivity() {
     }
 
     private fun doInit() {
-        val group = groupsService.getGroup(activityData.groupId) ?: throw RuntimeException()
+        val group = groupsStorageService.getById(activityData.groupId) ?: throw RuntimeException()
         val lesson = group.lessons.find { it.id == activityData.lessonId } ?: throw RuntimeException()
         val students = lessonsService.getLessonStudents(activityData.lessonId, activityData.weekIndex)
         val lessonStatus = lessonStatusService.getLessonStatus(
