@@ -18,6 +18,7 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
     private val leftIconId: Int
     private val firstRightIconId: Int
     private val secondRightIconId: Int
+    private val thirdRightIconId: Int
 
     init {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.AppHeaderView, 0, 0)
@@ -27,6 +28,7 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
             leftIconId = ta.getResourceId(R.styleable.AppHeaderView_leftIcon, -1)
             firstRightIconId = ta.getResourceId(R.styleable.AppHeaderView_firstRightIcon, -1)
             secondRightIconId = ta.getResourceId(R.styleable.AppHeaderView_secondRightIcon, -1)
+            thirdRightIconId = ta.getResourceId(R.styleable.AppHeaderView_thirdRightIcon, -1)
         } finally {
             ta.recycle()
         }
@@ -39,6 +41,7 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
         setActionButton(leftActionButtonView, leftIconId)
         setActionButton(firstRightActionButtonView, firstRightIconId)
         setActionButton(secondRightActionButtonView, secondRightIconId)
+        setActionButton(thirdRightActionButtonView, thirdRightIconId)
     }
 
     private fun setActionButton(actionButtonView: ImageView, drawableId: Int) {
@@ -66,44 +69,33 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
         return this
     }
 
-    fun setFirstRightButtonAction(action: () -> Unit): AppHeaderView {
-        firstRightActionButtonView.setOnClickListener { action.invoke() }
+    fun getFirstButtonHandler() = AppHeaderIconHandler(context = context, view = firstRightActionButtonView)
+    fun getSecondButtonHandler() = AppHeaderIconHandler(context = context, view = secondRightActionButtonView)
+    fun getThirdButtonHandler() = AppHeaderIconHandler(context = context, view = thirdRightActionButtonView)
+}
+
+class AppHeaderIconHandler internal constructor(
+        private val context: Context,
+        private val view: ImageView
+) {
+    fun setAction(action: () -> Unit): AppHeaderIconHandler {
+        view.setOnClickListener { action() }
 
         return this
     }
 
-    fun setFirstRightButtonActive(active: Boolean): AppHeaderView {
-        firstRightActionButtonView.setColorFilter(
-                getButtonColor(active),
-                PorterDuff.Mode.SRC_IN
-        )
-
-        return this
-    }
-
-    fun setSecondRightButtonAction(action: () -> Unit): AppHeaderView {
-        secondRightActionButtonView.setOnClickListener { action.invoke() }
-
-        return this
-    }
-
-    fun setSecondRightButtonActive(active: Boolean): AppHeaderView {
-        secondRightActionButtonView.setColorFilter(
-                getButtonColor(active),
-                PorterDuff.Mode.SRC_IN
-        )
-
-        return this
-    }
-
-    private fun getButtonColor(active: Boolean): Int {
-        return AppResources.getColor(
+    fun setToggled(toggled: Boolean): AppHeaderIconHandler {
+        val color = AppResources.getColor(
                 context = context,
-                colorId = if (active) {
+                colorId = if (toggled) {
                     R.color.fill_text_basic_accent
                 } else {
                     R.color.fill_text_basic
                 }
         )
+
+        view.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+
+        return this
     }
 }
