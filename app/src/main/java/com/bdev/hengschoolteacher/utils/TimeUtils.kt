@@ -115,6 +115,7 @@ class TimeUtils {
             Time.T_19_00, Time.T_19_30 -> 19
             Time.T_20_00, Time.T_20_30 -> 20
             Time.T_21_00, Time.T_21_30 -> 21
+            Time.T_22_00 -> 22
         }
     }
 
@@ -122,7 +123,8 @@ class TimeUtils {
         return when (time) {
             Time.T_07_00, Time.T_08_00, Time.T_09_00, Time.T_10_00, Time.T_11_00,
             Time.T_12_00, Time.T_13_00, Time.T_14_00, Time.T_15_00, Time.T_16_00,
-            Time.T_17_00, Time.T_18_00, Time.T_19_00, Time.T_20_00, Time.T_21_00 -> 0
+            Time.T_17_00, Time.T_18_00, Time.T_19_00, Time.T_20_00, Time.T_21_00,
+            Time.T_22_00 -> 0
 
             Time.T_07_30, Time.T_08_30, Time.T_09_30, Time.T_10_30, Time.T_11_30,
             Time.T_12_30, Time.T_13_30, Time.T_14_30, Time.T_15_30, Time.T_16_30,
