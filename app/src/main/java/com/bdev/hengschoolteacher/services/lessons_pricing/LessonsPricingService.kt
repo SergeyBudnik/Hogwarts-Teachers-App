@@ -26,31 +26,31 @@ open class LessonsPricingServiceImpl : LessonsPricingService {
 
     private fun getPriceForGroupWithSingleStudent(lengthIn30m: Int): Int {
         return when (lengthIn30m) {
-            1 -> 350
-            2 -> 700
-            3 -> 1050
-            4 -> 1400
-            else -> 700 /* ToDo: log */
+            1 -> 375
+            2 -> 750
+            3 -> 1125
+            4 -> 1500
+            else -> 750 /* ToDo: log */
         }
     }
 
     private fun getPriceForGroupWithMultipleStudents(lengthIn30m: Int): Int {
         return when (lengthIn30m) {
-            1 -> 240
-            2 -> 480
-            3 -> 700
+            1 -> 250
+            2 -> 500
+            3 -> 750
             4 -> 1000
-            else -> 700 /* ToDo: log */
+            else -> 750 /* ToDo: log */
         }
     }
 
     private fun getPriceForIndividual(lengthIn30m: Int): Int {
         return when (lengthIn30m) {
-            1 -> 600
-            2 -> 1200
-            3 -> 1800
-            4 -> 2400
-            else -> 1200 /* ToDO: log */
+            1 ->  750
+            2 -> 1500
+            3 -> 2250
+            4 -> 3000
+            else -> 1500 /* ToDO: log */
         }
     }
 }
