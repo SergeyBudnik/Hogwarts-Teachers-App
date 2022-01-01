@@ -21,7 +21,8 @@ enum class Time constructor(
     T_18_00(23, R.string.t_18_00), T_18_30(24, R.string.t_18_30),
     T_19_00(25, R.string.t_19_00), T_19_30(26, R.string.t_19_30),
     T_20_00(27, R.string.t_20_00), T_20_30(28, R.string.t_20_30),
-    T_21_00(29, R.string.t_21_00), T_21_30(30, R.string.t_21_30);
+    T_21_00(29, R.string.t_21_00), T_21_30(30, R.string.t_21_30),
+    T_22_00(31, R.string.t_22_00);
 
     companion object {
         fun fromOrder(order: Int): Time {
