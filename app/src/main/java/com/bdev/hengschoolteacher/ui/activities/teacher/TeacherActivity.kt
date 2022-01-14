@@ -6,7 +6,7 @@ import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
-import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView_
+import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView
 import kotlinx.android.synthetic.main.activity_teacher.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -41,12 +41,12 @@ open class TeacherActivity : BaseActivity() {
 
         val teacher = staffMembersStorageService.getStaffMember(teacherLogin) ?: throw RuntimeException()
 
-        teacherInfoView.bind(teacherLogin = teacherLogin, clickable = false)
+        teacherInfoView.bind(teacher = teacher, clickable = false)
 
         teacherPhonesContainerView.removeAllViews()
 
         teacher.person.contacts.phones.forEach { phone ->
-            teacherPhonesContainerView.addView(BrandedPhoneView_.build(this).bind(personContact = phone))
+            teacherPhonesContainerView.addView(BrandedPhoneView(this).bind(personContact = phone))
         }
     }
 

@@ -9,16 +9,11 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.TextChangeAdapter
 import com.bdev.hengschoolteacher.ui.utils.KeyboardUtils
 import kotlinx.android.synthetic.main.view_branded_header_search.view.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_branded_header_search)
-open class BrandedHeaderSearchView : RelativeLayout {
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
+class BrandedHeaderSearchView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_branded_header_search, this)
 
-    @AfterViews
-    fun init() {
         visibility = View.GONE
 
         brandedHeaderSearchCancelView.setOnClickListener {
@@ -31,6 +26,9 @@ open class BrandedHeaderSearchView : RelativeLayout {
             }
         }
     }
+
+    constructor(context: Context?) : super(context)
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
 
     fun addOnTextChangeListener(listener: (String) -> Unit) {
         brandedHeaderSearchView.addTextChangedListener(object: TextChangeAdapter() {

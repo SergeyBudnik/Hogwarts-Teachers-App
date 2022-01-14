@@ -10,48 +10,61 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
+import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.services.*
-import com.bdev.hengschoolteacher.services.lessons.LessonsService
-import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import kotlinx.android.synthetic.main.view_lesson_row.view.*
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_lesson_row)
-open class LessonRowView : LinearLayout {
-    @Bean
-    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
-    @Bean
-    lateinit var lessonsService: LessonsService
-    @Bean
-    lateinit var lessonsAttendancesService: LessonsAttendancesService
-    @Bean
-    lateinit var lessonStatusService: LessonStatusService
-    @Bean
-    lateinit var lessonStateService: LessonStateService
+data class LessonRowViewData(
+        val staffMember: StaffMember?,
+        val group: Group,
+        val lesson: Lesson,
+        val lessonStatus: LessonStatus?,
+        val isLessonFinished: Boolean,
+        val isLessonAttendanceFilled: Boolean,
+        val studentsToAttendanceType: List<Pair<Student, StudentAttendanceType?>>,
+        val weekIndex: Int,
+        val showTeacher: Boolean
+)
+
+class LessonRowView : LinearLayout {
+//    @Bean
+//    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
+//    @Bean
+//    lateinit var lessonsService: LessonsService
+//    @Bean
+//    lateinit var lessonsAttendancesService: LessonsAttendancesService
+//    @Bean
+//    lateinit var lessonStatusService: LessonStatusService
+//    @Bean
+//    lateinit var lessonStateService: LessonStateService
+
+    init {
+        View.inflate(context, R.layout.view_lesson_row, this)
+    }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(group: Group, lesson: Lesson, students: List<Student>, weekIndex: Int) {
-        lessonRowGroupIconView.bind(group)
+    fun bind(data: LessonRowViewData) {
+        lessonRowGroupIconView.bind(data.group)
 
-        lessonRowStartTimeView.text = context.getString(lesson.startTime.translationId)
-        lessonRowFinishTimeView.text = context.getString(lesson.finishTime.translationId)
+        lessonRowStartTimeView.text = context.getString(data.lesson.startTime.translationId)
+        lessonRowFinishTimeView.text = context.getString(data.lesson.finishTime.translationId)
 
         listOf(lessonRowStudent1View, lessonRowStudent2View, lessonRowStudent3View, lessonRowStudent4View, lessonRowStudent5View, lessonRowStudent6View)
                 .forEachIndexed { index, it ->
-                    val student = if (students.size > index) { students[index] } else { null }
-                    val attendance = if (student != null) { studentsAttendancesProviderService.getAttendance(lesson.id, student.login, weekIndex) } else { null }
+                    val studentAndAttendanceType = data.studentsToAttendanceType.getOrNull(index)
+
+                    val student = studentAndAttendanceType?.first
+                    val attendance = studentAndAttendanceType?.second
 
                     setStudentIcon(student, attendance, it)
                 }
 
-        setLessonIcon(lesson, weekIndex)
-        setLessonStatus(lesson, weekIndex)
+        setLessonIcon(data)
+        setLessonStatus(data)
     }
 
     private fun setStudentIcon(student: Student?, attendanceType: StudentAttendanceType?, studentView: ImageView) {
@@ -88,24 +101,9 @@ open class LessonRowView : LinearLayout {
         )
     }
 
-    private fun setLessonIcon(lesson: Lesson, weekIndex: Int) {
-        val isLessonFinished = lessonStateService.isLessonFinished(
-                lessonId = lesson.id,
-                weekIndex = weekIndex
-        )
-
-        val isLessonFilled = lessonsAttendancesService.isLessonAttendanceFilled(
-                lessonId = lesson.id,
-                weekIndex = weekIndex
-        )
-
-        val isLessonMarked = lessonStatusService.getLessonStatus(
-                lessonId = lesson.id,
-                lessonTime = lessonsService.getLessonStartTime(lesson.id, weekIndex)
-        ) != null
-
-        val iconId = if (isLessonFinished) {
-            if (isLessonFilled) {
+    private fun setLessonIcon(data: LessonRowViewData) {
+        val iconId = if (data.isLessonFinished) {
+            if (data.isLessonAttendanceFilled) {
                 R.drawable.ic_lesson_status_finished
             } else {
                 R.drawable.ic_lesson_status_unknown
@@ -114,8 +112,8 @@ open class LessonRowView : LinearLayout {
             R.drawable.ic_lesson_status_not_finished
         }
 
-        val colorId = if (isLessonFinished) {
-            if (isLessonFilled && isLessonMarked) {
+        val colorId = if (data.isLessonFinished) {
+            if (data.isLessonAttendanceFilled && data.lessonStatus != null) {
                 R.color.fill_text_basic_positive
             } else {
                 R.color.fill_text_basic_negative
@@ -140,13 +138,11 @@ open class LessonRowView : LinearLayout {
         )
     }
 
-    private fun setLessonStatus(lesson: Lesson, weekIndex: Int) {
-        val lessonStatus = lessonStatusService.getLessonStatus(lesson.id, lessonsService.getLessonStartTime(lesson.id, weekIndex))
+    private fun setLessonStatus(data: LessonRowViewData) {
+        lessonRowLessonStatusView.visibility = if (data.lessonStatus != null) { View.VISIBLE } else { View.GONE }
 
-        lessonRowLessonStatusView.visibility = if (lessonStatus != null) { View.VISIBLE } else { View.GONE }
-
-        if (lessonStatus != null) {
-            lessonRowLessonStatusView.text = when (lessonStatus.type) {
+        if (data.lessonStatus != null) {
+            lessonRowLessonStatusView.text = when (data.lessonStatus.type) {
                 LessonStatus.Type.FINISHED -> "Проведено"
                 LessonStatus.Type.CANCELED -> "Отменено"
                 LessonStatus.Type.MOVED -> "Перенесено"

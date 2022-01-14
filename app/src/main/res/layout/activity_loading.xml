@@ -51,7 +51,7 @@
             android:textSize="@dimen/font_large"
             app:app_font="regular"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
             android:id="@+id/loadingFailedRestartView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             app:button_text="Перезапустить"
             app:button_style="primary_style"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
             android:id="@+id/loadingFailedContinueView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -7,35 +7,31 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_students_with_debts.view.*
 import kotlinx.android.synthetic.main.view_students_with_debts_item.view.*
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EViewGroup
 import java.util.*
 
-@EViewGroup(R.layout.view_students_with_debts)
-open class StudentsWithDebtsListView : RelativeLayout {
+class StudentsWithDebtsListView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_students_with_debts, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    @Bean(StudentDebtsServiceImpl::class)
-    lateinit var studentsDebtsService: StudentDebtsService
-
-    fun bind(students: List<Student>, searchQuery: String, withDebtsOnly: Boolean) {
+    fun bind(studentsToExpectedDebt: List<Pair<Student, Int>>, searchQuery: String, withDebtsOnly: Boolean) {
         val adapter = StudentsListAdapter(context)
 
         adapter.setItems(
-                students
+                studentsToExpectedDebt
                         .map {
                             StudentInfo(
-                                    student = it,
-                                    dept = studentsDebtsService.getExpectedDebt(studentLogin = it.login).toLong()
+                                    student = it.first,
+                                    dept = it.second.toLong()
                             )
                         }
                         .filter { studentInfo ->
@@ -66,8 +62,17 @@ open class StudentsWithDebtsListView : RelativeLayout {
     }
 }
 
-@EViewGroup(R.layout.view_students_with_debts_item)
-open class StudentsWithDebtsItemView : RelativeLayout {
+data class StudentsWithDebtsListViewModel(
+        val studentsToExpectedDebt: List<Pair<Student, Int>>,
+        val searchQuery: String,
+        val withDebtsOnly: Boolean
+)
+
+class StudentsWithDebtsItemView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_students_with_debts_item, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
@@ -84,7 +89,7 @@ open class StudentsWithDebtsItemView : RelativeLayout {
 private class StudentsListAdapter(context: Context) : BaseItemsListAdapter<StudentInfo>(context) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
         return if (convertView == null) {
-            StudentsWithDebtsItemView_.build(context)
+            StudentsWithDebtsItemView(context)
         } else {
             convertView as StudentsWithDebtsItemView
         }.bind(

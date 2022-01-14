@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
@@ -28,12 +29,13 @@ import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_app_menu_row)
-open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
+class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
     private val itemName: String
     private val itemIcon: Int
 
     init {
+        View.inflate(context, R.layout.view_app_menu_row, this)
+
         val ta = context.obtainStyledAttributes(attrs, R.styleable.AppMenuRowView, 0, 0)
 
         try {
@@ -42,10 +44,7 @@ open class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayou
         } finally {
             ta.recycle()
         }
-    }
 
-    @AfterViews
-    fun init() {
         appMenuItemIconView.setImageDrawable(
                 AppResources.getDrawable(
                         context = context,

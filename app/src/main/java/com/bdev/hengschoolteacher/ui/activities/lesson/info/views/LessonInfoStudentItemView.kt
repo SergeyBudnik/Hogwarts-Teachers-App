@@ -3,34 +3,29 @@ package com.bdev.hengschoolteacher.ui.activities.lesson.info.views
 import android.content.Context
 import android.graphics.PorterDuff
 import android.util.AttributeSet
+import android.view.View
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
-import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityData
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_item_lesson_info_student.view.*
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_item_lesson_info_student)
-open class LessonInfoStudentItemView : RelativeLayout {
-    @Bean
-    lateinit var studentsAttendanceProviderService: StudentsAttendancesProviderService
-
-    @Bean(StudentDebtsServiceImpl::class)
-    lateinit var studentsDebtsService: StudentDebtsService
+class LessonInfoStudentItemView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_item_lesson_info_student, this)
+    }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(
             student: Student, lesson: Lesson, weekIndex: Int,
+            currentDebt: Int, expectedDebt: Int,
+            attendanceType: StudentAttendanceType?,
             goToStudentInformationAction: (Student) -> Unit,
             goToStudentPaymentAction: (Student) -> Unit,
             goToLessonAttendanceAction: (LessonAttendanceActivityData) -> Unit
@@ -41,6 +36,7 @@ open class LessonInfoStudentItemView : RelativeLayout {
                 student = student,
                 lesson = lesson,
                 weekIndex = weekIndex,
+                attendanceType = attendanceType,
                 goToLessonAttendanceAction = goToLessonAttendanceAction
         )
 
@@ -50,7 +46,8 @@ open class LessonInfoStudentItemView : RelativeLayout {
         )
 
         bindDept(
-                student = student
+                currentDebt = currentDebt,
+                expectedDebt = expectedDebt
         )
 
         setOnClickListener {
@@ -71,10 +68,9 @@ open class LessonInfoStudentItemView : RelativeLayout {
 
     private fun bindAttendance(
             student: Student, lesson: Lesson, weekIndex: Int,
+            attendanceType: StudentAttendanceType?,
             goToLessonAttendanceAction: (LessonAttendanceActivityData) -> Unit
     ) {
-        val attendanceType = studentsAttendanceProviderService.getAttendance(lesson.id, student.login, weekIndex)
-
         val colorId = when (attendanceType) {
             null -> R.color.fill_text_basic
             StudentAttendanceType.VISITED -> R.color.fill_text_basic_positive
@@ -102,16 +98,13 @@ open class LessonInfoStudentItemView : RelativeLayout {
         }
     }
 
-    private fun bindDept(student: Student) {
-        val dept = studentsDebtsService.getDebt(student.login)
-        val expectedDebt = studentsDebtsService.getExpectedDebt(studentLogin = student.login)
-
+    private fun bindDept(currentDebt: Int, expectedDebt: Int) {
         lessonStudentItemNoDeptView.visibility = visibleElseGone(visible = expectedDebt <= 0)
 
         lessonStudentItemDeptView.visibility = visibleElseGone(visible = expectedDebt > 0)
         lessonStudentItemExpectedDebtView.visibility = visibleElseGone(visible = expectedDebt > 0)
 
-        lessonStudentItemDeptView.text = "Долг: $dept Р"
+        lessonStudentItemDeptView.text = "Долг: $currentDebt Р"
         lessonStudentItemExpectedDebtView.text = "Ожидаемый долг: $expectedDebt Р"
     }
 }

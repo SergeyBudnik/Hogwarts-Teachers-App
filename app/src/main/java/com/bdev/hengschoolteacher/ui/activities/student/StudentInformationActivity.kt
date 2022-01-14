@@ -17,14 +17,17 @@ import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
-import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView_
+import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView
 import kotlinx.android.synthetic.main.activity_student_information.*
 import kotlinx.android.synthetic.main.view_list_item_student_information_timetable.view.*
 import org.androidannotations.annotations.*
 import java.util.*
 
-@EViewGroup(R.layout.view_list_item_student_information_timetable)
-open class StudentInformationTimetableListItemView : LinearLayout {
+class StudentInformationTimetableListItemView : LinearLayout {
+    init {
+        View.inflate(context, R.layout.view_list_item_student_information_timetable, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
@@ -41,7 +44,7 @@ open class StudentInformationTimetableListItemView : LinearLayout {
 class StudentInformationTimetableListAdapter(context: Context) : BaseWeekItemsListAdapter<GroupAndLesson>(context) {
     override fun getElementView(item: GroupAndLesson, convertView: View?): View {
         return if (convertView == null || convertView !is StudentInformationTimetableListItemView) {
-            StudentInformationTimetableListItemView_.build(context)
+            StudentInformationTimetableListItemView(context)
         } else {
             convertView
         }.bind(item)
@@ -110,7 +113,7 @@ open class StudentInformationActivity : BaseActivity() {
 
     private fun initPhonesList(student: Student) {
         student.person.contacts.phones.forEach {
-            studentInformationPhonesLayoutView.addView(BrandedPhoneView_.build(this).bind(it))
+            studentInformationPhonesLayoutView.addView(BrandedPhoneView(this).bind(it))
         }
     }
 
@@ -122,7 +125,7 @@ open class StudentInformationActivity : BaseActivity() {
         adapter.setItems(lessonsService
                 .getStudentLessons(student.login)
                 .filter { it.lesson.creationTime <= currentTime }
-                .filter { it.lesson.deactivationTime == null || currentTime <= it.lesson.deactivationTime }
+                .filter { currentTime <= it.lesson.deactivationTime }
         )
 
         studentInformationTimetableListView.adapter = adapter

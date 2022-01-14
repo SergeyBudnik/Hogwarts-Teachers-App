@@ -2,9 +2,12 @@ package com.bdev.hengschoolteacher.ui.activities.profile
 
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
+import com.bdev.hengschoolteacher.services.alerts.profile.AlertsProfileService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.profile.ProfileService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -30,6 +33,10 @@ open class ProfileDebtsActivity : BaseActivity() {
     lateinit var profileService: ProfileService
     @Bean(StudentsStorageServiceImpl::class)
     lateinit var studentsStorageService: StudentsStorageService
+    @Bean(StudentDebtsServiceImpl::class)
+    lateinit var studentsDebtsService: StudentDebtsService
+    @Bean
+    lateinit var alertsProfileService: AlertsProfileService
 
     private var me: StaffMember? = null
 
@@ -40,10 +47,19 @@ open class ProfileDebtsActivity : BaseActivity() {
         profileDebtsLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
 
         profileDebtsHeaderView.setLeftButtonAction { profileDebtsLayoutView.openMenu() }
-        profileDebtsSecondaryHeaderView.bind(ProfileHeaderView.Item.DEBTS)
+        profileDebtsSecondaryHeaderView.bind(
+                ProfileHeaderView.Item.DEBTS,
+                hasLessonsAlert = alertsProfileService.haveLessonsAlerts(),
+                hasDebtsAlert = alertsProfileService.haveDebtsAlerts(),
+                hasPaymentsAlert = alertsProfileService.havePaymentsAlerts()
+        )
 
         profileDebtsListView.bind(
-                students = studentsStorageService.getAll().filter { it.managerLogin == me?.login },
+                studentsToExpectedDebt = studentsStorageService.getAll()
+                        .filter { it.managerLogin == me?.login }
+                        .map {
+                            Pair(it, studentsDebtsService.getExpectedDebt(studentLogin = it.login))
+                        },
                 searchQuery = "",
                 withDebtsOnly = true
         )

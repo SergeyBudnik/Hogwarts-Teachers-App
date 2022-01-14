@@ -43,7 +43,7 @@
         android:layout_marginTop="@dimen/app_size_5"
         android:padding="@dimen/app_size_1">
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView
             android:id="@+id/loginLoginView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             app:branded_edit_text_hint="Введите логин"
             app:branded_edit_text_type="branded_edit_text_type_text"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView
             android:id="@+id/loginPasswordView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
             app:branded_edit_text_hint="Введите пароль"
             app:branded_edit_text_type="branded_edit_text_type_password"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
             android:id="@+id/loginDoLoginView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

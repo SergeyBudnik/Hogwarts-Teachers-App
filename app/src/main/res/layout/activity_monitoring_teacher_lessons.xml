@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/monitoringTeacherPaymentsMenuLayoutView"
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
             android:id="@+id/monitoringTeacherLessonsHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             app:secondRightIcon="@drawable/ic_calendar"
             app:thirdRightIcon="@drawable/ic_teacher"/>
 
-        <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView_
+        <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
             android:id="@+id/monitoringTeacherLessonsSecondaryHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -31,14 +31,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.bdev.hengschoolteacher.ui.views.app.date.WeekSelectionBarView_
+            <com.bdev.hengschoolteacher.ui.views.app.date.WeekSelectionBarView
                 android:id="@+id/monitoringTeacherLessonsWeekSelectionBarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:visibility="gone"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsView_
+            <com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsView
                 android:id="@+id/monitoringTeacherLessonsListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -48,4 +48,4 @@
 
     </LinearLayout>
 
-</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView>

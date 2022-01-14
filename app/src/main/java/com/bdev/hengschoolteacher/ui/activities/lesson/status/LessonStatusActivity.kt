@@ -8,6 +8,7 @@ import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
 import com.bdev.hengschoolteacher.services.LessonStatusService
 import com.bdev.hengschoolteacher.services.lessons.LessonsService
 import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.status.LessonStatusActivityParams.EXTRA_DATA
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -31,6 +32,8 @@ open class LessonStatusActivity : BaseActivity() {
 
     @Bean
     lateinit var lessonsStatusAsyncService: LessonStatusAsyncService
+    @Bean
+    lateinit var staffMembersStorageService: StaffMembersStorageService
 
     @Extra(EXTRA_DATA)
     lateinit var activityData: LessonStatusActivityData
@@ -42,7 +45,9 @@ open class LessonStatusActivity : BaseActivity() {
         val lesson = lessonsService.getLesson(activityData.lessonId)?.lesson ?: throw RuntimeException()
 
         lessonStatusLessonTimeView.bind(lesson, activityData.weekIndex)
-        lessonStatusTeacherInfoView.bind(lesson.teacherLogin)
+        lessonStatusTeacherInfoView.bind(
+                staffMembersStorageService.getStaffMember(lesson.teacherLogin)
+        )
 
         initButtons()
     }

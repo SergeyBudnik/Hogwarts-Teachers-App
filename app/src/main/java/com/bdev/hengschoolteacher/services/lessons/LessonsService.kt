@@ -242,7 +242,7 @@ open class LessonsService {
         val lessonStartTime = getLessonStartTime(lesson.id, weekIndex)
 
         val creationTimeMatches = lesson.creationTime <= lessonStartTime
-        val deactivationTimeMatches = (lesson.deactivationTime == null) || lessonStartTime <= lesson.deactivationTime
+        val deactivationTimeMatches = lessonStartTime <= lesson.deactivationTime
 
         return creationTimeMatches && deactivationTimeMatches
     }

@@ -2,17 +2,15 @@ package com.bdev.hengschoolteacher.ui.views.app.students
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.students.StudentsGroupsListActivity
 import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity
 import kotlinx.android.synthetic.main.view_students_header.view.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_students_header)
-open class StudentsHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class StudentsHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     private enum class Item(val id: Int) {
         LIST(1), GROUPS(2);
 
@@ -26,6 +24,8 @@ open class StudentsHeaderView(context: Context, attrs: AttributeSet) : LinearLay
     private val item: Item
 
     init {
+        View.inflate(context, R.layout.view_students_header, this)
+
         val ta = context.obtainStyledAttributes(attrs, R.styleable.StudentsHeaderView, 0, 0)
 
         try {
@@ -33,10 +33,7 @@ open class StudentsHeaderView(context: Context, attrs: AttributeSet) : LinearLay
         } finally {
             ta.recycle()
         }
-    }
 
-    @AfterViews
-    fun init() {
         studentsHeaderListView.bind(
                 active = item == Item.LIST,
                 hasAlert = false,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
             android:id="@+id/lessonAttendanceHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
                 android:layout_marginStart="@dimen/app_size_1"
                 android:layout_marginEnd="@dimen/app_size_1"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.student.StudentInfoView_
+            <com.bdev.hengschoolteacher.ui.views.app.student.StudentInfoView
                 android:id="@+id/lessonStudentAttendanceStudentInfoView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
 
         </LinearLayout>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
             android:id="@+id/studentAttendanceVisitButtonView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:layout_marginStart="@dimen/app_size_1"
             android:layout_marginEnd="@dimen/app_size_1"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
             android:id="@+id/studentAttendanceValidSkipButtonView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:layout_marginStart="@dimen/app_size_1"
             android:layout_marginEnd="@dimen/app_size_1"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
             android:id="@+id/studentAttendanceInvalidSkipButtonView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             android:layout_marginStart="@dimen/app_size_1"
             android:layout_marginEnd="@dimen/app_size_1"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
             android:id="@+id/studentAttendanceFreeLessonButtonView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,4 +76,4 @@
 
     </LinearLayout>
 
-</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView>

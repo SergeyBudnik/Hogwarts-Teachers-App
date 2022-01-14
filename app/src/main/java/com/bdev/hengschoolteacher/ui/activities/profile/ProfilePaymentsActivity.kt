@@ -2,6 +2,7 @@ package com.bdev.hengschoolteacher.ui.activities.profile
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.services.alerts.profile.AlertsProfileService
 import com.bdev.hengschoolteacher.services.profile.ProfileService
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
@@ -32,6 +33,8 @@ open class ProfilePaymentsActivity : BaseActivity() {
     lateinit var profileService: ProfileService
     @Bean(StudentsPaymentsProviderServiceImpl::class)
     lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
+    @Bean
+    lateinit var alertsProfileService: AlertsProfileService
 
     private var filterEnabled: Boolean = true
 
@@ -41,7 +44,12 @@ open class ProfilePaymentsActivity : BaseActivity() {
 
         initHeader()
 
-        profilePaymentsSecondaryHeaderView.bind(ProfileHeaderView.Item.PAYMENTS)
+        profilePaymentsSecondaryHeaderView.bind(
+                ProfileHeaderView.Item.PAYMENTS,
+                hasLessonsAlert = alertsProfileService.haveLessonsAlerts(),
+                hasDebtsAlert = alertsProfileService.haveDebtsAlerts(),
+                hasPaymentsAlert = alertsProfileService.havePaymentsAlerts()
+        )
 
         profilePaymentsEmptyWithFilterView.bind {
             toggleFilter()

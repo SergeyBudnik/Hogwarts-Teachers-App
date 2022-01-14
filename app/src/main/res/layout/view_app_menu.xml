@@ -29,7 +29,7 @@
         android:textSize="@dimen/font_large"
         android:textColor="@color/fill_text_basic_light"/>
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView_
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView
         android:id="@+id/menuItemMyProfileView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:menuItemIcon="@drawable/ic_user_filled"
         app:menuItemName="Мой профиль"/>
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView_
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView
         android:id="@+id/menuItemStudentsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         app:menuItemIcon="@drawable/ic_users_filled"
         app:menuItemName="Студенты"/>
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView_
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView
         android:id="@+id/menuItemTeachersView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
         app:menuItemIcon="@drawable/ic_teacher"
         app:menuItemName="Учителя"/>
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView_
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView
         android:id="@+id/menuItemMonitoringView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         app:menuItemIcon="@drawable/ic_search"
         app:menuItemName="Мониторинг"/>
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView_
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuRowView
         android:id="@+id/menuItemSettingsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

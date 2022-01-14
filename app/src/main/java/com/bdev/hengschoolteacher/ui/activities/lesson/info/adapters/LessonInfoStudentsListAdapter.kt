@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.student.Student
+import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityData
 import com.bdev.hengschoolteacher.ui.activities.lesson.info.views.LessonInfoStudentItemView
-import com.bdev.hengschoolteacher.ui.activities.lesson.info.views.LessonInfoStudentItemView_
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 
 class LessonInfoStudentsListAdapter(
@@ -17,16 +17,19 @@ class LessonInfoStudentsListAdapter(
         private val goToStudentInformationAction: (Student) -> Unit,
         private val goToStudentPaymentAction: (Student) -> Unit,
         private val goToLessonAttendanceAction: (LessonAttendanceActivityData) -> Unit
-) : BaseItemsListAdapter<Student>(context) {
+) : BaseItemsListAdapter<Pair<Pair<Student, StudentAttendanceType?>, Pair<Int, Int>>>(context) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         return if (convertView == null) {
-            LessonInfoStudentItemView_.build(context)
+            LessonInfoStudentItemView(context)
         } else {
             convertView as LessonInfoStudentItemView
         }.bind(
-                student = getItem(position),
+                student = getItem(position).first.first,
                 lesson = lesson,
                 weekIndex = weekIndex,
+                attendanceType = getItem(position).first.second,
+                currentDebt = getItem(position).second.first,
+                expectedDebt = getItem(position).second.second,
                 goToStudentInformationAction = goToStudentInformationAction,
                 goToStudentPaymentAction = goToStudentPaymentAction,
                 goToLessonAttendanceAction = goToLessonAttendanceAction

@@ -12,6 +12,9 @@ import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.lessons.LessonsService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityHandler
 import com.bdev.hengschoolteacher.ui.activities.lesson.info.LessonInfoActivityParams.EXTRA_DATA
@@ -41,6 +44,10 @@ open class LessonInfoActivity : BaseActivity() {
     lateinit var lessonStatusService: LessonStatusService
     @Bean
     lateinit var lessonStateService: LessonStateService
+    @Bean(StudentDebtsServiceImpl::class)
+    lateinit var studentsDebtsService: StudentDebtsService
+    @Bean
+    lateinit var studentsAttendanceProviderService: StudentsAttendancesProviderService
 
     @AfterViews
     fun init() {
@@ -137,7 +144,18 @@ open class LessonInfoActivity : BaseActivity() {
                 }
         )
 
-        adapter.setItems(students)
+        adapter.setItems(students.map {
+            Pair(
+                    Pair(
+                            it,
+                            studentsAttendanceProviderService.getAttendance(lesson.id, it.login, activityData.weekIndex)
+                    ),
+                    Pair(
+                            studentsDebtsService.getDebt(it.login),
+                            studentsDebtsService.getExpectedDebt(it.login)
+                    )
+            )
+        })
 
         lessonStudentsListView.adapter = adapter
     }

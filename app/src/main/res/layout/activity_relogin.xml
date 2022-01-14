@@ -51,7 +51,7 @@
             android:textSize="@dimen/font_large"
             app:app_font="regular"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
             android:id="@+id/reloginFailedRestartView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -23,8 +23,11 @@ import kotlinx.android.synthetic.main.view_payments_summary.view.*
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_payments_summary)
-open class PaymentsSummaryView : RelativeLayout {
+class PaymentsSummaryView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_payments_summary, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
@@ -155,8 +158,11 @@ class PaymentsListAdapter(
     }
 }
 
-@EViewGroup(R.layout.view_payments)
-open class PaymentsView : RelativeLayout {
+class PaymentsView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_payments, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 

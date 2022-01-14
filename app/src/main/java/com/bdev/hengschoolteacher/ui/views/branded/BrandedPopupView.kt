@@ -26,8 +26,11 @@ data class BrandedPopupButtonInfo(
         val style: BrandedPopupButtonStyle
 )
 
-@EViewGroup(R.layout.view_branded_popup)
-open class BrandedPopupView : RelativeLayout {
+class BrandedPopupView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_branded_popup, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 

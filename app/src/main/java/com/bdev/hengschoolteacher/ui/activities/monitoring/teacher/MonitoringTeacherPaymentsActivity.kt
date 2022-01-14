@@ -2,6 +2,7 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringTeachersService
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
@@ -33,6 +34,8 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
 
     @Bean(StudentsPaymentsProviderServiceImpl::class)
     lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
+    @Bean
+    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
 
     @Extra(EXTRA_TEACHER_LOGIN)
     lateinit var teacherLogin: String
@@ -45,7 +48,10 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
 
         monitoringTeacherPaymentsSecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.PAYMENTS,
-                teacherLogin = teacherLogin
+                teacherLogin = teacherLogin,
+                hasLessonsAlert = alertsMonitoringTeachersService.haveLessonsAlerts(teacherLogin = teacherLogin),
+                hasPaymentsAlert = alertsMonitoringTeachersService.havePaymentsAlerts(teacherLogin = teacherLogin),
+                hasDebtsAlert = alertsMonitoringTeachersService.haveDebtsAlerts(teacherLogin = teacherLogin)
         )
 
         monitoringTeacherPaymentsEmptyWithFilterView.bind {

@@ -9,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
+import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
 import com.bdev.hengschoolteacher.data.school.student_payment.NewStudentPayment
@@ -34,25 +35,23 @@ import org.androidannotations.annotations.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-@EViewGroup(R.layout.view_student_payment_item)
-open class StudentPaymentItemView : RelativeLayout {
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
+class StudentPaymentItemView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_student_payment_item, this)
+    }
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
 
-    fun bind(existingStudentPayment: ExistingStudentPayment) {
+    fun bind(existingStudentPayment: ExistingStudentPayment, teacher: StaffMember?) {
         studentPaymentItemValueView.text = "${existingStudentPayment.info.amount} Р"
         studentPaymentItemTimeView.text = SimpleDateFormat("dd.MM.yyyy", Locale.US)
                 .format(existingStudentPayment.info.time)
 
-        initTeachers(existingStudentPayment)
+        initTeachers(teacher = teacher)
     }
 
-    private fun initTeachers(existingStudentPayment: ExistingStudentPayment) {
-        val teacher = staffMembersStorageService.getStaffMember(existingStudentPayment.info.staffMemberLogin)
-
+    private fun initTeachers(teacher: StaffMember?) {
         studentPaymentItemTeacherView.text = teacher
                 ?.person?.name
                 ?.split(" ")
@@ -76,6 +75,9 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
     @RootContext
     lateinit var context: Context
 
+    @Bean
+    lateinit var staffMembersStorageService: StaffMembersStorageService
+
     private var paymentExistings: List<ExistingStudentPayment> = emptyList()
 
     fun setItems(paymentExistings: List<ExistingStudentPayment>) {
@@ -84,12 +86,17 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
         val v = if (convertView == null) {
-            StudentPaymentItemView_.build(context)
+            StudentPaymentItemView(context)
         } else {
             convertView as StudentPaymentItemView
         }
 
-        v.bind(getItem(position))
+        getItem(position).let { payment ->
+            v.bind(
+                    teacher = staffMembersStorageService.getStaffMember(payment.info.staffMemberLogin),
+                    existingStudentPayment = payment
+            )
+        }
 
         return v
     }

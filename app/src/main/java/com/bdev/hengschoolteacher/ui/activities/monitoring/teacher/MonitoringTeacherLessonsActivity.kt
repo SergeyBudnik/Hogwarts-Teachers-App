@@ -5,13 +5,20 @@ import android.app.Activity
 import android.content.Intent
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.services.LessonStateService
+import com.bdev.hengschoolteacher.services.LessonStatusService
+import com.bdev.hengschoolteacher.services.LessonsAttendancesService
+import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringTeachersService
 import com.bdev.hengschoolteacher.services.lessons.LessonsService
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.lesson.LessonRowViewData
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
+import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsViewData
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_lessons.*
 import org.androidannotations.annotations.AfterViews
@@ -51,6 +58,16 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
     lateinit var lessonsService: LessonsService
     @Bean
     lateinit var lessonStateService: LessonStateService
+    @Bean
+    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
+    @Bean
+    lateinit var staffMembersStorageService: StaffMembersStorageService
+    @Bean
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
+    @Bean
+    lateinit var lessonsAttendancesService: LessonsAttendancesService
+    @Bean
+    lateinit var lessonStatusService: LessonStatusService
 
     private var weekIndex = 0
 
@@ -63,10 +80,13 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
 
         monitoringTeacherLessonsSecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.LESSONS,
-                teacherLogin = teacherLogin
+                teacherLogin = teacherLogin,
+                hasLessonsAlert = alertsMonitoringTeachersService.haveLessonsAlerts(teacherLogin = teacherLogin),
+                hasPaymentsAlert = alertsMonitoringTeachersService.havePaymentsAlerts(teacherLogin = teacherLogin),
+                hasDebtsAlert = alertsMonitoringTeachersService.haveDebtsAlerts(teacherLogin = teacherLogin)
         )
 
-        monitoringTeacherLessonsListView.bind(showTeacher = false)
+        monitoringTeacherLessonsListView.bind()
 
         monitoringTeacherLessonsWeekSelectionBarView.init { weekIndex ->
             this.weekIndex = weekIndex
@@ -122,7 +142,44 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
                     !filterEnabled || !lessonStateService.isLessonFilled(it.lesson, weekIndex)
                 }
 
-        monitoringTeacherLessonsListView.fill(lessons, weekIndex)
+        monitoringTeacherLessonsListView.fill(
+                LessonsViewData(
+                        weekIndex = weekIndex,
+                        lessonsData = lessons.map { groupAndLesson ->
+                            LessonRowViewData(
+                                    staffMember = staffMembersStorageService.getStaffMember(groupAndLesson.lesson.teacherLogin),
+                                    group = groupAndLesson.group,
+                                    lesson = groupAndLesson.lesson,
+                                    lessonStatus = lessonStatusService.getLessonStatus(
+                                            lessonId = groupAndLesson.lesson.id,
+                                            lessonTime = lessonsService.getLessonStartTime(groupAndLesson.lesson.id, weekIndex)
+                                    ),
+                                    isLessonFinished = lessonStateService.isLessonFinished(
+                                            lessonId = groupAndLesson.lesson.id,
+                                            weekIndex = weekIndex
+                                    ),
+                                    isLessonAttendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(
+                                            lessonId = groupAndLesson.lesson.id,
+                                            weekIndex = weekIndex
+                                    ),
+                                    studentsToAttendanceType = lessonsService
+                                            .getLessonStudents(groupAndLesson.lesson.id, weekIndex)
+                                            .map { student ->
+                                                Pair(
+                                                        student,
+                                                        studentsAttendancesProviderService.getAttendance(
+                                                                groupAndLesson.lesson.id,
+                                                                student.login,
+                                                                weekIndex
+                                                        )
+                                                )
+                                            },
+                                    weekIndex = weekIndex,
+                                    showTeacher = false
+                            )
+                        }
+                )
+        )
     }
 
     private fun toggleFilter() {

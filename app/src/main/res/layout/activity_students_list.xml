@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/studentsMenuLayoutView"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
                 android:id="@+id/studentsHeaderView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
                 app:leftIcon="@drawable/ic_menu"
                 app:firstRightIcon="@drawable/ic_search"/>
 
-            <com.bdev.hengschoolteacher.ui.views.branded.BrandedHeaderSearchView_
+            <com.bdev.hengschoolteacher.ui.views.branded.BrandedHeaderSearchView
                 android:id="@+id/studentsListHeaderSearchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
 
         </RelativeLayout>
 
-        <com.bdev.hengschoolteacher.ui.views.app.students.StudentsHeaderView_
+        <com.bdev.hengschoolteacher.ui.views.app.students.StudentsHeaderView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:students_item="students_list"/>
@@ -50,4 +50,4 @@
 
     </LinearLayout>
 
-</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView>

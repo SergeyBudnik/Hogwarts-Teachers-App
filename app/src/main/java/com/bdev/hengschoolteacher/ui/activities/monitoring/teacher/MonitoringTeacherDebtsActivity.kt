@@ -2,8 +2,11 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringTeachersService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -45,6 +48,10 @@ open class MonitoringTeacherDebtsActivity : BaseActivity() {
 
     @Bean(StudentsStorageServiceImpl::class)
     lateinit var studentsStorageService: StudentsStorageService
+    @Bean(StudentDebtsServiceImpl::class)
+    lateinit var studentsDebtsService: StudentDebtsService
+    @Bean
+    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
 
     @AfterViews
     fun init() {
@@ -52,11 +59,18 @@ open class MonitoringTeacherDebtsActivity : BaseActivity() {
 
         monitoringTeacherDebtsSecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.DEBTS,
-                teacherLogin = teacherLogin
+                teacherLogin = teacherLogin,
+                hasLessonsAlert = alertsMonitoringTeachersService.haveLessonsAlerts(teacherLogin = teacherLogin),
+                hasPaymentsAlert = alertsMonitoringTeachersService.havePaymentsAlerts(teacherLogin = teacherLogin),
+                hasDebtsAlert = alertsMonitoringTeachersService.haveDebtsAlerts(teacherLogin = teacherLogin)
         )
 
         monitoringTeacherDebtsListView.bind(
-                students = studentsStorageService.getAll().filter { it.managerLogin == teacherLogin },
+                studentsToExpectedDebt = studentsStorageService.getAll()
+                        .filter { it.managerLogin == teacherLogin }
+                        .map {
+                            Pair(it, studentsDebtsService.getExpectedDebt(studentLogin = it.login))
+                        },
                 searchQuery = "",
                 withDebtsOnly = true
         )
