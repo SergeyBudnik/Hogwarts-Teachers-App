@@ -3,6 +3,7 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.student
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.Month
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
@@ -11,6 +12,8 @@ import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.student.MonitoringStudentMonthHeaderView
+import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsItemViewData
+import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsViewData
 import kotlinx.android.synthetic.main.activity_monitoring_student_month_payments.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -49,6 +52,8 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
     lateinit var studentsStorageService: StudentsStorageService
     @Bean(StudentsPaymentsProviderServiceImpl::class)
     lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
+    @Bean
+    lateinit var staffMembersStorageService: StaffMembersStorageService
 
     @AfterViews
     fun init() {
@@ -69,12 +74,27 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
         student?.let { monitoringStudentMonthPaymentsStudentView.bind(it) }
 
         monitoringStudentMonthPaymentsPaymentsView.bind(
-                payments = studentsPaymentsProviderService.getForStudentForMonth(
-                        studentLogin = studentLogin,
-                        monthIndex = monthIndex
-                ),
-                singleTeacher = false,
-                editable = false
+                data = PaymentsViewData(
+                        paymentItemsData = studentsPaymentsProviderService
+                                .getForStudentForMonth(
+                                        studentLogin = studentLogin,
+                                        monthIndex = monthIndex
+                                ).sortedByDescending { payment ->
+                                    payment.info.time
+                                }.map { studentPayment ->
+                                    PaymentsItemViewData(
+                                            studentPayment = studentPayment,
+                                            studentName = studentsStorageService.getByLogin(
+                                                    studentPayment.info.studentLogin
+                                            )?.person?.name ?: "?",
+                                            staffMemberName = staffMembersStorageService.getStaffMember(
+                                                    studentPayment.info.staffMemberLogin
+                                            )?.person?.name ?: "?",
+                                            singleTeacher = false,
+                                            clickAction = null
+                                    )
+                                }
+                )
         )
     }
 

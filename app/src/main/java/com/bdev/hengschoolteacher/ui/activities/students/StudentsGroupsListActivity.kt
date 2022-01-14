@@ -9,12 +9,14 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Group
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.data.school.staff.StaffMember
+import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.services.groups.GroupStudentsProviderService
 import com.bdev.hengschoolteacher.services.groups.GroupStudentsProviderServiceImpl
 import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
 import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.profile.ProfileService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
@@ -27,70 +29,56 @@ import kotlinx.android.synthetic.main.view_list_item_students_groups.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.EViewGroup
 import java.util.*
 
-@EViewGroup(R.layout.view_list_item_students_groups)
-open class StudentsGroupsListItemView : LinearLayout {
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
-    @Bean
-    lateinit var profileService: ProfileService
-    @Bean(GroupStudentsProviderServiceImpl::class)
-    lateinit var groupsStudentsProviderService: GroupStudentsProviderService
+data class StudentsGroupsListItemViewData(
+        val me: StaffMember,
+        val group: Group,
+        val groupStudents: List<Student>
+)
+
+class StudentsGroupsListItemView : LinearLayout {
+    init {
+        View.inflate(context, R.layout.view_list_item_students_groups, this)
+    }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(group: Group, time: Long): StudentsGroupsListItemView {
-        setTitle(group = group, time = time)
-        setBackground(group)
+    fun bind(data: StudentsGroupsListItemViewData): StudentsGroupsListItemView {
+        setTitle(groupStudents = data.groupStudents)
+        setBackground(me = data.me, group = data.group)
 
         return this
     }
 
-    private fun setTitle(group: Group, time: Long) {
-        val groupStudents = groupsStudentsProviderService.getAll(
-                groupId = group.id,
-                time = time
-        )
-
+    private fun setTitle(groupStudents: List<Student>) {
         studentsGroupsItemNameView.text = groupStudents.foldRight("") {
             student, sum -> "${student.person.name.split(" ")[0]}; $sum"
         }
     }
 
-    private fun setBackground(group: Group) {
-        val me = profileService.getMe()
+    private fun setBackground(me: StaffMember, group: Group) {
+        val isMyGroup = group.lessons.filter { it.teacherLogin == me.login }.any()
 
-        if (me != null) {
-            val isMyGroup = group.lessons.filter { it.teacherLogin == me.login }.any()
+        val colorId = if (isMyGroup) { R.color.status_info_subtle } else { R.color.alt_contrast_light }
 
-            val colorId = if (isMyGroup) { R.color.status_info_subtle } else { R.color.alt_contrast_light }
-
-            studentsGroupsItemView.backgroundTintList = ColorStateList.valueOf(
-                    AppResources.getColor(
-                            context = context,
-                            colorId = colorId
-                    )
-            )
-        }
+        studentsGroupsItemView.backgroundTintList = ColorStateList.valueOf(
+                AppResources.getColor(
+                        context = context,
+                        colorId = colorId
+                )
+        )
     }
 }
 
-class StudentsGroupsListAdapter(
-        context: Context,
-        private val time: Long
-): BaseItemsListAdapter<Group>(context) {
+class StudentsGroupsListAdapter(context: Context): BaseItemsListAdapter<StudentsGroupsListItemViewData>(context) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return if (convertView == null) {
-            StudentsGroupsListItemView_.build(context)
+            StudentsGroupsListItemView(context)
         } else {
             (convertView as StudentsGroupsListItemView)
-        }.bind(
-                group = getItem(position),
-                time = time
-        )
+        }.bind(data = getItem(position))
     }
 }
 
@@ -126,22 +114,30 @@ open class StudentsGroupsListActivity : BaseActivity() {
         val me = profileService.getMe()
 
         if (me != null) {
-            val adapter = StudentsGroupsListAdapter(
-                    context = this,
-                    time = currentTime
-            )
+            val adapter = StudentsGroupsListAdapter(context = this)
 
             adapter.setItems(groupsStorageService
                     .getAll()
                     .sortedByDescending { group -> group.lessons.filter { it.teacherLogin == me.login }.any() }
+                    .map { group ->
+                        StudentsGroupsListItemViewData(
+                                me = me,
+                                group = group,
+                                groupStudents = groupsStudentsProviderService.getAll(
+                                        groupId = group.id,
+                                        time = currentTime
+                                )
+
+                        )
+                    }
             )
 
             studentsGroupsListView.adapter = adapter
 
             studentsGroupsHeaderSearchView.addOnTextChangeListener { filter ->
-                adapter.setFilter { group ->
+                adapter.setFilter { data ->
                     val groupStudents = groupsStudentsProviderService.getAll(
-                            groupId = group.id,
+                            groupId = data.group.id,
                             time = currentTime
                     )
 

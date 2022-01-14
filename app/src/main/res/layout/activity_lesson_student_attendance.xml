@@ -25,7 +25,7 @@
             android:background="@color/fill_contrast_base"
             android:paddingBottom="@dimen/app_size_1">
 
-            <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonInfoView_
+            <com.bdev.hengschoolteacher.ui.views.app.lesson.LessonInfoView
                 android:id="@+id/lessonStudentAttendanceLessonTimeView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

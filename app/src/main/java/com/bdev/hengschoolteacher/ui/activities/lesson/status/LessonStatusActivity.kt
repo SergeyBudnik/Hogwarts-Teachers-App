@@ -9,10 +9,12 @@ import com.bdev.hengschoolteacher.services.LessonStatusService
 import com.bdev.hengschoolteacher.services.lessons.LessonsService
 import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.services.teacher.TeacherInfoService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.status.LessonStatusActivityParams.EXTRA_DATA
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
+import kotlinx.android.synthetic.main.activity_lesson.*
 import kotlinx.android.synthetic.main.activity_lesson_status.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -29,11 +31,12 @@ open class LessonStatusActivity : BaseActivity() {
     lateinit var lessonsService: LessonsService
     @Bean
     lateinit var lessonStatusService: LessonStatusService
-
     @Bean
     lateinit var lessonsStatusAsyncService: LessonStatusAsyncService
     @Bean
     lateinit var staffMembersStorageService: StaffMembersStorageService
+    @Bean
+    lateinit var teacherInfoService: TeacherInfoService
 
     @Extra(EXTRA_DATA)
     lateinit var activityData: LessonStatusActivityData
@@ -44,7 +47,15 @@ open class LessonStatusActivity : BaseActivity() {
 
         val lesson = lessonsService.getLesson(activityData.lessonId)?.lesson ?: throw RuntimeException()
 
-        lessonStatusLessonTimeView.bind(lesson, activityData.weekIndex)
+        staffMembersStorageService.getStaffMember(lesson.teacherLogin)?.let { teacher ->
+            lessonStatusLessonTimeView.bind(
+                    lesson = lesson,
+                    lessonStartTime = lessonsService.getLessonStartTime(lesson.id, activityData.weekIndex),
+                    teacherName = teacherInfoService.getTeachersName(teacher),
+                    teacherSurname = teacherInfoService.getTeachersSurname(teacher)
+            )
+        }
+
         lessonStatusTeacherInfoView.bind(
                 staffMembersStorageService.getStaffMember(lesson.teacherLogin)
         )

@@ -2,8 +2,12 @@ package com.bdev.hengschoolteacher.ui.activities.profile
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
 import com.bdev.hengschoolteacher.services.alerts.profile.AlertsProfileService
 import com.bdev.hengschoolteacher.services.profile.ProfileService
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
@@ -11,6 +15,8 @@ import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
+import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsItemViewData
+import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsViewData
 import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
 import kotlinx.android.synthetic.main.activity_profile_payments.*
 import org.androidannotations.annotations.AfterViews
@@ -35,6 +41,10 @@ open class ProfilePaymentsActivity : BaseActivity() {
     lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
     @Bean
     lateinit var alertsProfileService: AlertsProfileService
+    @Bean
+    lateinit var staffMembersStorageService: StaffMembersStorageService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
 
     private var filterEnabled: Boolean = true
 
@@ -91,9 +101,24 @@ open class ProfilePaymentsActivity : BaseActivity() {
         profilePaymentsEmptyWithFilterView.visibility = visibleElseGone(visible = (allPayments.isNotEmpty() && filteredPayments.isEmpty()))
 
         profilePaymentsTeacherPaymentsView.bind(
-                payments = filteredPayments,
-                singleTeacher = true,
-                editable = false
+                data = PaymentsViewData(
+                        paymentItemsData = filteredPayments
+                                .sortedByDescending { payment ->
+                                    payment.info.time
+                                }.map { studentPayment ->
+                                    PaymentsItemViewData(
+                                            studentPayment = studentPayment,
+                                            studentName = studentsStorageService.getByLogin(
+                                                    studentPayment.info.studentLogin
+                                            )?.person?.name ?: "?",
+                                            staffMemberName = staffMembersStorageService.getStaffMember(
+                                                    studentPayment.info.staffMemberLogin
+                                            )?.person?.name ?: "?",
+                                            singleTeacher = false,
+                                            clickAction = null
+                                    )
+                                }
+                )
         )
     }
 

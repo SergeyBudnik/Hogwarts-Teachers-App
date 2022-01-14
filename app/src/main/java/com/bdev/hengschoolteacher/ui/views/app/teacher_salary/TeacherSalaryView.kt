@@ -79,7 +79,7 @@ class TeacherSalaryView : LinearLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun init(teacher: StaffMember, teacherPayments: List<TeacherPayment>) {
-        teacherSalarySalaryIn30mView.text = "${teacher?.salaryIn30m} Р"
+        teacherSalarySalaryIn30mView.text = "${teacher.salaryIn30m} Р"
         teacherSalaryWeekSumView.text = "${teacherPayments.fold(0) {v, tp -> v + tp.amount}} Р"
 
         val adapter = TeacherSalaryListAdapter(context)

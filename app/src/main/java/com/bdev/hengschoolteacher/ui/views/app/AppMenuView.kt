@@ -10,10 +10,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.services.auth.AuthService
-import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringService
-import com.bdev.hengschoolteacher.services.alerts.profile.AlertsProfileService
-import com.bdev.hengschoolteacher.services.profile.ProfileService
+import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoadingActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity
@@ -25,9 +22,6 @@ import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.VersionUtils
 import kotlinx.android.synthetic.main.view_app_menu.view.*
 import kotlinx.android.synthetic.main.view_app_menu_row.view.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EViewGroup
 
 class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
     private val itemName: String
@@ -121,32 +115,27 @@ class AppMenuRowView(context: Context, attrs: AttributeSet) : RelativeLayout(con
     }
 }
 
-@EViewGroup(R.layout.view_app_menu)
-open class AppMenuView : LinearLayout {
+class AppMenuView : LinearLayout {
     enum class Item {
         MY_PROFILE, STUDENTS, TEACHERS, MONITORING, SETTINGS, NONE
     }
 
-    @Bean
-    lateinit var authService: AuthService
-
-    @Bean
-    lateinit var profileService: ProfileService
-
-    @Bean
-    lateinit var alertsProfileService: AlertsProfileService
-    @Bean
-    lateinit var alertsMonitoringSevice: AlertsMonitoringService
+//    @Bean
+//    lateinit var authService: AuthService
+//
+//    @Bean
+//    lateinit var profileService: ProfileService
+//
+//    @Bean
+//    lateinit var alertsProfileService: AlertsProfileService
+//    @Bean
+//    lateinit var alertsMonitoringSevice: AlertsMonitoringService
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    @AfterViews
-    fun init() {
-        val me = profileService.getMe()
-
-        teacherNameView.text = me?.person?.name ?: ""
-        teacherLoginView.text = me?.login ?: ""
+    init {
+        View.inflate(context, R.layout.view_app_menu, this)
 
         val activity = context as BaseActivity
 
@@ -169,14 +158,17 @@ open class AppMenuView : LinearLayout {
                 activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
             }
         }
-
-        bind(Item.NONE)
     }
 
-    fun bind(item: Item) {
+    fun bind(me: StaffMember?, hasProfileAlerts: Boolean, hasMonitoringAlerts: Boolean, item: Item) {
+        // val me = profileService.getMe()
+
+        teacherNameView.text = me?.person?.name ?: ""
+        teacherLoginView.text = me?.login ?: ""
+
         menuItemMyProfileView.bind(
                 isCurrent = item == Item.MY_PROFILE,
-                hasAlerts = alertsProfileService.haveAlerts()
+                hasAlerts = hasProfileAlerts // alertsProfileService.haveAlerts()
         )
 
         menuItemStudentsView.bind(
@@ -191,7 +183,7 @@ open class AppMenuView : LinearLayout {
 
         menuItemMonitoringView.bind(
                 isCurrent = item == Item.MONITORING,
-                hasAlerts = alertsMonitoringSevice.haveAlerts()
+                hasAlerts = hasMonitoringAlerts // alertsMonitoringSevice.haveAlerts()
         )
 
         menuItemSettingsView.bind(
