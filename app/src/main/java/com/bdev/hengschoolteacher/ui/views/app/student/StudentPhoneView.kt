@@ -2,15 +2,18 @@ package com.bdev.hengschoolteacher.ui.views.app.student
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.PhoneUtils
 import kotlinx.android.synthetic.main.view_item_student_phone.view.*
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_item_student_phone)
-open class StudentPhoneItemView : RelativeLayout {
+class StudentPhoneItemView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_item_student_phone, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 

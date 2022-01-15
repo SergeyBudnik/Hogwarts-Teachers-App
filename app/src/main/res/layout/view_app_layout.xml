@@ -20,7 +20,7 @@
 
         </LinearLayout>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedPopupView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedPopupView
             android:id="@+id/appLayoutPopupView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,7 +28,7 @@
 
     </RelativeLayout>
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppMenuView_
+    <com.bdev.hengschoolteacher.ui.views.app.AppMenuView
         android:id="@+id/appLayoutMenuView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

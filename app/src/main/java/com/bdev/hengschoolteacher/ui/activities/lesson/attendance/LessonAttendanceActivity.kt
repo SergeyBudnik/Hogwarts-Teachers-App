@@ -9,9 +9,11 @@ import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
 import com.bdev.hengschoolteacher.services.lessons.LessonsService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesModifierService
 import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.teacher.TeacherInfoService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityParams.EXTRA_DATA
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -35,6 +37,10 @@ open class LessonAttendanceActivity : BaseActivity() {
     lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
     @Bean
     lateinit var studentsAttendancesModifierService: StudentsAttendancesModifierService
+    @Bean
+    lateinit var staffMembersStorageService: StaffMembersStorageService
+    @Bean
+    lateinit var teacherInfoService: TeacherInfoService
 
     @Extra(EXTRA_DATA)
     lateinit var activityData: LessonAttendanceActivityData
@@ -49,7 +55,15 @@ open class LessonAttendanceActivity : BaseActivity() {
         val lesson = groupAndLesson.lesson
         val student = studentsStorageService.getByLogin(activityData.studentLogin) ?: throw RuntimeException()
 
-        lessonStudentAttendanceLessonTimeView.bind(lesson, activityData.weekIndex)
+        staffMembersStorageService.getStaffMember(lesson.teacherLogin)?.let { teacher ->
+            lessonStudentAttendanceLessonTimeView.bind(
+                    lesson = lesson,
+                    lessonStartTime = lessonsService.getLessonStartTime(lesson.id, activityData.weekIndex),
+                    teacherName = teacherInfoService.getTeachersName(teacher),
+                    teacherSurname = teacherInfoService.getTeachersSurname(teacher)
+            )
+        }
+
         lessonStudentAttendanceStudentInfoView.bind(student)
 
         initButtons(group)

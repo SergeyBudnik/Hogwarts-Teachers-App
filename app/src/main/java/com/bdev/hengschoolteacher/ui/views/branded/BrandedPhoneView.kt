@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.bdev.hengschoolteacher.R
@@ -11,10 +12,12 @@ import com.bdev.hengschoolteacher.data.school.person.PersonContact
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.PhoneUtils
 import kotlinx.android.synthetic.main.view_branded_phone.view.*
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_branded_phone)
-open class BrandedPhoneView : LinearLayout {
+class BrandedPhoneView : LinearLayout {
+    init {
+        View.inflate(context, R.layout.view_branded_phone, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 

@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:weightSum="3">
 
-    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem
         android:id="@+id/studentHeaderDetailsView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         app:header_title="Детали"
         app:header_active="true"/>
 
-    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem
         android:id="@+id/studentHeaderAttendanceView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         app:header_title="Посещаемость"
         app:header_active="false"/>
 
-    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem
         android:id="@+id/studentHeaderPaymentsView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

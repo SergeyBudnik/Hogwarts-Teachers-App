@@ -2,6 +2,9 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringTeachersService
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.services.teacher.TeacherSalaryService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -10,6 +13,7 @@ import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_salary.*
 import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
 import org.androidannotations.annotations.Extra
 
@@ -31,6 +35,13 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
     @Extra(EXTRA_TEACHER_LOGIN)
     lateinit var teacherLogin: String
 
+    @Bean
+    lateinit var staffMembersStorageService: StaffMembersStorageService
+    @Bean
+    lateinit var teacherSalaryService: TeacherSalaryService
+    @Bean
+    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
+
     private var calendarEnabled = false
 
     @AfterViews
@@ -39,14 +50,22 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
 
         monitoringTeacherSalarySecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.SALARY,
-                teacherLogin = teacherLogin
+                teacherLogin = teacherLogin,
+                hasLessonsAlert = alertsMonitoringTeachersService.haveLessonsAlerts(teacherLogin = teacherLogin),
+                hasPaymentsAlert = alertsMonitoringTeachersService.havePaymentsAlerts(teacherLogin = teacherLogin),
+                hasDebtsAlert = alertsMonitoringTeachersService.haveDebtsAlerts(teacherLogin = teacherLogin)
         )
 
         monitoringTeacherSalaryWeekSelectionBarView.init { weekIndex ->
-            monitoringTeacherSalaryTeacherSalaryView.init(
-                    teacherLogin = teacherLogin,
-                    weekIndex = weekIndex
-            )
+            staffMembersStorageService.getStaffMember(login = teacherLogin)?.let { teacher ->
+                monitoringTeacherSalaryTeacherSalaryView.init(
+                        teacher = teacher,
+                        teacherPayments = teacherSalaryService.getTeacherPayments(
+                                teacherLogin = teacherLogin,
+                                weekIndex = weekIndex
+                        )
+                )
+            }
         }
     }
 

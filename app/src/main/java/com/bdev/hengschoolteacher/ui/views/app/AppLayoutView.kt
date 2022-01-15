@@ -12,18 +12,13 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPopupView
 import kotlinx.android.synthetic.main.view_app_layout.view.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_app_layout)
-open class AppLayoutView : DrawerLayout {
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
+class AppLayoutView : DrawerLayout {
     private var customView: Pair<View, ViewGroup.LayoutParams?>? = null
 
-    @AfterViews
-    fun init() {
+    init {
+        View.inflate(context, R.layout.view_app_layout, this)
+
         appLayoutContainerView.setScrimColor(Color.TRANSPARENT)
 
         if (!isInEditMode) {
@@ -37,6 +32,25 @@ open class AppLayoutView : DrawerLayout {
                     }
             )
         }
+    }
+
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    fun getPopupView(): BrandedPopupView {
+        return appLayoutPopupView
+    }
+
+    fun setCurrentMenuItem(item: AppMenuView.Item) {
+        // appLayoutMenuView.bind(item)
+    }
+
+    fun openMenu() {
+        appLayoutContainerView.openDrawer(GravityCompat.START)
+    }
+
+    override fun onFinishInflate() {
+        super.onFinishInflate()
 
         customView?.let { customView ->
             if (customView.second != null) {
@@ -45,18 +59,6 @@ open class AppLayoutView : DrawerLayout {
                 appLayoutEmbeddedContentView.addView(customView.first)
             }
         }
-    }
-
-    fun getPopupView(): BrandedPopupView {
-        return appLayoutPopupView
-    }
-
-    fun setCurrentMenuItem(item: AppMenuView.Item) {
-        appLayoutMenuView.bind(item)
-    }
-
-    fun openMenu() {
-        appLayoutContainerView.openDrawer(GravityCompat.START)
     }
 
     override fun addView(child: View) {

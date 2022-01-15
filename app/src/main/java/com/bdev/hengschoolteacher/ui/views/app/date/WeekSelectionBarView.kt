@@ -2,16 +2,15 @@ package com.bdev.hengschoolteacher.ui.views.app.date
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import kotlinx.android.synthetic.main.view_week_selection_bar.view.*
-import org.androidannotations.annotations.EViewGroup
 import java.text.SimpleDateFormat
 import java.util.*
 
-@EViewGroup(R.layout.view_week_selection_bar)
-open class WeekSelectionBarView : RelativeLayout {
+class WeekSelectionBarView : RelativeLayout {
     companion object {
         private const val WEEK_LEFT_BORDER = -8
         private const val WEEK_RIGHT_BORDED = 0
@@ -20,6 +19,10 @@ open class WeekSelectionBarView : RelativeLayout {
 
     private var currentWeekIndex = WEEK_CENTER
     private var changeListener: (Int) -> Unit = { _ -> }
+
+    init {
+        View.inflate(context, R.layout.view_week_selection_bar, this)
+    }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

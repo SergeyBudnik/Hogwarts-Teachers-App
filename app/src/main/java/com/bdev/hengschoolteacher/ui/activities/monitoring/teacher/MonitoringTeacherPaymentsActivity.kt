@@ -2,6 +2,11 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
+import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringTeachersService
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageService
+import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
 import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
@@ -10,6 +15,8 @@ import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
+import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsItemViewData
+import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsViewData
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_payments.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -33,6 +40,14 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
 
     @Bean(StudentsPaymentsProviderServiceImpl::class)
     lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
+    @Bean
+    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
+    @Bean(StudentsStorageServiceImpl::class)
+    lateinit var studentsStorageService: StudentsStorageService
+    @Bean
+    lateinit var staffMembersStorageService: StaffMembersStorageService
+    @Bean
+    lateinit var studentsPaymentsAsyncService: StudentsPaymentAsyncService
 
     @Extra(EXTRA_TEACHER_LOGIN)
     lateinit var teacherLogin: String
@@ -45,7 +60,10 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
 
         monitoringTeacherPaymentsSecondaryHeaderView.bind(
                 currentItem = MonitoringTeacherHeaderView.Item.PAYMENTS,
-                teacherLogin = teacherLogin
+                teacherLogin = teacherLogin,
+                hasLessonsAlert = alertsMonitoringTeachersService.haveLessonsAlerts(teacherLogin = teacherLogin),
+                hasPaymentsAlert = alertsMonitoringTeachersService.havePaymentsAlerts(teacherLogin = teacherLogin),
+                hasDebtsAlert = alertsMonitoringTeachersService.haveDebtsAlerts(teacherLogin = teacherLogin)
         )
 
         monitoringTeacherPaymentsEmptyWithFilterView.bind {
@@ -92,9 +110,28 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
         monitoringTeacherPaymentsEmptyWithFilterView.visibility = visibleElseGone(visible = (allPayments.isNotEmpty() && filteredPayments.isEmpty()))
 
         monitoringTeacherPaymentsView.bind(
-                payments = filteredPayments,
-                singleTeacher = true,
-                editable = true
+                data = PaymentsViewData(
+                        paymentItemsData = filteredPayments
+                                .sortedByDescending { payment ->
+                                    payment.info.time
+                                }.map { studentPayment ->
+                                    PaymentsItemViewData(
+                                            studentPayment = studentPayment,
+                                            studentName = studentsStorageService.getByLogin(
+                                                    studentPayment.info.studentLogin
+                                            )?.person?.name ?: "?",
+                                            staffMemberName = staffMembersStorageService.getStaffMember(
+                                                    studentPayment.info.staffMemberLogin
+                                            )?.person?.name ?: "?",
+                                            singleTeacher = false,
+                                            clickAction = {
+                                                studentsPaymentsAsyncService
+                                                        .setPaymentProcessed(studentPayment.id)
+                                                        // .onSuccess { renderProcessed(it.processed) } todo
+                                            }
+                                    )
+                                }
+                )
         )
     }
 

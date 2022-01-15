@@ -3,18 +3,16 @@ package com.bdev.hengschoolteacher.ui.views.branded
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import kotlinx.android.synthetic.main.view_branded_action_button.view.*
-import org.androidannotations.annotations.EViewGroup
-import org.androidannotations.annotations.res.AnimationRes
 
-@EViewGroup(R.layout.view_branded_action_button)
-open class BrandedActionButtonView : RelativeLayout {
-    @AnimationRes(R.anim.spinner)
-    lateinit var spinnerAnimation: Animation
+class BrandedActionButtonView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_branded_action_button, this)
+    }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -53,6 +51,8 @@ open class BrandedActionButtonView : RelativeLayout {
         brandedActionButtonIconView.visibility = View.GONE
 
         brandedActionButtonProgressView.visibility = View.VISIBLE
-        brandedActionButtonProgressView.startAnimation(spinnerAnimation)
+        brandedActionButtonProgressView.startAnimation(
+                AnimationUtils.loadAnimation(context, R.anim.spinner)
+        )
     }
 }

@@ -3,15 +3,13 @@ package com.bdev.hengschoolteacher.ui.views.branded
 import android.content.Context
 import android.text.InputType
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.views.common.CommonFontableEditTextView
 import kotlinx.android.synthetic.main.view_branded_edit_text.view.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_branded_edit_text)
-open class BrandedEditTextView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class BrandedEditTextView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     enum class Style(val id: Int) {
         TEXT(1), PASSWORD(2);
 
@@ -20,6 +18,10 @@ open class BrandedEditTextView(context: Context, attrs: AttributeSet) : LinearLa
                 return values().find { it.id == id }
             }
         }
+    }
+
+    init {
+        View.inflate(context, R.layout.view_branded_edit_text, this)
     }
 
     private val label: String
@@ -40,10 +42,7 @@ open class BrandedEditTextView(context: Context, attrs: AttributeSet) : LinearLa
         } finally {
             ta.recycle()
         }
-    }
 
-    @AfterViews
-    fun init() {
         brandedEditTextLabelView.text = label
         brandedEditTextControlView.hint = hint
 

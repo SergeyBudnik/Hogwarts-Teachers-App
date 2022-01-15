@@ -2,6 +2,7 @@ package com.bdev.hengschoolteacher.ui.views.app.student
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
@@ -9,14 +10,16 @@ import com.bdev.hengschoolteacher.ui.activities.monitoring.student.MonitoringStu
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentPaymentActivity
 import kotlinx.android.synthetic.main.view_student_header.view.*
-import org.androidannotations.annotations.EViewGroup
 
 enum class StudentHeaderItem {
     DETAILS, ATTENDANCE, PAYMENTS
 }
 
-@EViewGroup(R.layout.view_student_header)
-open class StudentHeaderView : LinearLayout {
+class StudentHeaderView : LinearLayout {
+    init {
+        View.inflate(context, R.layout.view_student_header, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 

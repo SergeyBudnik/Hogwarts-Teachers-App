@@ -7,19 +7,21 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import kotlinx.android.synthetic.main.view_branded_list_item.view.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_branded_list_item)
-open class BrandedListItemView : RelativeLayout {
+class BrandedListItemView : RelativeLayout {
     private val customViews: MutableSet<View> = HashSet()
     private val customViewsWithParams: MutableSet<Pair<View, ViewGroup.LayoutParams>> = HashSet()
+
+    init {
+        View.inflate(context, R.layout.view_branded_list_item, this)
+    }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    @AfterViews
-    fun init() {
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+
         customViews.forEach { brandedListItemContainerView.addView(it) }
         customViewsWithParams.forEach { brandedListItemContainerView.addView(it.first, it.second) }
     }

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
+    <com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
         android:id="@+id/monitoringTeachersMenuLayoutView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,14 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
                 android:id="@+id/monitoringTeachersHeaderView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="Мониторинг"
                 app:leftIcon="@drawable/ic_menu"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView_
+            <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
                 android:id="@+id/monitoringTeachersSecondaryHeaderView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -43,6 +43,6 @@
 
         </LinearLayout>
 
-    </com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>
+    </com.bdev.hengschoolteacher.ui.views.app.AppLayoutView>
 
 </LinearLayout>

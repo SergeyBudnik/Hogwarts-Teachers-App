@@ -2,9 +2,12 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -31,6 +34,10 @@ open class MonitoringStudentsActivity : BaseActivity() {
     lateinit var studentsStorageService: StudentsStorageService
     @Bean
     lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
+    @Bean(StudentDebtsServiceImpl::class)
+    lateinit var studentsDebtsService: StudentDebtsService
+    @Bean
+    lateinit var alertsMonitoringService: AlertsMonitoringService
 
     private var filterEnabled = true
 
@@ -43,7 +50,10 @@ open class MonitoringStudentsActivity : BaseActivity() {
         monitoringPaymentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
 
         monitoringPaymentsSecondaryHeaderView.bind(
-                currentItem = MonitoringHeaderView.Item.STUDENTS
+                currentItem = MonitoringHeaderView.Item.STUDENTS,
+                hasTeachersAlert = alertsMonitoringService.teachersHaveAlerts(),
+                hasStudentsAlert = alertsMonitoringService.studentsHaveAlerts(),
+                hasLessonsAlert = alertsMonitoringService.lessonsHaveAlerts()
         )
 
         monitoringPaymentsHeaderSearchView.addOnTextChangeListener { search ->
@@ -69,7 +79,9 @@ open class MonitoringStudentsActivity : BaseActivity() {
 
     private fun initList() {
         monitoringPaymentsListView.bind(
-                students = studentsStorageService.getAll(),
+                studentsToExpectedDebt = studentsStorageService.getAll().map {
+                    Pair(it, studentsDebtsService.getExpectedDebt(studentLogin = it.login))
+                },
                 searchQuery = search,
                 withDebtsOnly = filterEnabled
         )

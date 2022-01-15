@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/settingsMenuLayoutView"
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
             android:id="@+id/settingsHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:textColor="@color/fill_text_basic_light"
             android:textSize="@dimen/font_large"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_size_1"
@@ -48,7 +48,7 @@
             app:button_text="Изменить пароль"
             app:button_style="default_style"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+        <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
             android:id="@+id/settingsLogoutView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,4 +60,4 @@
 
     </LinearLayout>
 
-</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView>

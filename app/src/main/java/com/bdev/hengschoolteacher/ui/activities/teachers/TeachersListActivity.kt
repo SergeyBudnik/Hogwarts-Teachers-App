@@ -19,8 +19,11 @@ import kotlinx.android.synthetic.main.activity_teachers_list.*
 import kotlinx.android.synthetic.main.view_teachers_list_row_item.view.*
 import org.androidannotations.annotations.*
 
-@EViewGroup(R.layout.view_teachers_list_row_item)
-open class TeachersListRowItemView : RelativeLayout {
+class TeachersListRowItemView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_teachers_list_row_item, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
@@ -44,7 +47,7 @@ open class TeachersListAdapter : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
         return if (convertView == null) {
-            TeachersListRowItemView_.build(context)
+            TeachersListRowItemView(context)
         } else {
             convertView as TeachersListRowItemView
         }.bind(getItem(position))

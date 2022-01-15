@@ -3,6 +3,7 @@ package com.bdev.hengschoolteacher.ui.views.app
 import android.content.Context
 import android.graphics.PorterDuff
 import android.util.AttributeSet
+import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
@@ -12,8 +13,7 @@ import kotlinx.android.synthetic.main.view_app_header.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_app_header)
-open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
+class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
     private val title: String
     private val leftIconId: Int
     private val firstRightIconId: Int
@@ -21,6 +21,8 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
     private val thirdRightIconId: Int
 
     init {
+        View.inflate(context, R.layout.view_app_header, this)
+
         val ta = context.obtainStyledAttributes(attrs, R.styleable.AppHeaderView, 0, 0)
 
         try {
@@ -32,10 +34,7 @@ open class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout
         } finally {
             ta.recycle()
         }
-    }
 
-    @AfterViews
-    fun init() {
         titleView.text = title
 
         setActionButton(leftActionButtonView, leftIconId)

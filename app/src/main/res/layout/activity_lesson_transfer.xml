@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
             android:id="@+id/lessonTransferHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
                 android:layout_marginStart="@dimen/app_size_1"
                 android:layout_marginEnd="@dimen/app_size_1"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView_
+            <com.bdev.hengschoolteacher.ui.views.app.teacher.TeacherInfoView
                 android:id="@+id/lessonTransferTeacherInfoView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                 android:paddingTop="@dimen/app_size_1"
                 android:paddingBottom="@dimen/app_size_1">
 
-                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
+                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/app_size_1"
@@ -63,7 +63,7 @@
                     app:branded_edit_text_label="Дата переноса:"
                     app:branded_edit_text_hint="ДД.ММ.ГГГГ"/>
 
-                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
+                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/app_size_1"
@@ -73,7 +73,7 @@
                     app:branded_edit_text_label="Время переноса:"
                     app:branded_edit_text_hint="ЧЧ:ММ"/>
 
-                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
+                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/app_size_1"
@@ -83,7 +83,7 @@
                     app:branded_edit_text_label="Длительность занятия:"
                     app:branded_edit_text_hint="Длительность занятия"/>
 
-                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView_
+                <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/app_size_1"
@@ -121,7 +121,7 @@
 
                 </LinearLayout>
 
-                <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+                <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/app_size_2"
@@ -136,4 +136,4 @@
 
     </LinearLayout>
 
-</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView>

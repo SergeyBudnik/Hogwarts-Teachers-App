@@ -21,10 +21,12 @@ import kotlinx.android.synthetic.main.view_students_list_row_item.view.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_students_list_row_item)
-open class StudentsListRowItemView : RelativeLayout {
+class StudentsListRowItemView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_students_list_row_item, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
@@ -38,7 +40,7 @@ open class StudentsListRowItemView : RelativeLayout {
 class StudentsListAdapter(context: Context) : BaseItemsListAdapter<Student>(context) {
     override fun getView(position: Int, convertView: View?, parentView: ViewGroup): View {
         return if (convertView == null) {
-            StudentsListRowItemView_.build(context)
+            StudentsListRowItemView(context)
         } else {
             convertView as StudentsListRowItemView
         }.bind(getItem(position))

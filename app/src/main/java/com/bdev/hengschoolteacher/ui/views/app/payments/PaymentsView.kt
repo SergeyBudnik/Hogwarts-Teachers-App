@@ -6,13 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
 import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
-import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
-import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
@@ -20,11 +14,12 @@ import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_payments.view.*
 import kotlinx.android.synthetic.main.view_payments_item.view.*
 import kotlinx.android.synthetic.main.view_payments_summary.view.*
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_payments_summary)
-open class PaymentsSummaryView : RelativeLayout {
+class PaymentsSummaryView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_payments_summary, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
@@ -60,56 +55,43 @@ open class PaymentsSummaryView : RelativeLayout {
     }
 }
 
-@EViewGroup(R.layout.view_payments_item)
-open class PaymentsItemView : RelativeLayout {
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
-    @Bean(StudentsPaymentsProviderServiceImpl::class)
-    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
+data class PaymentsItemViewData(
+        val studentPayment: ExistingStudentPayment,
+        val studentName: String,
+        val staffMemberName: String,
+        val singleTeacher: Boolean,
+        val clickAction: (() -> Unit)?
+)
 
-    @Bean
-    lateinit var studentsPaymentsAsyncService: StudentsPaymentAsyncService
+class PaymentsItemView : RelativeLayout {
+    init {
+        R.layout.view_payments_item
+    }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(existingStudentPayment: ExistingStudentPayment, singleTeacher: Boolean, editable: Boolean): PaymentsItemView {
+    fun bind(data: PaymentsItemViewData): PaymentsItemView {
         paymentsItemAmountView.text = context.getString(
                 R.string.amount_in_rub,
-                existingStudentPayment.info.amount
+                data.studentPayment.info.amount
         )
 
-        paymentsItemStudentView.text = studentsStorageService.getByLogin(
-                existingStudentPayment.info.studentLogin
-        )?.person?.name ?: "?"
+        paymentsItemStudentView.text = data.studentName
 
-        paymentsItemTeacherView.text = staffMembersStorageService.getStaffMember(
-                existingStudentPayment.info.staffMemberLogin
-        )?.person?.name ?: "?"
+        paymentsItemTeacherView.text = data.staffMemberName
 
-        paymentsItemDateView.text = TimeFormatUtils.format(existingStudentPayment.info.time)
+        paymentsItemDateView.text = TimeFormatUtils.format(data.studentPayment.info.time)
 
-        paymentsItemTeacherView.visibility = visibleElseGone(visible = !singleTeacher)
+        paymentsItemTeacherView.visibility = visibleElseGone(visible = !data.singleTeacher)
 
-        renderProcessed(
-                studentsPaymentsProviderService.getByPaymentId(existingStudentPayment.id)?.processed ?: false
-        )
+        renderProcessed(data.studentPayment.processed)
 
         setOnClickListener {
-            if (editable) {
-                process(existingStudentPayment.id)
-            }
+            data.clickAction?.invoke()
         }
 
         return this
-    }
-
-    private fun process(studentPaymentId: Long) {
-        studentsPaymentsAsyncService
-                .setPaymentProcessed(studentPaymentId)
-                .onSuccess { renderProcessed(it.processed) }
     }
 
     private fun renderProcessed(processed: Boolean) {
@@ -137,42 +119,35 @@ open class PaymentsItemView : RelativeLayout {
     }
 }
 
-class PaymentsListAdapter(
-        private val singleTeacher: Boolean,
-        private val editable: Boolean,
-        context: Context
-) : BaseItemsListAdapter<ExistingStudentPayment>(context) {
+class PaymentsListAdapter(context: Context) : BaseItemsListAdapter<PaymentsItemViewData>(context) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         return if (convertView == null) {
-            PaymentsItemView_.build(context)
+            PaymentsItemView(context)
         } else {
             convertView as PaymentsItemView
-        }.bind(
-                existingStudentPayment = getItem(position),
-                singleTeacher = singleTeacher,
-                editable = editable
-        )
+        }.bind(data = getItem(position))
     }
 }
 
-@EViewGroup(R.layout.view_payments)
-open class PaymentsView : RelativeLayout {
+data class PaymentsViewData(
+        val paymentItemsData: List<PaymentsItemViewData>
+)
+
+class PaymentsView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_payments, this)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun bind(
-            payments: List<ExistingStudentPayment>,
-            singleTeacher: Boolean,
-            editable: Boolean
-    ) {
-        paymentsSummaryView.bind(payments = payments)
+    fun bind(data: PaymentsViewData) {
+        // paymentsSummaryView.bind(payments = payments) todo
 
-        PaymentsListAdapter(
-                singleTeacher = singleTeacher,
-                editable = editable,
-                context = context
-        ).let {
-            it.setItems(payments.sortedByDescending { payment -> payment.info.time })
+        PaymentsListAdapter(context = context).let {
+            // payments
+
+            it.setItems(data.paymentItemsData)
 
             paymentsListView.adapter = it
         }

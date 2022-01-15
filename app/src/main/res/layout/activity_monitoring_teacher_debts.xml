@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/monitoringTeacherDebtsRootView"
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/fill_contrast_base">
 
-            <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+            <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
                 android:id="@+id/monitoringTeacherDebtsHeaderView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,18 +26,18 @@
                 app:leftIcon="@drawable/ic_arrow_left"
                 app:firstRightIcon="@drawable/ic_teacher"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView_
+            <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
                 android:id="@+id/monitoringTeacherDebtsSecondaryHeaderView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
-        <com.bdev.hengschoolteacher.ui.views.app.students.StudentsWithDebtsListView_
+        <com.bdev.hengschoolteacher.ui.views.app.students.StudentsWithDebtsListView
             android:id="@+id/monitoringTeacherDebtsListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
     </LinearLayout>
 
-</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView>

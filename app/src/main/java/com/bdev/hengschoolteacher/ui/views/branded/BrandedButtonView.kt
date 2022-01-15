@@ -3,15 +3,13 @@ package com.bdev.hengschoolteacher.ui.views.branded
 import android.content.Context
 import android.graphics.PorterDuff
 import android.util.AttributeSet
+import android.view.View
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import kotlinx.android.synthetic.main.view_branded_button.view.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_branded_button)
-open class BrandedButtonView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
+class BrandedButtonView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
     enum class Style(
             val id: Int,
             val backgroundId: Int,
@@ -32,6 +30,8 @@ open class BrandedButtonView(context: Context, attrs: AttributeSet) : RelativeLa
     private var style: Style
 
     init {
+        View.inflate(context, R.layout.view_branded_button, this)
+
         val ta = context.obtainStyledAttributes(attrs, R.styleable.BrandedButtonView, 0, 0)
 
         try {
@@ -40,10 +40,7 @@ open class BrandedButtonView(context: Context, attrs: AttributeSet) : RelativeLa
         } finally {
             ta.recycle()
         }
-    }
 
-    @AfterViews
-    fun init() {
         doInit()
     }
 

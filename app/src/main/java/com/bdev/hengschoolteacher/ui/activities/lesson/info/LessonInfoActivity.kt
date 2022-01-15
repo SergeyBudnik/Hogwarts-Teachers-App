@@ -6,12 +6,18 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.services.*
+import com.bdev.hengschoolteacher.services.LessonStateService
+import com.bdev.hengschoolteacher.services.LessonStatusService
 import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
 import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
 import com.bdev.hengschoolteacher.services.lessons.LessonsService
+import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageService
 import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
+import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
+import com.bdev.hengschoolteacher.services.teacher.TeacherInfoService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityHandler
 import com.bdev.hengschoolteacher.ui.activities.lesson.info.LessonInfoActivityParams.EXTRA_DATA
@@ -41,6 +47,14 @@ open class LessonInfoActivity : BaseActivity() {
     lateinit var lessonStatusService: LessonStatusService
     @Bean
     lateinit var lessonStateService: LessonStateService
+    @Bean(StudentDebtsServiceImpl::class)
+    lateinit var studentsDebtsService: StudentDebtsService
+    @Bean
+    lateinit var studentsAttendanceProviderService: StudentsAttendancesProviderService
+    @Bean
+    lateinit var staffMembersStorageService: StaffMembersStorageService
+    @Bean
+    lateinit var teacherInfoService: TeacherInfoService
 
     @AfterViews
     fun init() {
@@ -89,7 +103,14 @@ open class LessonInfoActivity : BaseActivity() {
                 )
         )
 
-        lessonTimeView.bind(lesson, activityData.weekIndex)
+        staffMembersStorageService.getStaffMember(lesson.teacherLogin)?.let { teacher ->
+            lessonTimeView.bind(
+                    lesson = lesson,
+                    lessonStartTime = lessonsService.getLessonStartTime(lesson.id, activityData.weekIndex),
+                    teacherName = teacherInfoService.getTeachersName(teacher),
+                    teacherSurname = teacherInfoService.getTeachersSurname(teacher)
+            )
+        }
 
         fillLessons(lesson, students)
 
@@ -137,7 +158,18 @@ open class LessonInfoActivity : BaseActivity() {
                 }
         )
 
-        adapter.setItems(students)
+        adapter.setItems(students.map {
+            Pair(
+                    Pair(
+                            it,
+                            studentsAttendanceProviderService.getAttendance(lesson.id, it.login, activityData.weekIndex)
+                    ),
+                    Pair(
+                            studentsDebtsService.getDebt(it.login),
+                            studentsDebtsService.getExpectedDebt(it.login)
+                    )
+            )
+        })
 
         lessonStudentsListView.adapter = adapter
     }

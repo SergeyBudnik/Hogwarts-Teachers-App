@@ -27,15 +27,15 @@ import kotlinx.android.synthetic.main.activity_monitoring_student_month_attendan
 import kotlinx.android.synthetic.main.view_monitoring_student_month_attendance_item.view.*
 import org.androidannotations.annotations.*
 
-@EViewGroup(R.layout.view_monitoring_student_month_attendance_item)
-open class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
-    @Bean(StudentsPricingServiceImpl::class)
-    lateinit var studentsPricingService: StudentsPricingService
+class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
+    init {
+        View.inflate(context, R.layout.view_monitoring_student_month_attendance_item, this)
+    }
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
 
-    fun bind(studentAttendance: StudentAttendance): MonitoringStudentMonthAttendanceItemView {
+    fun bind(studentAttendance: StudentAttendance, studentAttendancePrice: Int): MonitoringStudentMonthAttendanceItemView {
         monitoringStudentMonthAttendanceItemDateView.text = TimeFormatUtils.formatOnlyDate(
                 studentAttendance.startTime
         )
@@ -56,7 +56,7 @@ open class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
                 getAttendanceColor(studentAttendance)
         )
 
-        monitoringStudentMonthAttendanceItemPriceView.text = "${studentsPricingService.getAttendancePrice(studentAttendance)} Р"
+        monitoringStudentMonthAttendanceItemPriceView.text = "$studentAttendancePrice Р"
 
         return this
     }
@@ -85,17 +85,20 @@ open class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
 
 private class MonitoringStudentMonthAttendanceListAdapter(
         context: Context
-) : BaseItemsListAdapter<StudentAttendance>(context) {
+) : BaseItemsListAdapter<Pair<StudentAttendance, Int>>(context) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         return if (convertView == null) {
-            MonitoringStudentMonthAttendanceItemView_.build(context)
+            MonitoringStudentMonthAttendanceItemView(context)
         } else {
             convertView as MonitoringStudentMonthAttendanceItemView
-        }.bind(getItem(position))
+        }.bind(
+                studentAttendance = getItem(position).first,
+                studentAttendancePrice = getItem(position).second
+        )
     }
 
-    override fun setItems(items: List<StudentAttendance>) {
-        super.setItems(items.sortedByDescending { it.startTime })
+    override fun setItems(items: List<Pair<StudentAttendance, Int>>) {
+        super.setItems(items.sortedByDescending { it.first.startTime })
     }
 }
 
@@ -137,6 +140,8 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
     lateinit var studentsStorageService: StudentsStorageService
     @Bean
     lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
+    @Bean(StudentsPricingServiceImpl::class)
+    lateinit var studentsPricingService: StudentsPricingService
 
     @AfterViews
     fun init() {
@@ -165,7 +170,9 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
         adapter.setItems(studentsAttendancesProviderService.getMonthlyAttendances(
                 studentLogin = studentLogin,
                 month = monthIndex
-        ))
+        ).map {
+            Pair(it, studentsPricingService.getAttendancePrice(attendance = it))
+        })
 
         monitoringStudentMonthAttendanceListView.adapter = adapter
     }

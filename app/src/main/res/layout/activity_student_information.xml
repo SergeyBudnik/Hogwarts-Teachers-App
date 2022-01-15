@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/studentInformationMenuLayoutView"
@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
             android:id="@+id/studentInformationHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="Студент"
             app:leftIcon="@drawable/ic_arrow_left"/>
 
-        <com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderView_
+        <com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderView
             android:id="@+id/studentInformationSecondaryHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -63,4 +63,4 @@
 
     </LinearLayout>
 
-</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView>

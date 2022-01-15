@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_
+<com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/monitoringTeacherPaymentsMenuLayoutView"
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView_
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
             android:id="@+id/monitoringTeacherPaymentsHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             app:firstRightIcon="@drawable/ic_filter"
             app:secondRightIcon="@drawable/ic_teacher"/>
 
-        <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView_
+        <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
             android:id="@+id/monitoringTeacherPaymentsSecondaryHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -31,12 +31,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsView_
+            <com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsView
                 android:id="@+id/monitoringTeacherPaymentsView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsEmptyWithFilterView_
+            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsEmptyWithFilterView
                 android:id="@+id/monitoringTeacherPaymentsEmptyWithFilterView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 android:layout_marginEnd="@dimen/app_size_2"
                 android:visibility="gone"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsEmptyView_
+            <com.bdev.hengschoolteacher.ui.views.app.teacher_payments.TeacherPaymentsEmptyView
                 android:id="@+id/monitoringTeacherPaymentsEmptyView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,4 +58,4 @@
 
     </LinearLayout>
 
-</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView_>
+</com.bdev.hengschoolteacher.ui.views.app.AppLayoutView>

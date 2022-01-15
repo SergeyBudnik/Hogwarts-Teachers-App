@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
-import com.bdev.hengschoolteacher.ui.views.app.common.ListDayItemView_
+import com.bdev.hengschoolteacher.ui.views.app.common.ListDayItemView
 import java.util.ArrayList
 
 abstract class BaseWeekItemsListAdapter<T>(
@@ -42,8 +42,8 @@ abstract class BaseWeekItemsListAdapter<T>(
         val element = item.second
 
         return if (element == null) {
-            val view = if (convertView == null || convertView !is ListDayItemView_) {
-                ListDayItemView_.build(context)
+            val view = if (convertView == null || convertView !is ListDayItemView) {
+                ListDayItemView(context)
             } else {
                 convertView
             }.bind(day)

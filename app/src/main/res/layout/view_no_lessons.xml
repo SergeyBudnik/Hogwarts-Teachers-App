@@ -24,7 +24,7 @@
         android:textColor="@color/fill_text_basic"
         android:textSize="@dimen/font_large"/>
 
-    <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView_
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
         android:id="@+id/profileLessonsNoLessonsDisableFilterView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

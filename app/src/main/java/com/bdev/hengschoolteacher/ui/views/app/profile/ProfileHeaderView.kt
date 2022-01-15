@@ -2,33 +2,34 @@ package com.bdev.hengschoolteacher.ui.views.app.profile
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.services.alerts.profile.AlertsProfileService
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileDebtsActivity
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfilePaymentsActivity
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileSalaryActivity
 import kotlinx.android.synthetic.main.view_profile_header.view.*
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EViewGroup
 
-@EViewGroup(R.layout.view_profile_header)
 open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     enum class Item {
         LESSONS, SALARY, PAYMENTS, DEBTS;
     }
 
-    @Bean
-    lateinit var alertsProfileService: AlertsProfileService
+    init {
+        View.inflate(context, R.layout.view_profile_header, this)
+    }
 
-    fun bind(currentItem: Item) {
+    fun bind(
+            currentItem: Item,
+            hasLessonsAlert: Boolean, hasPaymentsAlert: Boolean, hasDebtsAlert: Boolean
+    ) {
         val activity = context as BaseActivity
 
         profileHeaderMyLessonsView.bind(
             active = currentItem == Item.LESSONS,
-            hasAlert = alertsProfileService.haveLessonsAlerts(),
+            hasAlert = hasLessonsAlert,
             clickAction = { ProfileLessonsActivity.redirectToSibling(current = activity) }
         )
 
@@ -40,13 +41,13 @@ open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayo
 
         profileHeaderMyPaymentsView.bind(
             active = currentItem == Item.PAYMENTS,
-            hasAlert = alertsProfileService.havePaymentsAlerts(),
+            hasAlert = hasPaymentsAlert,
             clickAction = { ProfilePaymentsActivity.redirectToSibling(current = activity) }
         )
 
         profileHeaderDebtsView.bind(
             active = currentItem == Item.DEBTS,
-            hasAlert = alertsProfileService.haveDebtsAlerts(),
+            hasAlert = hasDebtsAlert,
             clickAction = { ProfileDebtsActivity.redirectToSibling(from = activity) }
         )
     }

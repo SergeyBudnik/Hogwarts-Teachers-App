@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:weightSum="4">
 
-    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem
         android:id="@+id/profileHeaderMyLessonsView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         app:header_title="Занятия"
         app:header_active="true"/>
 
-    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem
         android:id="@+id/profileHeaderMySalaryView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         app:header_title="Зарплата"
         app:header_active="false"/>
 
-    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem
         android:id="@+id/profileHeaderMyPaymentsView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         app:header_title="Оплата"
         app:header_active="false"/>
 
-    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem_
+    <com.bdev.hengschoolteacher.ui.views.branded.BrandedSecondaryHeaderItem
         android:id="@+id/profileHeaderDebtsView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
