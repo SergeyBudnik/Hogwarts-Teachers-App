@@ -1,24 +1,22 @@
 package com.bdev.hengschoolteacher.interactors.auth
 
-import com.bdev.hengschoolteacher.async.CommonAsyncService
 import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
 import com.bdev.hengschoolteacher.data.auth.AuthInfo
-import com.bdev.hengschoolteacher.rest.AuthRest
 import com.bdev.hengschoolteacher.interactors.UserPreferencesServiceImpl
+import com.bdev.hengschoolteacher.network.api.auth.AuthApiProviderImpl
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
-import org.androidannotations.rest.spring.annotations.RestService
 
 interface AuthActionsInteractor {
     fun login(authCredentials: AuthCredentials): SmartPromise<AuthInfo, Exception>
 }
 
 @EBean
-open class AuthActionsInteractorImpl : AuthActionsInteractor, CommonAsyncService() {
-    @RestService
-    lateinit var authRest: AuthRest
+open class AuthActionsInteractorImpl : AuthActionsInteractor {
+    @Bean
+    lateinit var authApiProvider: AuthApiProviderImpl
 
     @Bean
     lateinit var authService: AuthStorageInteractorImpl
@@ -27,7 +25,7 @@ open class AuthActionsInteractorImpl : AuthActionsInteractor, CommonAsyncService
 
     override fun login(authCredentials: AuthCredentials): SmartPromise<AuthInfo, Exception> {
         return smartTask {
-            val authInfo = authRest.login(authCredentials)
+            val authInfo = authApiProvider.provide().login(authCredentials).execute().body()!!
 
             authService.setAuthInfo(authInfo)
 

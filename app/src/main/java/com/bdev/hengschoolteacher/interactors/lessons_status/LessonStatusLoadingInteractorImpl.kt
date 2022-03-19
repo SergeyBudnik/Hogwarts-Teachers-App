@@ -1,14 +1,12 @@
 package com.bdev.hengschoolteacher.interactors.lessons_status
 
-import com.bdev.hengschoolteacher.async.CommonAsyncService
 import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
-import com.bdev.hengschoolteacher.rest.LessonStatusRest
 import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractorImpl
+import com.bdev.hengschoolteacher.network.api.lessons_status.LessonsStatusApiProviderImpl
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
-import org.androidannotations.rest.spring.annotations.RestService
 
 interface LessonStatusLoadingInteractor {
     fun load(): SmartPromise<Unit, Exception>
@@ -16,10 +14,9 @@ interface LessonStatusLoadingInteractor {
 }
 
 @EBean
-open class LessonStatusLoadingInteractorImpl : LessonStatusLoadingInteractor, CommonAsyncService() {
-    @RestService
-    lateinit var lessonStatusRest: LessonStatusRest
-
+open class LessonStatusLoadingInteractorImpl : LessonStatusLoadingInteractor {
+    @Bean
+    lateinit var lessonsStatusApiProvider: LessonsStatusApiProviderImpl
     @Bean
     lateinit var lessonStatusService: LessonStatusStorageInteractorImpl
     @Bean
@@ -27,12 +24,11 @@ open class LessonStatusLoadingInteractorImpl : LessonStatusLoadingInteractor, Co
 
     override fun load(): SmartPromise<Unit, Exception> {
         return smartTask {
-            authenticateAll(
-                listOf(lessonStatusRest),
-                authService.getAuthInfo()
-            )
-
-            val lessonsStatuses = lessonStatusRest.getAllLessonsStatuses(0, Long.MAX_VALUE) // ToDo
+            val lessonsStatuses = lessonsStatusApiProvider
+                .provide()
+                .getAllLessonsStatuses(0, Long.MAX_VALUE) // ToDo
+                .execute()
+                .body()!!
 
             lessonStatusService.setLessonsStatuses(lessonsStatuses)
         }
@@ -40,13 +36,10 @@ open class LessonStatusLoadingInteractorImpl : LessonStatusLoadingInteractor, Co
 
     override fun addLessonStatus(lessonStatus: LessonStatus): SmartPromise<Unit, Exception> {
         return smartTask {
-            authenticateAll(
-                    listOf(lessonStatusRest),
-                    authService.getAuthInfo()
-            )
-
             lessonStatusService.addLessonStatus(
-                    lessonStatus.withId(lessonStatusRest.addLessonStatus(lessonStatus) as Long)
+                    lessonStatus.withId(
+                        lessonsStatusApiProvider.provide().addLessonStatus(lessonStatus).execute().body()!!
+                    )
             )
         }
     }

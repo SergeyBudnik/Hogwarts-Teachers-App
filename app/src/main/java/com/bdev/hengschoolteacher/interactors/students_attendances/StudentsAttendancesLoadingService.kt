@@ -1,22 +1,20 @@
 package com.bdev.hengschoolteacher.interactors.students_attendances
 
-import com.bdev.hengschoolteacher.async.CommonAsyncService
 import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
-import com.bdev.hengschoolteacher.rest.StudentsAttendancesRest
 import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractorImpl
+import com.bdev.hengschoolteacher.network.api.students_attendances.StudentsAttendancesApiProviderImpl
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
-import org.androidannotations.rest.spring.annotations.RestService
 
 interface StudentsAttendancesLoadingService {
     fun load(): SmartPromise<Unit, Exception>
 }
 
 @EBean(scope = EBean.Scope.Singleton)
-open class StudentsAttendancesLoadingServiceImpl : StudentsAttendancesLoadingService, CommonAsyncService() {
-    @RestService
-    lateinit var studentsAttendancesRest: StudentsAttendancesRest
+open class StudentsAttendancesLoadingServiceImpl : StudentsAttendancesLoadingService {
+    @Bean
+    lateinit var studentsAttendancesApiProvider: StudentsAttendancesApiProviderImpl
 
     @Bean
     lateinit var authService: AuthStorageInteractorImpl
@@ -26,10 +24,8 @@ open class StudentsAttendancesLoadingServiceImpl : StudentsAttendancesLoadingSer
 
     override fun load(): SmartPromise<Unit, Exception> {
         return smartTask {
-            authenticateAll(listOf(studentsAttendancesRest), authService.getAuthInfo())
-
             studentsAttendancesStorageService.setAll(
-                    studentsAttendancesRest.getStudentsAttendances()
+                    studentsAttendancesApiProvider.provide().getStudentsAttendances().execute().body()!!
             )
         }
     }

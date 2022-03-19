@@ -1,25 +1,22 @@
 package com.bdev.hengschoolteacher.interactors.students_payments
 
-import com.bdev.hengschoolteacher.async.CommonAsyncService
 import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
 import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
 import com.bdev.hengschoolteacher.data.school.student_payment.NewStudentPayment
-import com.bdev.hengschoolteacher.rest.StudentsPaymentsRest
 import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractorImpl
+import com.bdev.hengschoolteacher.network.api.students_payments.StudentsPaymentsApiProviderImpl
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
-import org.androidannotations.rest.spring.annotations.RestService
-import java.lang.RuntimeException
 
 interface StudentsPaymentsActionsInteractor {
     fun addPayment(newStudentPayment: NewStudentPayment): SmartPromise<Unit, Exception>
 }
 
 @EBean
-open class StudentsPaymentsActionsInteractorImpl : StudentsPaymentsActionsInteractor, CommonAsyncService() {
-    @RestService
-    lateinit var studentsPaymentsRest: StudentsPaymentsRest
+open class StudentsPaymentsActionsInteractorImpl : StudentsPaymentsActionsInteractor {
+    @Bean
+    lateinit var studentsPaymentsApiProvider: StudentsPaymentsApiProviderImpl
 
     @Bean
     lateinit var authService: AuthStorageInteractorImpl
@@ -32,12 +29,11 @@ open class StudentsPaymentsActionsInteractorImpl : StudentsPaymentsActionsIntera
 
     override fun addPayment(newStudentPayment: NewStudentPayment): SmartPromise<Unit, Exception> {
         return smartTask {
-            authenticateAll(
-                    listOf(studentsPaymentsRest),
-                    authService.getAuthInfo()
-            )
-
-            val studentPaymentId = studentsPaymentsRest.addStudentPayment(newStudentPayment)!!
+            val studentPaymentId = studentsPaymentsApiProvider
+                .provide()
+                .addStudentPayment(newStudentPayment)
+                .execute()
+                .body()!!
 
             studentsPaymentsModifierService.add(
                     payment = ExistingStudentPayment(
@@ -55,15 +51,13 @@ open class StudentsPaymentsActionsInteractorImpl : StudentsPaymentsActionsIntera
                     paymentId = paymentId
             ) ?: throw RuntimeException()
 
-            authenticateAll(
-                    rests = listOf(studentsPaymentsRest),
-                    authInfo = authService.getAuthInfo()
-            )
-
-            studentsPaymentsRest.setStudentPaymentsProcessed(
+            studentsPaymentsApiProvider
+                .provide()
+                .setStudentPaymentsProcessed(
                     paymentId = paymentId,
                     processed = !oldStudentPayment.processed
-            )
+                )
+                .execute()
 
             val newStudentPayment = oldStudentPayment.copy(
                     processed = !oldStudentPayment.processed
