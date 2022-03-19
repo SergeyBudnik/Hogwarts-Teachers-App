@@ -10,8 +10,10 @@ class GroupsModel @JsonCreator constructor(
     @JsonProperty("groups") val groups: List<Group>
 )
 
+interface GroupsDao : CommonDao<GroupsModel>
+
 @EBean(scope = EBean.Scope.Singleton)
-open class GroupsDao : CommonDao<GroupsModel>() {
+open class GroupsDaoImpl : GroupsDao, CommonDaoImpl<GroupsModel>() {
     override fun getFileName(): String {
         return "groups.data"
     }

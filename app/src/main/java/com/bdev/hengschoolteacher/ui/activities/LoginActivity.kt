@@ -3,7 +3,7 @@ package com.bdev.hengschoolteacher.ui.activities
 import android.annotation.SuppressLint
 import android.widget.Toast
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.async.AuthAsyncService
+import com.bdev.hengschoolteacher.interactors.auth.AuthActionsInteractorImpl
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -25,7 +25,7 @@ open class LoginActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var authAsyncService: AuthAsyncService
+    lateinit var authAsyncService: AuthActionsInteractorImpl
 
     @AfterViews
     fun init() {

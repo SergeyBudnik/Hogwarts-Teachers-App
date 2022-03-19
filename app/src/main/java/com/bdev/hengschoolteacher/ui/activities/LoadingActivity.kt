@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.view.View
 import android.view.animation.Animation
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.async.SchoolDataAsyncService
-import com.bdev.hengschoolteacher.services.staff.StaffMembersLoadingService
-import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesLoadingService
+import com.bdev.hengschoolteacher.interactors.groups.GroupsLoadingInteractorImpl
+import com.bdev.hengschoolteacher.interactors.lessons_status.LessonStatusLoadingInteractorImpl
+import com.bdev.hengschoolteacher.interactors.staff.StaffMembersLoadingServiceImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsLoadingInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesLoadingServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsLoadingInteractorImpl
 import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -29,12 +32,17 @@ open class LoadingActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var schoolDataAsyncService: SchoolDataAsyncService
-
+    lateinit var studentsLoadingInteractor: StudentsLoadingInteractorImpl
     @Bean
-    lateinit var studentsAttendancesLoadingService: StudentsAttendancesLoadingService
+    lateinit var studentsAttendancesLoadingService: StudentsAttendancesLoadingServiceImpl
     @Bean
-    lateinit var staffMembersLoadingService: StaffMembersLoadingService
+    lateinit var staffMembersLoadingService: StaffMembersLoadingServiceImpl
+    @Bean
+    lateinit var lessonsStatusLoadingInteractor: LessonStatusLoadingInteractorImpl
+    @Bean
+    lateinit var studentsPaymentsLoadingInteractor: StudentsPaymentsLoadingInteractorImpl
+    @Bean
+    lateinit var groupsLoadingInteractor: GroupsLoadingInteractorImpl
 
     @AnimationRes(R.anim.spinner)
     lateinit var spinnerAnim: Animation
@@ -53,14 +61,14 @@ open class LoadingActivity : BaseActivity() {
 
         loadingFailedView.visibility = View.GONE
 
-        val loadPromise = schoolDataAsyncService.load()
-        val loadStudentsPromise = schoolDataAsyncService.loadStudents()
-        val loadGroupsPromise = schoolDataAsyncService.loadGroups()
+        val loadStudentsPromise = studentsLoadingInteractor.load()
+        val loadLessonsStatusPromise = lessonsStatusLoadingInteractor.load()
+        val loadGroupsPromise = groupsLoadingInteractor.load()
         val loadStudentsAttendancesPromise = studentsAttendancesLoadingService.load()
-        val loadStudentsPaymentsPromise = schoolDataAsyncService.loadStudentsPayments()
+        val loadStudentsPaymentsPromise = studentsPaymentsLoadingInteractor.load()
         val loadStaffMembersPromise = staffMembersLoadingService.load()
 
-        loadPromise
+        loadLessonsStatusPromise
                 .and(loadStudentsPromise)
                 .and(loadGroupsPromise)
                 .and(loadStudentsAttendancesPromise)

@@ -2,13 +2,13 @@ package com.bdev.hengschoolteacher.ui.activities.profile
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.services.LessonStatusService
-import com.bdev.hengschoolteacher.services.UserPreferencesService
-import com.bdev.hengschoolteacher.services.alerts.profile.AlertsProfileService
-import com.bdev.hengschoolteacher.services.lessons.LessonsService
-import com.bdev.hengschoolteacher.services.profile.ProfileService
-import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
-import com.bdev.hengschoolteacher.services.teacher.TeacherSalaryService
+import com.bdev.hengschoolteacher.interactors.lessons_status.LessonStatusStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.UserPreferencesServiceImpl
+import com.bdev.hengschoolteacher.interactors.alerts.profile.AlertsProfileInteractorImpl
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
+import com.bdev.hengschoolteacher.interactors.profile.ProfileServiceImpl
+import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.teacher.TeacherSalaryServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
@@ -33,19 +33,19 @@ open class ProfileSalaryActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var userPreferencesService: UserPreferencesService
+    lateinit var userPreferencesService: UserPreferencesServiceImpl
     @Bean
-    lateinit var profileService: ProfileService
+    lateinit var profileService: ProfileServiceImpl
     @Bean
-    lateinit var lessonStatusService: LessonStatusService
+    lateinit var lessonStatusService: LessonStatusStorageInteractorImpl
     @Bean
-    lateinit var lessonsService: LessonsService
+    lateinit var lessonsService: LessonsInteractorImpl
     @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
     @Bean
-    lateinit var teacherSalaryService: TeacherSalaryService
+    lateinit var teacherSalaryService: TeacherSalaryServiceImpl
     @Bean
-    lateinit var alertsProfileService: AlertsProfileService
+    lateinit var alertsProfileService: AlertsProfileInteractorImpl
 
     private var calendarEnabled = false
 

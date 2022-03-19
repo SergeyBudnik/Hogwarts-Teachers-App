@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
@@ -59,8 +59,8 @@ open class StudentsListActivity : BaseActivity() {
         }
     }
 
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
+    @Bean(StudentsStorageInteractorImpl::class)
+    lateinit var studentsStorageInteractor: StudentsStorageInteractor
 
     private var studentsListAdapter: StudentsListAdapter = StudentsListAdapter(this)
 
@@ -70,7 +70,7 @@ open class StudentsListActivity : BaseActivity() {
 
         studentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.STUDENTS)
 
-        studentsListAdapter.setItems(studentsStorageService.getAll().sortedBy { it.person.name })
+        studentsListAdapter.setItems(studentsStorageInteractor.getAll().sortedBy { it.person.name })
         studentsListView.adapter = studentsListAdapter
         studentsListView.setOnItemClickListener { adapterView, _, position, _ ->
             val student = adapterView.getItemAtPosition(position) as Student

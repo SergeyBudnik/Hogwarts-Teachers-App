@@ -2,9 +2,9 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringTeachersService
-import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
-import com.bdev.hengschoolteacher.services.teacher.TeacherSalaryService
+import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractorImpl
+import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.teacher.TeacherSalaryServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -36,11 +36,11 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
     lateinit var teacherLogin: String
 
     @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
     @Bean
-    lateinit var teacherSalaryService: TeacherSalaryService
+    lateinit var teacherSalaryService: TeacherSalaryServiceImpl
     @Bean
-    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
+    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractorImpl
 
     private var calendarEnabled = false
 

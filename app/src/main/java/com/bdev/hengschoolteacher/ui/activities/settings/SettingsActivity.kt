@@ -2,8 +2,8 @@ package com.bdev.hengschoolteacher.ui.activities.settings
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.services.auth.AuthService
-import com.bdev.hengschoolteacher.services.profile.ProfileService
+import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.profile.ProfileServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoginActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -27,9 +27,9 @@ open class SettingsActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var authService: AuthService
+    lateinit var authService: AuthStorageInteractorImpl
     @Bean
-    lateinit var profileService: ProfileService
+    lateinit var profileService: ProfileServiceImpl
 
     @AfterViews
     fun init() {

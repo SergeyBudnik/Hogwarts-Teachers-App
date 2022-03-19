@@ -12,16 +12,16 @@ import com.bdev.hengschoolteacher.data.school.Month
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.services.lessons.LessonsService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
-import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
-import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
-import com.bdev.hengschoolteacher.services.students_pricing.StudentsPricingService
-import com.bdev.hengschoolteacher.services.students_pricing.StudentsPricingServiceImpl
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsService
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderService
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingService
+import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -152,11 +152,11 @@ open class MonitoringStudentActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderServiceImpl
     @Bean
-    lateinit var lessonsService: LessonsService
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
+    lateinit var lessonsService: LessonsInteractorImpl
+    @Bean(StudentsStorageInteractorImpl::class)
+    lateinit var studentsStorageInteractor: StudentsStorageInteractor
     @Bean(StudentDebtsServiceImpl::class)
     lateinit var studentsDebtsService: StudentDebtsService
 
@@ -173,7 +173,7 @@ open class MonitoringStudentActivity : BaseActivity() {
 
     @AfterViews
     fun init() {
-        val student = studentsStorageService.getByLogin(studentLogin)
+        val student = studentsStorageInteractor.getByLogin(studentLogin)
 
         monitoringStudentPaymentHeaderView
                 .setTitle("Студент. ${student?.person?.name ?: "?"}")

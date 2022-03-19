@@ -2,12 +2,12 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
+import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsService
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -30,14 +30,14 @@ open class MonitoringStudentsActivity : BaseActivity() {
         }
     }
 
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
+    @Bean(StudentsStorageInteractorImpl::class)
+    lateinit var studentsStorageInteractor: StudentsStorageInteractor
     @Bean
-    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderServiceImpl
     @Bean(StudentDebtsServiceImpl::class)
     lateinit var studentsDebtsService: StudentDebtsService
     @Bean
-    lateinit var alertsMonitoringService: AlertsMonitoringService
+    lateinit var alertsMonitoringService: AlertsMonitoringInteractorImpl
 
     private var filterEnabled = true
 
@@ -79,7 +79,7 @@ open class MonitoringStudentsActivity : BaseActivity() {
 
     private fun initList() {
         monitoringPaymentsListView.bind(
-                studentsToExpectedDebt = studentsStorageService.getAll().map {
+                studentsToExpectedDebt = studentsStorageInteractor.getAll().map {
                     Pair(it, studentsDebtsService.getExpectedDebt(studentLogin = it.login))
                 },
                 searchQuery = search,

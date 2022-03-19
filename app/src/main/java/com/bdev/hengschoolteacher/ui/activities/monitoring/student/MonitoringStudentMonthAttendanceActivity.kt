@@ -11,11 +11,11 @@ import com.bdev.hengschoolteacher.data.school.Month
 import com.bdev.hengschoolteacher.data.school.group.GroupType
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.services.students_pricing.StudentsPricingService
-import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.students_pricing.StudentsPricingServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingService
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.resources.AppResources
@@ -136,10 +136,10 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
     @JvmField
     var monthIndex: Int = 0
 
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
+    @Bean(StudentsStorageInteractorImpl::class)
+    lateinit var studentsStorageInteractor: StudentsStorageInteractor
     @Bean
-    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderServiceImpl
     @Bean(StudentsPricingServiceImpl::class)
     lateinit var studentsPricingService: StudentsPricingService
 
@@ -157,7 +157,7 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
                 item = MonitoringStudentMonthHeaderView.Item.ATTENDANCE
         )
 
-        val student = studentsStorageService.getByLogin(studentLogin)
+        val student = studentsStorageInteractor.getByLogin(studentLogin)
 
         student?.let { monitoringStudentMonthAttendanceStudentView.bind(it) }
 

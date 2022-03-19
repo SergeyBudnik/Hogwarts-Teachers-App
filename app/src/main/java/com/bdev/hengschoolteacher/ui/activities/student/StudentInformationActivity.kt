@@ -9,9 +9,9 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.services.lessons.LessonsService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -88,14 +88,14 @@ open class StudentInformationActivity : BaseActivity() {
     @Extra(EXTRA_STUDENT_LOGIN)
     lateinit var studentLogin: String
 
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
+    @Bean(StudentsStorageInteractorImpl::class)
+    lateinit var studentsStorageInteractor: StudentsStorageInteractor
     @Bean
-    lateinit var lessonsService: LessonsService
+    lateinit var lessonsService: LessonsInteractorImpl
 
     @AfterViews
     fun init() {
-        val student = studentsStorageService.getByLogin(studentLogin) ?: throw RuntimeException()
+        val student = studentsStorageInteractor.getByLogin(studentLogin) ?: throw RuntimeException()
 
         studentInformationHeaderView
                 .setTitle("Студент. ${student.person.name}")

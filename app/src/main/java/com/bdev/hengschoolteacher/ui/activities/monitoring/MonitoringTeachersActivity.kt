@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
-import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringService
-import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringTeachersService
-import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringInteractorImpl
+import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractorImpl
+import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
@@ -70,11 +70,11 @@ open class MonitoringTeachersActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
     @Bean
-    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
+    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractorImpl
     @Bean
-    lateinit var alertsMonitoringService: AlertsMonitoringService
+    lateinit var alertsMonitoringService: AlertsMonitoringInteractorImpl
 
     @AfterViews
     fun init() {
