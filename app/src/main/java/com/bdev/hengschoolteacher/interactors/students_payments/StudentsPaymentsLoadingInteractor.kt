@@ -1,22 +1,20 @@
 package com.bdev.hengschoolteacher.interactors.students_payments
 
-import com.bdev.hengschoolteacher.async.CommonAsyncService
 import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask
 import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractorImpl
-import com.bdev.hengschoolteacher.rest.StudentsPaymentsRest
+import com.bdev.hengschoolteacher.network.api.students_payments.StudentsPaymentsApiProviderImpl
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
-import org.androidannotations.rest.spring.annotations.RestService
 
 interface StudentsPaymentsLoadingInteractor {
     fun load(): SmartPromise<Unit, Exception>
 }
 
 @EBean
-open class StudentsPaymentsLoadingInteractorImpl : StudentsPaymentsLoadingInteractor, CommonAsyncService() {
-    @RestService
-    lateinit var studentsPaymentsRest: StudentsPaymentsRest
+open class StudentsPaymentsLoadingInteractorImpl : StudentsPaymentsLoadingInteractor {
+    @Bean
+    lateinit var studentsPaymentsApiProvider: StudentsPaymentsApiProviderImpl
 
     @Bean
     lateinit var authService: AuthStorageInteractorImpl
@@ -26,10 +24,8 @@ open class StudentsPaymentsLoadingInteractorImpl : StudentsPaymentsLoadingIntera
 
     override fun load(): SmartPromise<Unit, Exception> {
         return SmartTask.smartTask {
-            authenticateAll(listOf(studentsPaymentsRest), authService.getAuthInfo())
-
             studentsPaymentsModifierService.setAll(
-                payments = studentsPaymentsRest.getStudentsPayments()
+                payments = studentsPaymentsApiProvider.provide().getStudentsPayments().execute().body()!!
             )
         }
     }
