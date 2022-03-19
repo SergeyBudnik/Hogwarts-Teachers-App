@@ -10,8 +10,10 @@ class UserPreferencesModel @JsonCreator constructor(
         @JsonProperty("password") val password: String?
 )
 
+interface UserPreferencesDao : CommonDao<UserPreferencesModel>
+
 @EBean(scope = EBean.Scope.Singleton)
-open class UserPreferencesDao : CommonDao<UserPreferencesModel>() {
+open class UserPreferencesDaoImpl : UserPreferencesDao, CommonDaoImpl<UserPreferencesModel>() {
     override fun getFileName(): String {
         return "user-preferences.data"
     }

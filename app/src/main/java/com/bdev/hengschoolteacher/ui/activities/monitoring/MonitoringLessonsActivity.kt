@@ -4,16 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.services.LessonStateService
-import com.bdev.hengschoolteacher.services.LessonStatusService
-import com.bdev.hengschoolteacher.services.LessonsAttendancesService
-import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringService
-import com.bdev.hengschoolteacher.services.groups.GroupStudentsProviderService
-import com.bdev.hengschoolteacher.services.groups.GroupStudentsProviderServiceImpl
-import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
-import com.bdev.hengschoolteacher.services.lessons.LessonsService
-import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
-import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
+import com.bdev.hengschoolteacher.interactors.LessonStateServiceImpl
+import com.bdev.hengschoolteacher.interactors.lessons_status.LessonStatusStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.LessonsAttendancesServiceImpl
+import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringInteractorImpl
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
+import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
@@ -41,19 +38,19 @@ open class MonitoringLessonsActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var lessonsService: LessonsService
+    lateinit var lessonsService: LessonsInteractorImpl
     @Bean
-    lateinit var lessonStateService: LessonStateService
+    lateinit var lessonStateService: LessonStateServiceImpl
     @Bean
-    lateinit var alertsMonitoringService: AlertsMonitoringService
+    lateinit var alertsMonitoringService: AlertsMonitoringInteractorImpl
     @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
     @Bean
-    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderServiceImpl
     @Bean
-    lateinit var lessonsAttendancesService: LessonsAttendancesService
+    lateinit var lessonsAttendancesService: LessonsAttendancesServiceImpl
     @Bean
-    lateinit var lessonStatusService: LessonStatusService
+    lateinit var lessonStatusService: LessonStatusStorageInteractorImpl
 
     private var filterEnabled = true
     private var calendarEnabled = false

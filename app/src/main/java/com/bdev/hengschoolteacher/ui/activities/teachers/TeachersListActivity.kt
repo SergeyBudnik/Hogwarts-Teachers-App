@@ -9,7 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
-import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -79,7 +79,7 @@ open class TeachersListActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
 
     @Bean
     lateinit var teachersListAdapter: TeachersListAdapter

@@ -10,8 +10,10 @@ class StudentsPaymentsModel @JsonCreator constructor(
     @JsonProperty("studentsPayments") val studentsPayments: Map<Long, ExistingStudentPayment>
 )
 
+interface StudentsPaymentsDao : CommonDao<StudentsPaymentsModel>
+
 @EBean(scope = EBean.Scope.Singleton)
-open class StudentsPaymentsDao : CommonDao<StudentsPaymentsModel>() {
+open class StudentsPaymentsDaoImpl : StudentsPaymentsDao, CommonDaoImpl<StudentsPaymentsModel>() {
     override fun getFileName(): String {
         return "students-payments.data"
     }

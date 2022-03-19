@@ -2,11 +2,11 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.services.alerts.monitoring.AlertsMonitoringTeachersService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
+import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsService
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -46,12 +46,12 @@ open class MonitoringTeacherDebtsActivity : BaseActivity() {
     @Extra(EXTRA_TEACHER_LOGIN)
     lateinit var teacherLogin: String
 
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
+    @Bean(StudentsStorageInteractorImpl::class)
+    lateinit var studentsStorageInteractor: StudentsStorageInteractor
     @Bean(StudentDebtsServiceImpl::class)
     lateinit var studentsDebtsService: StudentDebtsService
     @Bean
-    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersService
+    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractorImpl
 
     @AfterViews
     fun init() {
@@ -66,7 +66,7 @@ open class MonitoringTeacherDebtsActivity : BaseActivity() {
         )
 
         monitoringTeacherDebtsListView.bind(
-                studentsToExpectedDebt = studentsStorageService.getAll()
+                studentsToExpectedDebt = studentsStorageInteractor.getAll()
                         .filter { it.managerLogin == teacherLogin }
                         .map {
                             Pair(it, studentsDebtsService.getExpectedDebt(studentLogin = it.login))

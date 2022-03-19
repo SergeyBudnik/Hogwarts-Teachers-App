@@ -2,12 +2,12 @@ package com.bdev.hengschoolteacher.ui.activities.profile
 
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
-import com.bdev.hengschoolteacher.services.alerts.profile.AlertsProfileService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.profile.ProfileService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsService
-import com.bdev.hengschoolteacher.services.students_debts.StudentDebtsServiceImpl
+import com.bdev.hengschoolteacher.interactors.alerts.profile.AlertsProfileInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.profile.ProfileServiceImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsService
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -30,13 +30,13 @@ open class ProfileDebtsActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var profileService: ProfileService
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
+    lateinit var profileService: ProfileServiceImpl
+    @Bean(StudentsStorageInteractorImpl::class)
+    lateinit var studentsStorageInteractor: StudentsStorageInteractor
     @Bean(StudentDebtsServiceImpl::class)
     lateinit var studentsDebtsService: StudentDebtsService
     @Bean
-    lateinit var alertsProfileService: AlertsProfileService
+    lateinit var alertsProfileService: AlertsProfileInteractorImpl
 
     private var me: StaffMember? = null
 
@@ -55,7 +55,7 @@ open class ProfileDebtsActivity : BaseActivity() {
         )
 
         profileDebtsListView.bind(
-                studentsToExpectedDebt = studentsStorageService.getAll()
+                studentsToExpectedDebt = studentsStorageInteractor.getAll()
                         .filter { it.managerLogin == me?.login }
                         .map {
                             Pair(it, studentsDebtsService.getExpectedDebt(studentLogin = it.login))

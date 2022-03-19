@@ -10,8 +10,10 @@ data class StaffMembersModel @JsonCreator constructor(
         @JsonProperty("staffMembers") val staffMembers: List<StaffMember>
 )
 
+interface StaffMembersDao : CommonDao<StaffMembersModel>
+
 @EBean(scope = EBean.Scope.Singleton)
-open class StaffMembersDao : CommonDao<StaffMembersModel>() {
+open class StaffMembersDaoImpl : StaffMembersDao, CommonDaoImpl<StaffMembersModel>() {
     override fun getFileName(): String {
         return "staff-members.data"
     }

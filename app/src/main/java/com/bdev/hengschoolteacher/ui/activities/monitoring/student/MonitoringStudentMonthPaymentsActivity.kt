@@ -3,11 +3,11 @@ package com.bdev.hengschoolteacher.ui.activities.monitoring.student
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.Month
-import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
-import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderService
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -48,12 +48,12 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
     @JvmField
     var monthIndex: Int = 0
 
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
+    @Bean(StudentsStorageInteractorImpl::class)
+    lateinit var studentsStorageInteractor: StudentsStorageInteractor
     @Bean(StudentsPaymentsProviderServiceImpl::class)
     lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
     @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
 
     @AfterViews
     fun init() {
@@ -69,7 +69,7 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
                 item = MonitoringStudentMonthHeaderView.Item.PAYMENTS
         )
 
-        val student = studentsStorageService.getByLogin(studentLogin)
+        val student = studentsStorageInteractor.getByLogin(studentLogin)
 
         student?.let { monitoringStudentMonthPaymentsStudentView.bind(it) }
 
@@ -84,7 +84,7 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
                                 }.map { studentPayment ->
                                     PaymentsItemViewData(
                                             studentPayment = studentPayment,
-                                            studentName = studentsStorageService.getByLogin(
+                                            studentName = studentsStorageInteractor.getByLogin(
                                                     studentPayment.info.studentLogin
                                             )?.person?.name ?: "?",
                                             staffMemberName = staffMembersStorageService.getStaffMember(

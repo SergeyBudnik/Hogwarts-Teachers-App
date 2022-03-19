@@ -2,14 +2,13 @@ package com.bdev.hengschoolteacher.ui.activities.profile
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.async.StudentsPaymentAsyncService
-import com.bdev.hengschoolteacher.services.alerts.profile.AlertsProfileService
-import com.bdev.hengschoolteacher.services.profile.ProfileService
-import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderService
-import com.bdev.hengschoolteacher.services.students_payments.StudentsPaymentsProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.alerts.profile.AlertsProfileInteractorImpl
+import com.bdev.hengschoolteacher.interactors.profile.ProfileServiceImpl
+import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderService
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
@@ -36,15 +35,15 @@ open class ProfilePaymentsActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var profileService: ProfileService
+    lateinit var profileService: ProfileServiceImpl
     @Bean(StudentsPaymentsProviderServiceImpl::class)
     lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
     @Bean
-    lateinit var alertsProfileService: AlertsProfileService
+    lateinit var alertsProfileService: AlertsProfileInteractorImpl
     @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
+    @Bean(StudentsStorageInteractorImpl::class)
+    lateinit var studentsStorageInteractor: StudentsStorageInteractor
 
     private var filterEnabled: Boolean = true
 
@@ -108,7 +107,7 @@ open class ProfilePaymentsActivity : BaseActivity() {
                                 }.map { studentPayment ->
                                     PaymentsItemViewData(
                                             studentPayment = studentPayment,
-                                            studentName = studentsStorageService.getByLogin(
+                                            studentName = studentsStorageInteractor.getByLogin(
                                                     studentPayment.info.studentLogin
                                             )?.person?.name ?: "?",
                                             staffMemberName = staffMembersStorageService.getStaffMember(

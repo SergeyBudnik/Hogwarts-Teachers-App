@@ -10,8 +10,10 @@ class AuthModel @JsonCreator constructor(
     @JsonProperty("authInfo") val authInfo: AuthInfo?
 )
 
+interface AuthDao : CommonDao<AuthModel>
+
 @EBean(scope = EBean.Scope.Singleton)
-open class AuthDao : CommonDao<AuthModel>() {
+open class AuthDaoImpl : AuthDao, CommonDaoImpl<AuthModel>() {
     override fun getFileName(): String {
         return "auth.data"
     }

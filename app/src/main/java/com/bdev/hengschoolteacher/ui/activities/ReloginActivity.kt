@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.view.View
 import android.view.animation.Animation
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.async.AuthAsyncService
+import com.bdev.hengschoolteacher.interactors.auth.AuthActionsInteractorImpl
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
-import com.bdev.hengschoolteacher.services.UserPreferencesService
+import com.bdev.hengschoolteacher.interactors.UserPreferencesServiceImpl
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import kotlinx.android.synthetic.main.activity_relogin.*
@@ -28,9 +28,9 @@ open class ReloginActivity : BaseActivity() {
     }
 
     @Bean
-    lateinit var authAsyncService: AuthAsyncService
+    lateinit var authAsyncService: AuthActionsInteractorImpl
     @Bean
-    lateinit var userPreferencesService: UserPreferencesService
+    lateinit var userPreferencesService: UserPreferencesServiceImpl
 
     @AnimationRes(R.anim.spinner)
     lateinit var spinnerAnim: Animation

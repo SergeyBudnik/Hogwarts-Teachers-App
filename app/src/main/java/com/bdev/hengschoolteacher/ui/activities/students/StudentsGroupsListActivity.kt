@@ -11,13 +11,13 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.services.groups.GroupStudentsProviderService
-import com.bdev.hengschoolteacher.services.groups.GroupStudentsProviderServiceImpl
-import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
-import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.profile.ProfileService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.groups.GroupStudentsProviderService
+import com.bdev.hengschoolteacher.interactors.groups.GroupStudentsProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.profile.ProfileServiceImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.resources.AppResources
@@ -94,14 +94,14 @@ open class StudentsGroupsListActivity : BaseActivity() {
         }
     }
 
-    @Bean(GroupsStorageServiceImpl::class)
-    lateinit var groupsStorageService: GroupsStorageService
+    @Bean(GroupsStorageInteractorImpl::class)
+    lateinit var groupsStorageInteractor: GroupsStorageInteractor
     @Bean(GroupStudentsProviderServiceImpl::class)
     lateinit var groupsStudentsProviderService: GroupStudentsProviderService
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
+    @Bean(StudentsStorageInteractorImpl::class)
+    lateinit var studentsStorageInteractor: StudentsStorageInteractor
     @Bean
-    lateinit var profileService: ProfileService
+    lateinit var profileService: ProfileServiceImpl
 
     @AfterViews
     fun init() {
@@ -116,7 +116,7 @@ open class StudentsGroupsListActivity : BaseActivity() {
         if (me != null) {
             val adapter = StudentsGroupsListAdapter(context = this)
 
-            adapter.setItems(groupsStorageService
+            adapter.setItems(groupsStorageInteractor
                     .getAll()
                     .sortedByDescending { group -> group.lessons.filter { it.teacherLogin == me.login }.any() }
                     .map { group ->

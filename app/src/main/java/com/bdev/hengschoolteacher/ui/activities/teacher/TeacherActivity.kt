@@ -2,7 +2,7 @@ package com.bdev.hengschoolteacher.ui.activities.teacher
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
+import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -33,7 +33,7 @@ open class TeacherActivity : BaseActivity() {
     lateinit var teacherLogin: String
 
     @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
 
     @AfterViews
     fun init() {

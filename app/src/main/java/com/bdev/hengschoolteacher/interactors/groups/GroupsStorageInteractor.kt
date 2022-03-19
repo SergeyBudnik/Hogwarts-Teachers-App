@@ -1,0 +1,33 @@
+package com.bdev.hengschoolteacher.interactors.groups
+
+import com.bdev.hengschoolteacher.dao.GroupsDaoImpl
+import com.bdev.hengschoolteacher.dao.GroupsModel
+import com.bdev.hengschoolteacher.data.school.group.Group
+import org.androidannotations.annotations.Bean
+import org.androidannotations.annotations.EBean
+
+interface GroupsStorageInteractor {
+    fun getAll(): List<Group>
+    fun getById(groupId: Long): Group?
+    fun setAll(groups: List<Group>)
+}
+
+@EBean(scope = EBean.Scope.Singleton)
+open class GroupsStorageInteractorImpl : GroupsStorageInteractor {
+    @Bean
+    lateinit var groupsDao: GroupsDaoImpl
+
+    override fun getAll(): List<Group> {
+        return groupsDao.readValue().groups
+    }
+
+    override fun getById(groupId: Long): Group? {
+        return groupsDao.readValue().groups.find { it.id == groupId }
+    }
+
+    override fun setAll(groups: List<Group>) {
+        groupsDao.writeValue(
+                GroupsModel(groups)
+        )
+    }
+}

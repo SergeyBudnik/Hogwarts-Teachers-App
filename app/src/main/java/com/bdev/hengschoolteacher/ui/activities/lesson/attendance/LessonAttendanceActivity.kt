@@ -5,15 +5,15 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
-import com.bdev.hengschoolteacher.services.lessons.LessonsService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageService
-import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
-import com.bdev.hengschoolteacher.services.students.StudentsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesModifierService
-import com.bdev.hengschoolteacher.services.students_attendances.StudentsAttendancesProviderService
-import com.bdev.hengschoolteacher.services.teacher.TeacherInfoService
+import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesModifierServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.teacher.TeacherInfoServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityParams.EXTRA_DATA
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
@@ -27,20 +27,20 @@ import org.androidannotations.annotations.Extra
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_lesson_student_attendance)
 open class LessonAttendanceActivity : BaseActivity() {
-    @Bean(GroupsStorageServiceImpl::class)
-    lateinit var groupsStorageService: GroupsStorageService
-    @Bean(StudentsStorageServiceImpl::class)
-    lateinit var studentsStorageService: StudentsStorageService
+    @Bean(GroupsStorageInteractorImpl::class)
+    lateinit var groupsStorageInteractor: GroupsStorageInteractor
+    @Bean(StudentsStorageInteractorImpl::class)
+    lateinit var studentsStorageInteractor: StudentsStorageInteractor
     @Bean
-    lateinit var lessonsService: LessonsService
+    lateinit var lessonsService: LessonsInteractorImpl
     @Bean
-    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderService
+    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderServiceImpl
     @Bean
-    lateinit var studentsAttendancesModifierService: StudentsAttendancesModifierService
+    lateinit var studentsAttendancesModifierService: StudentsAttendancesModifierServiceImpl
     @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
     @Bean
-    lateinit var teacherInfoService: TeacherInfoService
+    lateinit var teacherInfoService: TeacherInfoServiceImpl
 
     @Extra(EXTRA_DATA)
     lateinit var activityData: LessonAttendanceActivityData
@@ -53,7 +53,7 @@ open class LessonAttendanceActivity : BaseActivity() {
 
         val group = groupAndLesson.group
         val lesson = groupAndLesson.lesson
-        val student = studentsStorageService.getByLogin(activityData.studentLogin) ?: throw RuntimeException()
+        val student = studentsStorageInteractor.getByLogin(activityData.studentLogin) ?: throw RuntimeException()
 
         staffMembersStorageService.getStaffMember(lesson.teacherLogin)?.let { teacher ->
             lessonStudentAttendanceLessonTimeView.bind(

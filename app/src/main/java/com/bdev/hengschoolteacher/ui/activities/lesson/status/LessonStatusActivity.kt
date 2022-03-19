@@ -2,19 +2,18 @@ package com.bdev.hengschoolteacher.ui.activities.lesson.status
 
 import android.annotation.SuppressLint
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.async.LessonStatusAsyncService
+import com.bdev.hengschoolteacher.interactors.lessons_status.LessonStatusLoadingInteractorImpl
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
-import com.bdev.hengschoolteacher.services.groups.GroupsStorageService
-import com.bdev.hengschoolteacher.services.LessonStatusService
-import com.bdev.hengschoolteacher.services.lessons.LessonsService
-import com.bdev.hengschoolteacher.services.groups.GroupsStorageServiceImpl
-import com.bdev.hengschoolteacher.services.staff.StaffMembersStorageService
-import com.bdev.hengschoolteacher.services.teacher.TeacherInfoService
+import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractor
+import com.bdev.hengschoolteacher.interactors.lessons_status.LessonStatusStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
+import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.teacher.TeacherInfoServiceImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.status.LessonStatusActivityParams.EXTRA_DATA
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
-import kotlinx.android.synthetic.main.activity_lesson.*
 import kotlinx.android.synthetic.main.activity_lesson_status.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
@@ -25,18 +24,18 @@ import java.util.*
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_lesson_status)
 open class LessonStatusActivity : BaseActivity() {
-    @Bean(GroupsStorageServiceImpl::class)
-    lateinit var groupsStorageService: GroupsStorageService
+    @Bean(GroupsStorageInteractorImpl::class)
+    lateinit var groupsStorageInteractor: GroupsStorageInteractor
     @Bean
-    lateinit var lessonsService: LessonsService
+    lateinit var lessonsService: LessonsInteractorImpl
     @Bean
-    lateinit var lessonStatusService: LessonStatusService
+    lateinit var lessonStatusService: LessonStatusStorageInteractorImpl
     @Bean
-    lateinit var lessonsStatusAsyncService: LessonStatusAsyncService
+    lateinit var lessonsStatusAsyncService: LessonStatusLoadingInteractorImpl
     @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageService
+    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
     @Bean
-    lateinit var teacherInfoService: TeacherInfoService
+    lateinit var teacherInfoService: TeacherInfoServiceImpl
 
     @Extra(EXTRA_DATA)
     lateinit var activityData: LessonStatusActivityData

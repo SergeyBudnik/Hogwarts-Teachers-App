@@ -10,8 +10,13 @@ import org.codehaus.jackson.map.ObjectMapper
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicReference
 
+interface CommonDao<T> {
+    fun readValue(): T
+    fun writeValue(o: T)
+}
+
 @EBean
-abstract class CommonDao<T> {
+abstract class CommonDaoImpl<T> : CommonDao<T> {
     @RootContext
     lateinit var context: Context
 
@@ -24,13 +29,13 @@ abstract class CommonDao<T> {
         return cache.get()
     }
 
-    fun readValue(): T {
+    override fun readValue(): T {
         readCache()
 
         return cache.get()
     }
 
-    fun writeValue(o: T) {
+    override fun writeValue(o: T) {
         readCache()
 
         cache.set(o)

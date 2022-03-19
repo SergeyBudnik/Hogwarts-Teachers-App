@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.view.WindowManager
 import androidx.fragment.app.FragmentActivity
-import com.bdev.hengschoolteacher.services.updater.AppUpdateInfo
-import com.bdev.hengschoolteacher.services.updater.AppUpdateListener
-import com.bdev.hengschoolteacher.services.updater.AppUpdateService
+import com.bdev.hengschoolteacher.interactors.updater.AppUpdateInfo
+import com.bdev.hengschoolteacher.interactors.updater.AppUpdateListener
+import com.bdev.hengschoolteacher.interactors.updater.AppUpdateService
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPopupButtonInfo
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPopupButtonStyle
