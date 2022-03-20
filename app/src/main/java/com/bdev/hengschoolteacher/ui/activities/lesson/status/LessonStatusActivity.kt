@@ -1,69 +1,61 @@
 package com.bdev.hengschoolteacher.ui.activities.lesson.status
 
-import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.lessons_status.LessonStatusLoadingInteractorImpl
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.lessons_status.LessonStatusStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
-import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
-import com.bdev.hengschoolteacher.interactors.teacher.TeacherInfoServiceImpl
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
+import com.bdev.hengschoolteacher.interactors.lessons_status.LessonsStatusLoadingInteractor
+import com.bdev.hengschoolteacher.interactors.lessons_status.LessonsStatusStorageInteractor
+import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
+import com.bdev.hengschoolteacher.interactors.teachers.TeacherInfoInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.lesson.status.LessonStatusActivityParams.EXTRA_DATA
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_lesson_status.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.Extra
 import java.util.*
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_lesson_status)
-open class LessonStatusActivity : BaseActivity() {
-    @Bean(GroupsStorageInteractorImpl::class)
-    lateinit var groupsStorageInteractor: GroupsStorageInteractor
-    @Bean
-    lateinit var lessonsService: LessonsInteractorImpl
-    @Bean
-    lateinit var lessonStatusService: LessonStatusStorageInteractorImpl
-    @Bean
-    lateinit var lessonsStatusAsyncService: LessonStatusLoadingInteractorImpl
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
-    @Bean
-    lateinit var teacherInfoService: TeacherInfoServiceImpl
+@AndroidEntryPoint
+class LessonStatusActivity : BaseActivity() {
+    @Inject lateinit var groupsStorageInteractor: GroupsStorageInteractor
+    @Inject lateinit var lessonsService: LessonsInteractor
+    @Inject lateinit var lessonsStatusService: LessonsStatusStorageInteractor
+    @Inject lateinit var lessonsStatusAsyncService: LessonsStatusLoadingInteractor
+    @Inject lateinit var staffMembersStorageInteractor: StaffMembersStorageInteractor
+    @Inject lateinit var teacherInfoInteractor: TeacherInfoInteractor
 
-    @Extra(EXTRA_DATA)
     lateinit var activityData: LessonStatusActivityData
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_lesson_status)
+
         lessonStatusHeaderView.setLeftButtonAction { doFinish() }
 
         val lesson = lessonsService.getLesson(activityData.lessonId)?.lesson ?: throw RuntimeException()
 
-        staffMembersStorageService.getStaffMember(lesson.teacherLogin)?.let { teacher ->
+        staffMembersStorageInteractor.getStaffMember(lesson.teacherLogin)?.let { teacher ->
             lessonStatusLessonTimeView.bind(
                     lesson = lesson,
                     lessonStartTime = lessonsService.getLessonStartTime(lesson.id, activityData.weekIndex),
-                    teacherName = teacherInfoService.getTeachersName(teacher),
-                    teacherSurname = teacherInfoService.getTeachersSurname(teacher)
+                    teacherName = teacherInfoInteractor.getTeachersName(teacher),
+                    teacherSurname = teacherInfoInteractor.getTeachersSurname(teacher)
             )
         }
 
         lessonStatusTeacherInfoView.bind(
-                staffMembersStorageService.getStaffMember(lesson.teacherLogin)
+                staffMembersStorageInteractor.getStaffMember(lesson.teacherLogin)
         )
 
         initButtons()
     }
 
     private fun initButtons() {
-        val status = lessonStatusService.getLessonStatus(
+        val status = lessonsStatusService.getLessonStatus(
                 activityData.lessonId,
                 lessonsService.getLessonStartTime(
                         activityData.lessonId,

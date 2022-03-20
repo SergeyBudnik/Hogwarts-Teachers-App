@@ -7,7 +7,6 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import kotlinx.android.synthetic.main.view_list_item_day.view.*
-import org.androidannotations.annotations.EViewGroup
 
 class ListDayItemView : RelativeLayout {
     init {

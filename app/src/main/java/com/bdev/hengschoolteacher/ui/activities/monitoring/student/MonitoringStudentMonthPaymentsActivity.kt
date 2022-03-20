@@ -1,28 +1,24 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring.student
 
-import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.Month
-import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderService
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.student.MonitoringStudentMonthHeaderView
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsItemViewData
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsViewData
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_student_month_payments.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.Extra
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_monitoring_student_month_payments)
-open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
+@AndroidEntryPoint
+class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
     companion object {
         const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
         const val EXTRA_MONTH_INDEX = "EXTRA_MONTH_INDEX"
@@ -35,28 +31,27 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
         private fun redirect(current: BaseActivity, studentLogin: String, monthIndex: Int): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
-                    .to(MonitoringStudentMonthPaymentsActivity_::class.java)
+                    .to(MonitoringStudentMonthPaymentsActivity::class.java)
                     .withExtra(EXTRA_STUDENT_LOGIN, studentLogin)
                     .withExtra(EXTRA_MONTH_INDEX, monthIndex)
         }
     }
 
-    @Extra(EXTRA_STUDENT_LOGIN)
     lateinit var studentLogin: String
-
-    @Extra(EXTRA_MONTH_INDEX)
-    @JvmField
     var monthIndex: Int = 0
 
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean(StudentsPaymentsProviderServiceImpl::class)
-    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var studentsPaymentsProviderInteractor: StudentsPaymentsProviderInteractor
+    @Inject lateinit var staffMembersStorageInteractor: StaffMembersStorageInteractor
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_monitoring_student_month_payments)
+
+        studentLogin = intent.getStringExtra(EXTRA_STUDENT_LOGIN)!!
+        monthIndex = intent.getIntExtra(EXTRA_MONTH_INDEX, 0)
+
         val month = Month.findByIndex(monthIndex)
 
         monitoringStudentMonthPaymentsHeaderView
@@ -75,7 +70,7 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
 
         monitoringStudentMonthPaymentsPaymentsView.bind(
                 data = PaymentsViewData(
-                        paymentItemsData = studentsPaymentsProviderService
+                        paymentItemsData = studentsPaymentsProviderInteractor
                                 .getForStudentForMonth(
                                         studentLogin = studentLogin,
                                         monthIndex = monthIndex
@@ -87,7 +82,7 @@ open class MonitoringStudentMonthPaymentsActivity : BaseActivity() {
                                             studentName = studentsStorageInteractor.getByLogin(
                                                     studentPayment.info.studentLogin
                                             )?.person?.name ?: "?",
-                                            staffMemberName = staffMembersStorageService.getStaffMember(
+                                            staffMemberName = staffMembersStorageInteractor.getStaffMember(
                                                     studentPayment.info.staffMemberLogin
                                             )?.person?.name ?: "?",
                                             singleTeacher = false,

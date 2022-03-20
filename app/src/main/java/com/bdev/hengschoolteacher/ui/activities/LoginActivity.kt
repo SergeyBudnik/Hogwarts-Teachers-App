@@ -1,34 +1,35 @@
 package com.bdev.hengschoolteacher.ui.activities
 
-import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.widget.Toast
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.auth.AuthActionsInteractorImpl
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
+import com.bdev.hengschoolteacher.interactors.auth.AuthActionsInteractor
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_login)
-open class LoginActivity : BaseActivity() {
+@AndroidEntryPoint
+class LoginActivity : BaseActivity() {
     companion object {
         fun redirectToSibling(current: BaseActivity) {
             RedirectBuilder
                     .redirect(current)
-                    .to(LoginActivity_::class.java)
+                    .to(LoginActivity::class.java)
                     .goAndCloseAll()
         }
     }
 
-    @Bean
-    lateinit var authAsyncService: AuthActionsInteractorImpl
+    @Inject lateinit var authAsyncService: AuthActionsInteractor
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_login)
+
         loginDoLoginView.setOnClickListener { doLogin() }
     }
 

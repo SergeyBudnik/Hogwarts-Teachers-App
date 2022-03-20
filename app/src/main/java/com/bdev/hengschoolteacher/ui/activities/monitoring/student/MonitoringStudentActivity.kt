@@ -1,7 +1,8 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring.student
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -12,24 +13,21 @@ import com.bdev.hengschoolteacher.data.school.Month
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderServiceImpl
-import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsService
-import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsServiceImpl
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderService
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderServiceImpl
-import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingService
-import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderInteractor
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
+import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
 import com.bdev.hengschoolteacher.utils.TimeUtils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_student_payment.*
 import kotlinx.android.synthetic.main.view_monitoring_student_payment_item.view.*
-import org.androidannotations.annotations.*
+import javax.inject.Inject
 
 data class MonitoringStudentPaymentItemViewData(
         val student: Student,
@@ -89,11 +87,9 @@ class MonitoringStudentPaymentItemView : RelativeLayout {
     }
 }
 
-@EBean
-open class MonitoringStudentPaymentListAdapter : BaseAdapter() {
-    @RootContext
-    lateinit var context: Context
-
+class MonitoringStudentPaymentListAdapter(
+    private val context: Context
+): BaseAdapter() {
     private var items: List<MonitoringStudentPaymentItemViewData> = emptyList()
 
     fun bind(items: List<MonitoringStudentPaymentItemViewData>) {
@@ -125,9 +121,8 @@ open class MonitoringStudentPaymentListAdapter : BaseAdapter() {
     }
 }
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_monitoring_student_payment)
-open class MonitoringStudentActivity : BaseActivity() {
+@AndroidEntryPoint
+class MonitoringStudentActivity : BaseActivity() {
     companion object {
         const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
 
@@ -146,33 +141,28 @@ open class MonitoringStudentActivity : BaseActivity() {
         private fun redirect(current: BaseActivity, studentLogin: String): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
-                    .to(MonitoringStudentActivity_::class.java)
+                    .to(MonitoringStudentActivity::class.java)
                     .withExtra(EXTRA_STUDENT_LOGIN, studentLogin)
         }
     }
 
-    @Bean
-    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderServiceImpl
-    @Bean
-    lateinit var lessonsService: LessonsInteractorImpl
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean(StudentDebtsServiceImpl::class)
-    lateinit var studentsDebtsService: StudentDebtsService
+    @Inject lateinit var studentsAttendancesProviderInteractor: StudentsAttendancesProviderInteractor
+    @Inject lateinit var lessonsService: LessonsInteractor
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var studentsDebtsInteractor: StudentsDebtsInteractor
 
-    @Bean
-    lateinit var monitoringStudentPaymentListAdapter: MonitoringStudentPaymentListAdapter
+    @Inject lateinit var studentPricingInteractor: StudentsPricingInteractor
+    @Inject lateinit var studentsPaymentsProviderInteractor: StudentsPaymentsProviderInteractor
 
-    @Bean(StudentsPricingServiceImpl::class)
-    lateinit var studentPricingService: StudentsPricingService
-    @Bean(StudentsPaymentsProviderServiceImpl::class)
-    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
-
-    @Extra(EXTRA_STUDENT_LOGIN)
     lateinit var studentLogin: String
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_monitoring_student_payment)
+
+        studentLogin = intent.getStringExtra(EXTRA_STUDENT_LOGIN)!!
+
         val student = studentsStorageInteractor.getByLogin(studentLogin)
 
         monitoringStudentPaymentHeaderView
@@ -184,15 +174,17 @@ open class MonitoringStudentActivity : BaseActivity() {
                 studentLogin = studentLogin
         )
 
-        monitoringStudentPaymentDeptView.text = "${studentsDebtsService.getDebt(studentLogin)}"
+        monitoringStudentPaymentDeptView.text = "${studentsDebtsInteractor.getDebt(studentLogin)}"
 
-        monitoringStudentExpectedMonthlyDebtView.text = "${studentsDebtsService.getExpectedDebt(studentLogin = studentLogin)}"
+        monitoringStudentExpectedMonthlyDebtView.text = "${studentsDebtsInteractor.getExpectedDebt(studentLogin = studentLogin)}"
 
-        val allAttendances = studentsAttendancesProviderService.getAllStudentAttendances(studentLogin)
+        val allAttendances = studentsAttendancesProviderInteractor.getAllStudentAttendances(studentLogin)
         val allVisitedAttendances = allAttendances.filter { it.type == StudentAttendanceType.VISITED }
         val allValidSkipAttendances = allAttendances.filter { it.type == StudentAttendanceType.VALID_SKIP }
         val allInvalidSkipAttendances = allAttendances.filter { it.type == StudentAttendanceType.INVALID_SKIP }
         val allFreeLessonAttendances = allAttendances.filter { it.type == StudentAttendanceType.FREE_LESSON }
+
+        val monitoringStudentPaymentListAdapter = MonitoringStudentPaymentListAdapter(context = this)
 
         student?.let {
             monitoringStudentPaymentListAdapter.bind(
@@ -204,11 +196,11 @@ open class MonitoringStudentActivity : BaseActivity() {
                                         studentLogin = student.login,
                                         month = month
                                 ).size,
-                                moneySpent = studentPricingService.getMonthPrice(
+                                moneySpent = studentPricingInteractor.getMonthPrice(
                                         studentLogin = student.login,
                                         month = month
                                 ).toInt(),
-                                moneyPayed = studentsPaymentsProviderService.getForStudentForMonth(
+                                moneyPayed = studentsPaymentsProviderInteractor.getForStudentForMonth(
                                         studentLogin = student.login,
                                         monthIndex = month
                                 ).map { it.info.amount }.fold(0L) { p1, p2 -> p1 + p2 }.toInt(),

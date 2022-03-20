@@ -2,19 +2,15 @@ package com.bdev.hengschoolteacher.interactors.groups
 
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import javax.inject.Inject
 
-interface GroupStudentsProviderService {
+interface GroupsStudentsProviderInteractor {
     fun getAll(groupId: Long, time: Long): List<Student>
 }
 
-@EBean(scope = EBean.Scope.Singleton)
-open class GroupStudentsProviderServiceImpl : GroupStudentsProviderService {
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-
+class GroupsStudentsProviderInteractorImpl @Inject constructor(
+    private val studentsStorageInteractor: StudentsStorageInteractor
+): GroupsStudentsProviderInteractor {
     override fun getAll(groupId: Long, time: Long): List<Student> {
         return studentsStorageInteractor
                 .getAll()

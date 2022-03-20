@@ -2,25 +2,17 @@ package com.bdev.hengschoolteacher.interactors.students
 
 import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask
-import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractorImpl
 import com.bdev.hengschoolteacher.network.api.students.StudentsApiProviderImpl
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import javax.inject.Inject
 
 interface StudentsLoadingInteractor {
     fun load(): SmartPromise<Unit, Exception>
 }
 
-@EBean
-open class StudentsLoadingInteractorImpl : StudentsLoadingInteractor {
-    @Bean
-    lateinit var authService: AuthStorageInteractorImpl
-
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-
-    @Bean
-    lateinit var studentsApiProvider: StudentsApiProviderImpl
+class StudentsLoadingInteractorImpl @Inject constructor(
+    private val studentsStorageInteractor: StudentsStorageInteractor,
+    private val studentsApiProvider: StudentsApiProviderImpl
+): StudentsLoadingInteractor {
 
     override fun load(): SmartPromise<Unit, Exception> {
         return SmartTask.smartTask {

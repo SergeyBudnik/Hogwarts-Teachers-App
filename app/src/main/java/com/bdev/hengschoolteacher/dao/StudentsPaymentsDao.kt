@@ -1,10 +1,12 @@
 package com.bdev.hengschoolteacher.dao
 
+import android.content.Context
 import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
-import org.androidannotations.annotations.EBean
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.codehaus.jackson.annotate.JsonCreator
 import org.codehaus.jackson.annotate.JsonProperty
 import org.codehaus.jackson.map.ObjectMapper
+import javax.inject.Inject
 
 class StudentsPaymentsModel @JsonCreator constructor(
     @JsonProperty("studentsPayments") val studentsPayments: Map<Long, ExistingStudentPayment>
@@ -12,8 +14,9 @@ class StudentsPaymentsModel @JsonCreator constructor(
 
 interface StudentsPaymentsDao : CommonDao<StudentsPaymentsModel>
 
-@EBean(scope = EBean.Scope.Singleton)
-open class StudentsPaymentsDaoImpl : StudentsPaymentsDao, CommonDaoImpl<StudentsPaymentsModel>() {
+class StudentsPaymentsDaoImpl @Inject constructor(
+    @ApplicationContext context: Context
+): StudentsPaymentsDao, CommonDaoImpl<StudentsPaymentsModel>(context = context) {
     override fun getFileName(): String {
         return "students-payments.data"
     }

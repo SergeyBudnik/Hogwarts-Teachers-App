@@ -1,7 +1,8 @@
 package com.bdev.hengschoolteacher.ui.activities.students
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -9,18 +10,16 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_students_list.*
 import kotlinx.android.synthetic.main.view_students_list_row_item.view.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
+import javax.inject.Inject
 
 class StudentsListRowItemView : RelativeLayout {
     init {
@@ -47,25 +46,26 @@ class StudentsListAdapter(context: Context) : BaseItemsListAdapter<Student>(cont
     }
 }
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_students_list)
-open class StudentsListActivity : BaseActivity() {
+@AndroidEntryPoint
+class StudentsListActivity : BaseActivity() {
     companion object {
         fun redirectToSibling(current: BaseActivity) {
             RedirectBuilder
                     .redirect(current)
-                    .to(StudentsListActivity_::class.java)
+                    .to(StudentsListActivity::class.java)
                     .goAndCloseCurrent()
         }
     }
 
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
 
     private var studentsListAdapter: StudentsListAdapter = StudentsListAdapter(this)
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_students_list)
+
         initHeader()
 
         studentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.STUDENTS)

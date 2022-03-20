@@ -1,51 +1,50 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
-import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractorImpl
-import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
-import com.bdev.hengschoolteacher.interactors.teacher.TeacherSalaryServiceImpl
+import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractor
+import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
+import com.bdev.hengschoolteacher.interactors.teachers.TeacherSalaryInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_salary.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.Extra
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_monitoring_teacher_salary)
-open class MonitoringTeacherSalaryActivity : BaseActivity() {
+@AndroidEntryPoint
+class MonitoringTeacherSalaryActivity : BaseActivity() {
     companion object {
         const val EXTRA_TEACHER_LOGIN = "EXTRA_TEACHER_LOGIN"
 
         fun redirectToSibling(current: BaseActivity, teacherLogin: String) {
             return RedirectBuilder
                     .redirect(current)
-                    .to(MonitoringTeacherSalaryActivity_::class.java)
+                    .to(MonitoringTeacherSalaryActivity::class.java)
                     .withExtra(EXTRA_TEACHER_LOGIN, teacherLogin)
                     .goAndCloseCurrent()
         }
     }
 
-    @Extra(EXTRA_TEACHER_LOGIN)
     lateinit var teacherLogin: String
 
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
-    @Bean
-    lateinit var teacherSalaryService: TeacherSalaryServiceImpl
-    @Bean
-    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractorImpl
+    @Inject lateinit var staffMembersStorageInteractor: StaffMembersStorageInteractor
+    @Inject lateinit var teacherSalaryInteractor: TeacherSalaryInteractor
+    @Inject lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractor
 
     private var calendarEnabled = false
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_monitoring_teacher_salary)
+
+        teacherLogin = intent.getStringExtra(EXTRA_TEACHER_LOGIN)!!
+
         initHeader()
 
         monitoringTeacherSalarySecondaryHeaderView.bind(
@@ -57,10 +56,10 @@ open class MonitoringTeacherSalaryActivity : BaseActivity() {
         )
 
         monitoringTeacherSalaryWeekSelectionBarView.init { weekIndex ->
-            staffMembersStorageService.getStaffMember(login = teacherLogin)?.let { teacher ->
+            staffMembersStorageInteractor.getStaffMember(login = teacherLogin)?.let { teacher ->
                 monitoringTeacherSalaryTeacherSalaryView.init(
                         teacher = teacher,
-                        teacherPayments = teacherSalaryService.getTeacherPayments(
+                        teacherPayments = teacherSalaryInteractor.getTeacherPayments(
                                 teacherLogin = teacherLogin,
                                 weekIndex = weekIndex
                         )

@@ -1,52 +1,45 @@
 package com.bdev.hengschoolteacher.ui.activities.lesson.attendance
 
-import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
+import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesModifierServiceImpl
-import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderServiceImpl
-import com.bdev.hengschoolteacher.interactors.teacher.TeacherInfoServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesModifierInteractor
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderInteractor
+import com.bdev.hengschoolteacher.interactors.teachers.TeacherInfoInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityParams.EXTRA_DATA
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_lesson_student_attendance.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.Extra
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_lesson_student_attendance)
+@AndroidEntryPoint
 open class LessonAttendanceActivity : BaseActivity() {
-    @Bean(GroupsStorageInteractorImpl::class)
-    lateinit var groupsStorageInteractor: GroupsStorageInteractor
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean
-    lateinit var lessonsService: LessonsInteractorImpl
-    @Bean
-    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderServiceImpl
-    @Bean
-    lateinit var studentsAttendancesModifierService: StudentsAttendancesModifierServiceImpl
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
-    @Bean
-    lateinit var teacherInfoService: TeacherInfoServiceImpl
+    @Inject lateinit var groupsStorageInteractor: GroupsStorageInteractor
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var lessonsService: LessonsInteractor
+    @Inject lateinit var studentsAttendancesProviderInteractor: StudentsAttendancesProviderInteractor
+    @Inject lateinit var studentsAttendancesModifierInteractor: StudentsAttendancesModifierInteractor
+    @Inject lateinit var staffMembersStorageInteractor: StaffMembersStorageInteractor
+    @Inject lateinit var teacherInfoInteractor: TeacherInfoInteractor
 
-    @Extra(EXTRA_DATA)
     lateinit var activityData: LessonAttendanceActivityData
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_lesson_student_attendance)
+
+        activityData = intent.getSerializableExtra(EXTRA_DATA) as LessonAttendanceActivityData
+
         lessonAttendanceHeaderView.setLeftButtonAction { doFinish() }
 
         val groupAndLesson = lessonsService.getLesson(activityData.lessonId) ?: throw RuntimeException()
@@ -55,12 +48,12 @@ open class LessonAttendanceActivity : BaseActivity() {
         val lesson = groupAndLesson.lesson
         val student = studentsStorageInteractor.getByLogin(activityData.studentLogin) ?: throw RuntimeException()
 
-        staffMembersStorageService.getStaffMember(lesson.teacherLogin)?.let { teacher ->
+        staffMembersStorageInteractor.getStaffMember(lesson.teacherLogin)?.let { teacher ->
             lessonStudentAttendanceLessonTimeView.bind(
                     lesson = lesson,
                     lessonStartTime = lessonsService.getLessonStartTime(lesson.id, activityData.weekIndex),
-                    teacherName = teacherInfoService.getTeachersName(teacher),
-                    teacherSurname = teacherInfoService.getTeachersSurname(teacher)
+                    teacherName = teacherInfoInteractor.getTeachersName(teacher),
+                    teacherSurname = teacherInfoInteractor.getTeachersSurname(teacher)
             )
         }
 
@@ -70,7 +63,7 @@ open class LessonAttendanceActivity : BaseActivity() {
     }
 
     private fun initButtons(group: Group) {
-        val attendance = studentsAttendancesProviderService.getAttendance(
+        val attendance = studentsAttendancesProviderInteractor.getAttendance(
                 lessonId = activityData.lessonId,
                 studentLogin = activityData.studentLogin,
                 weekIndex = activityData.weekIndex
@@ -163,7 +156,7 @@ open class LessonAttendanceActivity : BaseActivity() {
     private fun markButtonAttendance(group: Group, attendance: StudentAttendanceType) {
         val lesson = lessonsService.getLesson(lessonId = activityData.lessonId)
 
-        studentsAttendancesModifierService
+        studentsAttendancesModifierInteractor
                 .addAttendance(StudentAttendance(
                         studentLogin = activityData.studentLogin,
                         groupType = group.type,

@@ -1,8 +1,7 @@
 package com.bdev.hengschoolteacher.interactors.alerts.monitoring
 
-import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
+import javax.inject.Inject
 
 interface AlertsMonitoringInteractor {
     fun haveAlerts(): Boolean
@@ -11,18 +10,12 @@ interface AlertsMonitoringInteractor {
     fun studentsHaveAlerts(): Boolean
 }
 
-@EBean
-open class AlertsMonitoringInteractorImpl : AlertsMonitoringInteractor {
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
-
-    @Bean
-    lateinit var alertsMonitoringLessonsService: AlertsMonitoringLessonsInteractorImpl
-    @Bean
-    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractorImpl
-    @Bean
-    lateinit var alertsMonitoringStudentsService: AlertsMonitoringStudentsInteractorImpl
-
+class AlertsMonitoringInteractorImpl @Inject constructor(
+    private val staffMembersStorageInteractor: StaffMembersStorageInteractor,
+    private val alertsMonitoringLessonsService: AlertsMonitoringLessonsInteractor,
+    private val alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractor,
+    private val alertsMonitoringStudentsService: AlertsMonitoringStudentsInteractor
+): AlertsMonitoringInteractor {
     override fun haveAlerts(): Boolean {
         return lessonsHaveAlerts() || teachersHaveAlerts() || studentsHaveAlerts()
     }
@@ -32,7 +25,7 @@ open class AlertsMonitoringInteractorImpl : AlertsMonitoringInteractor {
     }
 
     override fun teachersHaveAlerts(): Boolean {
-        return staffMembersStorageService
+        return staffMembersStorageInteractor
                 .getAllStaffMembers()
                 .map { alertsMonitoringTeachersService.haveAlerts(it.login) }
                 .fold(false) { result, value -> result or value }

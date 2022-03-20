@@ -1,43 +1,43 @@
 package com.bdev.hengschoolteacher.ui.activities.settings
 
-import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.profile.ProfileServiceImpl
+import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractor
+import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.LoginActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_settings.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_settings)
-open class SettingsActivity : BaseActivity() {
+@AndroidEntryPoint
+class SettingsActivity : BaseActivity() {
     companion object {
         fun redirectToSibling(current: BaseActivity) {
             RedirectBuilder
                     .redirect(current)
-                    .to(SettingsActivity_::class.java)
+                    .to(SettingsActivity::class.java)
                     .goAndCloseCurrent()
         }
     }
 
-    @Bean
-    lateinit var authService: AuthStorageInteractorImpl
-    @Bean
-    lateinit var profileService: ProfileServiceImpl
+    @Inject lateinit var authService: AuthStorageInteractor
+    @Inject lateinit var profileInteractor: ProfileInteractor
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_settings)
+
         settingsHeaderView.setLeftButtonAction { settingsMenuLayoutView.openMenu() }
 
         settingsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.SETTINGS)
 
-        val me = profileService.getMe()
+        val me = profileInteractor.getMe()
 
         settingsAccountNameView.text = me?.person?.name ?: ""
         settingsAccountLoginView.text = me?.login ?: ""

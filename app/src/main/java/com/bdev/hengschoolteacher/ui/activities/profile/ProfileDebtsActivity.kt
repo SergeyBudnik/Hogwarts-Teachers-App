@@ -1,48 +1,46 @@
 package com.bdev.hengschoolteacher.ui.activities.profile
 
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
-import com.bdev.hengschoolteacher.interactors.alerts.profile.AlertsProfileInteractorImpl
+import com.bdev.hengschoolteacher.interactors.alerts.profile.AlertsProfileInteractor
+import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.profile.ProfileServiceImpl
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsService
-import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_profile_depts.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
+import javax.inject.Inject
 
-@EActivity(R.layout.activity_profile_depts)
-open class ProfileDebtsActivity : BaseActivity() {
+@AndroidEntryPoint
+class ProfileDebtsActivity : BaseActivity() {
     companion object {
         fun redirectToSibling(from: BaseActivity) {
             RedirectBuilder
                     .redirect(from)
-                    .to(ProfileDebtsActivity_::class.java)
+                    .to(ProfileDebtsActivity::class.java)
                     .goAndCloseCurrent()
         }
     }
 
-    @Bean
-    lateinit var profileService: ProfileServiceImpl
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean(StudentDebtsServiceImpl::class)
-    lateinit var studentsDebtsService: StudentDebtsService
-    @Bean
-    lateinit var alertsProfileService: AlertsProfileInteractorImpl
+    @Inject lateinit var profileInteractor: ProfileInteractor
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var studentsDebtsInteractor: StudentsDebtsInteractor
+    @Inject lateinit var alertsProfileService: AlertsProfileInteractor
 
     private var me: StaffMember? = null
 
-    @AfterViews
-    fun afterViews() {
-        me = profileService.getMe()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_profile_depts)
+
+        me = profileInteractor.getMe()
 
         profileDebtsLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
 
@@ -58,7 +56,7 @@ open class ProfileDebtsActivity : BaseActivity() {
                 studentsToExpectedDebt = studentsStorageInteractor.getAll()
                         .filter { it.managerLogin == me?.login }
                         .map {
-                            Pair(it, studentsDebtsService.getExpectedDebt(studentLogin = it.login))
+                            Pair(it, studentsDebtsInteractor.getExpectedDebt(studentLogin = it.login))
                         },
                 searchQuery = "",
                 withDebtsOnly = true

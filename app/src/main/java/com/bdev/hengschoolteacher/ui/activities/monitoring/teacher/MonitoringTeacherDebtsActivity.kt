@@ -1,26 +1,22 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
-import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractorImpl
+import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsService
-import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_debts.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.Extra
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_monitoring_teacher_debts)
-open class MonitoringTeacherDebtsActivity : BaseActivity() {
+@AndroidEntryPoint
+class MonitoringTeacherDebtsActivity : BaseActivity() {
     companion object {
         const val EXTRA_TEACHER_LOGIN = "EXTRA_TEACHER_LOGIN"
 
@@ -38,23 +34,24 @@ open class MonitoringTeacherDebtsActivity : BaseActivity() {
         private fun redirect(current: BaseActivity, teacherLogin: String): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
-                    .to(MonitoringTeacherDebtsActivity_::class.java)
+                    .to(MonitoringTeacherDebtsActivity::class.java)
                     .withExtra(EXTRA_TEACHER_LOGIN, teacherLogin)
         }
     }
 
-    @Extra(EXTRA_TEACHER_LOGIN)
     lateinit var teacherLogin: String
 
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean(StudentDebtsServiceImpl::class)
-    lateinit var studentsDebtsService: StudentDebtsService
-    @Bean
-    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractorImpl
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var studentsDebtsInteractor: StudentsDebtsInteractor
+    @Inject lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractor
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_monitoring_teacher_debts)
+
+        teacherLogin = intent.getStringExtra(EXTRA_TEACHER_LOGIN)!!
+
         initHeader()
 
         monitoringTeacherDebtsSecondaryHeaderView.bind(
@@ -69,7 +66,7 @@ open class MonitoringTeacherDebtsActivity : BaseActivity() {
                 studentsToExpectedDebt = studentsStorageInteractor.getAll()
                         .filter { it.managerLogin == teacherLogin }
                         .map {
-                            Pair(it, studentsDebtsService.getExpectedDebt(studentLogin = it.login))
+                            Pair(it, studentsDebtsInteractor.getExpectedDebt(studentLogin = it.login))
                         },
                 searchQuery = "",
                 withDebtsOnly = true

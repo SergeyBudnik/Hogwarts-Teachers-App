@@ -5,12 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
-import org.androidannotations.annotations.EBean
-import com.github.javiersantos.appupdater.enums.AppUpdaterError
-import com.github.javiersantos.appupdater.objects.Update
 import com.github.javiersantos.appupdater.AppUpdaterUtils
+import com.github.javiersantos.appupdater.enums.AppUpdaterError
 import com.github.javiersantos.appupdater.enums.UpdateFrom
-import org.androidannotations.annotations.RootContext
+import com.github.javiersantos.appupdater.objects.Update
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 data class AppUpdateInfo(val version: String)
 
@@ -18,29 +18,35 @@ interface AppUpdateListener {
     fun onUpdate(appUpdateInfo: AppUpdateInfo)
 }
 
-@EBean(scope = EBean.Scope.Singleton)
-open class AppUpdateService {
-    @RootContext
-    lateinit var context: Context
+interface AppUpdateService {
+    fun setUpdateListener(appUpdateListener: AppUpdateListener)
+    fun clearUpdateListener()
+    fun setUpdateHandled()
+    fun goToGooglePlay()
+    fun enqueueUpdate()
+}
 
+class AppUpdateServiceImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+): AppUpdateService {
     private var appUpdateListener: AppUpdateListener? = null
     private var appUpdateInfo: AppUpdateInfo? = null
 
-    fun setUpdateListener(appUpdateListener: AppUpdateListener) {
+    override fun setUpdateListener(appUpdateListener: AppUpdateListener) {
         this.appUpdateListener = appUpdateListener
 
         notifyUpdate()
     }
 
-    fun clearUpdateListener() {
+    override fun clearUpdateListener() {
         this.appUpdateListener = null
     }
 
-    fun setUpdateHandled() {
+    override fun setUpdateHandled() {
         this.appUpdateInfo = null
     }
 
-    fun goToGooglePlay() {
+    override fun goToGooglePlay() {
         val appPackageName = context.packageName
 
         val googlePlayIntentProvider: (String) -> Intent = { uri ->
@@ -62,7 +68,7 @@ open class AppUpdateService {
         }
     }
 
-    fun enqueueUpdate() {
+    override fun enqueueUpdate() {
         AppUpdaterUtils(context)
                 .setUpdateFrom(UpdateFrom.GOOGLE_PLAY)
                 .withListener(object : AppUpdaterUtils.UpdateListener {

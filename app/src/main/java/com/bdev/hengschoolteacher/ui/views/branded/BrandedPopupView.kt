@@ -8,7 +8,6 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bdev.hengschoolteacher.R
 import kotlinx.android.synthetic.main.view_branded_popup.view.*
-import org.androidannotations.annotations.EViewGroup
 
 data class BrandedPopupInfo(
         val title: String,

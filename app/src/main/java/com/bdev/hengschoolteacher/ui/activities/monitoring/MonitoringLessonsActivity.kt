@@ -1,16 +1,17 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.LessonStateServiceImpl
-import com.bdev.hengschoolteacher.interactors.lessons_status.LessonStatusStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.LessonsAttendancesServiceImpl
-import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringInteractorImpl
-import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
-import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
-import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.LessonStateService
+import com.bdev.hengschoolteacher.interactors.LessonsAttendancesService
+import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringInteractor
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
+import com.bdev.hengschoolteacher.interactors.lessons_status.LessonsStatusStorageInteractor
+import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
@@ -20,45 +21,39 @@ import com.bdev.hengschoolteacher.ui.views.app.lesson.LessonRowViewData
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsViewData
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_lessons.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_monitoring_lessons)
-open class MonitoringLessonsActivity : BaseActivity() {
+@AndroidEntryPoint
+class MonitoringLessonsActivity : BaseActivity() {
     companion object {
         fun redirectToSibling(current: BaseActivity) {
             RedirectBuilder
                     .redirect(current)
-                    .to(MonitoringLessonsActivity_::class.java)
+                    .to(MonitoringLessonsActivity::class.java)
                     .goAndCloseCurrent()
         }
     }
 
-    @Bean
-    lateinit var lessonsService: LessonsInteractorImpl
-    @Bean
-    lateinit var lessonStateService: LessonStateServiceImpl
-    @Bean
-    lateinit var alertsMonitoringService: AlertsMonitoringInteractorImpl
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
-    @Bean
-    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderServiceImpl
-    @Bean
-    lateinit var lessonsAttendancesService: LessonsAttendancesServiceImpl
-    @Bean
-    lateinit var lessonStatusService: LessonStatusStorageInteractorImpl
+    @Inject lateinit var lessonsService: LessonsInteractor
+    @Inject lateinit var lessonStateService: LessonStateService
+    @Inject lateinit var alertsMonitoringService: AlertsMonitoringInteractor
+    @Inject lateinit var staffMembersStorageInteractor: StaffMembersStorageInteractor
+    @Inject lateinit var studentsAttendancesProviderInteractor: StudentsAttendancesProviderInteractor
+    @Inject lateinit var lessonsAttendancesService: LessonsAttendancesService
+    @Inject lateinit var lessonsStatusService: LessonsStatusStorageInteractor
 
     private var filterEnabled = true
     private var calendarEnabled = false
 
     private var weekIndex = 0
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_monitoring_lessons)
+
         initHeader()
 
         monitoringLessonsSecondaryHeaderView.bind(
@@ -118,10 +113,10 @@ open class MonitoringLessonsActivity : BaseActivity() {
                         weekIndex = weekIndex,
                         lessonsData = lessons.map { groupAndLesson ->
                             LessonRowViewData(
-                                    staffMember = staffMembersStorageService.getStaffMember(groupAndLesson.lesson.teacherLogin),
+                                    staffMember = staffMembersStorageInteractor.getStaffMember(groupAndLesson.lesson.teacherLogin),
                                     group = groupAndLesson.group,
                                     lesson = groupAndLesson.lesson,
-                                    lessonStatus = lessonStatusService.getLessonStatus(
+                                    lessonStatus = lessonsStatusService.getLessonStatus(
                                             lessonId = groupAndLesson.lesson.id,
                                             lessonTime = lessonsService.getLessonStartTime(groupAndLesson.lesson.id, weekIndex)
                                     ),
@@ -138,7 +133,7 @@ open class MonitoringLessonsActivity : BaseActivity() {
                                             .map { student ->
                                                 Pair(
                                                         student,
-                                                        studentsAttendancesProviderService.getAttendance(
+                                                        studentsAttendancesProviderInteractor.getAttendance(
                                                                 groupAndLesson.lesson.id,
                                                                 student.login,
                                                                 weekIndex

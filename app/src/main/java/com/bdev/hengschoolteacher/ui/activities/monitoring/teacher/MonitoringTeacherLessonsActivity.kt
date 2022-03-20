@@ -1,16 +1,17 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.LessonStateServiceImpl
-import com.bdev.hengschoolteacher.interactors.lessons_status.LessonStatusStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.LessonsAttendancesServiceImpl
-import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractorImpl
-import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
-import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
-import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.LessonStateService
+import com.bdev.hengschoolteacher.interactors.LessonsAttendancesService
+import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractor
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
+import com.bdev.hengschoolteacher.interactors.lessons_status.LessonsStatusStorageInteractor
+import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -20,15 +21,12 @@ import com.bdev.hengschoolteacher.ui.views.app.lesson.LessonRowViewData
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsViewData
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_lessons.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.Extra
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_monitoring_teacher_lessons)
-open class MonitoringTeacherLessonsActivity : BaseActivity() {
+@AndroidEntryPoint
+class MonitoringTeacherLessonsActivity : BaseActivity() {
     companion object {
         const val EXTRA_TEACHER_LOGIN = "EXTRA_TEACHER_LOGIN"
 
@@ -46,36 +44,33 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
         private fun redirect(current: BaseActivity, teacherLogin: String): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
-                    .to(MonitoringTeacherLessonsActivity_::class.java)
+                    .to(MonitoringTeacherLessonsActivity::class.java)
                     .withExtra(EXTRA_TEACHER_LOGIN, teacherLogin)
         }
     }
 
-    @Extra(EXTRA_TEACHER_LOGIN)
     lateinit var teacherLogin: String
 
-    @Bean
-    lateinit var lessonsService: LessonsInteractorImpl
-    @Bean
-    lateinit var lessonStateService: LessonStateServiceImpl
-    @Bean
-    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractorImpl
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
-    @Bean
-    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderServiceImpl
-    @Bean
-    lateinit var lessonsAttendancesService: LessonsAttendancesServiceImpl
-    @Bean
-    lateinit var lessonStatusService: LessonStatusStorageInteractorImpl
+    @Inject lateinit var lessonsService: LessonsInteractor
+    @Inject lateinit var lessonStateService: LessonStateService
+    @Inject lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractor
+    @Inject lateinit var staffMembersStorageInteractor: StaffMembersStorageInteractor
+    @Inject lateinit var studentsAttendancesProviderInteractor: StudentsAttendancesProviderInteractor
+    @Inject lateinit var lessonsAttendancesService: LessonsAttendancesService
+    @Inject lateinit var lessonsStatusService: LessonsStatusStorageInteractor
 
     private var weekIndex = 0
 
     private var filterEnabled = true
     private var calendarEnabled = false
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_monitoring_teacher_lessons)
+
+        teacherLogin = intent.getStringExtra(EXTRA_TEACHER_LOGIN)!!
+
         initHeader()
 
         monitoringTeacherLessonsSecondaryHeaderView.bind(
@@ -147,10 +142,10 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
                         weekIndex = weekIndex,
                         lessonsData = lessons.map { groupAndLesson ->
                             LessonRowViewData(
-                                    staffMember = staffMembersStorageService.getStaffMember(groupAndLesson.lesson.teacherLogin),
+                                    staffMember = staffMembersStorageInteractor.getStaffMember(groupAndLesson.lesson.teacherLogin),
                                     group = groupAndLesson.group,
                                     lesson = groupAndLesson.lesson,
-                                    lessonStatus = lessonStatusService.getLessonStatus(
+                                    lessonStatus = lessonsStatusService.getLessonStatus(
                                             lessonId = groupAndLesson.lesson.id,
                                             lessonTime = lessonsService.getLessonStartTime(groupAndLesson.lesson.id, weekIndex)
                                     ),
@@ -167,7 +162,7 @@ open class MonitoringTeacherLessonsActivity : BaseActivity() {
                                             .map { student ->
                                                 Pair(
                                                         student,
-                                                        studentsAttendancesProviderService.getAttendance(
+                                                        studentsAttendancesProviderInteractor.getAttendance(
                                                                 groupAndLesson.lesson.id,
                                                                 student.login,
                                                                 weekIndex

@@ -3,8 +3,6 @@ package com.bdev.hengschoolteacher.dao
 import android.content.Context
 import android.util.Log
 import com.bdev.hengschoolteacher.utils.StorageUtils
-import org.androidannotations.annotations.EBean
-import org.androidannotations.annotations.RootContext
 import org.codehaus.jackson.map.ObjectMapper
 
 import java.io.IOException
@@ -15,11 +13,9 @@ interface CommonDao<T> {
     fun writeValue(o: T)
 }
 
-@EBean
-abstract class CommonDaoImpl<T> : CommonDao<T> {
-    @RootContext
-    lateinit var context: Context
-
+abstract class CommonDaoImpl<T>(
+    private val context: Context
+) : CommonDao<T> {
     private val cache = AtomicReference<T>(null)
 
     protected abstract fun getFileName(): String

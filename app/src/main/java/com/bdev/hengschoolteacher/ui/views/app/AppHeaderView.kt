@@ -10,8 +10,6 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_app_header.view.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EViewGroup
 
 class AppHeaderView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
     private val title: String

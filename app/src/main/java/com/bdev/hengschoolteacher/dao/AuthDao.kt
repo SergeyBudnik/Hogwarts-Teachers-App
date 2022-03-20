@@ -1,10 +1,12 @@
 package com.bdev.hengschoolteacher.dao
 
+import android.content.Context
 import com.bdev.hengschoolteacher.data.auth.AuthInfo
-import org.androidannotations.annotations.EBean
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.codehaus.jackson.annotate.JsonCreator
 import org.codehaus.jackson.annotate.JsonProperty
 import org.codehaus.jackson.map.ObjectMapper
+import javax.inject.Inject
 
 class AuthModel @JsonCreator constructor(
     @JsonProperty("authInfo") val authInfo: AuthInfo?
@@ -12,8 +14,9 @@ class AuthModel @JsonCreator constructor(
 
 interface AuthDao : CommonDao<AuthModel>
 
-@EBean(scope = EBean.Scope.Singleton)
-open class AuthDaoImpl : AuthDao, CommonDaoImpl<AuthModel>() {
+class AuthDaoImpl @Inject constructor(
+    @ApplicationContext context: Context
+) : AuthDao, CommonDaoImpl<AuthModel>(context = context) {
     override fun getFileName(): String {
         return "auth.data"
     }

@@ -1,15 +1,11 @@
 package com.bdev.hengschoolteacher.interactors.alerts.monitoring
 
-import com.bdev.hengschoolteacher.interactors.LessonStateServiceImpl
-import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsService
-import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
+import com.bdev.hengschoolteacher.interactors.LessonStateService
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsServiceImpl
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderService
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderServiceImpl
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
+import javax.inject.Inject
 
 interface AlertsMonitoringTeachersInteractor {
     fun haveAlerts(teacherLogin: String): Boolean
@@ -18,20 +14,14 @@ interface AlertsMonitoringTeachersInteractor {
     fun haveDebtsAlerts(teacherLogin: String): Boolean
 }
 
-@EBean
-open class AlertsMonitoringTeachersInteractorImpl : AlertsMonitoringTeachersInteractor {
+class AlertsMonitoringTeachersInteractorImpl @Inject constructor(
+    private val studentsPaymentsProviderInteractor: StudentsPaymentsProviderInteractor,
+    private val lessonsService: LessonsInteractor,
+    private val lessonStateService: LessonStateService,
+    private val studentsStorageInteractor: StudentsStorageInteractor,
+    private val studentsDebtsInteractor: StudentsDebtsInteractor
+): AlertsMonitoringTeachersInteractor {
     private val monitoringWeeksAmount = 6
-
-    @Bean(StudentsPaymentsProviderServiceImpl::class)
-    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
-    @Bean
-    lateinit var lessonsService: LessonsInteractorImpl
-    @Bean
-    lateinit var lessonStateService: LessonStateServiceImpl
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean(StudentDebtsServiceImpl::class)
-    lateinit var studentsDebtsService: StudentDebtsService
 
     override fun haveAlerts(teacherLogin: String): Boolean {
         return haveLessonsAlerts(teacherLogin) || havePaymentsAlerts(teacherLogin)
@@ -53,7 +43,7 @@ open class AlertsMonitoringTeachersInteractorImpl : AlertsMonitoringTeachersInte
     }
 
     override fun havePaymentsAlerts(teacherLogin: String): Boolean {
-        return studentsPaymentsProviderService.getForTeacher(
+        return studentsPaymentsProviderInteractor.getForTeacher(
                 teacherLogin = teacherLogin,
                 onlyUnprocessed = true
         ).isNotEmpty()
@@ -63,6 +53,6 @@ open class AlertsMonitoringTeachersInteractorImpl : AlertsMonitoringTeachersInte
         return studentsStorageInteractor
                 .getAll()
                 .filter { it.managerLogin == teacherLogin }
-                .any { student -> studentsDebtsService.getExpectedDebt(student.login) > 0 }
+                .any { student -> studentsDebtsInteractor.getExpectedDebt(student.login) > 0 }
     }
 }

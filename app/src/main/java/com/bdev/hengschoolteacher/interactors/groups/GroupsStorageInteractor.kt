@@ -1,10 +1,9 @@
 package com.bdev.hengschoolteacher.interactors.groups
 
-import com.bdev.hengschoolteacher.dao.GroupsDaoImpl
+import com.bdev.hengschoolteacher.dao.GroupsDao
 import com.bdev.hengschoolteacher.dao.GroupsModel
 import com.bdev.hengschoolteacher.data.school.group.Group
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import javax.inject.Inject
 
 interface GroupsStorageInteractor {
     fun getAll(): List<Group>
@@ -12,11 +11,9 @@ interface GroupsStorageInteractor {
     fun setAll(groups: List<Group>)
 }
 
-@EBean(scope = EBean.Scope.Singleton)
-open class GroupsStorageInteractorImpl : GroupsStorageInteractor {
-    @Bean
-    lateinit var groupsDao: GroupsDaoImpl
-
+class GroupsStorageInteractorImpl @Inject constructor(
+    private val groupsDao: GroupsDao
+): GroupsStorageInteractor {
     override fun getAll(): List<Group> {
         return groupsDao.readValue().groups
     }

@@ -2,25 +2,17 @@ package com.bdev.hengschoolteacher.interactors.groups
 
 import com.bdev.hengschoolteacher.async.common.SmartPromise
 import com.bdev.hengschoolteacher.async.common.SmartTask.Companion.smartTask
-import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractorImpl
-import com.bdev.hengschoolteacher.network.api.groups.GroupsApiProviderImpl
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import com.bdev.hengschoolteacher.network.api.groups.GroupsApiProvider
+import javax.inject.Inject
 
 interface GroupsLoadingInteractor {
     fun load(): SmartPromise<Unit, Exception>
 }
 
-@EBean(scope = EBean.Scope.Singleton)
-open class GroupsLoadingInteractorImpl : GroupsLoadingInteractor {
-    @Bean
-    lateinit var groupsApiProvider: GroupsApiProviderImpl
-
-    @Bean
-    lateinit var authService: AuthStorageInteractorImpl
-
-    @Bean(GroupsStorageInteractorImpl::class)
-    lateinit var groupsStorageInteractor: GroupsStorageInteractor
+class GroupsLoadingInteractorImpl @Inject constructor(
+    private val groupsApiProvider: GroupsApiProvider,
+    private val groupsStorageInteractor: GroupsStorageInteractor
+): GroupsLoadingInteractor {
 
     override fun load(): SmartPromise<Unit, Exception> {
         return smartTask {

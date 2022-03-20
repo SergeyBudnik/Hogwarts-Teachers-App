@@ -8,7 +8,7 @@ object LessonStatusActivityLauncher {
     fun launchAsChild(from: BaseActivity, requestCode: Int, data: LessonStatusActivityData) {
         RedirectBuilder
                 .redirect(from)
-                .to(LessonStatusActivity_::class.java)
+                .to(LessonStatusActivity::class.java)
                 .withExtra(LessonStatusActivityParams.EXTRA_DATA, data)
                 .withAnim(R.anim.slide_open_enter, R.anim.slide_open_exit)
                 .goForResult(requestCode)
