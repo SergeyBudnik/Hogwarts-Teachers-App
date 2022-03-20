@@ -1,14 +1,13 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring.teacher
 
-import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsActionsInteractorImpl
-import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractorImpl
-import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractor
+import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderService
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsActionsInteractor
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
@@ -17,45 +16,41 @@ import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsItemViewData
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsViewData
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_payments.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.Extra
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_monitoring_teacher_payments)
-open class MonitoringTeacherPaymentsActivity : BaseActivity() {
+@AndroidEntryPoint
+class MonitoringTeacherPaymentsActivity : BaseActivity() {
     companion object {
         const val EXTRA_TEACHER_LOGIN = "EXTRA_TEACHER_LOGIN"
 
         fun redirectToSibling(current: BaseActivity, teacherLogin: String) {
             RedirectBuilder
                     .redirect(current)
-                    .to(MonitoringTeacherPaymentsActivity_::class.java)
+                    .to(MonitoringTeacherPaymentsActivity::class.java)
                     .withExtra(EXTRA_TEACHER_LOGIN, teacherLogin)
                     .goAndCloseCurrent()
         }
     }
 
-    @Bean(StudentsPaymentsProviderServiceImpl::class)
-    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
-    @Bean
-    lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractorImpl
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
-    @Bean
-    lateinit var studentsPaymentsAsyncService: StudentsPaymentsActionsInteractorImpl
+    @Inject lateinit var studentsPaymentsProviderInteractor: StudentsPaymentsProviderInteractor
+    @Inject lateinit var alertsMonitoringTeachersService: AlertsMonitoringTeachersInteractor
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var staffMembersStorageInteractor: StaffMembersStorageInteractor
+    @Inject lateinit var studentsPaymentsAsyncService: StudentsPaymentsActionsInteractor
 
-    @Extra(EXTRA_TEACHER_LOGIN)
     lateinit var teacherLogin: String
 
     private var filterEnabled: Boolean = true
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_monitoring_teacher_payments)
+
+        teacherLogin = intent.getStringExtra(EXTRA_TEACHER_LOGIN)!!
+
         initHeader()
 
         monitoringTeacherPaymentsSecondaryHeaderView.bind(
@@ -99,7 +94,7 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
     }
 
     private fun initList() {
-        val allPayments = studentsPaymentsProviderService.getForTeacher(
+        val allPayments = studentsPaymentsProviderInteractor.getForTeacher(
                 teacherLogin = teacherLogin,
                 onlyUnprocessed = false
         )
@@ -120,7 +115,7 @@ open class MonitoringTeacherPaymentsActivity : BaseActivity() {
                                             studentName = studentsStorageInteractor.getByLogin(
                                                     studentPayment.info.studentLogin
                                             )?.person?.name ?: "?",
-                                            staffMemberName = staffMembersStorageService.getStaffMember(
+                                            staffMemberName = staffMembersStorageInteractor.getStaffMember(
                                                     studentPayment.info.staffMemberLogin
                                             )?.person?.name ?: "?",
                                             singleTeacher = false,

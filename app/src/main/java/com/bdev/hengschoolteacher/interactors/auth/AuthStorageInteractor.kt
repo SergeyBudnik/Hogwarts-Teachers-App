@@ -1,10 +1,9 @@
 package com.bdev.hengschoolteacher.interactors.auth
 
-import com.bdev.hengschoolteacher.dao.AuthDaoImpl
+import com.bdev.hengschoolteacher.dao.AuthDao
 import com.bdev.hengschoolteacher.dao.AuthModel
 import com.bdev.hengschoolteacher.data.auth.AuthInfo
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import javax.inject.Inject
 
 interface AuthStorageInteractor {
     fun getAuthInfo(): AuthInfo?
@@ -12,11 +11,9 @@ interface AuthStorageInteractor {
     fun clearAuthInfo()
 }
 
-@EBean
-open class AuthStorageInteractorImpl : AuthStorageInteractor {
-    @Bean
-    lateinit var authDao: AuthDaoImpl
-
+class AuthStorageInteractorImpl @Inject constructor(
+    private val authDao: AuthDao
+): AuthStorageInteractor {
     override fun getAuthInfo(): AuthInfo? {
         return authDao.readValue().authInfo
     }

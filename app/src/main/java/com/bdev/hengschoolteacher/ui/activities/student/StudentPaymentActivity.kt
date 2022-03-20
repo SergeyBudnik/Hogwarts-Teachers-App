@@ -1,39 +1,38 @@
 package com.bdev.hengschoolteacher.ui.activities.student
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsActionsInteractorImpl
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student_payment.ExistingStudentPayment
 import com.bdev.hengschoolteacher.data.school.student_payment.NewStudentPayment
 import com.bdev.hengschoolteacher.data.school.student_payment.StudentPaymentInfo
 import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
-import com.bdev.hengschoolteacher.interactors.profile.ProfileServiceImpl
-import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
+import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
+import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderService
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsActionsInteractor
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
 import com.bdev.hengschoolteacher.ui.utils.KeyboardUtils
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_student_payment.*
 import kotlinx.android.synthetic.main.view_student_payment_item.view.*
-import org.androidannotations.annotations.*
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class StudentPaymentItemView : RelativeLayout {
     init {
@@ -70,14 +69,10 @@ class StudentPaymentItemView : RelativeLayout {
     }
 }
 
-@EBean
-open class StudentPaymentsListAdapter : BaseAdapter() {
-    @RootContext
-    lateinit var context: Context
-
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
-
+class StudentPaymentsListAdapter(
+    private val context: Context,
+    private val staffMemberProvider: (String) -> StaffMember?
+) : BaseAdapter() {
     private var paymentExistings: List<ExistingStudentPayment> = emptyList()
 
     fun setItems(paymentExistings: List<ExistingStudentPayment>) {
@@ -93,7 +88,7 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
 
         getItem(position).let { payment ->
             v.bind(
-                    teacher = staffMembersStorageService.getStaffMember(payment.info.staffMemberLogin),
+                    teacher = staffMemberProvider(payment.info.staffMemberLogin),
                     existingStudentPayment = payment
             )
         }
@@ -114,9 +109,8 @@ open class StudentPaymentsListAdapter : BaseAdapter() {
     }
 }
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_student_payment)
-open class StudentPaymentActivity : BaseActivity() {
+@AndroidEntryPoint
+class StudentPaymentActivity : BaseActivity() {
     companion object {
         private const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
 
@@ -135,33 +129,28 @@ open class StudentPaymentActivity : BaseActivity() {
         private fun redirect(current: BaseActivity, studentLogin: String): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
-                    .to(StudentPaymentActivity_::class.java)
+                    .to(StudentPaymentActivity::class.java)
                     .withExtra(EXTRA_STUDENT_LOGIN, studentLogin)
         }
     }
 
-    @Bean(GroupsStorageInteractorImpl::class)
-    lateinit var groupsStorageInteractor: GroupsStorageInteractor
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean
-    lateinit var lessonsService: LessonsInteractorImpl
-    @Bean(StudentsPaymentsProviderServiceImpl::class)
-    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
-    @Bean
-    lateinit var profileService: ProfileServiceImpl
+    @Inject lateinit var groupsStorageInteractor: GroupsStorageInteractor
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var lessonsService: LessonsInteractor
+    @Inject lateinit var studentsPaymentsProviderInteractor: StudentsPaymentsProviderInteractor
+    @Inject lateinit var profileInteractor: ProfileInteractor
+    @Inject lateinit var studentsPaymentAsyncService: StudentsPaymentsActionsInteractor
+    @Inject lateinit var staffMembersStorageInteractor: StaffMembersStorageInteractor
 
-    @Bean
-    lateinit var studentsPaymentAsyncService: StudentsPaymentsActionsInteractorImpl
-
-    @Bean
-    lateinit var studentPaymentsListAdapter: StudentPaymentsListAdapter
-
-    @Extra(EXTRA_STUDENT_LOGIN)
     lateinit var studentLogin: String
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_student_payment)
+
+        studentLogin = intent.getStringExtra(EXTRA_STUDENT_LOGIN)!!
+
         val student = studentsStorageInteractor.getByLogin(studentLogin) ?: throw RuntimeException()
 
         studentPaymentsHeaderView
@@ -175,8 +164,13 @@ open class StudentPaymentActivity : BaseActivity() {
 
         studentPaymentAddPaymentView.setOnClickListener { addPayment(student) }
 
+        val studentPaymentsListAdapter = StudentPaymentsListAdapter(
+            context = this,
+            staffMemberProvider = { staffMembersStorageInteractor.getStaffMember(it) }
+        )
+
         studentPaymentsListAdapter.setItems(
-                studentsPaymentsProviderService
+                studentsPaymentsProviderInteractor
                         .getForStudent(studentLogin = studentLogin)
                         .sortedBy { it.info.time }
         )
@@ -187,7 +181,7 @@ open class StudentPaymentActivity : BaseActivity() {
     private fun addPayment(student: Student) {
         KeyboardUtils.hideKeyboard(this)
 
-        val me = profileService.getMe()
+        val me = profileInteractor.getMe()
         val amount = studentPaymentAmountView.text.toString().toLong()
         val lessonStartTime = Date().time
 

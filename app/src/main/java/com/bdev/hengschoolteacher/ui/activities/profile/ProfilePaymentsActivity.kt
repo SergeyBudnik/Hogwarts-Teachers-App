@@ -1,14 +1,13 @@
 package com.bdev.hengschoolteacher.ui.activities.profile
 
-import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.alerts.profile.AlertsProfileInteractorImpl
-import com.bdev.hengschoolteacher.interactors.profile.ProfileServiceImpl
-import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.alerts.profile.AlertsProfileInteractor
+import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
+import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderService
-import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
@@ -17,38 +16,34 @@ import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsItemViewData
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsViewData
 import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_profile_payments.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_profile_payments)
-open class ProfilePaymentsActivity : BaseActivity() {
+@AndroidEntryPoint
+class ProfilePaymentsActivity : BaseActivity() {
     companion object {
         fun redirectToSibling(current: BaseActivity) {
             RedirectBuilder
                     .redirect(current)
-                    .to(ProfilePaymentsActivity_::class.java)
+                    .to(ProfilePaymentsActivity::class.java)
                     .goAndCloseCurrent()
         }
     }
 
-    @Bean
-    lateinit var profileService: ProfileServiceImpl
-    @Bean(StudentsPaymentsProviderServiceImpl::class)
-    lateinit var studentsPaymentsProviderService: StudentsPaymentsProviderService
-    @Bean
-    lateinit var alertsProfileService: AlertsProfileInteractorImpl
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var profileInteractor: ProfileInteractor
+    @Inject lateinit var studentsPaymentsProviderInteractor: StudentsPaymentsProviderInteractor
+    @Inject lateinit var alertsProfileService: AlertsProfileInteractor
+    @Inject lateinit var staffMembersStorageInteractor: StaffMembersStorageInteractor
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
 
     private var filterEnabled: Boolean = true
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_profile_payments)
+
         profilePaymentsMenuLayoutView.setCurrentMenuItem(item = AppMenuView.Item.MY_PROFILE)
 
         initHeader()
@@ -85,10 +80,10 @@ open class ProfilePaymentsActivity : BaseActivity() {
     }
 
     private fun initList() {
-        val teacherLogin = profileService.getMe()?.login
+        val teacherLogin = profileInteractor.getMe()?.login
 
         val allPayments = teacherLogin?.let {
-            studentsPaymentsProviderService.getForTeacher(
+            studentsPaymentsProviderInteractor.getForTeacher(
                     teacherLogin = teacherLogin,
                     onlyUnprocessed = false
             )
@@ -110,7 +105,7 @@ open class ProfilePaymentsActivity : BaseActivity() {
                                             studentName = studentsStorageInteractor.getByLogin(
                                                     studentPayment.info.studentLogin
                                             )?.person?.name ?: "?",
-                                            staffMemberName = staffMembersStorageService.getStaffMember(
+                                            staffMemberName = staffMembersStorageInteractor.getStaffMember(
                                                     studentPayment.info.staffMemberLogin
                                             )?.person?.name ?: "?",
                                             singleTeacher = false,

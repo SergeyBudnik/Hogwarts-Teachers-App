@@ -1,48 +1,46 @@
 package com.bdev.hengschoolteacher.ui.activities
 
-import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
-import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.auth.AuthActionsInteractorImpl
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
-import com.bdev.hengschoolteacher.interactors.UserPreferencesServiceImpl
+import com.bdev.hengschoolteacher.interactors.auth.AuthActionsInteractorImpl
+import com.bdev.hengschoolteacher.interactors.user_preferences.UserPreferencesInteractor
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_relogin.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.res.AnimationRes
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_relogin)
-open class ReloginActivity : BaseActivity() {
+@AndroidEntryPoint
+class ReloginActivity : BaseActivity() {
     companion object {
         fun redirectToSibling(current: BaseActivity) {
             RedirectBuilder
                     .redirect(current)
-                    .to(ReloginActivity_::class.java)
+                    .to(ReloginActivity::class.java)
                     .goAndCloseCurrent()
         }
     }
 
-    @Bean
-    lateinit var authAsyncService: AuthActionsInteractorImpl
-    @Bean
-    lateinit var userPreferencesService: UserPreferencesServiceImpl
+    @Inject lateinit var authAsyncService: AuthActionsInteractorImpl
+    @Inject lateinit var userPreferencesService: UserPreferencesInteractor
 
-    @AnimationRes(R.anim.spinner)
-    lateinit var spinnerAnim: Animation
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    @AfterViews
-    fun init() {
+        setContentView(R.layout.activity_relogin)
+
         doRelogin()
 
         reloginFailedRestartView.setOnClickListener { doRelogin() }
     }
 
     private fun doRelogin() {
+        val spinnerAnim = AnimationUtils.loadAnimation(this, R.anim.spinner)
+
         reloginInProgressView.visibility = View.VISIBLE
         reloginInProgressSpinnerView.startAnimation(spinnerAnim)
 

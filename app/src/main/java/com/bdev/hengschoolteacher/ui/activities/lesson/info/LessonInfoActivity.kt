@@ -1,23 +1,21 @@
 package com.bdev.hengschoolteacher.ui.activities.lesson.info
 
-import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.interactors.LessonStateServiceImpl
-import com.bdev.hengschoolteacher.interactors.lessons_status.LessonStatusStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.LessonStateService
 import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
-import com.bdev.hengschoolteacher.interactors.staff.StaffMembersStorageServiceImpl
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
+import com.bdev.hengschoolteacher.interactors.lessons_status.LessonsStatusStorageInteractor
+import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderServiceImpl
-import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsService
-import com.bdev.hengschoolteacher.interactors.students_debts.StudentDebtsServiceImpl
-import com.bdev.hengschoolteacher.interactors.teacher.TeacherInfoServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderInteractor
+import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
+import com.bdev.hengschoolteacher.interactors.teachers.TeacherInfoInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.activities.lesson.attendance.LessonAttendanceActivityHandler
 import com.bdev.hengschoolteacher.ui.activities.lesson.info.LessonInfoActivityParams.EXTRA_DATA
@@ -25,39 +23,31 @@ import com.bdev.hengschoolteacher.ui.activities.lesson.info.adapters.LessonInfoS
 import com.bdev.hengschoolteacher.ui.activities.lesson.status.LessonStatusActivityHandler
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_lesson.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.Extra
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_lesson)
-open class LessonInfoActivity : BaseActivity() {
-    @Extra(EXTRA_DATA)
+@AndroidEntryPoint
+class LessonInfoActivity : BaseActivity() {
     lateinit var activityData: LessonInfoActivityData
 
-    @Bean(GroupsStorageInteractorImpl::class)
-    lateinit var groupsStorageInteractor: GroupsStorageInteractor
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean
-    lateinit var lessonsService: LessonsInteractorImpl
-    @Bean
-    lateinit var lessonStatusService: LessonStatusStorageInteractorImpl
-    @Bean
-    lateinit var lessonStateService: LessonStateServiceImpl
-    @Bean(StudentDebtsServiceImpl::class)
-    lateinit var studentsDebtsService: StudentDebtsService
-    @Bean
-    lateinit var studentsAttendanceProviderService: StudentsAttendancesProviderServiceImpl
-    @Bean
-    lateinit var staffMembersStorageService: StaffMembersStorageServiceImpl
-    @Bean
-    lateinit var teacherInfoService: TeacherInfoServiceImpl
+    @Inject lateinit var groupsStorageInteractor: GroupsStorageInteractor
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var lessonsService: LessonsInteractor
+    @Inject lateinit var lessonsStatusService: LessonsStatusStorageInteractor
+    @Inject lateinit var lessonStateService: LessonStateService
+    @Inject lateinit var studentsDebtsInteractor: StudentsDebtsInteractor
+    @Inject lateinit var studentsAttendanceProviderInteractor: StudentsAttendancesProviderInteractor
+    @Inject lateinit var staffMembersStorageInteractor: StaffMembersStorageInteractor
+    @Inject lateinit var teacherInfoInteractor: TeacherInfoInteractor
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_lesson)
+
+        activityData = intent.getSerializableExtra(EXTRA_DATA) as LessonInfoActivityData
+
         lessonHeaderView.setLeftButtonAction { doFinish() }
 
         doInit()
@@ -95,7 +85,7 @@ open class LessonInfoActivity : BaseActivity() {
         val group = groupsStorageInteractor.getById(activityData.groupId) ?: throw RuntimeException()
         val lesson = group.lessons.find { it.id == activityData.lessonId } ?: throw RuntimeException()
         val students = lessonsService.getLessonStudents(activityData.lessonId, activityData.weekIndex)
-        val lessonStatus = lessonStatusService.getLessonStatus(
+        val lessonStatus = lessonsStatusService.getLessonStatus(
                 activityData.lessonId,
                 lessonsService.getLessonStartTime(
                         activityData.lessonId,
@@ -103,12 +93,12 @@ open class LessonInfoActivity : BaseActivity() {
                 )
         )
 
-        staffMembersStorageService.getStaffMember(lesson.teacherLogin)?.let { teacher ->
+        staffMembersStorageInteractor.getStaffMember(lesson.teacherLogin)?.let { teacher ->
             lessonTimeView.bind(
                     lesson = lesson,
                     lessonStartTime = lessonsService.getLessonStartTime(lesson.id, activityData.weekIndex),
-                    teacherName = teacherInfoService.getTeachersName(teacher),
-                    teacherSurname = teacherInfoService.getTeachersSurname(teacher)
+                    teacherName = teacherInfoInteractor.getTeachersName(teacher),
+                    teacherSurname = teacherInfoInteractor.getTeachersSurname(teacher)
             )
         }
 
@@ -162,11 +152,11 @@ open class LessonInfoActivity : BaseActivity() {
             Pair(
                     Pair(
                             it,
-                            studentsAttendanceProviderService.getAttendance(lesson.id, it.login, activityData.weekIndex)
+                            studentsAttendanceProviderInteractor.getAttendance(lesson.id, it.login, activityData.weekIndex)
                     ),
                     Pair(
-                            studentsDebtsService.getDebt(it.login),
-                            studentsDebtsService.getExpectedDebt(it.login)
+                            studentsDebtsInteractor.getDebt(it.login),
+                            studentsDebtsInteractor.getExpectedDebt(it.login)
                     )
             )
         })

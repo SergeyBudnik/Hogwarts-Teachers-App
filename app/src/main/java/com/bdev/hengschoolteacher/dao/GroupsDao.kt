@@ -1,10 +1,12 @@
 package com.bdev.hengschoolteacher.dao
 
+import android.content.Context
 import com.bdev.hengschoolteacher.data.school.group.Group
-import org.androidannotations.annotations.EBean
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.codehaus.jackson.annotate.JsonCreator
 import org.codehaus.jackson.annotate.JsonProperty
 import org.codehaus.jackson.map.ObjectMapper
+import javax.inject.Inject
 
 class GroupsModel @JsonCreator constructor(
     @JsonProperty("groups") val groups: List<Group>
@@ -12,8 +14,9 @@ class GroupsModel @JsonCreator constructor(
 
 interface GroupsDao : CommonDao<GroupsModel>
 
-@EBean(scope = EBean.Scope.Singleton)
-open class GroupsDaoImpl : GroupsDao, CommonDaoImpl<GroupsModel>() {
+class GroupsDaoImpl @Inject constructor(
+    @ApplicationContext context: Context
+) : GroupsDao, CommonDaoImpl<GroupsModel>(context = context) {
     override fun getFileName(): String {
         return "groups.data"
     }

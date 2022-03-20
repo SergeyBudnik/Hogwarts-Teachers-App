@@ -1,33 +1,28 @@
 package com.bdev.hengschoolteacher.interactors
 
 import com.bdev.hengschoolteacher.data.school.group.Lesson
-import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
-import com.bdev.hengschoolteacher.interactors.lessons_status.LessonStatusStorageInteractorImpl
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
+import com.bdev.hengschoolteacher.interactors.lessons_status.LessonsStatusStorageInteractor
 import java.util.*
+import javax.inject.Inject
 
 interface LessonStateService {
     fun isLessonFilled(lesson: Lesson, weekIndex: Int): Boolean
     fun isLessonFinished(lessonId: Long, weekIndex: Int): Boolean
 }
 
-@EBean
-open class LessonStateServiceImpl : LessonStateService {
-    @Bean
-    lateinit var lessonsAttendancesService: LessonsAttendancesServiceImpl
-    @Bean
-    lateinit var lessonStatusService: LessonStatusStorageInteractorImpl
-    @Bean
-    lateinit var lessonsService: LessonsInteractorImpl
-
+class LessonStateServiceImpl @Inject constructor(
+    private val lessonsAttendancesService: LessonsAttendancesService,
+    private val lessonsStatusService: LessonsStatusStorageInteractor,
+    private val lessonsService: LessonsInteractor
+): LessonStateService {
     override fun isLessonFilled(lesson: Lesson, weekIndex: Int): Boolean {
         val attendanceFilled = lessonsAttendancesService.isLessonAttendanceFilled(
                 lessonId = lesson.id,
                 weekIndex = weekIndex
         )
 
-        val statusFilled = lessonStatusService.getLessonStatus(
+        val statusFilled = lessonsStatusService.getLessonStatus(
                 lessonId = lesson.id,
                 lessonTime = lessonsService.getLessonStartTime(lesson.id, weekIndex)
         ) != null

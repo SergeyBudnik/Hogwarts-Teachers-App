@@ -1,7 +1,8 @@
 package com.bdev.hengschoolteacher.ui.activities.monitoring.student
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,9 @@ import com.bdev.hengschoolteacher.data.school.Month
 import com.bdev.hengschoolteacher.data.school.group.GroupType
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingService
-import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderServiceImpl
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingServiceImpl
+import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderInteractor
+import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingInteractor
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.resources.AppResources
@@ -23,9 +22,10 @@ import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.student.MonitoringStudentMonthHeaderView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_student_month_attendance.*
 import kotlinx.android.synthetic.main.view_monitoring_student_month_attendance_item.view.*
-import org.androidannotations.annotations.*
+import javax.inject.Inject
 
 class MonitoringStudentMonthAttendanceItemView : RelativeLayout {
     init {
@@ -102,9 +102,8 @@ private class MonitoringStudentMonthAttendanceListAdapter(
     }
 }
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_monitoring_student_month_attendance)
-open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
+@AndroidEntryPoint
+class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
     companion object {
         const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
         const val EXTRA_MONTH_INDEX = "EXTRA_MONTH_INDEX"
@@ -123,28 +122,27 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
         private fun redirect(current: BaseActivity, studentLogin: String, monthIndex: Int): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
-                    .to(MonitoringStudentMonthAttendanceActivity_::class.java)
+                    .to(MonitoringStudentMonthAttendanceActivity::class.java)
                     .withExtra(EXTRA_STUDENT_LOGIN, studentLogin)
                     .withExtra(EXTRA_MONTH_INDEX, monthIndex)
         }
     }
 
-    @Extra(EXTRA_STUDENT_LOGIN)
     lateinit var studentLogin: String
-
-    @Extra(EXTRA_MONTH_INDEX)
-    @JvmField
     var monthIndex: Int = 0
 
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean
-    lateinit var studentsAttendancesProviderService: StudentsAttendancesProviderServiceImpl
-    @Bean(StudentsPricingServiceImpl::class)
-    lateinit var studentsPricingService: StudentsPricingService
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var studentsAttendancesProviderInteractor: StudentsAttendancesProviderInteractor
+    @Inject lateinit var studentsPricingInteractor: StudentsPricingInteractor
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_monitoring_student_month_attendance)
+
+        studentLogin = intent.getStringExtra(EXTRA_STUDENT_LOGIN)!!
+        monthIndex = intent.getIntExtra(EXTRA_MONTH_INDEX, 0)
+
         val month = Month.findByIndex(monthIndex)
 
         monitoringStudentMonthAttendanceHeaderView
@@ -167,11 +165,11 @@ open class MonitoringStudentMonthAttendanceActivity : BaseActivity() {
     private fun fillList() {
         val adapter = MonitoringStudentMonthAttendanceListAdapter(this)
 
-        adapter.setItems(studentsAttendancesProviderService.getMonthlyAttendances(
+        adapter.setItems(studentsAttendancesProviderInteractor.getMonthlyAttendances(
                 studentLogin = studentLogin,
                 month = monthIndex
         ).map {
-            Pair(it, studentsPricingService.getAttendancePrice(attendance = it))
+            Pair(it, studentsPricingInteractor.getAttendancePrice(attendance = it))
         })
 
         monitoringStudentMonthAttendanceListView.adapter = adapter

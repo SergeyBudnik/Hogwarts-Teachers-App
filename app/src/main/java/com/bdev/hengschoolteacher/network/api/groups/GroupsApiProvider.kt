@@ -1,16 +1,13 @@
 package com.bdev.hengschoolteacher.network.api.groups
 
-import com.bdev.hengschoolteacher.network.api_provider.AllApiProviderImpl
+import com.bdev.hengschoolteacher.network.api_provider.AllApiProvider
 import com.bdev.hengschoolteacher.network.api_provider.ApiProvider
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import javax.inject.Inject
 
 interface GroupsApiProvider : ApiProvider<GroupsApi>
 
-@EBean
-open class GroupsApiProviderImpl : GroupsApiProvider {
-    @Bean
-    lateinit var allApiProvider: AllApiProviderImpl
-
+class GroupsApiProviderImpl @Inject constructor(
+    private val allApiProvider: AllApiProvider
+) : GroupsApiProvider {
     override fun provide() = allApiProvider.provideGroupsApi()
 }

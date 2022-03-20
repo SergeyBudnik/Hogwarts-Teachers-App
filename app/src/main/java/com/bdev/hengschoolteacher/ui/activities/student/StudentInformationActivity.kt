@@ -1,7 +1,8 @@
 package com.bdev.hengschoolteacher.ui.activities.student
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -9,19 +10,19 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_student_information.*
 import kotlinx.android.synthetic.main.view_list_item_student_information_timetable.view.*
-import org.androidannotations.annotations.*
 import java.util.*
+import javax.inject.Inject
 
 class StudentInformationTimetableListItemView : LinearLayout {
     init {
@@ -59,9 +60,8 @@ class StudentInformationTimetableListAdapter(context: Context) : BaseWeekItemsLi
     }
 }
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_student_information)
-open class StudentInformationActivity : BaseActivity() {
+@AndroidEntryPoint
+class StudentInformationActivity : BaseActivity() {
     companion object {
         const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
 
@@ -80,21 +80,23 @@ open class StudentInformationActivity : BaseActivity() {
         private fun redirect(current: BaseActivity, studentLogin: String): RedirectBuilder {
             return RedirectBuilder
                     .redirect(current)
-                    .to(StudentInformationActivity_::class.java)
+                    .to(StudentInformationActivity::class.java)
                     .withExtra(EXTRA_STUDENT_LOGIN, studentLogin)
         }
     }
 
-    @Extra(EXTRA_STUDENT_LOGIN)
     lateinit var studentLogin: String
 
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean
-    lateinit var lessonsService: LessonsInteractorImpl
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var lessonsService: LessonsInteractor
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_student_information)
+
+        studentLogin = intent.getStringExtra(EXTRA_STUDENT_LOGIN)!!
+
         val student = studentsStorageInteractor.getByLogin(studentLogin) ?: throw RuntimeException()
 
         studentInformationHeaderView

@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
+        android:name=".ui.application.HTApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,49 +19,49 @@
         android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".ui.activities.StartActivity_">
+        <activity android:name=".ui.activities.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activities.profile.ProfileLessonsActivity_"/>
-        <activity android:name=".ui.activities.profile.ProfileSalaryActivity_"/>
-        <activity android:name=".ui.activities.profile.ProfilePaymentsActivity_"/>
-        <activity android:name=".ui.activities.profile.ProfileDebtsActivity_"/>
+        <activity android:name=".ui.activities.profile.ProfileLessonsActivity"/>
+        <activity android:name=".ui.activities.profile.ProfileSalaryActivity"/>
+        <activity android:name=".ui.activities.profile.ProfilePaymentsActivity"/>
+        <activity android:name=".ui.activities.profile.ProfileDebtsActivity"/>
 
-        <activity android:name=".ui.activities.students.StudentsListActivity_"/>
-        <activity android:name=".ui.activities.students.StudentsGroupsListActivity_"/>
+        <activity android:name=".ui.activities.students.StudentsListActivity"/>
+        <activity android:name=".ui.activities.students.StudentsGroupsListActivity"/>
 
-        <activity android:name=".ui.activities.teachers.TeachersListActivity_"/>
+        <activity android:name=".ui.activities.teachers.TeachersListActivity"/>
 
-        <activity android:name=".ui.activities.monitoring.MonitoringLessonsActivity_"/>
-        <activity android:name=".ui.activities.monitoring.MonitoringTeachersActivity_"/>
-        <activity android:name=".ui.activities.monitoring.MonitoringStudentsActivity_"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringLessonsActivity"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringTeachersActivity"/>
+        <activity android:name=".ui.activities.monitoring.MonitoringStudentsActivity"/>
 
-        <activity android:name=".ui.activities.monitoring.student.MonitoringStudentActivity_"/>
-        <activity android:name=".ui.activities.monitoring.student.MonitoringStudentMonthAttendanceActivity_"/>
-        <activity android:name=".ui.activities.monitoring.student.MonitoringStudentMonthPaymentsActivity_"/>
+        <activity android:name=".ui.activities.monitoring.student.MonitoringStudentActivity"/>
+        <activity android:name=".ui.activities.monitoring.student.MonitoringStudentMonthAttendanceActivity"/>
+        <activity android:name=".ui.activities.monitoring.student.MonitoringStudentMonthPaymentsActivity"/>
 
-        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity_"/>
-        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity_"/>
-        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity_"/>
-        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherDebtsActivity_"/>
+        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity"/>
+        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity"/>
+        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity"/>
+        <activity android:name=".ui.activities.monitoring.teacher.MonitoringTeacherDebtsActivity"/>
 
-        <activity android:name=".ui.activities.student.StudentInformationActivity_"/>
-        <activity android:name=".ui.activities.student.StudentPaymentActivity_"/>
+        <activity android:name=".ui.activities.student.StudentInformationActivity"/>
+        <activity android:name=".ui.activities.student.StudentPaymentActivity"/>
 
-        <activity android:name=".ui.activities.lesson.info.LessonInfoActivity_"/>
-        <activity android:name=".ui.activities.lesson.status.LessonStatusActivity_"/>
-        <activity android:name=".ui.activities.lesson.attendance.LessonAttendanceActivity_"/>
+        <activity android:name=".ui.activities.lesson.info.LessonInfoActivity"/>
+        <activity android:name=".ui.activities.lesson.status.LessonStatusActivity"/>
+        <activity android:name=".ui.activities.lesson.attendance.LessonAttendanceActivity"/>
 
-        <activity android:name=".ui.activities.LoginActivity_" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".ui.activities.LoadingActivity_"/>
-        <activity android:name=".ui.activities.ReloginActivity_"/>
-        <activity android:name=".ui.activities.teacher.TeacherActivity_"/>
+        <activity android:name=".ui.activities.LoginActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.activities.LoadingActivity"/>
+        <activity android:name=".ui.activities.ReloginActivity"/>
+        <activity android:name=".ui.activities.teacher.TeacherActivity"/>
 
-        <activity android:name=".ui.activities.settings.SettingsActivity_"/>
+        <activity android:name=".ui.activities.settings.SettingsActivity"/>
     </application>
 
 </manifest>

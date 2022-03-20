@@ -1,8 +1,9 @@
 package com.bdev.hengschoolteacher.ui.activities.students
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -11,25 +12,21 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Group
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.interactors.groups.GroupStudentsProviderService
-import com.bdev.hengschoolteacher.interactors.groups.GroupStudentsProviderServiceImpl
+import com.bdev.hengschoolteacher.interactors.groups.GroupsStudentsProviderInteractor
 import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractorImpl
-import com.bdev.hengschoolteacher.interactors.profile.ProfileServiceImpl
+import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
 import com.bdev.hengschoolteacher.ui.activities.BaseActivity
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.RedirectBuilder
 import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_students_groups.*
 import kotlinx.android.synthetic.main.view_list_item_students_groups.view.*
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EActivity
 import java.util.*
+import javax.inject.Inject
 
 data class StudentsGroupsListItemViewData(
         val me: StaffMember,
@@ -82,36 +79,34 @@ class StudentsGroupsListAdapter(context: Context): BaseItemsListAdapter<Students
     }
 }
 
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_students_groups)
-open class StudentsGroupsListActivity : BaseActivity() {
+@AndroidEntryPoint
+class StudentsGroupsListActivity : BaseActivity() {
     companion object {
         fun redirectToSibling(current: BaseActivity) {
             RedirectBuilder
                     .redirect(current)
-                    .to(StudentsGroupsListActivity_::class.java)
+                    .to(StudentsGroupsListActivity::class.java)
                     .goAndCloseCurrent()
         }
     }
 
-    @Bean(GroupsStorageInteractorImpl::class)
-    lateinit var groupsStorageInteractor: GroupsStorageInteractor
-    @Bean(GroupStudentsProviderServiceImpl::class)
-    lateinit var groupsStudentsProviderService: GroupStudentsProviderService
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-    @Bean
-    lateinit var profileService: ProfileServiceImpl
+    @Inject lateinit var groupsStorageInteractor: GroupsStorageInteractor
+    @Inject lateinit var groupsStudentsProviderInteractor: GroupsStudentsProviderInteractor
+    @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
+    @Inject lateinit var profileInteractor: ProfileInteractor
 
-    @AfterViews
-    fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_students_groups)
+
         val currentTime = Date().time
 
         initHeader()
 
         studentsGroupsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.STUDENTS)
 
-        val me = profileService.getMe()
+        val me = profileInteractor.getMe()
 
         if (me != null) {
             val adapter = StudentsGroupsListAdapter(context = this)
@@ -123,7 +118,7 @@ open class StudentsGroupsListActivity : BaseActivity() {
                         StudentsGroupsListItemViewData(
                                 me = me,
                                 group = group,
-                                groupStudents = groupsStudentsProviderService.getAll(
+                                groupStudents = groupsStudentsProviderInteractor.getAll(
                                         groupId = group.id,
                                         time = currentTime
                                 )
@@ -136,7 +131,7 @@ open class StudentsGroupsListActivity : BaseActivity() {
 
             studentsGroupsHeaderSearchView.addOnTextChangeListener { filter ->
                 adapter.setFilter { data ->
-                    val groupStudents = groupsStudentsProviderService.getAll(
+                    val groupStudents = groupsStudentsProviderInteractor.getAll(
                             groupId = data.group.id,
                             time = currentTime
                     )

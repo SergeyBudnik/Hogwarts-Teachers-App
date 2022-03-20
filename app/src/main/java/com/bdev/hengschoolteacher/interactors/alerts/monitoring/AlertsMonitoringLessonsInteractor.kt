@@ -1,22 +1,18 @@
 package com.bdev.hengschoolteacher.interactors.alerts.monitoring
 
-import com.bdev.hengschoolteacher.interactors.LessonStateServiceImpl
-import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractorImpl
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import com.bdev.hengschoolteacher.interactors.LessonStateService
+import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
+import javax.inject.Inject
 
 interface AlertsMonitoringLessonsInteractor {
     fun haveAlerts(): Boolean
 }
 
-@EBean
-open class AlertsMonitoringLessonsInteractorImpl : AlertsMonitoringLessonsInteractor {
+class AlertsMonitoringLessonsInteractorImpl @Inject constructor(
+    private val lessonsService: LessonsInteractor,
+    private val lessonStateService: LessonStateService
+): AlertsMonitoringLessonsInteractor {
     private val monitoringWeeksAmount = 6
-
-    @Bean
-    lateinit var lessonsService: LessonsInteractorImpl
-    @Bean
-    lateinit var lessonStateService: LessonStateServiceImpl
 
     override fun haveAlerts(): Boolean {
         var haveAlerts = false

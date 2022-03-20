@@ -1,9 +1,11 @@
 package com.bdev.hengschoolteacher.dao
 
-import org.androidannotations.annotations.EBean
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.codehaus.jackson.annotate.JsonCreator
 import org.codehaus.jackson.annotate.JsonProperty
 import org.codehaus.jackson.map.ObjectMapper
+import javax.inject.Inject
 
 class UserPreferencesModel @JsonCreator constructor(
         @JsonProperty("login") val login: String?,
@@ -12,8 +14,9 @@ class UserPreferencesModel @JsonCreator constructor(
 
 interface UserPreferencesDao : CommonDao<UserPreferencesModel>
 
-@EBean(scope = EBean.Scope.Singleton)
-open class UserPreferencesDaoImpl : UserPreferencesDao, CommonDaoImpl<UserPreferencesModel>() {
+class UserPreferencesDaoImpl @Inject constructor(
+    @ApplicationContext context: Context
+): UserPreferencesDao, CommonDaoImpl<UserPreferencesModel>(context = context) {
     override fun getFileName(): String {
         return "user-preferences.data"
     }

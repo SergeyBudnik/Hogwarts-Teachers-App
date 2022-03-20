@@ -8,14 +8,10 @@ import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentGroup
 import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractorImpl
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
-import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractorImpl
 import com.bdev.hengschoolteacher.utils.TimeUtils
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
 import java.util.*
-import kotlin.collections.ArrayList
+import javax.inject.Inject
 
 interface LessonsInteractor {
     fun getLesson(lessonId: Long): GroupAndLesson?
@@ -30,13 +26,10 @@ interface LessonsInteractor {
     fun getLessonFinishTime(lessonId: Long, weekIndex: Int): Long
 }
 
-@EBean
-open class LessonsInteractorImpl : LessonsInteractor {
-    @Bean(GroupsStorageInteractorImpl::class)
-    lateinit var groupsStorageInteractor: GroupsStorageInteractor
-    @Bean(StudentsStorageInteractorImpl::class)
-    lateinit var studentsStorageInteractor: StudentsStorageInteractor
-
+class LessonsInteractorImpl @Inject constructor(
+    private val groupsStorageInteractor: GroupsStorageInteractor,
+    private val studentsStorageInteractor: StudentsStorageInteractor
+): LessonsInteractor {
     override fun getLesson(lessonId: Long): GroupAndLesson? {
         for (group in groupsStorageInteractor.getAll()) {
             for (lesson in group.lessons) {

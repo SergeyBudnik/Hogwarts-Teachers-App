@@ -1,16 +1,13 @@
 package com.bdev.hengschoolteacher.network.api.students
 
-import com.bdev.hengschoolteacher.network.api_provider.AllApiProviderImpl
+import com.bdev.hengschoolteacher.network.api_provider.AllApiProvider
 import com.bdev.hengschoolteacher.network.api_provider.ApiProvider
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import javax.inject.Inject
 
 interface StudentsApiProvider : ApiProvider<StudentsApi>
 
-@EBean
-open class StudentsApiProviderImpl : StudentsApiProvider {
-    @Bean
-    lateinit var allApiProvider: AllApiProviderImpl
-
+class StudentsApiProviderImpl @Inject constructor(
+    private val allApiProvider: AllApiProvider
+): StudentsApiProvider {
     override fun provide() = allApiProvider.provideStudentsApi()
 }

@@ -1,10 +1,12 @@
 package com.bdev.hengschoolteacher.dao
 
+import android.content.Context
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendance
-import org.androidannotations.annotations.EBean
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.codehaus.jackson.annotate.JsonCreator
 import org.codehaus.jackson.annotate.JsonProperty
 import org.codehaus.jackson.map.ObjectMapper
+import javax.inject.Inject
 
 class StudentsAttendancesModel @JsonCreator constructor(
     @JsonProperty("studentsAttendances") val studentsAttendances: List<StudentAttendance>
@@ -12,8 +14,9 @@ class StudentsAttendancesModel @JsonCreator constructor(
 
 interface StudentsAttendancesDao : CommonDao<StudentsAttendancesModel>
 
-@EBean(scope = EBean.Scope.Singleton)
-open class StudentsAttendancesDaoImpl : StudentsAttendancesDao, CommonDaoImpl<StudentsAttendancesModel>() {
+class StudentsAttendancesDaoImpl @Inject constructor(
+    @ApplicationContext context: Context
+): StudentsAttendancesDao, CommonDaoImpl<StudentsAttendancesModel>(context = context) {
     override fun getFileName(): String {
         return "students-attendances.data"
     }

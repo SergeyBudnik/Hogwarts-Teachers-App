@@ -1,7 +1,7 @@
 package com.bdev.hengschoolteacher.network.api_provider
 
 import android.annotation.SuppressLint
-import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractorImpl
+import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractor
 import com.bdev.hengschoolteacher.network.api.auth.AuthApi
 import com.bdev.hengschoolteacher.network.api.groups.GroupsApi
 import com.bdev.hengschoolteacher.network.api.lessons_status.LessonsStatusApi
@@ -11,13 +11,12 @@ import com.bdev.hengschoolteacher.network.api.students_attendances.StudentsAtten
 import com.bdev.hengschoolteacher.network.api.students_payments.StudentsPaymentsApi
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
+import javax.inject.Inject
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
@@ -33,11 +32,9 @@ interface AllApiProvider {
     fun provideStudentsPaymentsApi(): StudentsPaymentsApi
 }
 
-@EBean(scope = EBean.Scope.Singleton)
-open class AllApiProviderImpl : AllApiProvider {
-    @Bean
-    lateinit var authService: AuthStorageInteractorImpl
-
+class AllApiProviderImpl @Inject constructor(
+    private val authService: AuthStorageInteractor
+): AllApiProvider {
     private val sslSocketFactory = getSslSocketFactory()
     private val sslTrustManager = getSslTrustManager()
     private val hostnameVerifier = getHostnameVerifier()

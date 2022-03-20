@@ -1,11 +1,10 @@
 package com.bdev.hengschoolteacher.interactors.students
 
-import com.bdev.hengschoolteacher.dao.StudentsDaoImpl
+import com.bdev.hengschoolteacher.dao.StudentsDao
 import com.bdev.hengschoolteacher.dao.StudentsModel
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentStatusType
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
+import javax.inject.Inject
 
 interface StudentsStorageInteractor {
     fun getAll(): List<Student>
@@ -13,11 +12,9 @@ interface StudentsStorageInteractor {
     fun setAll(students: List<Student>)
 }
 
-@EBean
-open class StudentsStorageInteractorImpl : StudentsStorageInteractor {
-    @Bean
-    lateinit var studentsDao: StudentsDaoImpl
-
+class StudentsStorageInteractorImpl @Inject constructor(
+    private val studentsDao: StudentsDao
+): StudentsStorageInteractor {
     override fun getAll(): List<Student> {
         return studentsDao.readValue().students
     }
