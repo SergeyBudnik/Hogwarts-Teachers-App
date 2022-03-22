@@ -2,21 +2,47 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/startPage">
 
     <fragment
         android:id="@+id/startPage"
         android:name="com.bdev.hengschoolteacher.ui.page_fragments.start.StartPageFragment">
+
     </fragment>
 
     <fragment
         android:id="@+id/loginPage"
         android:name="com.bdev.hengschoolteacher.ui.page_fragments.login.LoginPageFragment">
+
+        <action
+            android:id="@+id/loginToLoading"
+            app:destination="@id/loadingPage"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/loadingPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.loading.LoadingPageFragment">
+
+        <action
+            android:id="@+id/loadingToProfileLessons"
+            app:destination="@id/profileLessonsPage"/>
+
     </fragment>
 
     <fragment
         android:id="@+id/reloginPage"
         android:name="com.bdev.hengschoolteacher.ui.page_fragments.relogin.ReloginPageFragment">
+
+    </fragment>
+
+    <!-- Profile -->
+
+    <fragment
+        android:id="@+id/profileLessonsPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.lessons.ProfileLessonsPageFragment">
+
     </fragment>
 
     <!-- Lesson -->
@@ -36,5 +62,21 @@
     </fragment>
 
     <!-- Monitoring -->
+
+    <!--
+     - Global Actions
+     -->
+
+    <action
+        android:id="@+id/startWithLoginGlobalNavAction"
+        app:destination="@id/loginPage"
+        app:enterAnim="@anim/slide_open_enter"
+        app:exitAnim="@anim/slide_close_exit"/>
+
+    <action
+        android:id="@+id/startWithLoadingGlobalNavAction"
+        app:destination="@id/loadingPage"
+        app:enterAnim="@anim/slide_open_enter"
+        app:exitAnim="@anim/slide_close_exit"/>
 
 </navigation>

@@ -24,7 +24,7 @@ class AuthActionsInteractorImpl @Inject constructor(
             authService.setAuthInfo(authInfo)
 
             userPreferencesInteractor.setUserCredentials(
-                    authCredentials.login,
+                    authCredentials.username,
                     authCredentials.password
             )
 

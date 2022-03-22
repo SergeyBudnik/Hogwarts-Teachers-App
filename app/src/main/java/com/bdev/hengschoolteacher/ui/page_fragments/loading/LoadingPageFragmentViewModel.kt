@@ -9,6 +9,7 @@ import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAtten
 import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsLoadingInteractor
 import com.bdev.hengschoolteacher.ui.events.EventsQueue
 import com.bdev.hengschoolteacher.ui.events.EventsQueueLiveDataHolder
+import com.bdev.hengschoolteacher.ui.navigation.NavCommand
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragmentViewModel
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragmentViewModelImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -53,12 +54,20 @@ class LoadingPageFragmentViewModelImpl @Inject constructor(
             .and(loadStudentsAttendancesPromise)
             .and(loadStudentsPaymentsPromise)
             .and(loadStaffMembersPromise)
-            .onSuccess { /* ToDo: Go to profile lessons */ }
+            .onSuccess { onSuccess() }
             .onAuthFail { /* ToDo: Go to relogin */ }
             .onOtherFail { failureEventsQueueLiveDataHolder.postEvent(true) /* ToDo: Event.any */ }
     }
 
     override fun proceedWithoutLoading() {
         /* ToDo: Go to profile lessons */
+    }
+
+    private fun onSuccess() {
+        navigate(
+            navCommand = NavCommand.forward(
+                navDir = LoadingPageFragmentDirections.loadingToProfileLessons()
+            )
+        )
     }
 }

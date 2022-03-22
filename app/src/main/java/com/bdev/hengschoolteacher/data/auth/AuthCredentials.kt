@@ -4,6 +4,6 @@ import org.codehaus.jackson.annotate.JsonCreator
 import org.codehaus.jackson.annotate.JsonProperty
 
 class AuthCredentials @JsonCreator constructor(
-        @JsonProperty("login") val login: String,
+        @JsonProperty("login") val username: String,
         @JsonProperty("password") val password: String
 )

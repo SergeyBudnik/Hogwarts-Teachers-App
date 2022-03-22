@@ -10,8 +10,9 @@ import com.bdev.hengschoolteacher.ui.activities.HTActivityViewModel
 import com.bdev.hengschoolteacher.ui.activities.HTActivityViewModelImpl
 
 abstract class BaseFragment<ViewModelType : BaseFragmentViewModel> : Fragment() {
-    protected lateinit var activityViewModel: HTActivityViewModel private set
     protected lateinit var fragmentViewModel: ViewModelType private set
+
+    private lateinit var activityViewModel: HTActivityViewModel
 
     abstract fun provideViewModel(): ViewModelType
 
@@ -30,7 +31,7 @@ abstract class BaseFragment<ViewModelType : BaseFragmentViewModel> : Fragment() 
 
         fragmentViewModel.getNavCommandEventLiveData().observe(this) { navCommandsEvents ->
             navCommandsEvents.drainEvents().firstOrNull()?.let { navCommand ->
-                // activityViewModel.navigate()
+                activityViewModel.navigate(navCommand)
             }
         }
 
