@@ -9,7 +9,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPopupView
 import kotlinx.android.synthetic.main.view_app_layout.view.*
 
@@ -22,15 +22,15 @@ class AppLayoutView : DrawerLayout {
         appLayoutContainerView.setScrimColor(Color.TRANSPARENT)
 
         if (!isInEditMode) {
-            appLayoutContainerView.addDrawerListener(
-                    object : ActionBarDrawerToggle(context as BaseActivity, appLayoutContainerView, 0, 0) {
-                        override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                            super.onDrawerSlide(drawerView, slideOffset)
-
-                            appLayoutContentView.translationX = drawerView.width * slideOffset
-                        }
-                    }
-            )
+//            appLayoutContainerView.addDrawerListener(
+//                    object : ActionBarDrawerToggle(context as BasePageFragment, appLayoutContainerView, 0, 0) {
+//                        override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+//                            super.onDrawerSlide(drawerView, slideOffset)
+//
+//                            appLayoutContentView.translationX = drawerView.width * slideOffset
+//                        }
+//                    }
+//            )
         }
     }
 

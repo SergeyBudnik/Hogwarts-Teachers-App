@@ -11,13 +11,12 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
-import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.LoadingActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity
-import com.bdev.hengschoolteacher.ui.activities.profile.ProfileLessonsActivity
-import com.bdev.hengschoolteacher.ui.activities.settings.SettingsActivity
-import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity
-import com.bdev.hengschoolteacher.ui.activities.teachers.TeachersListActivity
+import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.loading.LoadingPageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.lessons.MonitoringLessonsPageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.profile.lessons.ProfileLessonsPageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.settings.SettingsPageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.teachers.TeachersListPageFragment
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.VersionUtils
 import kotlinx.android.synthetic.main.view_app_menu.view.*
@@ -137,26 +136,38 @@ class AppMenuView : LinearLayout {
     init {
         View.inflate(context, R.layout.view_app_menu, this)
 
-        val activity = context as BaseActivity
+        // val activity = context as BasePageFragment
 
-        menuItemMyProfileView.setOnClickListener { ProfileLessonsActivity.redirectToSibling(activity) }
-        menuItemStudentsView.setOnClickListener { StudentsListActivity.redirectToSibling(activity) }
-        menuItemTeachersView.setOnClickListener { TeachersListActivity.redirectToSibling(activity) }
-        menuItemMonitoringView.setOnClickListener { MonitoringLessonsActivity.redirectToSibling(activity) }
-        menuItemSettingsView.setOnClickListener { SettingsActivity.redirectToSibling(activity) }
+        menuItemMyProfileView.setOnClickListener {
+        //    ProfileLessonsPageFragment.redirectToSibling(activity)
+        }
+        menuItemStudentsView.setOnClickListener {
+        //    StudentsListPageFragment.redirectToSibling(activity)
+        }
+        menuItemTeachersView.setOnClickListener {
+        //    TeachersListPageFragment.redirectToSibling(activity)
+        }
+        menuItemMonitoringView.setOnClickListener {
+        //    MonitoringLessonsPageFragment.redirectToSibling(activity)
+        }
+        menuItemSettingsView.setOnClickListener {
+        //    SettingsPageFragment.redirectToSibling(activity)
+        }
 
-        refreshButtonView.setOnClickListener { LoadingActivity.redirectToSibling(activity) }
+        refreshButtonView.setOnClickListener {
+        //    LoadingPageFragment.redirectToSibling(activity)
+        }
 
         versionView.text = VersionUtils().getVersion()
 
         menuUpdateAppView.setOnClickListener {
-            val appPackageName = activity.packageName
+            // val appPackageName = activity.packageName
 
-            try {
-                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
-            } catch (e: ActivityNotFoundException) {
-                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
-            }
+//            try {
+//                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+//            } catch (e: ActivityNotFoundException) {
+//                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+//            }
         }
     }
 

@@ -5,10 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.student.MonitoringStudentActivity
-import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
-import com.bdev.hengschoolteacher.ui.activities.student.StudentPaymentActivity
+import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.student.MonitoringStudentPageFragment
 import kotlinx.android.synthetic.main.view_student_header.view.*
 
 enum class StudentHeaderItem {
@@ -28,7 +26,7 @@ class StudentHeaderView : LinearLayout {
                 active = item == StudentHeaderItem.DETAILS,
                 hasAlert = false,
                 clickAction = {
-                    StudentInformationActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
+                    // StudentInformationPageFragment.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
                 }
         )
 
@@ -36,7 +34,7 @@ class StudentHeaderView : LinearLayout {
                 active = item == StudentHeaderItem.ATTENDANCE,
                 hasAlert = false,
                 clickAction = {
-                    MonitoringStudentActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
+                    // MonitoringStudentPageFragment.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
                 }
         )
 
@@ -44,12 +42,8 @@ class StudentHeaderView : LinearLayout {
                 active = item == StudentHeaderItem.PAYMENTS,
                 hasAlert = false,
                 clickAction = {
-                    StudentPaymentActivity.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
+                    // StudentPaymentPageFragment.redirectToSibling(current = getActivity(), studentLogin = studentLogin)
                 }
         )
-    }
-
-    private fun getActivity(): BaseActivity {
-        return context as BaseActivity
     }
 }

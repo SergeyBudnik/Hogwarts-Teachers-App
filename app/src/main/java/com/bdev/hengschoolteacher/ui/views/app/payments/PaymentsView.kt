@@ -38,8 +38,8 @@ class PaymentsSummaryView : RelativeLayout {
     }
 
     private fun bindPeriod(payments: List<ExistingStudentPayment>) {
-        val earliestPayment = payments.minBy { it.info.time }
-        val latestPayment = payments.maxBy { it.info.time }
+        val earliestPayment = payments.minByOrNull { it.info.time }
+        val latestPayment = payments.maxByOrNull { it.info.time }
 
         if (earliestPayment != null && latestPayment != null) {
             paymentsSummaryPeriodView.visibility = View.VISIBLE

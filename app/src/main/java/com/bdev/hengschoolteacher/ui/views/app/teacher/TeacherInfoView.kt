@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
-import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
+import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.teacher.TeacherPageFragment
 import kotlinx.android.synthetic.main.view_teacher_info.view.*
 
 class TeacherInfoView : LinearLayout {
@@ -26,10 +26,10 @@ class TeacherInfoView : LinearLayout {
 
         setOnClickListener {
             if (clickable && teacher != null) {
-                TeacherActivity.redirectToChild(
-                        current = context as BaseActivity,
-                        teacherLogin = teacher.login
-                )
+//                TeacherPageFragment.redirectToChild(
+//                        current = context as BasePageFragment,
+//                        teacherLogin = teacher.login
+//                )
             } else {
                 /* Do nothing */
             }

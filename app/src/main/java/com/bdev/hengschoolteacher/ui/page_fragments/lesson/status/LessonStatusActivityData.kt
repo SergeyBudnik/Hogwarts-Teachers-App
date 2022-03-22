@@ -1,0 +1,8 @@
+package com.bdev.hengschoolteacher.ui.page_fragments.lesson.status
+
+import java.io.Serializable
+
+data class LessonStatusActivityData(
+        val lessonId: Long,
+        val weekIndex: Int
+): Serializable

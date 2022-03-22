@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.person.PersonContact
-import com.bdev.hengschoolteacher.ui.activities.BaseActivity
+import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.utils.PhoneUtils
 import kotlinx.android.synthetic.main.view_branded_phone.view.*
 
@@ -26,7 +26,7 @@ class BrandedPhoneView : LinearLayout {
         brandedPhoneValueView.text = personContact.value
 
         setOnClickListener {
-            PhoneUtils.call(context as BaseActivity, personContact.value)
+            // PhoneUtils.call(context as BasePageFragment, personContact.value)
         }
 
         setOnLongClickListener {

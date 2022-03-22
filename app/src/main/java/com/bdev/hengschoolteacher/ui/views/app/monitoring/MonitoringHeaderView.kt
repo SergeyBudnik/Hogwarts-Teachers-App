@@ -5,10 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringLessonsActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringStudentsActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.MonitoringTeachersActivity
+import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.students.MonitoringStudentsPageFragment
 import kotlinx.android.synthetic.main.view_header_monitoring.view.*
 
 class MonitoringHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -24,19 +22,25 @@ class MonitoringHeaderView(context: Context, attrs: AttributeSet) : LinearLayout
         monitoringHeaderLessonsView.bind(
                 active = currentItem == Item.LESSONS,
                 hasAlert = hasLessonsAlert,
-                clickAction = { MonitoringLessonsActivity.redirectToSibling(context as BaseActivity) }
+                clickAction = {
+                    //MonitoringLessonsPageFragment.redirectToSibling(context as BasePageFragment)
+                }
         )
 
         monitoringHeaderTeachersView.bind(
                 active = currentItem == Item.TEACHERS,
                 hasAlert = hasTeachersAlert,
-                clickAction = { MonitoringTeachersActivity.redirectToSibling(context as BaseActivity) }
+                clickAction = {
+                    //MonitoringTeachersPageFragment.redirectToSibling(context as BasePageFragment)
+                }
         )
 
         monitoringHeaderStudentsView.bind(
             active = currentItem == Item.STUDENTS,
             hasAlert = hasStudentsAlert,
-            clickAction = { MonitoringStudentsActivity.redirectToSibling(context as BaseActivity) }
+            clickAction = {
+                //MonitoringStudentsPageFragment.redirectToSibling(context as BasePageFragment)
+            }
         )
     }
 }

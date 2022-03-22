@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph">
+
+    <fragment
+        android:id="@+id/startPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.start.StartPageFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.login.LoginPageFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/reloginPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.relogin.ReloginPageFragment">
+    </fragment>
+
+    <!-- Lesson -->
+
+    <fragment
+        android:id="@+id/lessonAttendancePage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.attendance.LessonAttendancePageFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/lessonInfoPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.info.LessonInfoPageFragment"/>
+
+    <fragment
+        android:id="@+id/lessonStatusPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.status.LessonStatusPageFragment">
+    </fragment>
+
+    <!-- Monitoring -->
+
+</navigation>

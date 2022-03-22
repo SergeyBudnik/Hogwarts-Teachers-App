@@ -7,9 +7,8 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
-import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.lesson.info.LessonInfoActivityData
-import com.bdev.hengschoolteacher.ui.activities.lesson.info.LessonInfoActivityLauncher
+import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.lesson.info.LessonInfoActivityData
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.lesson.LessonRowViewData
@@ -92,15 +91,15 @@ class LessonsView : RelativeLayout {
 
         lessonsListView.setOnItemClickListener { _, _, position, _ ->
             adapter.getItem(position).second?.let { data ->
-                LessonInfoActivityLauncher.launchAsChild(
-                        from = context as BaseActivity,
-                        data = LessonInfoActivityData(
-                                groupId = data.group.id,
-                                lessonId = data.lesson.id,
-                                weekIndex = weekIndex
-                        ),
-                        requestCode = LessonItemView.REQUEST_CODE_LESSON
-                )
+//                LessonInfoActivityLauncher.launchAsChild(
+//                        from = context as BasePageFragment,
+//                        data = LessonInfoActivityData(
+//                                groupId = data.group.id,
+//                                lessonId = data.lesson.id,
+//                                weekIndex = weekIndex
+//                        ),
+//                        requestCode = LessonItemView.REQUEST_CODE_LESSON
+//                )
             }
         }
     }

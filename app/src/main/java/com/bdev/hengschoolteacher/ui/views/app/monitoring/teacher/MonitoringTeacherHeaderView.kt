@@ -5,11 +5,11 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherDebtsActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherLessonsActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherPaymentsActivity
-import com.bdev.hengschoolteacher.ui.activities.monitoring.teacher.MonitoringTeacherSalaryActivity
+import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.teacher.debts.MonitoringTeacherDebtsPageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.teacher.lessons.MonitoringTeacherLessonsPageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.teacher.payments.MonitoringTeacherPaymentsPageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.teacher.salary.MonitoringTeacherSalaryPageFragment
 import kotlinx.android.synthetic.main.view_monitoring_teacher_header.view.*
 
 class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -32,10 +32,10 @@ class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : Linea
             active = currentItem == Item.LESSONS,
             hasAlert = hasLessonsAlert,
             clickAction = {
-                MonitoringTeacherLessonsActivity.redirectToSibling(
-                        current = context as BaseActivity,
-                        teacherLogin = teacherLogin
-                )
+//                MonitoringTeacherLessonsPageFragment.redirectToSibling(
+//                        current = context as BasePageFragment,
+//                        teacherLogin = teacherLogin
+//                )
             }
         )
 
@@ -43,10 +43,10 @@ class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : Linea
             active = currentItem == Item.SALARY,
             hasAlert = false,
             clickAction = {
-                MonitoringTeacherSalaryActivity.redirectToSibling(
-                        current = context as BaseActivity,
-                        teacherLogin = teacherLogin
-                )
+//                MonitoringTeacherSalaryPageFragment.redirectToSibling(
+//                        current = context as BasePageFragment,
+//                        teacherLogin = teacherLogin
+//                )
             }
         )
 
@@ -54,10 +54,10 @@ class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : Linea
             active = currentItem == Item.PAYMENTS,
             hasAlert = hasPaymentsAlert,
             clickAction = {
-                MonitoringTeacherPaymentsActivity.redirectToSibling(
-                        current = context as BaseActivity,
-                        teacherLogin = teacherLogin
-                )
+//                MonitoringTeacherPaymentsPageFragment.redirectToSibling(
+//                        current = context as BasePageFragment,
+//                        teacherLogin = teacherLogin
+//                )
             }
         )
 
@@ -65,10 +65,10 @@ class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : Linea
                 active = currentItem == Item.DEBTS,
                 hasAlert = hasDebtsAlert,
                 clickAction = {
-                    MonitoringTeacherDebtsActivity.redirectToSibling(
-                            current = context as BaseActivity,
-                            teacherLogin = teacherLogin
-                    )
+//                    MonitoringTeacherDebtsPageFragment.redirectToSibling(
+//                            current = context as BasePageFragment,
+//                            teacherLogin = teacherLogin
+//                    )
                 }
         )
     }

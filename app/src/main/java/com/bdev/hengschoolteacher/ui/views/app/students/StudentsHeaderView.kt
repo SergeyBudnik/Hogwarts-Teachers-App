@@ -5,9 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.students.StudentsGroupsListActivity
-import com.bdev.hengschoolteacher.ui.activities.students.StudentsListActivity
+import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import kotlinx.android.synthetic.main.view_students_header.view.*
 
 class StudentsHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -38,7 +36,7 @@ class StudentsHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(c
                 active = item == Item.LIST,
                 hasAlert = false,
                 clickAction = {
-                    StudentsListActivity.redirectToSibling(context as BaseActivity)
+                    // StudentsListPageFragment.redirectToSibling(context as BasePageFragment)
                 }
         )
 
@@ -46,7 +44,7 @@ class StudentsHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(c
                 active = item == Item.GROUPS,
                 hasAlert = false,
                 clickAction = {
-                    StudentsGroupsListActivity.redirectToSibling(context as BaseActivity)
+                    // StudentsGroupsListPageFragment.redirectToSibling(context as BasePageFragment)
                 }
         )
     }
