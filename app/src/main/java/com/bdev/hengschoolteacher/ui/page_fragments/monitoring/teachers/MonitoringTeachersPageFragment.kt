@@ -15,9 +15,8 @@ import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoring
 import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.teacher.lessons.MonitoringTeacherLessonsPageFragment
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import dagger.hilt.android.AndroidEntryPoint
@@ -103,9 +102,5 @@ class MonitoringTeachersPageFragment : BasePageFragment<MonitoringTeachersPageFr
 //                    teacherLogin = teacher.staffMember.login
 //            )
         }
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

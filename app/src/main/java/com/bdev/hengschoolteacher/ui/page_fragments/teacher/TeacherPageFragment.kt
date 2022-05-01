@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_teacher.*
@@ -51,9 +51,5 @@ class TeacherPageFragment : BasePageFragment<TeacherPageFragmentViewModel>() {
     private fun doFinish() {
 //        finish()
 //        overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

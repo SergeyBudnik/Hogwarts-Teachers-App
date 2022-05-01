@@ -5,16 +5,12 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.profile.debts.ProfileDebtsPageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.profile.lessons.ProfileLessonsPageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.profile.payments.ProfilePaymentsPageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.profile.salary.ProfileSalaryPageFragment
+import com.bdev.hengschoolteacher.ui.navigation.NavCommand
 import kotlinx.android.synthetic.main.view_profile_header.view.*
 
-open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     enum class Item {
-        LESSONS, SALARY, PAYMENTS, DEBTS;
+        LESSONS, SALARY, PAYMENTS, DEBTS
     }
 
     init {
@@ -23,10 +19,9 @@ open class ProfileHeaderView(context: Context, attrs: AttributeSet) : LinearLayo
 
     fun bind(
             currentItem: Item,
-            hasLessonsAlert: Boolean, hasPaymentsAlert: Boolean, hasDebtsAlert: Boolean
+            hasLessonsAlert: Boolean, hasPaymentsAlert: Boolean, hasDebtsAlert: Boolean,
+            navCommandHandler: (NavCommand) -> Unit
     ) {
-        // val activity = context as BasePageFragment
-
         profileHeaderMyLessonsView.bind(
             active = currentItem == Item.LESSONS,
             hasAlert = hasLessonsAlert,

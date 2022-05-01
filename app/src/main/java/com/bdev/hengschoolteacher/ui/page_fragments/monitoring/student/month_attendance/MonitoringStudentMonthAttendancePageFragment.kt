@@ -20,7 +20,7 @@ import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.student.MonitoringStudentMonthHeaderView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_student_month_attendance.*
@@ -163,9 +163,5 @@ class MonitoringStudentMonthAttendancePageFragment : BasePageFragment<Monitoring
     private fun doFinish() {
 //        finish()
 //        overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

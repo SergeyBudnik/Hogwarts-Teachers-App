@@ -13,7 +13,7 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_students_list.*
@@ -84,10 +84,6 @@ class StudentsListPageFragment : BasePageFragment<StudentsListPageFragmentViewMo
             }
             studentsListAdapter.notifyDataSetChanged()
         }
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 
     private fun initHeader() {

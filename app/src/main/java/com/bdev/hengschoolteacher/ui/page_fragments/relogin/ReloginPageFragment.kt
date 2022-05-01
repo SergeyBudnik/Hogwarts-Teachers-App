@@ -11,7 +11,7 @@ import com.bdev.hengschoolteacher.data.auth.AuthCredentials
 import com.bdev.hengschoolteacher.interactors.auth.AuthActionsInteractorImpl
 import com.bdev.hengschoolteacher.interactors.user_preferences.UserPreferencesInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_relogin.*
 import javax.inject.Inject
@@ -69,9 +69,5 @@ class ReloginPageFragment : BasePageFragment<ReloginPageFragmentViewModel>() {
 //        reloginInProgressView.visibility = View.GONE
 //
 //        reloginFailedView.visibility = View.VISIBLE
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

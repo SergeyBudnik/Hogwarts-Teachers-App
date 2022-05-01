@@ -9,8 +9,10 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import com.bdev.hengschoolteacher.NavGraphDirections
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
+import com.bdev.hengschoolteacher.ui.navigation.NavCommand
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.page_fragments.loading.LoadingPageFragment
 import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.lessons.MonitoringLessonsPageFragment
@@ -130,6 +132,8 @@ class AppMenuView : LinearLayout {
 //    @Bean
 //    lateinit var alertsMonitoringSevice: AlertsMonitoringService
 
+    private var navCommandHandler: (NavCommand) -> Unit = {}
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
@@ -139,19 +143,33 @@ class AppMenuView : LinearLayout {
         // val activity = context as BasePageFragment
 
         menuItemMyProfileView.setOnClickListener {
-        //    ProfileLessonsPageFragment.redirectToSibling(activity)
+            navCommandHandler(
+                NavCommand.top(navDir = NavGraphDirections.menuToProfileGlobalNavAction())
+            )
         }
+
         menuItemStudentsView.setOnClickListener {
-        //    StudentsListPageFragment.redirectToSibling(activity)
+            navCommandHandler(
+                NavCommand.top(navDir = NavGraphDirections.menuToProfileGlobalNavAction())
+            )
         }
+
         menuItemTeachersView.setOnClickListener {
-        //    TeachersListPageFragment.redirectToSibling(activity)
+            navCommandHandler(
+                NavCommand.top(navDir = NavGraphDirections.menuToStaffMembersGlobalNavAction())
+            )
         }
+
         menuItemMonitoringView.setOnClickListener {
-        //    MonitoringLessonsPageFragment.redirectToSibling(activity)
+            navCommandHandler(
+                NavCommand.top(navDir = NavGraphDirections.menuToMonitoringGlobalNavAction())
+            )
         }
+
         menuItemSettingsView.setOnClickListener {
-        //    SettingsPageFragment.redirectToSibling(activity)
+            navCommandHandler(
+                NavCommand.top(navDir = NavGraphDirections.menuToSettingsGlobalNavAction())
+            )
         }
 
         refreshButtonView.setOnClickListener {
@@ -171,15 +189,21 @@ class AppMenuView : LinearLayout {
         }
     }
 
-    fun bind(me: StaffMember?, hasProfileAlerts: Boolean, hasMonitoringAlerts: Boolean, item: Item) {
-        // val me = profileService.getMe()
+    fun bind(
+        me: StaffMember,
+        hasProfileAlerts: Boolean,
+        hasMonitoringAlerts: Boolean,
+        item: Item,
+        navCommandHandler: (NavCommand) -> Unit
+    ) {
+        this.navCommandHandler = navCommandHandler
 
-        teacherNameView.text = me?.person?.name ?: ""
-        teacherLoginView.text = me?.login ?: ""
+        teacherNameView.text = me.person.name
+        teacherLoginView.text = me.login
 
         menuItemMyProfileView.bind(
                 isCurrent = item == Item.MY_PROFILE,
-                hasAlerts = hasProfileAlerts // alertsProfileService.haveAlerts()
+                hasAlerts = hasProfileAlerts
         )
 
         menuItemStudentsView.bind(
@@ -194,7 +218,7 @@ class AppMenuView : LinearLayout {
 
         menuItemMonitoringView.bind(
                 isCurrent = item == Item.MONITORING,
-                hasAlerts = hasMonitoringAlerts // alertsMonitoringSevice.haveAlerts()
+                hasAlerts = hasMonitoringAlerts
         )
 
         menuItemSettingsView.bind(

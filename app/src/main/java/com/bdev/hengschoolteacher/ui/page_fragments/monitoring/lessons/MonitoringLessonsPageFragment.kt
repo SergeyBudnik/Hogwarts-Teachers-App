@@ -17,7 +17,7 @@ import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageI
 import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.lesson.LessonRowViewData
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonItemView
@@ -161,9 +161,5 @@ class MonitoringLessonsPageFragment : BasePageFragment<MonitoringLessonsPageFrag
         monitoringLessonsHeaderView.getSecondButtonHandler().setToggled(toggled = calendarEnabled)
 
         monitoringLessonsWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

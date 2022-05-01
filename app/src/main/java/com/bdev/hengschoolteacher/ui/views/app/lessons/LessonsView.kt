@@ -7,36 +7,10 @@ import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
-import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.lesson.info.LessonInfoActivityData
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
-import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.lesson.LessonRowViewData
-import kotlinx.android.synthetic.main.view_lesson_item.view.*
 import kotlinx.android.synthetic.main.view_lessons.view.*
 import java.util.*
-
-class LessonItemView : RelativeLayout {
-    companion object {
-        const val REQUEST_CODE_LESSON = 1
-    }
-
-    init {
-        View.inflate(context, R.layout.view_lesson_item, this)
-    }
-
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-    fun bind(data: LessonRowViewData): LessonItemView {
-        lessonItemRowView.bind(data = data)
-
-        lessonItemTeacherView.text = data.staffMember?.person?.name ?: "?"
-        lessonItemTeacherView.visibility = visibleElseGone(visible = data.showTeacher)
-
-        return this
-    }
-}
 
 class LessonsListAdapter(context: Context) : BaseWeekItemsListAdapter<LessonRowViewData>(context) {
     private var weekIndex = 0

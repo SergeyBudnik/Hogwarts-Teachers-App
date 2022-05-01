@@ -8,7 +8,7 @@ import android.view.animation.AnimationUtils
 import androidx.lifecycle.ViewModelProvider
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_loading.*
 
@@ -54,9 +54,5 @@ class LoadingPageFragment : BasePageFragment<LoadingPageFragmentViewModel>() {
         loadingInProgressView.visibility = View.GONE
 
         loadingFailedView.visibility = View.VISIBLE
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

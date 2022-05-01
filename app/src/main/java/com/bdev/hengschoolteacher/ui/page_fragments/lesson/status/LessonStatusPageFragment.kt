@@ -14,7 +14,7 @@ import com.bdev.hengschoolteacher.interactors.lessons_status.LessonsStatusStorag
 import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.interactors.teachers.TeacherInfoInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_lesson_status.*
@@ -134,8 +134,4 @@ class LessonStatusPageFragment : BasePageFragment<LessonStatusPageFragmentViewMo
     }
 
     private fun doFinish() = LessonStatusActivityNavigation.goBackWithSuccess(from = this)
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
-    }
 }

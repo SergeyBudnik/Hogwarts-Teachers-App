@@ -10,7 +10,7 @@ import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoring
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_debts.*
@@ -59,8 +59,6 @@ class MonitoringTeacherDebtsPageFragment : BasePageFragment<MonitoringTeacherDeb
                 withDebtsOnly = true
         )
     }
-
-    override fun getAppLayoutView(): AppLayoutView = monitoringTeacherDebtsRootView
 
     private fun initHeader() {
         monitoringTeacherDebtsHeaderView

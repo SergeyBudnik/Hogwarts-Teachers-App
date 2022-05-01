@@ -11,7 +11,7 @@ import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageI
 import com.bdev.hengschoolteacher.interactors.teachers.TeacherSalaryInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_teacher_salary.*
@@ -93,9 +93,5 @@ class MonitoringTeacherSalaryPageFragment : BasePageFragment<MonitoringTeacherSa
         monitoringTeacherSalaryHeaderView.getFirstButtonHandler().setToggled(toggled = calendarEnabled)
 
         monitoringTeacherSalaryWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

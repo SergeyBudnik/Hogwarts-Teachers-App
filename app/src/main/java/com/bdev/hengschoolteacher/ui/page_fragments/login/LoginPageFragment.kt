@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -28,9 +28,5 @@ class LoginPageFragment : BasePageFragment<LoginPageFragmentViewModel>() {
                 password = loginPasswordView.getText()
             )
         }
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

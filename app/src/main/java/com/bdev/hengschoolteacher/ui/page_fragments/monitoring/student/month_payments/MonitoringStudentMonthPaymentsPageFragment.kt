@@ -11,7 +11,7 @@ import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageI
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.student.MonitoringStudentMonthHeaderView
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsItemViewData
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsViewData
@@ -89,9 +89,5 @@ class MonitoringStudentMonthPaymentsPageFragment : BasePageFragment<MonitoringSt
     private fun doFinish() {
 //        finish()
 //        overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

@@ -11,7 +11,7 @@ import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,11 +39,15 @@ class ProfileDebtsPageFragment : BasePageFragment<ProfileDebtsPageFragmentViewMo
         profileDebtsLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
 
         profileDebtsHeaderView.setLeftButtonAction { profileDebtsLayoutView.openMenu() }
+
         profileDebtsSecondaryHeaderView.bind(
-                ProfileHeaderView.Item.DEBTS,
-                hasLessonsAlert = alertsProfileService.haveLessonsAlerts(),
-                hasDebtsAlert = alertsProfileService.haveDebtsAlerts(),
-                hasPaymentsAlert = alertsProfileService.havePaymentsAlerts()
+            ProfileHeaderView.Item.DEBTS,
+            hasLessonsAlert = alertsProfileService.haveLessonsAlerts(),
+            hasDebtsAlert = alertsProfileService.haveDebtsAlerts(),
+            hasPaymentsAlert = alertsProfileService.havePaymentsAlerts(),
+            navCommandHandler = { navCommand ->
+
+            }
         )
 
         profileDebtsListView.bind(
@@ -56,6 +60,4 @@ class ProfileDebtsPageFragment : BasePageFragment<ProfileDebtsPageFragmentViewMo
                 withDebtsOnly = true
         )
     }
-
-    override fun getAppLayoutView(): AppLayoutView = profileDebtsLayoutView
 }

@@ -23,8 +23,7 @@ import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsActionsInteractor
 import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.utils.KeyboardUtils
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_student_payment.*
@@ -192,9 +191,5 @@ class StudentPaymentPageFragment : BasePageFragment<StudentPaymentPageFragmentVi
     private fun doFinish() {
 //        finish()
 //        overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

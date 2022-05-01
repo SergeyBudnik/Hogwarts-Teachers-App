@@ -1,5 +1,6 @@
 package com.bdev.hengschoolteacher.ui.page_fragments.login
 
+import com.bdev.hengschoolteacher.NavGraphDirections
 import com.bdev.hengschoolteacher.data.auth.AuthCredentials
 import com.bdev.hengschoolteacher.interactors.auth.AuthActionsInteractor
 import com.bdev.hengschoolteacher.ui.navigation.NavCommand
@@ -26,7 +27,8 @@ class LoginPageFragmentViewModelImpl @Inject constructor(
             authCredentials = AuthCredentials(
                 username = username,
                 password = password
-            ))
+            )
+        )
             .onSuccess { onLoginSuccess() }
             .onAuthFail { onLoginFailure() }
             .onOtherFail { onLoginFailure() }
@@ -35,7 +37,7 @@ class LoginPageFragmentViewModelImpl @Inject constructor(
     private fun onLoginSuccess() {
         navigate(
             navCommand = NavCommand.top(
-                navDir = LoginPageFragmentDirections.loginToLoading()
+                navDir = NavGraphDirections.loginToLoading()
             )
         )
     }

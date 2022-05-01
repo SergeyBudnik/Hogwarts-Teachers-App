@@ -13,7 +13,7 @@ import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPayments
 import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsItemViewData
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsViewData
@@ -130,9 +130,5 @@ class MonitoringTeacherPaymentsPageFragment : BasePageFragment<MonitoringTeacher
     private fun doFinish() {
 //        finish()
 //        overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

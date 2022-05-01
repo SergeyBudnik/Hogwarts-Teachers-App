@@ -13,7 +13,7 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_teachers_list.*
@@ -94,9 +94,5 @@ class TeachersListPageFragment : BasePageFragment<TeachersListPageFragmentViewMo
 //                    teacherLogin = teacher.login
 //            )
         }
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

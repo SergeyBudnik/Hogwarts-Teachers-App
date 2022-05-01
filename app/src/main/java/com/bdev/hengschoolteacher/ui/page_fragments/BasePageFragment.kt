@@ -3,7 +3,7 @@ package com.bdev.hengschoolteacher.ui.page_fragments
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import com.bdev.hengschoolteacher.ui.fragments.BaseFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 
 abstract class BasePageFragment<ViewModelType : BasePageFragmentViewModel> : BaseFragment<ViewModelType>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +15,4 @@ abstract class BasePageFragment<ViewModelType : BasePageFragmentViewModel> : Bas
             }
         })
     }
-
-    abstract fun getAppLayoutView(): AppLayoutView?
 }

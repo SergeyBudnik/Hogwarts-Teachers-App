@@ -20,7 +20,7 @@ import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.resources.AppResources
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_students_groups.*
@@ -147,9 +147,5 @@ class StudentsGroupsListPageFragment : BasePageFragment<StudentsGroupsListPageFr
 
         studentsGroupsHeaderView.getFirstButtonHandler()
                 .setAction(action = { studentsGroupsHeaderSearchView.show() })
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

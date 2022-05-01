@@ -1,19 +1,21 @@
-package com.bdev.hengschoolteacher.ui.views.app
+package com.bdev.hengschoolteacher.ui.views.app.root
 
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
+import com.bdev.hengschoolteacher.data.school.person.Person
+import com.bdev.hengschoolteacher.data.school.person.PersonContacts
+import com.bdev.hengschoolteacher.data.school.staff.StaffMember
+import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPopupView
 import kotlinx.android.synthetic.main.view_app_layout.view.*
 
-class AppLayoutView : DrawerLayout {
+class HtPageRootView : DrawerLayout {
     private var customView: Pair<View, ViewGroup.LayoutParams?>? = null
 
     init {
@@ -41,8 +43,28 @@ class AppLayoutView : DrawerLayout {
         return appLayoutPopupView
     }
 
+    fun getMenuView(): AppMenuView = appLayoutMenuView
+
     fun setCurrentMenuItem(item: AppMenuView.Item) {
-        // appLayoutMenuView.bind(item)
+        appLayoutMenuView.bind(
+            me = StaffMember(
+                login = "",
+                person = Person(
+                    name = "",
+                    contacts = PersonContacts(
+                        phones = emptyList(),
+                        vkLinks = emptyList()
+                    )
+                ),
+                salaryIn30m = 0
+            ),
+            item = item,
+            hasProfileAlerts = false,
+            hasMonitoringAlerts = false,
+            navCommandHandler = { navCommand ->
+
+            }
+        )
     }
 
     fun openMenu() {

@@ -15,7 +15,7 @@ import com.bdev.hengschoolteacher.interactors.teachers.TeacherSalaryInteractor
 import com.bdev.hengschoolteacher.interactors.user_preferences.UserPreferencesInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,10 +46,13 @@ class ProfileSalaryPageFragment : BasePageFragment<ProfileSalaryPageFragmentView
         initHeader()
 
         profileSalarySecondaryHeaderView.bind(
-                ProfileHeaderView.Item.SALARY,
-                hasLessonsAlert = alertsProfileService.haveLessonsAlerts(),
-                hasDebtsAlert = alertsProfileService.haveDebtsAlerts(),
-                hasPaymentsAlert = alertsProfileService.havePaymentsAlerts()
+            ProfileHeaderView.Item.SALARY,
+            hasLessonsAlert = alertsProfileService.haveLessonsAlerts(),
+            hasDebtsAlert = alertsProfileService.haveDebtsAlerts(),
+            hasPaymentsAlert = alertsProfileService.havePaymentsAlerts(),
+            navCommandHandler = { navCommand ->
+
+            }
         )
 
         profileSalaryMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
@@ -88,9 +91,5 @@ class ProfileSalaryPageFragment : BasePageFragment<ProfileSalaryPageFragmentView
         profileSalaryHeaderView.getFirstButtonHandler().setToggled(toggled = calendarEnabled)
 
         profileSalaryWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

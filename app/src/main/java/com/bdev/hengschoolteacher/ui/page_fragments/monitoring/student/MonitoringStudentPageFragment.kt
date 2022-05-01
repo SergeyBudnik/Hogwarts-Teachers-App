@@ -21,7 +21,7 @@ import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsIntera
 import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
 import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -204,9 +204,5 @@ class MonitoringStudentPageFragment : BasePageFragment<MonitoringStudentPageFrag
     private fun doFinish() {
 //        finish()
 //        overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }

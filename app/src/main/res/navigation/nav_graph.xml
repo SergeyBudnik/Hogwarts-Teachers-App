@@ -15,10 +15,6 @@
         android:id="@+id/loginPage"
         android:name="com.bdev.hengschoolteacher.ui.page_fragments.login.LoginPageFragment">
 
-        <action
-            android:id="@+id/loginToLoading"
-            app:destination="@id/loadingPage"/>
-
     </fragment>
 
     <fragment
@@ -45,6 +41,24 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/profileSalaryPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.salary.ProfileSalaryPageFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profilePaymentsPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.payments.ProfilePaymentsPageFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileDebtsPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.debts.ProfileDebtsPageFragment">
+
+    </fragment>
+
     <!-- Lesson -->
 
     <fragment
@@ -59,24 +73,79 @@
     <fragment
         android:id="@+id/lessonStatusPage"
         android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.status.LessonStatusPageFragment">
+
     </fragment>
 
     <!-- Monitoring -->
 
+    <fragment
+        android:id="@+id/monitoringLessonsPageFragment"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.lessons.MonitoringLessonsPageFragment">
+
+    </fragment>
+
     <!--
-     - Global Actions
+     - Global Actions - Start
      -->
 
     <action
         android:id="@+id/startWithLoginGlobalNavAction"
-        app:destination="@id/loginPage"
-        app:enterAnim="@anim/slide_open_enter"
-        app:exitAnim="@anim/slide_close_exit"/>
+        app:destination="@id/loginPage"/>
 
     <action
         android:id="@+id/startWithLoadingGlobalNavAction"
-        app:destination="@id/loadingPage"
-        app:enterAnim="@anim/slide_open_enter"
-        app:exitAnim="@anim/slide_close_exit"/>
+        app:destination="@id/loadingPage"/>
+
+    <!--
+     - Global Actions - Login
+     -->
+
+    <action
+        android:id="@+id/loginToLoading"
+        app:destination="@id/loadingPage"/>
+
+    <!--
+     - Global Actions - Menu
+     -->
+
+    <action
+        android:id="@+id/menuToProfileGlobalNavAction"
+        app:destination="@id/profileLessonsPage"/>
+
+    <action
+        android:id="@+id/menuToStudentsGlobalNavAction"
+        app:destination="@id/profileLessonsPage"/> <!-- todo -->
+
+    <action
+        android:id="@+id/menuToStaffMembersGlobalNavAction"
+        app:destination="@id/profileLessonsPage"/> <!-- todo -->
+
+    <action
+        android:id="@+id/menuToMonitoringGlobalNavAction"
+        app:destination="@id/monitoringLessonsPageFragment"/>
+
+    <action
+        android:id="@+id/menuToSettingsGlobalNavAction"
+        app:destination="@id/profileLessonsPage"/> <!-- todo -->
+
+    <!--
+     - Global Actions - Profile
+     -->
+
+    <action
+        android:id="@+id/profileToLessonsGlobalNavAction"
+        app:destination="@id/profileLessonsPage"/>
+
+    <action
+        android:id="@+id/profileToSalaryGlobalNavAction"
+        app:destination="@id/profileSalaryPage"/>
+
+    <action
+        android:id="@+id/profileToPaymentsGlobalNavAction"
+        app:destination="@id/profilePaymentsPage"/>
+
+    <action
+        android:id="@+id/profileToDebtsGlobalNavAction"
+        app:destination="@id/profileDebtsPage"/>
 
 </navigation>

@@ -11,7 +11,7 @@ import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderInteractor
 import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.AppLayoutView
+import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,9 +86,5 @@ class MonitoringStudentsPageFragment : BasePageFragment<MonitoringStudentsPageFr
         monitoringPaymentsHeaderView.getSecondButtonHandler().setToggled(toggled = filterEnabled)
 
         initList()
-    }
-
-    override fun getAppLayoutView(): AppLayoutView? {
-        return null
     }
 }
