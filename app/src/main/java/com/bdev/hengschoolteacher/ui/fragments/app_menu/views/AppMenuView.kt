@@ -13,18 +13,6 @@ import com.bdev.hengschoolteacher.ui.utils.VersionUtils
 import kotlinx.android.synthetic.main.view_app_menu.view.*
 
 class AppMenuView : LinearLayout {
-
-//    @Bean
-//    lateinit var authService: AuthService
-//
-//    @Bean
-//    lateinit var profileService: ProfileService
-//
-//    @Bean
-//    lateinit var alertsProfileService: AlertsProfileService
-//    @Bean
-//    lateinit var alertsMonitoringSevice: AlertsMonitoringService
-
     private var navCommandHandler: (NavCommand) -> Unit = {}
 
     constructor(context: Context) : super(context)
@@ -32,8 +20,6 @@ class AppMenuView : LinearLayout {
 
     init {
         View.inflate(context, R.layout.view_app_menu, this)
-
-        // val activity = context as BasePageFragment
 
         menuItemMyProfileView.setOnClickListener {
             navCommandHandler(
@@ -43,7 +29,7 @@ class AppMenuView : LinearLayout {
 
         menuItemStudentsView.setOnClickListener {
             navCommandHandler(
-                NavCommand.top(navDir = NavGraphDirections.menuToProfileGlobalNavAction())
+                NavCommand.top(navDir = NavGraphDirections.menuToStudentsGlobalNavAction())
             )
         }
 
