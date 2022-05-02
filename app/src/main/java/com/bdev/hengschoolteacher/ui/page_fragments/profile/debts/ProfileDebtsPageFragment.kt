@@ -10,10 +10,11 @@ import com.bdev.hengschoolteacher.interactors.alerts.profile.AlertsProfileIntera
 import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.AppMenuFragment
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.data.AppMenuItem
+import com.bdev.hengschoolteacher.ui.fragments.profile.header.ProfileHeaderFragment
+import com.bdev.hengschoolteacher.ui.fragments.profile.header.data.ProfileHeaderFragmentItem
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
-import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
-import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_profile_depts.*
 import javax.inject.Inject
@@ -34,21 +35,14 @@ class ProfileDebtsPageFragment : BasePageFragment<ProfileDebtsPageFragmentViewMo
     override fun doOnViewCreated() {
         super.doOnViewCreated()
 
+        getSecondaryHeaderFragment().setCurrentItem(item = ProfileHeaderFragmentItem.DEBTS)
+        getMenu().setCurrentItem(item = AppMenuItem.MY_PROFILE)
+
         val me = profileInteractor.getMe()
 
-        profileDebtsLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
+        profileDebtsLayoutView.setCurrentMenuItem(AppMenuItem.MY_PROFILE)
 
         profileDebtsHeaderView.setLeftButtonAction { profileDebtsLayoutView.openMenu() }
-
-        profileDebtsSecondaryHeaderView.bind(
-            ProfileHeaderView.Item.DEBTS,
-            hasLessonsAlert = alertsProfileService.haveLessonsAlerts(),
-            hasDebtsAlert = alertsProfileService.haveDebtsAlerts(),
-            hasPaymentsAlert = alertsProfileService.havePaymentsAlerts(),
-            navCommandHandler = { navCommand ->
-
-            }
-        )
 
         profileDebtsListView.bind(
                 studentsToExpectedDebt = studentsStorageInteractor.getAll()
@@ -60,4 +54,10 @@ class ProfileDebtsPageFragment : BasePageFragment<ProfileDebtsPageFragmentViewMo
                 withDebtsOnly = true
         )
     }
+
+    private fun getSecondaryHeaderFragment(): ProfileHeaderFragment =
+        childFragmentManager.findFragmentById(R.id.profileDebtsSecondaryHeaderFragment) as ProfileHeaderFragment
+
+    private fun getMenu(): AppMenuFragment =
+        childFragmentManager.findFragmentById(R.id.appMenuFragment) as AppMenuFragment
 }

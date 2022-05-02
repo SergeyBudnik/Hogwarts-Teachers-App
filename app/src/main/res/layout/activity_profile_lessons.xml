@@ -2,6 +2,7 @@
 <com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profileLessonsRootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,10 +22,12 @@
             app:firstRightIcon="@drawable/ic_filter"
             app:secondRightIcon="@drawable/ic_calendar"/>
 
-        <com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
-            android:id="@+id/profileLessonsSecondaryHeaderView"
+        <fragment
+            android:id="@+id/profileLessonsSecondaryHeaderFragment"
+            android:name="com.bdev.hengschoolteacher.ui.fragments.profile.header.ProfileHeaderFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_profile_header"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

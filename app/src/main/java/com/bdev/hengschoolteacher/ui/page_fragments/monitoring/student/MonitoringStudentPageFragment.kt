@@ -21,7 +21,6 @@ import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsIntera
 import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
 import com.bdev.hengschoolteacher.interactors.students_pricing.StudentsPricingInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -141,7 +140,7 @@ class MonitoringStudentPageFragment : BasePageFragment<MonitoringStudentPageFrag
         ViewModelProvider(this).get(MonitoringStudentPageFragmentViewModelImpl::class.java)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        inflater.inflate(R.layout.activity_monitoring_lessons, container, false)
+        inflater.inflate(R.layout.page_fragment_monitoring_lessons, container, false)
 
     override fun doOnViewCreated() {
         super.doOnViewCreated()

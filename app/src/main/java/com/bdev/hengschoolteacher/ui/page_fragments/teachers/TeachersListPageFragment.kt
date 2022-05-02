@@ -12,9 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.data.AppMenuItem
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
-import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_teachers_list.*
 import kotlinx.android.synthetic.main.view_teachers_list_row_item.view.*
@@ -79,7 +78,7 @@ class TeachersListPageFragment : BasePageFragment<TeachersListPageFragmentViewMo
         super.doOnViewCreated()
 
         teachersHeaderView.setLeftButtonAction { teachersMenuLayoutView.openMenu() }
-        teachersMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.TEACHERS)
+        teachersMenuLayoutView.setCurrentMenuItem(AppMenuItem.TEACHERS)
 
         val teachersListAdapter = TeachersListAdapter(context = requireContext())
 

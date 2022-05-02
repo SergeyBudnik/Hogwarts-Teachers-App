@@ -18,10 +18,9 @@ import com.bdev.hengschoolteacher.interactors.groups.GroupsStudentsProviderInter
 import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.data.AppMenuItem
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.resources.AppResources
-import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
-import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_students_groups.*
 import kotlinx.android.synthetic.main.view_list_item_students_groups.view.*
@@ -99,7 +98,7 @@ class StudentsGroupsListPageFragment : BasePageFragment<StudentsGroupsListPageFr
 
         initHeader()
 
-        studentsGroupsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.STUDENTS)
+        studentsGroupsMenuLayoutView.setCurrentMenuItem(AppMenuItem.STUDENTS)
 
         val me = profileInteractor.getMe()
 

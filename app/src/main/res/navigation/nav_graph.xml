@@ -79,8 +79,20 @@
     <!-- Monitoring -->
 
     <fragment
-        android:id="@+id/monitoringLessonsPageFragment"
+        android:id="@+id/monitoringLessons"
         android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.lessons.MonitoringLessonsPageFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/monitoringTeachers"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.teachers.MonitoringTeachersPageFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/monitoringStudents"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.students.MonitoringStudentsPageFragment">
 
     </fragment>
 
@@ -122,30 +134,46 @@
 
     <action
         android:id="@+id/menuToMonitoringGlobalNavAction"
-        app:destination="@id/monitoringLessonsPageFragment"/>
+        app:destination="@id/monitoringLessons"/>
 
     <action
         android:id="@+id/menuToSettingsGlobalNavAction"
         app:destination="@id/profileLessonsPage"/> <!-- todo -->
 
     <!--
-     - Global Actions - Profile
+     - Profile
      -->
 
     <action
-        android:id="@+id/profileToLessonsGlobalNavAction"
+        android:id="@+id/profileHeaderToProfileLessons"
         app:destination="@id/profileLessonsPage"/>
 
     <action
-        android:id="@+id/profileToSalaryGlobalNavAction"
+        android:id="@+id/profileHeaderToProfileSalary"
         app:destination="@id/profileSalaryPage"/>
 
     <action
-        android:id="@+id/profileToPaymentsGlobalNavAction"
+        android:id="@+id/profileHeaderToProfilePayments"
         app:destination="@id/profilePaymentsPage"/>
 
     <action
-        android:id="@+id/profileToDebtsGlobalNavAction"
+        android:id="@+id/profileHeaderToProfileDebts"
         app:destination="@id/profileDebtsPage"/>
+
+    <!--
+     - Monitoring
+     -->
+
+    <action
+        android:id="@+id/monitoringToMonitoringLessons"
+        app:destination="@id/monitoringLessons"/>
+
+    <action
+        android:id="@+id/monitoringToMonitoringTeachers"
+        app:destination="@id/monitoringTeachers"/>
+
+    <action
+        android:id="@+id/monitoringToMonitoringStudents"
+        app:destination="@id/monitoringStudents"/>
 
 </navigation>

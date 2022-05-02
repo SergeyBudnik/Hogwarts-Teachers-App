@@ -10,10 +10,11 @@ import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoring
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderInteractor
 import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.AppMenuFragment
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.data.AppMenuItem
+import com.bdev.hengschoolteacher.ui.fragments.monitoring.header.MonitoringHeaderFragment
+import com.bdev.hengschoolteacher.ui.fragments.monitoring.header.data.MonitoringHeaderFragmentItem
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
-import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
-import com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_monitoring_students.*
 import javax.inject.Inject
@@ -40,13 +41,10 @@ class MonitoringStudentsPageFragment : BasePageFragment<MonitoringStudentsPageFr
 
         initHeader()
 
-        monitoringPaymentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MONITORING)
+        getMenuFragment().setCurrentItem(item = AppMenuItem.MONITORING)
 
-        monitoringPaymentsSecondaryHeaderView.bind(
-                currentItem = MonitoringHeaderView.Item.STUDENTS,
-                hasTeachersAlert = alertsMonitoringService.teachersHaveAlerts(),
-                hasStudentsAlert = alertsMonitoringService.studentsHaveAlerts(),
-                hasLessonsAlert = alertsMonitoringService.lessonsHaveAlerts()
+        getSecondaryHeaderFragment().setCurrentItem(
+            item = MonitoringHeaderFragmentItem.STUDENTS
         )
 
         monitoringPaymentsHeaderSearchView.addOnTextChangeListener { search ->
@@ -87,4 +85,10 @@ class MonitoringStudentsPageFragment : BasePageFragment<MonitoringStudentsPageFr
 
         initList()
     }
+
+    private fun getSecondaryHeaderFragment(): MonitoringHeaderFragment =
+        childFragmentManager.findFragmentById(R.id.monitoringPaymentsSecondaryHeaderFragment) as MonitoringHeaderFragment
+
+    private fun getMenuFragment(): AppMenuFragment =
+        childFragmentManager.findFragmentById(R.id.appMenuFragment) as AppMenuFragment
 }

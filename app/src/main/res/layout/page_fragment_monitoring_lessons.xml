@@ -2,7 +2,8 @@
 <com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/monitoringLessonsMenuLayoutView"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/monitoringLessonsRootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -21,10 +22,12 @@
             app:firstRightIcon="@drawable/ic_filter"
             app:secondRightIcon="@drawable/ic_calendar"/>
 
-        <com.bdev.hengschoolteacher.ui.views.app.monitoring.MonitoringHeaderView
-            android:id="@+id/monitoringLessonsSecondaryHeaderView"
+        <fragment
+            android:id="@+id/monitoringLessonsSecondaryHeaderFragment"
+            android:name="com.bdev.hengschoolteacher.ui.fragments.monitoring.header.MonitoringHeaderFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_monitoring_header"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -37,18 +40,13 @@
                 android:layout_alignParentBottom="true"
                 android:visibility="gone"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsView
-                android:id="@+id/monitoringLessonsListView"
+            <fragment
+                android:id="@+id/monitoringLessonsFragment"
+                android:name="com.bdev.hengschoolteacher.ui.fragments.lessons.LessonsFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@id/monitoringLessonsWeekSelectionBarView"/>
-
-            <com.bdev.hengschoolteacher.ui.views.app.lesson.NoLessonsView
-                android:id="@+id/monitoringLessonsNoLessonsView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_5"
-                android:visibility="gone"/>
+                android:layout_above="@id/monitoringLessonsWeekSelectionBarView"
+                tools:layout="@layout/fragment_lessons"/>
 
         </RelativeLayout>
 

@@ -2,6 +2,7 @@
 <com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profileDebtsLayoutView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,10 +20,12 @@
             app:title="Профиль"
             app:leftIcon="@drawable/ic_menu"/>
 
-        <com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
-            android:id="@+id/profileDebtsSecondaryHeaderView"
+        <fragment
+            android:id="@+id/profileDebtsSecondaryHeaderFragment"
+            android:name="com.bdev.hengschoolteacher.ui.fragments.profile.header.ProfileHeaderFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_profile_header"/>
 
         <com.bdev.hengschoolteacher.ui.views.app.students.StudentsWithDebtsListView
             android:id="@+id/profileDebtsListView"

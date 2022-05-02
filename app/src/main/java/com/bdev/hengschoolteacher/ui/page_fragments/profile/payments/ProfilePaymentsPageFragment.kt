@@ -11,13 +11,14 @@ import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
 import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.AppMenuFragment
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.data.AppMenuItem
+import com.bdev.hengschoolteacher.ui.fragments.profile.header.ProfileHeaderFragment
+import com.bdev.hengschoolteacher.ui.fragments.profile.header.data.ProfileHeaderFragmentItem
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
-import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
-import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsItemViewData
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsViewData
-import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_profile_payments.*
 import javax.inject.Inject
@@ -41,19 +42,10 @@ class ProfilePaymentsPageFragment : BasePageFragment<ProfilePaymentsPageFragment
     override fun doOnViewCreated() {
         super.doOnViewCreated()
 
-        profilePaymentsMenuLayoutView.setCurrentMenuItem(item = AppMenuView.Item.MY_PROFILE)
+        getSecondaryHeaderFragment().setCurrentItem(item = ProfileHeaderFragmentItem.PAYMENTS)
+        getMenu().setCurrentItem(item = AppMenuItem.MY_PROFILE)
 
         initHeader()
-
-        profilePaymentsSecondaryHeaderView.bind(
-            ProfileHeaderView.Item.PAYMENTS,
-            hasLessonsAlert = alertsProfileService.haveLessonsAlerts(),
-            hasDebtsAlert = alertsProfileService.haveDebtsAlerts(),
-            hasPaymentsAlert = alertsProfileService.havePaymentsAlerts(),
-            navCommandHandler = { navCommand ->
-
-            }
-        )
 
         profilePaymentsEmptyWithFilterView.bind {
             toggleFilter()
@@ -115,4 +107,10 @@ class ProfilePaymentsPageFragment : BasePageFragment<ProfilePaymentsPageFragment
                 )
         )
     }
+
+    private fun getSecondaryHeaderFragment(): ProfileHeaderFragment =
+        childFragmentManager.findFragmentById(R.id.profilePaymentsSecondaryHeaderFragment) as ProfileHeaderFragment
+
+    private fun getMenu(): AppMenuFragment =
+        childFragmentManager.findFragmentById(R.id.appMenuFragment) as AppMenuFragment
 }

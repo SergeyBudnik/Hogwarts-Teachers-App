@@ -13,11 +13,12 @@ import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
 import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.interactors.teachers.TeacherSalaryInteractor
 import com.bdev.hengschoolteacher.interactors.user_preferences.UserPreferencesInteractor
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.AppMenuFragment
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.data.AppMenuItem
+import com.bdev.hengschoolteacher.ui.fragments.profile.header.ProfileHeaderFragment
+import com.bdev.hengschoolteacher.ui.fragments.profile.header.data.ProfileHeaderFragmentItem
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
-import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
-import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
-import com.bdev.hengschoolteacher.ui.views.app.profile.ProfileHeaderView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_profile_salary.*
 import javax.inject.Inject
@@ -45,17 +46,8 @@ class ProfileSalaryPageFragment : BasePageFragment<ProfileSalaryPageFragmentView
 
         initHeader()
 
-        profileSalarySecondaryHeaderView.bind(
-            ProfileHeaderView.Item.SALARY,
-            hasLessonsAlert = alertsProfileService.haveLessonsAlerts(),
-            hasDebtsAlert = alertsProfileService.haveDebtsAlerts(),
-            hasPaymentsAlert = alertsProfileService.havePaymentsAlerts(),
-            navCommandHandler = { navCommand ->
-
-            }
-        )
-
-        profileSalaryMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.MY_PROFILE)
+        getMenu().setCurrentItem(item = AppMenuItem.MY_PROFILE)
+        getSecondaryHeaderFragment().setCurrentItem(item = ProfileHeaderFragmentItem.SALARY)
 
         val me = profileInteractor.getMe()
 
@@ -92,4 +84,10 @@ class ProfileSalaryPageFragment : BasePageFragment<ProfileSalaryPageFragmentView
 
         profileSalaryWeekSelectionBarView.visibility = visibleElseGone(visible = calendarEnabled)
     }
+
+    private fun getSecondaryHeaderFragment(): ProfileHeaderFragment =
+        childFragmentManager.findFragmentById(R.id.profileSalarySecondaryHeaderFragment) as ProfileHeaderFragment
+
+    private fun getMenu(): AppMenuFragment =
+        childFragmentManager.findFragmentById(R.id.appMenuFragment) as AppMenuFragment
 }

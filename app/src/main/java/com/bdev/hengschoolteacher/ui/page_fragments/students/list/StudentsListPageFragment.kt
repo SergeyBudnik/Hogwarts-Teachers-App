@@ -12,9 +12,8 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.data.AppMenuItem
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
-import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_students_list.*
 import kotlinx.android.synthetic.main.view_students_list_row_item.view.*
@@ -62,7 +61,7 @@ class StudentsListPageFragment : BasePageFragment<StudentsListPageFragmentViewMo
 
         initHeader()
 
-        studentsMenuLayoutView.setCurrentMenuItem(AppMenuView.Item.STUDENTS)
+        studentsMenuLayoutView.setCurrentMenuItem(AppMenuItem.STUDENTS)
 
         studentsListAdapter.setItems(studentsStorageInteractor.getAll().sortedBy { it.person.name })
         studentsListView.adapter = studentsListAdapter

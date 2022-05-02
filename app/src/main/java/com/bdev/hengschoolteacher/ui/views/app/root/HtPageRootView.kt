@@ -11,7 +11,8 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.person.Person
 import com.bdev.hengschoolteacher.data.school.person.PersonContacts
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
-import com.bdev.hengschoolteacher.ui.views.app.AppMenuView
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.data.AppMenuItem
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.views.AppMenuView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPopupView
 import kotlinx.android.synthetic.main.view_app_layout.view.*
 
@@ -43,28 +44,26 @@ class HtPageRootView : DrawerLayout {
         return appLayoutPopupView
     }
 
-    fun getMenuView(): AppMenuView = appLayoutMenuView
-
-    fun setCurrentMenuItem(item: AppMenuView.Item) {
-        appLayoutMenuView.bind(
-            me = StaffMember(
-                login = "",
-                person = Person(
-                    name = "",
-                    contacts = PersonContacts(
-                        phones = emptyList(),
-                        vkLinks = emptyList()
-                    )
-                ),
-                salaryIn30m = 0
-            ),
-            item = item,
-            hasProfileAlerts = false,
-            hasMonitoringAlerts = false,
-            navCommandHandler = { navCommand ->
-
-            }
-        )
+    fun setCurrentMenuItem(appMenuItem: AppMenuItem) {
+//        appLayoutMenuView.bind(
+//            me = StaffMember(
+//                login = "",
+//                person = Person(
+//                    name = "",
+//                    contacts = PersonContacts(
+//                        phones = emptyList(),
+//                        vkLinks = emptyList()
+//                    )
+//                ),
+//                salaryIn30m = 0
+//            ),
+//            appMenuItem = appMenuItem,
+//            hasProfileAlerts = false,
+//            hasMonitoringAlerts = false,
+//            navCommandHandler = { navCommand ->
+//
+//            }
+//        )
     }
 
     fun openMenu() {
@@ -112,7 +111,7 @@ class HtPageRootView : DrawerLayout {
                 R.id.appLayoutContainerView,
                 R.id.appLayoutContentView,
                 appLayoutEmbeddedContentView,
-                R.id.appLayoutMenuView,
+                R.id.appMenuFragment,
                 R.id.appLayoutPopupView
         ).contains(view.id)
     }

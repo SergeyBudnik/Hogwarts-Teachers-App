@@ -5,7 +5,6 @@ import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.interactors.LessonStateService
 import com.bdev.hengschoolteacher.interactors.LessonsAttendancesService
-import com.bdev.hengschoolteacher.interactors.alerts.profile.AlertsProfileInteractor
 import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
 import com.bdev.hengschoolteacher.interactors.lessons_status.LessonsStatusStorageInteractor
 import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
@@ -17,7 +16,6 @@ import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragmentViewModelImp
 import com.bdev.hengschoolteacher.ui.views.app.lesson.LessonRowViewData
 import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.lang.RuntimeException
 import javax.inject.Inject
 
 interface ProfileLessonsPageFragmentViewModel : BasePageFragmentViewModel {
@@ -35,7 +33,6 @@ class ProfileLessonsPageFragmentViewModelImpl @Inject constructor(
     private val lessonsStatusService: LessonsStatusStorageInteractor,
     private val lessonStateService: LessonStateService,
     private val profileInteractor: ProfileInteractor,
-    private val alertsProfileService: AlertsProfileInteractor,
     private val staffMembersStorageInteractor: StaffMembersStorageInteractor,
     private val studentsAttendancesProviderInteractor: StudentsAttendancesProviderInteractor,
     private val lessonsAttendancesService: LessonsAttendancesService
@@ -91,9 +88,6 @@ class ProfileLessonsPageFragmentViewModelImpl @Inject constructor(
 
         return ProfileLessonsPageFragmentData(
             me = me,
-            hasLessonsAlert = alertsProfileService.haveLessonsAlerts(),
-            hasDebtsAlert = alertsProfileService.haveDebtsAlerts(),
-            hasPaymentsAlert = alertsProfileService.havePaymentsAlerts(),
             lessons = lessons,
             noLessons = getNoLessons(lessons = lessons, filterEnabled = false),
             weekIndex = 0,

@@ -6,9 +6,6 @@ import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsViewData
 
 data class ProfileLessonsPageFragmentData(
     val me: StaffMember,
-    val hasLessonsAlert: Boolean,
-    val hasDebtsAlert: Boolean,
-    val hasPaymentsAlert: Boolean,
     val lessons: LessonsViewData,
     val noLessons: Boolean,
     val weekIndex: Int,
