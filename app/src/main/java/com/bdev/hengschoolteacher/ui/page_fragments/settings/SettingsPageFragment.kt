@@ -6,19 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.auth.AuthStorageInteractor
-import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
+import com.bdev.hengschoolteacher.ui.fragments.app_menu.AppMenuFragment
 import com.bdev.hengschoolteacher.ui.fragments.app_menu.data.AppMenuItem
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_settings.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingsPageFragment : BasePageFragment<SettingsPageFragmentViewModel>() {
-    @Inject lateinit var authService: AuthStorageInteractor
-    @Inject lateinit var profileInteractor: ProfileInteractor
-
     override fun provideViewModel(): SettingsPageFragmentViewModel =
         ViewModelProvider(this).get(SettingsPageFragmentViewModelImpl::class.java)
 
@@ -28,19 +23,34 @@ class SettingsPageFragment : BasePageFragment<SettingsPageFragmentViewModel>() {
     override fun doOnViewCreated() {
         super.doOnViewCreated()
 
+        initHeader()
+        initMenu()
+        initLogoutButton()
+
+        fragmentViewModel.getDataLiveData().observe(this) { data ->
+            updateView(data = data)
+        }
+    }
+
+    private fun initHeader() {
         settingsHeaderView.setLeftButtonAction { settingsMenuLayoutView.openMenu() }
-
-        val me = profileInteractor.getMe()
-
-        settingsAccountNameView.text = me?.person?.name ?: ""
-        settingsAccountLoginView.text = me?.login ?: ""
-
-        settingsLogoutView.setOnClickListener { logOut() }
     }
 
-    private fun logOut() {
-        authService.clearAuthInfo()
-
-        // todo: go to login
+    private fun initMenu() {
+        getAppMenuFragment().setCurrentItem(item = AppMenuItem.SETTINGS)
     }
+
+    private fun initLogoutButton() {
+        settingsLogoutView.setOnClickListener {
+            fragmentViewModel.logout()
+        }
+    }
+
+    private fun updateView(data: SettingsPageFragmentData) {
+        settingsAccountNameView.text = data.name
+        settingsAccountLoginView.text = data.login
+    }
+
+    private fun getAppMenuFragment(): AppMenuFragment =
+        childFragmentManager.findFragmentById(R.id.appMenuFragment) as AppMenuFragment
 }
