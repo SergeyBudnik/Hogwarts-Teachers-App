@@ -40,18 +40,13 @@
                 android:layout_alignParentBottom="true"
                 android:visibility="gone"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsView
-                android:id="@+id/profileLessonsListView"
+            <fragment
+                android:id="@+id/profileLessonsFragment"
+                android:name="com.bdev.hengschoolteacher.ui.fragments.lessons.LessonsFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/profileLessonsWeekSelectionBarView" />
-
-            <com.bdev.hengschoolteacher.ui.views.app.lesson.NoLessonsView
-                android:id="@+id/profileLessonsNoLessonsView"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_size_5"
-                android:visibility="gone"/>
+                android:layout_above="@id/profileLessonsWeekSelectionBarView"
+                tools:layout="@layout/fragment_profile_header"/>
 
         </RelativeLayout>
 

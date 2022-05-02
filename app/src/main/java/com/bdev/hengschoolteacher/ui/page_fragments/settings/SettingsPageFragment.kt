@@ -30,8 +30,6 @@ class SettingsPageFragment : BasePageFragment<SettingsPageFragmentViewModel>() {
 
         settingsHeaderView.setLeftButtonAction { settingsMenuLayoutView.openMenu() }
 
-        settingsMenuLayoutView.setCurrentMenuItem(AppMenuItem.SETTINGS)
-
         val me = profileInteractor.getMe()
 
         settingsAccountNameView.text = me?.person?.name ?: ""

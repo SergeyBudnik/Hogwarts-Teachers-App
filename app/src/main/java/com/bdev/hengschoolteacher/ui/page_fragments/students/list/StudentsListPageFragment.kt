@@ -61,8 +61,6 @@ class StudentsListPageFragment : BasePageFragment<StudentsListPageFragmentViewMo
 
         initHeader()
 
-        studentsMenuLayoutView.setCurrentMenuItem(AppMenuItem.STUDENTS)
-
         studentsListAdapter.setItems(studentsStorageInteractor.getAll().sortedBy { it.person.name })
         studentsListView.adapter = studentsListAdapter
         studentsListView.setOnItemClickListener { adapterView, _, position, _ ->

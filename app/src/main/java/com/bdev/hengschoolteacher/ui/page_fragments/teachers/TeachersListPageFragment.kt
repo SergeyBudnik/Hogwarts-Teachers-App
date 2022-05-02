@@ -78,7 +78,6 @@ class TeachersListPageFragment : BasePageFragment<TeachersListPageFragmentViewMo
         super.doOnViewCreated()
 
         teachersHeaderView.setLeftButtonAction { teachersMenuLayoutView.openMenu() }
-        teachersMenuLayoutView.setCurrentMenuItem(AppMenuItem.TEACHERS)
 
         val teachersListAdapter = TeachersListAdapter(context = requireContext())
 

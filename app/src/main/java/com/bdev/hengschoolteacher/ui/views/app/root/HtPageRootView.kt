@@ -44,28 +44,6 @@ class HtPageRootView : DrawerLayout {
         return appLayoutPopupView
     }
 
-    fun setCurrentMenuItem(appMenuItem: AppMenuItem) {
-//        appLayoutMenuView.bind(
-//            me = StaffMember(
-//                login = "",
-//                person = Person(
-//                    name = "",
-//                    contacts = PersonContacts(
-//                        phones = emptyList(),
-//                        vkLinks = emptyList()
-//                    )
-//                ),
-//                salaryIn30m = 0
-//            ),
-//            appMenuItem = appMenuItem,
-//            hasProfileAlerts = false,
-//            hasMonitoringAlerts = false,
-//            navCommandHandler = { navCommand ->
-//
-//            }
-//        )
-    }
-
     fun openMenu() {
         appLayoutContainerView.openDrawer(GravityCompat.START)
     }

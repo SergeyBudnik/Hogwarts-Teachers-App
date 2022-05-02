@@ -98,8 +98,6 @@ class StudentsGroupsListPageFragment : BasePageFragment<StudentsGroupsListPageFr
 
         initHeader()
 
-        studentsGroupsMenuLayoutView.setCurrentMenuItem(AppMenuItem.STUDENTS)
-
         val me = profileInteractor.getMe()
 
         if (me != null) {

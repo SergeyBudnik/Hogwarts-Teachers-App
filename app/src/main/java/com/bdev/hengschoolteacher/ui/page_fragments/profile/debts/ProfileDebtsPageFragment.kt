@@ -40,8 +40,6 @@ class ProfileDebtsPageFragment : BasePageFragment<ProfileDebtsPageFragmentViewMo
 
         val me = profileInteractor.getMe()
 
-        profileDebtsLayoutView.setCurrentMenuItem(AppMenuItem.MY_PROFILE)
-
         profileDebtsHeaderView.setLeftButtonAction { profileDebtsLayoutView.openMenu() }
 
         profileDebtsListView.bind(
