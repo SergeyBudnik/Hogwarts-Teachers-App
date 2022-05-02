@@ -5,51 +5,50 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_teacher.*
-import javax.inject.Inject
+import kotlinx.android.synthetic.main.page_fragment_teacher.*
 
 @AndroidEntryPoint
 class TeacherPageFragment : BasePageFragment<TeacherPageFragmentViewModel>() {
-    companion object {
-        const val EXTRA_TEACHER_LOGIN = "EXTRA_TEACHER_LOGIN"
-    }
-
-    lateinit var teacherLogin: String
-
-    @Inject lateinit var staffMembersStorageInteractor: StaffMembersStorageInteractor
+    private val args: TeacherPageFragmentArgs by navArgs()
 
     override fun provideViewModel(): TeacherPageFragmentViewModel =
         ViewModelProvider(this).get(TeacherPageFragmentViewModelImpl::class.java)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        inflater.inflate(R.layout.activity_teacher, container, false)
+        inflater.inflate(R.layout.page_fragment_teacher, container, false)
 
     override fun doOnViewCreated() {
         super.doOnViewCreated()
 
-        // teacherLogin = intent.getStringExtra(EXTRA_TEACHER_LOGIN)!! todo
+        initHeader()
 
-        teacherHeaderView.setLeftButtonAction { doFinish() }
+        fragmentViewModel.getDataLiveData().observe(this) { data ->
+            updateView(data = data)
+        }
 
-        val teacher = staffMembersStorageInteractor.getStaffMember(teacherLogin) ?: throw RuntimeException()
+        fragmentViewModel.init(teacherLogin = args.args.login)
+    }
 
-        teacherInfoView.bind(teacher = teacher, clickable = false)
-
-        teacherPhonesContainerView.removeAllViews()
-
-        teacher.person.contacts.phones.forEach { phone ->
-            teacherPhonesContainerView.addView(BrandedPhoneView(requireContext()).bind(personContact = phone))
+    private fun initHeader() {
+        teacherHeaderView.setLeftButtonAction {
+            fragmentViewModel.goBack()
         }
     }
 
-    private fun doFinish() {
-//        finish()
-//        overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
+    private fun updateView(data: TeacherPageFragmentData) {
+        teacherInfoView.bind(teacher = data.teacher, clickable = false)
+
+        teacherPhonesContainerView.removeAllViews()
+
+        data.teacher.person.contacts.phones.forEach { phone ->
+            teacherPhonesContainerView.addView(
+                BrandedPhoneView(requireContext()).bind(personContact = phone)
+            )
+        }
     }
 }

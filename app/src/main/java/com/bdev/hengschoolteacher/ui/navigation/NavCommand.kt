@@ -36,5 +36,12 @@ data class NavCommand(
             closeAll = false,
             quitApp = true
         )
+
+        fun back() = NavCommand(
+            navDir = null,
+            closeCurrent = true,
+            closeAll = false,
+            quitApp = false
+        )
     }
 }
