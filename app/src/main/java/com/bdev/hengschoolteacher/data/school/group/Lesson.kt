@@ -2,19 +2,18 @@ package com.bdev.hengschoolteacher.data.school.group
 
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.Time
-import org.codehaus.jackson.annotate.JsonCreator
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 
-class Lesson @JsonCreator constructor(
-        @JsonProperty("id") val id: Long,
-        @JsonProperty("teacherLogin") val teacherLogin: String,
-        @JsonProperty("online") val isOnline: Boolean,
-        @JsonProperty("ignoreSingleStudentPricing") val ignoreSingleStudentPricing: Boolean,
-        @JsonProperty("day") val day: DayOfWeek,
-        @JsonProperty("startTime") val startTime: Time,
-        @JsonProperty("finishTime") val finishTime: Time,
-        @JsonProperty("creationTime") val creationTime: Long,
-        @JsonProperty("deactivationTime") val deactivationTime: Long
+class Lesson constructor(
+    @SerializedName("id") val id: Long,
+    @SerializedName("teacherLogin") val teacherLogin: String,
+    @SerializedName("online") val isOnline: Boolean,
+    @SerializedName("ignoreSingleStudentPricing") val ignoreSingleStudentPricing: Boolean,
+    @SerializedName("day") val day: DayOfWeek,
+    @SerializedName("startTime") val startTime: Time,
+    @SerializedName("finishTime") val finishTime: Time,
+    @SerializedName("creationTime") val creationTime: Long,
+    @SerializedName("deactivationTime") val deactivationTime: Long
 ) {
     fun durationIn30m(): Int {
         return finishTime.order - startTime.order

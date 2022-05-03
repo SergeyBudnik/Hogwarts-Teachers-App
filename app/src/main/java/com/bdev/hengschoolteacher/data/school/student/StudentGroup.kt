@@ -1,10 +1,9 @@
 package com.bdev.hengschoolteacher.data.school.student
 
-import org.codehaus.jackson.annotate.JsonCreator
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 
-class StudentGroup @JsonCreator constructor(
-        @JsonProperty("groupId") val groupId: Long,
-        @JsonProperty("startTime") val startTime: Long,
-        @JsonProperty("finishTime") val finishTime: Long
+class StudentGroup constructor(
+    @SerializedName("groupId") val groupId: Long,
+    @SerializedName("startTime") val startTime: Long,
+    @SerializedName("finishTime") val finishTime: Long
 )

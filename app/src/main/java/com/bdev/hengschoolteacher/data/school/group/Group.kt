@@ -1,16 +1,15 @@
 package com.bdev.hengschoolteacher.data.school.group
 
-import org.codehaus.jackson.annotate.JsonCreator
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 
 enum class GroupType {
     INDIVIDUAL, GROUP
 }
 
-class Group @JsonCreator constructor(
-        @JsonProperty("id") val id: Long,
-        @JsonProperty("cabinetId") val cabinetId: Long,
-        @JsonProperty("type") val type: GroupType,
-        @JsonProperty("lessons") val lessons: List<Lesson>,
-        @JsonProperty("color") val color: String
+class Group constructor(
+    @SerializedName("id") val id: Long,
+    @SerializedName("cabinetId") val cabinetId: Long,
+    @SerializedName("type") val type: GroupType,
+    @SerializedName("lessons") val lessons: List<Lesson>,
+    @SerializedName("color") val color: String
 )

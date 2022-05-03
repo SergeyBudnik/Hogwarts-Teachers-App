@@ -1,9 +1,8 @@
 package com.bdev.hengschoolteacher.data.school.teacher
 
-import org.codehaus.jackson.annotate.JsonCreator
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 
-class TeacherPayment @JsonCreator constructor(
-        @JsonProperty("amount") val amount: Int,
-        @JsonProperty("teacherAction") val teacherAction: TeacherAction
+class TeacherPayment constructor(
+    @SerializedName("amount") val amount: Int,
+    @SerializedName("teacherAction") val teacherAction: TeacherAction
 )

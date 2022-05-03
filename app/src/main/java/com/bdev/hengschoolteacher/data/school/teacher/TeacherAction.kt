@@ -2,16 +2,15 @@ package com.bdev.hengschoolteacher.data.school.teacher
 
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.Time
-import org.codehaus.jackson.annotate.JsonCreator
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 
 enum class TeacherActionType {
     ROAD, LESSON, ONLINE_LESSON
 }
 
-class TeacherAction @JsonCreator constructor(
-        @JsonProperty("type") val type: TeacherActionType,
-        @JsonProperty("dayOfWeek") val dayOfWeek: DayOfWeek,
-        @JsonProperty("startTime") val startTime: Time,
-        @JsonProperty("finishTime") val finishTime: Time
+class TeacherAction constructor(
+    @SerializedName("type") val type: TeacherActionType,
+    @SerializedName("dayOfWeek") val dayOfWeek: DayOfWeek,
+    @SerializedName("startTime") val startTime: Time,
+    @SerializedName("finishTime") val finishTime: Time
 )

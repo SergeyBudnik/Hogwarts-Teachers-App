@@ -1,12 +1,11 @@
 package com.bdev.hengschoolteacher.data.school.group
 
-import org.codehaus.jackson.annotate.JsonCreator
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 import java.util.*
 
-class GroupAndLesson @JsonCreator constructor(
-        @JsonProperty("group") val group: Group,
-        @JsonProperty("lesson") val lesson: Lesson
+class GroupAndLesson constructor(
+    @SerializedName("group") val group: Group,
+    @SerializedName("lesson") val lesson: Lesson
 ) {
     companion object {
         fun getComparator(calendar: Calendar): Comparator<GroupAndLesson> {

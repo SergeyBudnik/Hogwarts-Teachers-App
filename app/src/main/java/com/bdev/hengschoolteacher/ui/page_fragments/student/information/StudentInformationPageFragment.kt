@@ -63,12 +63,6 @@ class StudentInformationTimetableListAdapter(context: Context) : BaseWeekItemsLi
 
 @AndroidEntryPoint
 class StudentInformationPageFragment : BasePageFragment<StudentInformationPageFragmentViewModel>() {
-    companion object {
-        const val EXTRA_STUDENT_LOGIN = "EXTRA_STUDENT_LOGIN"
-    }
-
-    lateinit var studentLogin: String
-
     @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
     @Inject lateinit var lessonsService: LessonsInteractor
 
@@ -81,22 +75,20 @@ class StudentInformationPageFragment : BasePageFragment<StudentInformationPageFr
     override fun doOnViewCreated() {
         super.doOnViewCreated()
 
-        // studentLogin = intent.getStringExtra(EXTRA_STUDENT_LOGIN)!! todo
+        fragmentViewModel.getDataLiveData().observe(this) { data ->
+            studentInformationHeaderView
+                .setTitle("Студент. ${data.student.person.name}")
+                .setLeftButtonAction { fragmentViewModel.goBack() }
 
-        val student = studentsStorageInteractor.getByLogin(studentLogin) ?: throw RuntimeException()
-
-        studentInformationHeaderView
-                .setTitle("Студент. ${student.person.name}")
-                .setLeftButtonAction { doFinish() }
-
-        studentInformationSecondaryHeaderView.bind(
+            studentInformationSecondaryHeaderView.bind(
                 item = StudentHeaderItem.DETAILS,
-                studentLogin = studentLogin
-        )
+                studentLogin = data.student.login
+            )
 
-        initPhonesList(student)
+            initPhonesList(data.student)
 
-        initList(student)
+            initList(data.student)
+        }
     }
 
     private fun initPhonesList(student: Student) {
@@ -117,10 +109,5 @@ class StudentInformationPageFragment : BasePageFragment<StudentInformationPageFr
         )
 
         studentInformationTimetableListView.adapter = adapter
-    }
-
-    private fun doFinish() {
-//        finish()
-//        overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit)
     }
 }

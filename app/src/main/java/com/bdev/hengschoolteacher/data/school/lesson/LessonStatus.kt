@@ -1,14 +1,13 @@
 package com.bdev.hengschoolteacher.data.school.lesson
 
-import org.codehaus.jackson.annotate.JsonCreator
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 
-class LessonStatus @JsonCreator constructor(
-        @JsonProperty("id") val id: Long?,
-        @JsonProperty("lessonId") val lessonId: Long,
-        @JsonProperty("type") val type: Type,
-        @JsonProperty("actionTime") val actionTime: Long,
-        @JsonProperty("creationTime") val creationTime: Long
+class LessonStatus constructor(
+    @SerializedName("id") val id: Long?,
+    @SerializedName("lessonId") val lessonId: Long,
+    @SerializedName("type") val type: Type,
+    @SerializedName("actionTime") val actionTime: Long,
+    @SerializedName("creationTime") val creationTime: Long
 ) {
     enum class Type {
         CANCELED, MOVED, FINISHED

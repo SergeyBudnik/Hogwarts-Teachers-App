@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.bdev.hengschoolteacher.NavGraphDirections
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.ui.navigation.NavCommand
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.page_fragments.students.list.adapters.StudentsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,12 +36,9 @@ class StudentsListPageFragment : BasePageFragment<StudentsListPageFragmentViewMo
         studentsListAdapter.setItems(studentsStorageInteractor.getAll().sortedBy { it.person.name })
         studentsListView.adapter = studentsListAdapter
         studentsListView.setOnItemClickListener { adapterView, _, position, _ ->
-            val student = adapterView.getItemAtPosition(position) as Student
-
-//            StudentInformationPageFragment.redirectToChild(
-//                    current = this,
-//                    studentLogin = student.login
-//            )
+            fragmentViewModel.openStudentInformationPage(
+                login = (adapterView.getItemAtPosition(position) as Student).login
+            )
         }
 
         studentsListHeaderSearchView.addOnTextChangeListener { filter ->

@@ -1,8 +1,8 @@
 package com.bdev.hengschoolteacher.data.school.education_info
 
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 
 data class EducationInfo(
-        @JsonProperty("age") val age: EducationAge,
-        @JsonProperty("level") val level: EducationLevel
+    @SerializedName("age") val age: EducationAge,
+    @SerializedName("level") val level: EducationLevel
 )

@@ -3,8 +3,7 @@ package com.bdev.hengschoolteacher.dao
 import android.content.Context
 import android.util.Log
 import com.bdev.hengschoolteacher.utils.StorageUtils
-import org.codehaus.jackson.map.ObjectMapper
-
+import com.google.gson.Gson
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicReference
 
@@ -45,7 +44,7 @@ abstract class CommonDaoImpl<T>(
                 StorageUtils.writeData(
                         context,
                         getFileName(),
-                        ObjectMapper().writeValueAsString(cache.get())
+                        Gson().toJson(cache.get())
                 )
             } catch (e: IOException) {
                 Log.e("CommonDao", "Persist failed", e)
