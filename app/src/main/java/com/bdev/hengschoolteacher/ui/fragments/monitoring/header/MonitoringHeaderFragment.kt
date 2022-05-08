@@ -33,7 +33,7 @@ class MonitoringHeaderFragment : BaseFragment<MonitoringHeaderFragmentViewModel>
 
     private fun updateView(data: MonitoringHeaderFragmentData) {
         monitoringHeaderView.bind(
-            currentItem = data.currentItem,
+            currentItem = data.item,
             hasLessonsAlert = data.hasLessonsAlert,
             hasTeachersAlert = data.hasTeachersAlert,
             hasStudentsAlert = data.hasStudentsAlert,

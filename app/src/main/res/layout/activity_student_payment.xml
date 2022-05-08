@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             app:leftIcon="@drawable/ic_arrow_left"/>
 
-        <com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderView
+        <com.bdev.hengschoolteacher.ui.fragments.student.header.views.StudentHeaderView
             android:id="@+id/studentPaymentsSecondaryHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

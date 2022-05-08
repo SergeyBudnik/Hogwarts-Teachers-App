@@ -27,13 +27,13 @@ class ProfileHeaderFragmentViewModelImpl @Inject constructor(
 
     override fun setCurrentItem(item: ProfileHeaderFragmentItem) {
         dataLiveData.updateValue { oldValue ->
-            oldValue.copy(currentItem = item)
+            oldValue?.copy(item = item) ?: getInitialData()
         }
     }
 
     private fun getInitialData(): ProfileHeaderFragmentData =
         ProfileHeaderFragmentData(
-            currentItem = ProfileHeaderFragmentItem.NONE,
+            item = ProfileHeaderFragmentItem.NONE,
             hasLessonsAlert = alertsProfileService.haveLessonsAlerts(),
             hasPaymentsAlert = alertsProfileService.havePaymentsAlerts(),
             hasDebtsAlert = alertsProfileService.haveDebtsAlerts()

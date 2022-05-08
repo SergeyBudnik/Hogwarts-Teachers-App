@@ -21,7 +21,7 @@ class ProfileHeaderFragmentView(context: Context, attrs: AttributeSet) : LinearL
         navCommandHandler: (NavCommand) -> Unit
     ) {
         profileHeaderMyLessonsView.bind(
-            active = data.currentItem == ProfileHeaderFragmentItem.LESSONS,
+            active = data.item == ProfileHeaderFragmentItem.LESSONS,
             hasAlert = data.hasLessonsAlert,
             clickAction = {
                 navCommandHandler(
@@ -33,7 +33,7 @@ class ProfileHeaderFragmentView(context: Context, attrs: AttributeSet) : LinearL
         )
 
         profileHeaderMySalaryView.bind(
-            active = data.currentItem == ProfileHeaderFragmentItem.SALARY,
+            active = data.item == ProfileHeaderFragmentItem.SALARY,
             hasAlert = false,
             clickAction = {
                 navCommandHandler(
@@ -45,7 +45,7 @@ class ProfileHeaderFragmentView(context: Context, attrs: AttributeSet) : LinearL
         )
 
         profileHeaderMyPaymentsView.bind(
-            active = data.currentItem == ProfileHeaderFragmentItem.PAYMENTS,
+            active = data.item == ProfileHeaderFragmentItem.PAYMENTS,
             hasAlert = data.hasPaymentsAlert,
             clickAction = {
                 navCommandHandler(
@@ -57,7 +57,7 @@ class ProfileHeaderFragmentView(context: Context, attrs: AttributeSet) : LinearL
         )
 
         profileHeaderDebtsView.bind(
-            active = data.currentItem == ProfileHeaderFragmentItem.DEBTS,
+            active = data.item == ProfileHeaderFragmentItem.DEBTS,
             hasAlert = data.hasDebtsAlert,
             clickAction = {
                 navCommandHandler(

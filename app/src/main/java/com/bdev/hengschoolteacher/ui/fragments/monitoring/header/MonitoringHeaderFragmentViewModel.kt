@@ -19,21 +19,21 @@ interface MonitoringHeaderFragmentViewModel : BaseFragmentViewModel {
 class MonitoringHeaderFragmentViewModelImpl @Inject constructor(
     private val alertsMonitoringService: AlertsMonitoringInteractor
 ): MonitoringHeaderFragmentViewModel, BaseFragmentViewModelImpl() {
-    private val dataLiveData = MutableLiveDataWithState(
-        initialValue = getInitialData()
+    private val dataLiveData = MutableLiveDataWithState<MonitoringHeaderFragmentData>(
+        initialValue = null
     )
 
     override fun getDataLiveData() = dataLiveData.getLiveData()
 
     override fun setCurrentItem(item: MonitoringHeaderFragmentItem) {
-        dataLiveData.updateValue { oldValue ->
-            oldValue.copy(currentItem = item)
+        dataLiveData.updateValue {
+            getData(currentItem = item)
         }
     }
 
-    private fun getInitialData(): MonitoringHeaderFragmentData =
+    private fun getData(currentItem: MonitoringHeaderFragmentItem): MonitoringHeaderFragmentData =
         MonitoringHeaderFragmentData(
-            currentItem = MonitoringHeaderFragmentItem.LESSONS,
+            item = currentItem,
             hasLessonsAlert = alertsMonitoringService.lessonsHaveAlerts(),
             hasTeachersAlert = alertsMonitoringService.teachersHaveAlerts(),
             hasStudentsAlert = alertsMonitoringService.studentsHaveAlerts()

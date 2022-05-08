@@ -9,7 +9,7 @@ import com.bdev.hengschoolteacher.ui.views.app.common.ListDayItemView
 import java.util.ArrayList
 
 abstract class BaseWeekItemsListAdapter<T>(
-        protected val context: Context
+    protected val context: Context
 ) : BaseAdapter() {
     private var sortedItems: List<Pair<DayOfWeek, T?>> = ArrayList()
 

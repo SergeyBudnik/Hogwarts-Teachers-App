@@ -9,6 +9,8 @@ import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.fragments.app_menu.AppMenuFragment
 import com.bdev.hengschoolteacher.ui.fragments.lessons.LessonsFragment
 import com.bdev.hengschoolteacher.ui.fragments.app_menu.data.AppMenuItem
+import com.bdev.hengschoolteacher.ui.fragments.monitoring.header.MonitoringHeaderFragment
+import com.bdev.hengschoolteacher.ui.fragments.monitoring.header.data.MonitoringHeaderFragmentItem
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +28,7 @@ class MonitoringLessonsPageFragment : BasePageFragment<MonitoringLessonsPageFrag
         super.doOnViewCreated()
 
         initHeader()
+        initSecondaryHeader()
         initLessonsList()
         initWeekSelectionBar()
         initMenu()
@@ -41,6 +44,10 @@ class MonitoringLessonsPageFragment : BasePageFragment<MonitoringLessonsPageFrag
         monitoringLessonsHeaderView.setLeftButtonAction {
             monitoringLessonsRootView.openMenu()
         }
+    }
+
+    private fun initSecondaryHeader() {
+        getSecondaryHeaderFragment().setCurrentItem(item = MonitoringHeaderFragmentItem.LESSONS)
     }
 
     private fun initLessonsList() {
@@ -86,6 +93,9 @@ class MonitoringLessonsPageFragment : BasePageFragment<MonitoringLessonsPageFrag
             visible = data.calendarEnabled
         )
     }
+
+    private fun getSecondaryHeaderFragment(): MonitoringHeaderFragment =
+        childFragmentManager.findFragmentById(R.id.monitoringLessonsSecondaryHeaderFragment) as MonitoringHeaderFragment
 
     private fun getMenuFragment(): AppMenuFragment =
         childFragmentManager.findFragmentById(R.id.appMenuFragment) as AppMenuFragment

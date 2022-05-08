@@ -11,7 +11,6 @@ import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragmentViewModel
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragmentViewModelImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlin.math.log
 
 interface TeacherPageFragmentViewModel : BasePageFragmentViewModel {
     fun getDataLiveData(): LiveData<TeacherPageFragmentData>
@@ -23,19 +22,19 @@ interface TeacherPageFragmentViewModel : BasePageFragmentViewModel {
 class TeacherPageFragmentViewModelImpl @Inject constructor(
     private val staffMembersStorageInteractor: StaffMembersStorageInteractor
 ): TeacherPageFragmentViewModel, BasePageFragmentViewModelImpl() {
-    private val dataLiveData = MutableLiveDataWithState(
-        getInitialData()
+    private val dataLiveData = MutableLiveDataWithState<TeacherPageFragmentData>(
+        initialValue = null
     )
 
     override fun getDataLiveData() = dataLiveData.getLiveData()
 
     override fun init(teacherLogin: String) {
-        dataLiveData.updateValue { oldValue ->
-            oldValue.copy(
-                teacher = staffMembersStorageInteractor.getStaffMember(
-                    login = teacherLogin
-                ) ?: getEmptyTeacher()
-            )
+        staffMembersStorageInteractor.getStaffMember(login = teacherLogin)?.let { teacher ->
+            dataLiveData.updateValue {
+                TeacherPageFragmentData(
+                    teacher = teacher
+                )
+            }
         }
     }
 
@@ -44,22 +43,4 @@ class TeacherPageFragmentViewModelImpl @Inject constructor(
             navCommand = NavCommand.back()
         )
     }
-
-    private fun getInitialData(): TeacherPageFragmentData =
-        TeacherPageFragmentData(
-            teacher = getEmptyTeacher()
-        )
-
-    private fun getEmptyTeacher(): StaffMember =
-        StaffMember(
-            login = "",
-            person = Person(
-                name = "",
-                contacts = PersonContacts(
-                    phones = emptyList(),
-                    vkLinks = emptyList()
-                )
-            ),
-            salaryIn30m = 0
-        )
 }

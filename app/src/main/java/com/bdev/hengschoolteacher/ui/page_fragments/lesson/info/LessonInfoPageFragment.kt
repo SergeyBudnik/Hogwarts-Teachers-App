@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
@@ -20,10 +21,7 @@ import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAtten
 import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
 import com.bdev.hengschoolteacher.interactors.teachers.TeacherInfoInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.lesson.attendance.LessonAttendanceActivityHandler
 import com.bdev.hengschoolteacher.ui.page_fragments.lesson.info.adapters.LessonInfoStudentsListAdapter
-import com.bdev.hengschoolteacher.ui.page_fragments.lesson.status.LessonStatusActivityHandler
-import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_lesson.*
@@ -31,7 +29,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LessonInfoPageFragment : BasePageFragment<LessonInfoPageFragmentViewModel>() {
-    lateinit var activityData: LessonInfoActivityData
+    private val args: LessonInfoPageFragmentArgs by navArgs()
 
     @Inject lateinit var groupsStorageInteractor: GroupsStorageInteractor
     @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
@@ -54,7 +52,7 @@ class LessonInfoPageFragment : BasePageFragment<LessonInfoPageFragmentViewModel>
 
         // activityData = intent.getSerializableExtra(EXTRA_DATA) as LessonInfoActivityData todo
 
-        lessonHeaderView.setLeftButtonAction { doFinish() }
+        // lessonHeaderView.setLeftButtonAction { doFinish() }
 
         doInit()
     }
@@ -62,47 +60,47 @@ class LessonInfoPageFragment : BasePageFragment<LessonInfoPageFragmentViewModel>
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        when (requestCode) {
-            LessonInfoActivityParams.REQUEST_CODE_LESSON_ATTENDANCE -> {
-                LessonAttendanceActivityHandler.handle(resultCode = resultCode) {
-                    handleUpdate()
-                }
-            }
-            LessonInfoActivityParams.REQUEST_CODE_LESSON_STATUS -> {
-                LessonStatusActivityHandler.handle(resultCode = resultCode) {
-                    handleUpdate()
-                }
-            }
-        }
+//        when (requestCode) {
+//            LessonInfoActivityParams.REQUEST_CODE_LESSON_ATTENDANCE -> {
+//                LessonAttendanceActivityHandler.handle(resultCode = resultCode) {
+//                    handleUpdate()
+//                }
+//            }
+//            LessonInfoActivityParams.REQUEST_CODE_LESSON_STATUS -> {
+//                LessonStatusActivityHandler.handle(resultCode = resultCode) {
+//                    handleUpdate()
+//                }
+//            }
+//        }
     }
 
-    private fun handleUpdate() {
-        val group = groupsStorageInteractor.getById(activityData.groupId) ?: throw RuntimeException()
-        val lesson = group.lessons.find { it.id == activityData.lessonId } ?: throw RuntimeException()
+//    private fun handleUpdate() {
+//        val group = groupsStorageInteractor.getById(pageFragmentData.groupId) ?: throw RuntimeException()
+//        val lesson = group.lessons.find { it.id == pageFragmentData.lessonId } ?: throw RuntimeException()
+//
+//        if (lessonStateService.isLessonFilled(lesson, pageFragmentData.weekIndex)) {
+//            // doFinish()
+//        } else {
+//            doInit()
+//        }
+//    }
 
-        if (lessonStateService.isLessonFilled(lesson, activityData.weekIndex)) {
-            doFinish()
-        } else {
-            doInit()
-        }
-    }
-
-    private fun doInit() {
-        val group = groupsStorageInteractor.getById(activityData.groupId) ?: throw RuntimeException()
-        val lesson = group.lessons.find { it.id == activityData.lessonId } ?: throw RuntimeException()
-        val students = lessonsService.getLessonStudents(activityData.lessonId, activityData.weekIndex)
+    private fun `doInit`() {
+        val group = groupsStorageInteractor.getById(args.args.groupId) ?: throw RuntimeException()
+        val lesson = group.lessons.find { it.id == args.args.lessonId } ?: throw RuntimeException()
+        val students = lessonsService.getLessonStudents(args.args.lessonId, args.args.weekIndex)
         val lessonStatus = lessonsStatusService.getLessonStatus(
-                activityData.lessonId,
-                lessonsService.getLessonStartTime(
-                        activityData.lessonId,
-                        activityData.weekIndex
-                )
+            args.args.lessonId,
+            lessonsService.getLessonStartTime(
+                args.args.lessonId,
+                args.args.weekIndex
+            )
         )
 
         staffMembersStorageInteractor.getStaffMember(lesson.teacherLogin)?.let { teacher ->
             lessonTimeView.bind(
                     lesson = lesson,
-                    lessonStartTime = lessonsService.getLessonStartTime(lesson.id, activityData.weekIndex),
+                    lessonStartTime = lessonsService.getLessonStartTime(lesson.id, args.args.weekIndex),
                     teacherName = teacherInfoInteractor.getTeachersName(teacher),
                     teacherSurname = teacherInfoInteractor.getTeachersSurname(teacher)
             )
@@ -120,11 +118,11 @@ class LessonInfoPageFragment : BasePageFragment<LessonInfoPageFragmentViewModel>
         }
 
         lessonMarkStatusView.setOnClickListener {
-            LessonInfoActivityNavigation.goToStatus(
-                from = this,
-                lessonId = activityData.lessonId,
-                weekIndex = activityData.weekIndex
-            )
+//            LessonInfoActivityNavigation.goToStatus(
+//                from = this,
+//                lessonId = pageFragmentData.lessonId,
+//                weekIndex = pageFragmentData.weekIndex
+//            )
         }
 
         lessonAddTransferView.setOnClickListener {
@@ -136,21 +134,21 @@ class LessonInfoPageFragment : BasePageFragment<LessonInfoPageFragmentViewModel>
         val adapter = LessonInfoStudentsListAdapter(
                 context = requireContext(),
                 lesson = lesson,
-                weekIndex = activityData.weekIndex,
+                weekIndex = args.args.weekIndex,
                 goToStudentInformationAction = { student ->
-                    LessonInfoActivityNavigation.goToStudentInformation(
-                            from = this,
-                            studentLogin = student.login
-                    )
+//                    LessonInfoActivityNavigation.goToStudentInformation(
+//                            from = this,
+//                            studentLogin = student.login
+//                    )
                 },
                 goToStudentPaymentAction = { student ->
-                    LessonInfoActivityNavigation.goToStudentPayment(
-                            from = this,
-                            studentLogin = student.login
-                    )
+//                    LessonInfoActivityNavigation.goToStudentPayment(
+//                            from = this,
+//                            studentLogin = student.login
+//                    )
                 },
                 goToLessonAttendanceAction = { data ->
-                    LessonInfoActivityNavigation.goToAttendance(from = this, data = data)
+//                    LessonInfoActivityNavigation.goToAttendance(from = this, data = data)
                 }
         )
 
@@ -158,7 +156,7 @@ class LessonInfoPageFragment : BasePageFragment<LessonInfoPageFragmentViewModel>
             Pair(
                     Pair(
                             it,
-                            studentsAttendanceProviderInteractor.getAttendance(lesson.id, it.login, activityData.weekIndex)
+                            studentsAttendanceProviderInteractor.getAttendance(lesson.id, it.login, args.args.weekIndex)
                     ),
                     Pair(
                             studentsDebtsInteractor.getDebt(it.login),
@@ -169,6 +167,4 @@ class LessonInfoPageFragment : BasePageFragment<LessonInfoPageFragmentViewModel>
 
         lessonStudentsListView.adapter = adapter
     }
-
-    private fun doFinish() = LessonInfoActivityNavigation.goBackWithSuccess(from = this)
 }

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
@@ -15,9 +16,10 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.ui.adapters.BaseWeekItemsListAdapter
+import com.bdev.hengschoolteacher.ui.fragments.student.header.StudentHeaderFragment
+import com.bdev.hengschoolteacher.ui.fragments.student.header.StudentHeaderFragmentData
+import com.bdev.hengschoolteacher.ui.fragments.student.header.data.StudentHeaderFragmentItem
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
-import com.bdev.hengschoolteacher.ui.views.app.student.StudentHeaderItem
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_student_information.*
@@ -63,6 +65,8 @@ class StudentInformationTimetableListAdapter(context: Context) : BaseWeekItemsLi
 
 @AndroidEntryPoint
 class StudentInformationPageFragment : BasePageFragment<StudentInformationPageFragmentViewModel>() {
+    private val args: StudentInformationPageFragmentArgs by navArgs()
+
     @Inject lateinit var studentsStorageInteractor: StudentsStorageInteractor
     @Inject lateinit var lessonsService: LessonsInteractor
 
@@ -79,16 +83,18 @@ class StudentInformationPageFragment : BasePageFragment<StudentInformationPageFr
             studentInformationHeaderView
                 .setTitle("Студент. ${data.student.person.name}")
                 .setLeftButtonAction { fragmentViewModel.goBack() }
-
-            studentInformationSecondaryHeaderView.bind(
-                item = StudentHeaderItem.DETAILS,
-                studentLogin = data.student.login
-            )
-
+            
             initPhonesList(data.student)
 
             initList(data.student)
         }
+
+        getSecondaryHeaderFragment().init(
+            login = args.args.login,
+            item = StudentHeaderFragmentItem.DETAILS
+        )
+
+        fragmentViewModel.init(login = args.args.login)
     }
 
     private fun initPhonesList(student: Student) {
@@ -102,7 +108,8 @@ class StudentInformationPageFragment : BasePageFragment<StudentInformationPageFr
 
         val adapter = StudentInformationTimetableListAdapter(requireContext())
 
-        adapter.setItems(lessonsService
+        adapter.setItems(
+            items = lessonsService
                 .getStudentLessons(student.login)
                 .filter { it.lesson.creationTime <= currentTime }
                 .filter { currentTime <= it.lesson.deactivationTime }
@@ -110,4 +117,9 @@ class StudentInformationPageFragment : BasePageFragment<StudentInformationPageFr
 
         studentInformationTimetableListView.adapter = adapter
     }
+
+    private fun getSecondaryHeaderFragment(): StudentHeaderFragment =
+        childFragmentManager.findFragmentById(
+            R.id.studentInformationSecondaryHeaderFragment
+        ) as StudentHeaderFragment
 }

@@ -34,7 +34,7 @@ class ProfileLessonsPageFragmentViewModelImpl @Inject constructor(
     override fun getDataLiveData() = dataLiveData.getLiveData()
 
     override fun toggleFilter() {
-        dataLiveData.updateValue { oldData ->
+        dataLiveData.updateValue(defaultValue = getInitialData()) { oldData ->
             oldData.copy(
                 filterEnabled = !oldData.filterEnabled
             )
@@ -42,13 +42,13 @@ class ProfileLessonsPageFragmentViewModelImpl @Inject constructor(
     }
 
     override fun toggleCalendar() {
-        dataLiveData.updateValue { oldData ->
+        dataLiveData.updateValue(defaultValue = getInitialData()) { oldData ->
             oldData.copy(calendarEnabled = !oldData.calendarEnabled)
         }
     }
 
     override fun setWeekIndex(weekIndex: Int) {
-        dataLiveData.updateValue { oldData ->
+        dataLiveData.updateValue(defaultValue = getInitialData()) { oldData ->
             oldData.copy(
                 weekIndex = weekIndex,
                 lessons = getLessons(weekIndex = weekIndex),

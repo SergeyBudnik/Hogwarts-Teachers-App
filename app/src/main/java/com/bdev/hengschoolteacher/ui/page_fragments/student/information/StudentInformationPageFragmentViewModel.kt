@@ -26,19 +26,17 @@ interface StudentInformationPageFragmentViewModel : BasePageFragmentViewModel {
 class StudentInformationPageFragmentViewModelImpl @Inject constructor(
     private val studentsStorageInteractor: StudentsStorageInteractor
 ): StudentInformationPageFragmentViewModel, BasePageFragmentViewModelImpl() {
-    private val dataLiveData = MutableLiveDataWithState(
-        getInitialState()
+    private val dataLiveData = MutableLiveDataWithState<StudentInformationPageFragmentData>(
+        initialValue = null
     )
 
     override fun getDataLiveData() = dataLiveData.getLiveData()
 
     override fun init(login: String) {
-        dataLiveData.updateValue { oldValue ->
-            oldValue.copy(
-                student = studentsStorageInteractor.getByLogin(
-                    studentLogin = login
-                ) ?: getEmptyStudent()
-            )
+        studentsStorageInteractor.getByLogin(studentLogin = login)?.let { student ->
+            dataLiveData.updateValue {
+                StudentInformationPageFragmentData(student = student)
+            }
         }
     }
 
@@ -47,28 +45,4 @@ class StudentInformationPageFragmentViewModelImpl @Inject constructor(
             navCommand = NavCommand.back()
         )
     }
-
-    private fun getInitialState(): StudentInformationPageFragmentData =
-        StudentInformationPageFragmentData(
-            student = getEmptyStudent()
-        )
-
-    private fun getEmptyStudent(): Student =
-        Student(
-            login = "",
-            person = Person(
-                name = "",
-                contacts = PersonContacts(
-                    phones = emptyList(),
-                    vkLinks = emptyList()
-                )
-            ),
-            managerLogin = "",
-            educationInfo = EducationInfo(
-                age = EducationAge.ADULT,
-                level = EducationLevel.ADVANCED
-            ),
-            statusType = StudentStatusType.STUDYING,
-            studentGroups = emptyList()
-        )
 }

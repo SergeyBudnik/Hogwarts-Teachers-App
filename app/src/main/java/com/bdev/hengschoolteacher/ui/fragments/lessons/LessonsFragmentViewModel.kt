@@ -1,6 +1,7 @@
 package com.bdev.hengschoolteacher.ui.fragments.lessons
 
 import androidx.lifecycle.LiveData
+import com.bdev.hengschoolteacher.NavGraphDirections
 import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.interactors.LessonStateService
@@ -11,7 +12,8 @@ import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageI
 import com.bdev.hengschoolteacher.interactors.students_attendances.StudentsAttendancesProviderInteractor
 import com.bdev.hengschoolteacher.ui.fragments.BaseFragmentViewModel
 import com.bdev.hengschoolteacher.ui.fragments.BaseFragmentViewModelImpl
-import com.bdev.hengschoolteacher.ui.views.app.lesson.LessonRowViewData
+import com.bdev.hengschoolteacher.ui.navigation.NavCommand
+import com.bdev.hengschoolteacher.ui.page_fragments.lesson.info.LessonInfoPageFragmentArguments
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -19,6 +21,8 @@ interface LessonsFragmentViewModel : BaseFragmentViewModel {
     fun getDataLiveData(): LiveData<LessonsFragmentData>
 
     fun update(lessons: List<GroupAndLesson>, weekIndex: Int, filterEnabled: Boolean)
+
+    fun navigateToLesson(lessonRowViewData: LessonsFragmentItemData)
 }
 
 @HiltViewModel
@@ -30,15 +34,15 @@ class LessonsFragmentViewModelImpl @Inject constructor(
     private val lessonsAttendancesService: LessonsAttendancesService,
     private val lessonsStatusService: LessonsStatusStorageInteractor
 ): LessonsFragmentViewModel, BaseFragmentViewModelImpl() {
-    private val dataLiveData = MutableLiveDataWithState(
-        initialValue = getInitialData()
+    private val dataLiveData = MutableLiveDataWithState<LessonsFragmentData>(
+        initialValue = null
     )
 
     override fun getDataLiveData() = dataLiveData.getLiveData()
 
     override fun update(lessons: List<GroupAndLesson>, weekIndex: Int, filterEnabled: Boolean) {
-        dataLiveData.updateValue { oldValue ->
-            oldValue.copy(
+        dataLiveData.updateValue {
+            LessonsFragmentData(
                 lessons = getLessonsViewData(
                     lessons = lessons,
                     weekIndex = weekIndex,
@@ -50,19 +54,25 @@ class LessonsFragmentViewModelImpl @Inject constructor(
         }
     }
 
-    private fun getInitialData(): LessonsFragmentData {
-        return LessonsFragmentData(
-            lessons = emptyList(),
-            weekIndex = 0,
-            filterEnabled = false
+    override fun navigateToLesson(lessonRowViewData: LessonsFragmentItemData) {
+        navigate(
+            navCommand = NavCommand.forward(
+                navDir = NavGraphDirections.toLessonInfoAction(
+                    args = LessonInfoPageFragmentArguments(
+                        groupId = lessonRowViewData.group.id,
+                        lessonId = lessonRowViewData.lesson.id,
+                        weekIndex = lessonRowViewData.weekIndex
+                    )
+                )
+            )
         )
     }
 
-    private fun getLessonsViewData(lessons: List<GroupAndLesson>, weekIndex: Int, filterEnabled: Boolean): List<LessonRowViewData> =
+    private fun getLessonsViewData(lessons: List<GroupAndLesson>, weekIndex: Int, filterEnabled: Boolean): List<LessonsFragmentItemData> =
         lessons.filter {
             !filterEnabled || !lessonStateService.isLessonFilled(it.lesson, weekIndex)
         }.map { groupAndLesson ->
-            LessonRowViewData(
+            LessonsFragmentItemData(
                 staffMember = staffMembersStorageInteractor.getStaffMember(groupAndLesson.lesson.teacherLogin),
                 group = groupAndLesson.group,
                 lesson = groupAndLesson.lesson,

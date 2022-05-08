@@ -5,11 +5,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.teacher.debts.MonitoringTeacherDebtsPageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.teacher.lessons.MonitoringTeacherLessonsPageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.teacher.payments.MonitoringTeacherPaymentsPageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.teacher.salary.MonitoringTeacherSalaryPageFragment
 import kotlinx.android.synthetic.main.view_monitoring_teacher_header.view.*
 
 class MonitoringTeacherHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {

@@ -82,7 +82,7 @@
 
     <fragment
         android:id="@+id/studentsListPage"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.students.list.StudentsListPageFragment"/>
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.students.StudentsListPageFragment"/>
 
     <!-- Student -->
 
@@ -97,16 +97,45 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/studentStatisticsPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.student.statistics.StudentStatisticsPageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.student.statistics.StudentStatisticsPageFragmentArguments"
+            app:nullable="false"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/studentPaymentsPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.student.payments.StudentPaymentsPageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.student.payments.StudentPaymentsPageFragmentArguments"
+            app:nullable="false"/>
+
+    </fragment>
+
     <!-- Lesson -->
+
+    <fragment
+        android:id="@+id/lessonInfoPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.info.LessonInfoPageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.lesson.info.LessonInfoPageFragmentArguments"
+            app:nullable="false"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/lessonAttendancePage"
         android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.attendance.LessonAttendancePageFragment">
     </fragment>
-
-    <fragment
-        android:id="@+id/lessonInfoPage"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.info.LessonInfoPageFragment"/>
 
     <fragment
         android:id="@+id/lessonStatusPage"
@@ -224,6 +253,20 @@
         android:id="@+id/studentsListToStudentAction"
         app:destination="@id/studentInformationPage"/>
 
+    <!-- Student -->
+
+    <action
+        android:id="@+id/studentHeaderToStudentInformationAction"
+        app:destination="@id/studentInformationPage"/>
+
+    <action
+        android:id="@+id/studentHeaderToStudentStatisticsAction"
+        app:destination="@id/studentStatisticsPage"/>
+
+    <action
+        android:id="@+id/studentHeaderToStudentPaymentsAction"
+        app:destination="@id/studentPaymentsPage"/>
+
     <!-- Monitoring -->
 
     <action
@@ -249,5 +292,11 @@
         app:destination="@id/loginPage"/>
 
     <!-- Teacher -->
+
+    <!-- Lesson -->
+
+    <action
+        android:id="@+id/toLessonInfoAction"
+        app:destination="@id/lessonInfoPage"/>
 
 </navigation>

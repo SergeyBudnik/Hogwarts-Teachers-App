@@ -38,11 +38,11 @@
                 android:layout_alignParentBottom="true"
                 android:visibility="gone"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsView
-                android:id="@+id/monitoringTeacherLessonsListView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/monitoringTeacherLessonsWeekSelectionBarView"/>
+<!--            <com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsView-->
+<!--                android:id="@+id/monitoringTeacherLessonsListView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_above="@id/monitoringTeacherLessonsWeekSelectionBarView"/>-->
 
         </RelativeLayout>
 

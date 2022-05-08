@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.ui.fragments.BaseFragment
+import com.bdev.hengschoolteacher.ui.fragments.lessons.adapters.LessonsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
-import com.bdev.hengschoolteacher.ui.views.app.lessons.LessonsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_lessons.*
 
@@ -34,6 +35,12 @@ class LessonsFragment : BaseFragment<LessonsFragmentViewModel>() {
     }
 
     fun init(disableFilterAction: () -> Unit) {
+        lessonsListView.setOnItemClickListener { adapterView, _, position, _ ->
+            (adapterView.getItemAtPosition(position) as Pair<DayOfWeek, LessonsFragmentItemData>).second.let { lessonRowViewData ->
+                fragmentViewModel.navigateToLesson(lessonRowViewData = lessonRowViewData)
+            }
+        }
+
         lessonsEmptyView.bind(disableFilterAction = disableFilterAction)
     }
 

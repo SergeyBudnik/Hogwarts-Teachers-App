@@ -39,7 +39,7 @@ class MonitoringLessonsPageFragmentViewModelImpl @Inject constructor(
     }
 
     override fun toggleFilter() {
-        dataLiveData.updateValue { oldValue ->
+        dataLiveData.updateValue(defaultValue = getInitialData()) { oldValue ->
             oldValue.copy(
                 filterEnabled = !oldValue.filterEnabled,
                 lessons = getLessons(
@@ -50,7 +50,7 @@ class MonitoringLessonsPageFragmentViewModelImpl @Inject constructor(
     }
 
     override fun toggleCalendar() {
-        dataLiveData.updateValue { oldValue ->
+        dataLiveData.updateValue(defaultValue = getInitialData()) { oldValue ->
             oldValue.copy(
                 calendarEnabled = !oldValue.calendarEnabled
             )
@@ -58,7 +58,7 @@ class MonitoringLessonsPageFragmentViewModelImpl @Inject constructor(
     }
 
     override fun setWeekIndex(weekIndex: Int) {
-        dataLiveData.updateValue { oldValue ->
+        dataLiveData.updateValue(defaultValue = getInitialData()) { oldValue ->
             oldValue.copy(
                 weekIndex = weekIndex,
                 lessons = getLessons(

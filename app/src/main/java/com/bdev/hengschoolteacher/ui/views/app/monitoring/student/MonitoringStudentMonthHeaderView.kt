@@ -5,8 +5,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
-import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.student.month_payments.MonitoringStudentMonthPaymentsPageFragment
 import kotlinx.android.synthetic.main.view_monitoring_student_month_header.view.*
 
 class MonitoringStudentMonthHeaderView : LinearLayout {
