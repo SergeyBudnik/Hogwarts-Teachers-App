@@ -81,7 +81,7 @@ class AppMenuView : LinearLayout {
         teacherLoginView.text = me.login
 
         menuItemMyProfileView.bind(
-                isCurrent = item == AppMenuItem.MY_PROFILE,
+                isCurrent = item == AppMenuItem.PROFILE,
                 hasAlerts = hasProfileAlerts
         )
 

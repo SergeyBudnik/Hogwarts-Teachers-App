@@ -138,7 +138,7 @@ class StudentStatisticsPageFragment : BasePageFragment<StudentStatisticsPageFrag
         ViewModelProvider(this).get(StudentStatisticsPageFragmentViewModelImpl::class.java)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        inflater.inflate(R.layout.page_fragment_monitoring_lessons, container, false)
+        inflater.inflate(R.layout.fragment_monitoring_lessons, container, false)
 
     override fun doOnViewCreated() {
         super.doOnViewCreated()

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profileRootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
+            android:id="@+id/profilePrimaryHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Профиль"
+            app:leftIcon="@drawable/ic_menu"/>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/profileSecondaryHeaderView"
+            android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.fragments.header.ProfileHeaderFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_profile_header"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/profileLessonsView"
+                android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.fragments.content.lessons.ProfileLessonsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_profile_lessons"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/profileSalaryView"
+                android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.fragments.content.salary.ProfileSalaryFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_profile_salary"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/profilePaymentsView"
+                android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.fragments.content.payments.ProfilePaymentsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_profile_payments"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/profileDebtsView"
+                android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.fragments.content.debts.ProfileDebtsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_profile_debts"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView>

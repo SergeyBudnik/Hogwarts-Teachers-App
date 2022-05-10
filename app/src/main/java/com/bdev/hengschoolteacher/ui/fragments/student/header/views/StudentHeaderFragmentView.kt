@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.NavGraphDirections
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.ui.fragments.profile.header.ProfileHeaderFragmentData
 import com.bdev.hengschoolteacher.ui.fragments.student.header.StudentHeaderFragmentData
 import com.bdev.hengschoolteacher.ui.fragments.student.header.data.StudentHeaderFragmentItem
 import com.bdev.hengschoolteacher.ui.navigation.NavCommand

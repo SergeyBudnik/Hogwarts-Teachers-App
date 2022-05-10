@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profileLessonsRootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.bdev.hengschoolteacher.ui.views.app.date.WeekSelectionBarView
+        android:id="@+id/profileLessonsWeekSelectionBarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/profileLessonsListView"
+        android:name="com.bdev.hengschoolteacher.ui.fragments.lessons.LessonsListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/profileLessonsWeekSelectionBarView"
+        tools:layout="@layout/fragment_lessons"/>
+
+</RelativeLayout>

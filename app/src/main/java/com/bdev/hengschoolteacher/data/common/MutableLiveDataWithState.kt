@@ -15,6 +15,8 @@ class MutableLiveDataWithState<T : Any>(initialValue: T?) {
 
     fun getLiveData(): LiveData<T> = liveData
 
+    fun getValue(): T? = state
+
     fun updateValue(
         defaultValue: T,
         updateOnChangeOnly: Boolean = true,

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/monitoringTeachersRootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/monitoringTeachersListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/app_size_1"
+        android:paddingBottom="@dimen/app_size_1"
+        android:paddingStart="@dimen/app_size_1"
+        android:paddingEnd="@dimen/app_size_1"
+        android:clipToPadding="true"
+        android:divider="@null"
+        android:dividerHeight="@dimen/app_size_0_5"/>
+
+</RelativeLayout>

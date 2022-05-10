@@ -7,57 +7,27 @@
 
     <fragment
         android:id="@+id/startPage"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.start.StartPageFragment">
-
-    </fragment>
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.start.StartPageFragment"/>
 
     <fragment
         android:id="@+id/loginPage"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.login.LoginPageFragment">
-
-    </fragment>
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.login.LoginPageFragment"/>
 
     <fragment
         android:id="@+id/loadingPage"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.loading.LoadingPageFragment">
-
-        <action
-            android:id="@+id/loadingToProfileLessons"
-            app:destination="@id/profileLessonsPage"/>
-
-    </fragment>
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.loading.LoadingPageFragment"/>
 
     <fragment
         android:id="@+id/reloginPage"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.relogin.ReloginPageFragment">
-
-    </fragment>
-
-    <!-- Profile -->
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.relogin.ReloginPageFragment"/>
 
     <fragment
-        android:id="@+id/profileLessonsPage"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.lessons.ProfileLessonsPageFragment">
-
-    </fragment>
+        android:id="@+id/profilePage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.ProfilePageFragment"/>
 
     <fragment
-        android:id="@+id/profileSalaryPage"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.salary.ProfileSalaryPageFragment">
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/profilePaymentsPage"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.payments.ProfilePaymentsPageFragment">
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/profileDebtsPage"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.debts.ProfileDebtsPageFragment">
-
-    </fragment>
+        android:id="@+id/monitoringPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.MonitoringPageFragment"/>
 
     <!-- Teachers -->
 
@@ -145,23 +115,6 @@
 
     <!-- Monitoring -->
 
-    <fragment
-        android:id="@+id/monitoringLessons"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.lessons.MonitoringLessonsPageFragment">
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/monitoringTeachers"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.teachers.MonitoringTeachersPageFragment">
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/monitoringStudents"
-        android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.students.MonitoringStudentsPageFragment">
-
-    </fragment>
 
     <!-- Settings -->
 
@@ -189,13 +142,18 @@
         android:id="@+id/loginToLoading"
         app:destination="@id/loadingPage"/>
 
+    <action
+        android:id="@+id/loadingToProfileLessons"
+        app:destination="@id/profilePage"/>
+
+
     <!--
      - Global Actions - Menu
      -->
 
     <action
         android:id="@+id/menuToProfileGlobalNavAction"
-        app:destination="@id/profileLessonsPage"/>
+        app:destination="@id/profilePage"/>
 
     <action
         android:id="@+id/menuToStudentsGlobalNavAction"
@@ -207,7 +165,7 @@
 
     <action
         android:id="@+id/menuToMonitoringGlobalNavAction"
-        app:destination="@id/monitoringLessons"/>
+        app:destination="@id/monitoringPage"/>
 
     <action
         android:id="@+id/menuToSettingsGlobalNavAction"
@@ -217,27 +175,27 @@
      - Profile
      -->
 
-    <action
-        android:id="@+id/profileHeaderToProfileLessons"
-        app:destination="@id/profileLessonsPage"/>
+<!--    <action-->
+<!--        android:id="@+id/profileHeaderToProfileLessons"-->
+<!--        app:destination="@id/profileLessonsPage"/>-->
 
-    <action
-        android:id="@+id/profileHeaderToProfileSalary"
-        app:destination="@id/profileSalaryPage"/>
+<!--    <action-->
+<!--        android:id="@+id/profileHeaderToProfileSalary"-->
+<!--        app:destination="@id/profileSalaryPage"/>-->
 
-    <action
-        android:id="@+id/profileHeaderToProfilePayments"
-        app:destination="@id/profilePaymentsPage"/>
+<!--    <action-->
+<!--        android:id="@+id/profileHeaderToProfilePayments"-->
+<!--        app:destination="@id/profilePaymentsPage"/>-->
 
-    <action
-        android:id="@+id/profileHeaderToProfileDebts"
-        app:destination="@id/profileDebtsPage"/>
+<!--    <action-->
+<!--        android:id="@+id/profileHeaderToProfileDebts"-->
+<!--        app:destination="@id/profileDebtsPage"/>-->
 
     <!-- Teachers -->
 
     <action
         android:id="@+id/teachersListToProfile"
-        app:destination="@id/profileLessonsPage"/>
+        app:destination="@id/profilePage"/>
 
     <action
         android:id="@+id/teachersListToTeacherAction"
@@ -247,7 +205,7 @@
 
     <action
         android:id="@+id/studentsListToProfileAction"
-        app:destination="@id/profileLessonsPage"/>
+        app:destination="@id/profilePage"/>
 
     <action
         android:id="@+id/studentsListToStudentAction"
@@ -269,23 +227,11 @@
 
     <!-- Monitoring -->
 
-    <action
-        android:id="@+id/monitoringToMonitoringLessons"
-        app:destination="@id/monitoringLessons"/>
-
-    <action
-        android:id="@+id/monitoringToMonitoringTeachers"
-        app:destination="@id/monitoringTeachers"/>
-
-    <action
-        android:id="@+id/monitoringToMonitoringStudents"
-        app:destination="@id/monitoringStudents"/>
-
     <!-- Settings -->
 
     <action
         android:id="@+id/settingsToProfile"
-        app:destination="@id/profileLessonsPage"/>
+        app:destination="@id/profilePage"/>
 
     <action
         android:id="@+id/settingsToLogin"
