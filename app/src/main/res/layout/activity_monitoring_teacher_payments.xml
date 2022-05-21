@@ -21,7 +21,7 @@
             app:firstRightIcon="@drawable/ic_filter"
             app:secondRightIcon="@drawable/ic_teacher"/>
 
-        <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
+        <com.bdev.hengschoolteacher.ui.page_fragments.monitoring_teacher.fragments.header.views.MonitoringTeacherHeaderView
             android:id="@+id/monitoringTeacherPaymentsSecondaryHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

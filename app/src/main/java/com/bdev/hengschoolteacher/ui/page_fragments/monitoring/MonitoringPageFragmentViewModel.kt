@@ -7,11 +7,18 @@ import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.data.MonitoringPa
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-interface MonitoringPageFragmentViewModel : BaseContentPageFragmentViewModel<MonitoringPageFragmentTab>
+interface MonitoringPageFragmentViewModel : BaseContentPageFragmentViewModel<
+    MonitoringPageFragmentTab,
+    Any
+>
 
 @HiltViewModel
-class MonitoringPageFragmentViewModelImpl @Inject constructor(
-): MonitoringPageFragmentViewModel, BaseContentPageFragmentViewModelImpl<MonitoringPageFragmentTab>(
+class MonitoringPageFragmentViewModelImpl @Inject constructor():
+    MonitoringPageFragmentViewModel,
+    BaseContentPageFragmentViewModelImpl<
+        MonitoringPageFragmentTab,
+        Any
+    >(
     defaultTab = MonitoringPageFragmentTab.LESSONS
 ) {
     override fun goBack() {

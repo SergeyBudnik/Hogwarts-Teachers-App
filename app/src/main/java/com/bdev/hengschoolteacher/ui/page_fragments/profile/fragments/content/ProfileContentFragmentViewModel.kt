@@ -6,7 +6,10 @@ import com.bdev.hengschoolteacher.ui.fragments.common.content.BaseContentFragmen
 import com.bdev.hengschoolteacher.ui.page_fragments.profile.data.ProfilePageFragmentTab
 
 interface ProfileContentFragmentViewModel<DataType : BaseContentFragmentData> :
-    BaseContentFragmentViewModel<ProfilePageFragmentTab, DataType>
+    BaseContentFragmentViewModel<ProfilePageFragmentTab, Any, DataType>
 
 abstract class ProfileContentFragmentViewModelImpl<DataType : BaseContentFragmentData> :
-    BaseContentFragmentViewModelImpl<ProfilePageFragmentTab, DataType>()
+    BaseContentFragmentViewModelImpl<ProfilePageFragmentTab, Any, DataType>()
+{
+    final override fun setArgs(args: Any) { /* Do nothing */ }
+}

@@ -26,7 +26,7 @@
                 app:leftIcon="@drawable/ic_arrow_left"
                 app:firstRightIcon="@drawable/ic_teacher"/>
 
-            <com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
+            <com.bdev.hengschoolteacher.ui.page_fragments.monitoring_teacher.fragments.header.views.MonitoringTeacherHeaderView
                 android:id="@+id/monitoringTeacherDebtsSecondaryHeaderView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

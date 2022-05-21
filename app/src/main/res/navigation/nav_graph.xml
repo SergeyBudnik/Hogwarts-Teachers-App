@@ -29,6 +29,17 @@
         android:id="@+id/monitoringPage"
         android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.MonitoringPageFragment"/>
 
+    <fragment
+        android:id="@+id/monitoringTeacherPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring_teacher.MonitoringTeacherPageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.monitoring_teacher.MonitoringTeacherPageFragmentArguments"
+            app:nullable="false"/>
+
+    </fragment>
+
     <!-- Teachers -->
 
     <fragment
@@ -175,22 +186,6 @@
      - Profile
      -->
 
-<!--    <action-->
-<!--        android:id="@+id/profileHeaderToProfileLessons"-->
-<!--        app:destination="@id/profileLessonsPage"/>-->
-
-<!--    <action-->
-<!--        android:id="@+id/profileHeaderToProfileSalary"-->
-<!--        app:destination="@id/profileSalaryPage"/>-->
-
-<!--    <action-->
-<!--        android:id="@+id/profileHeaderToProfilePayments"-->
-<!--        app:destination="@id/profilePaymentsPage"/>-->
-
-<!--    <action-->
-<!--        android:id="@+id/profileHeaderToProfileDebts"-->
-<!--        app:destination="@id/profileDebtsPage"/>-->
-
     <!-- Teachers -->
 
     <action
@@ -244,5 +239,9 @@
     <action
         android:id="@+id/toLessonInfoAction"
         app:destination="@id/lessonInfoPage"/>
+
+    <action
+        android:id="@+id/toMonitoringTeacherAction"
+        app:destination="@id/monitoringTeacherPage"/>
 
 </navigation>

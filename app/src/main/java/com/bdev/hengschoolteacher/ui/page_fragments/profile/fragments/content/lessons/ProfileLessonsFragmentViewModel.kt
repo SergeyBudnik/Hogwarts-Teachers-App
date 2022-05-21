@@ -1,6 +1,6 @@
 package com.bdev.hengschoolteacher.ui.page_fragments.profile.fragments.content.lessons
 
-import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
+import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
 import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
@@ -12,6 +12,8 @@ import javax.inject.Inject
 
 interface ProfileLessonsPageFragmentViewModel : ProfileContentFragmentViewModel<ProfileLessonsFragmentData> {
     fun setWeekIndex(weekIndex: Int)
+
+    fun disableFilter()
 }
 
 @HiltViewModel
@@ -27,7 +29,7 @@ class ProfileLessonsPageFragmentViewModelImpl @Inject constructor(
         calendarEnabled = false
     )
 
-    private val dataLiveData = MutableLiveDataWithState(
+    private val dataLiveData = NullableMutableLiveDataWithState(
         initialValue = initialData
     )
 
@@ -46,6 +48,14 @@ class ProfileLessonsPageFragmentViewModelImpl @Inject constructor(
             oldData.copy(
                 weekIndex = weekIndex,
                 lessons = getLessons(weekIndex = weekIndex),
+            )
+        }
+    }
+
+    override fun disableFilter() {
+        dataLiveData.updateValue(defaultValue = initialData) { oldData ->
+            oldData.copy(
+                filterEnabled = false
             )
         }
     }

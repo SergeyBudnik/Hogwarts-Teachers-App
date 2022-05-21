@@ -25,20 +25,24 @@ class ProfileLessonsFragment : ProfileContentFragment<ProfileLessonsPageFragment
     override fun doOnViewCreated() {
         super.doOnViewCreated()
 
+        initLessonsList()
+
         fragmentViewModel.getDataLiveData().observe(this) { data ->
             bindLessonsList(data = data)
             bindWeekSelectionBar(data = data)
         }
-
-//        getLessonsFragment().init(
-//            disableFilterAction = {
-//                fragmentViewModel.toggleFilter()
-//            }
-//        )
-
+        
         profileLessonsWeekSelectionBarView.init { weekIndex ->
             fragmentViewModel.setWeekIndex(weekIndex = weekIndex)
         }
+    }
+
+    private fun initLessonsList() {
+        profileLessonsListView.getFragment<LessonsListFragment>().init(
+            disableFilterAction = {
+                fragmentViewModel.disableFilter()
+            }
+        )
     }
 
     private fun bindLessonsList(data: ProfileLessonsFragmentData) {

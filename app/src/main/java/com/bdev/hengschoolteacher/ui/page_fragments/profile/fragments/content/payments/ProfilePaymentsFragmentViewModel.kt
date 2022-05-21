@@ -1,6 +1,6 @@
 package com.bdev.hengschoolteacher.ui.page_fragments.profile.fragments.content.payments
 
-import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
+import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
 import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
@@ -22,7 +22,7 @@ class ProfilePaymentsPageFragmentViewModelImpl @Inject constructor(
     private val studentsStorageInteractor: StudentsStorageInteractor,
     private val staffMembersStorageInteractor: StaffMembersStorageInteractor
 ): ProfilePaymentsPageFragmentViewModel, ProfileContentFragmentViewModelImpl<ProfilePaymentsFragmentData>() {
-    private val dataLiveData = MutableLiveDataWithState(
+    private val dataLiveData = NullableMutableLiveDataWithState(
         initialValue = getInitialData()
     )
 

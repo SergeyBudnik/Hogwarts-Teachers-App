@@ -1,6 +1,6 @@
 package com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content.lessons
 
-import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
+import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.data.MonitoringPageFragmentTab
@@ -9,16 +9,16 @@ import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-interface MonitoringLessonsPageFragmentViewModel : MonitoringContentFragmentViewModel<MonitoringLessonsFragmentData> {
+interface MonitoringLessonsFragmentViewModel : MonitoringContentFragmentViewModel<MonitoringLessonsFragmentData> {
     fun setWeekIndex(weekIndex: Int)
 
     fun disableFilter()
 }
 
 @HiltViewModel
-class MonitoringLessonsPageFragmentViewModelImpl @Inject constructor(
+class MonitoringLessonsFragmentViewModelImpl @Inject constructor(
     private val lessonsInteractor: LessonsInteractor
-): MonitoringLessonsPageFragmentViewModel, MonitoringContentFragmentViewModelImpl<MonitoringLessonsFragmentData>() {
+): MonitoringLessonsFragmentViewModel, MonitoringContentFragmentViewModelImpl<MonitoringLessonsFragmentData>() {
     private val initialData = MonitoringLessonsFragmentData(
         visible = false,
         filterEnabled = false,
@@ -27,7 +27,7 @@ class MonitoringLessonsPageFragmentViewModelImpl @Inject constructor(
         lessons = getLessons(weekIndex = 0)
     )
 
-    private val dataLiveData = MutableLiveDataWithState(initialValue = initialData)
+    private val dataLiveData = NullableMutableLiveDataWithState(initialValue = initialData)
 
     override fun getDataLiveData() = dataLiveData.getLiveData()
 

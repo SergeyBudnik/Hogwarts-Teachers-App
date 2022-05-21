@@ -7,13 +7,13 @@ import com.bdev.hengschoolteacher.ui.page_fragments.profile.data.ProfilePageFrag
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-interface ProfilePageFragmentViewModel : BaseContentPageFragmentViewModel<ProfilePageFragmentTab>
+interface ProfilePageFragmentViewModel : BaseContentPageFragmentViewModel<ProfilePageFragmentTab, Any>
 
 @HiltViewModel
 class ProfilePageFragmentViewModelImpl @Inject constructor():
     ProfilePageFragmentViewModel,
-    BaseContentPageFragmentViewModelImpl<ProfilePageFragmentTab>(
-        defaultTab = ProfilePageFragmentTab.NONE
+    BaseContentPageFragmentViewModelImpl<ProfilePageFragmentTab, Any>(
+        defaultTab = ProfilePageFragmentTab.LESSONS
     )
 {
     override fun goBack() {

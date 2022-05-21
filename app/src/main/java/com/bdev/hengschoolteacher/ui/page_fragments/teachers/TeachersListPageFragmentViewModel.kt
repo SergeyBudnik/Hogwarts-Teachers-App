@@ -2,7 +2,7 @@ package com.bdev.hengschoolteacher.ui.page_fragments.teachers
 
 import androidx.lifecycle.LiveData
 import com.bdev.hengschoolteacher.NavGraphDirections
-import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
+import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.data.school.staff.StaffMember
 import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.ui.navigation.NavCommand
@@ -22,7 +22,7 @@ interface TeachersListPageFragmentViewModel : BasePageFragmentViewModel {
 class TeachersListPageFragmentViewModelImpl @Inject constructor(
     private val staffMembersStorageInteractor: StaffMembersStorageInteractor
 ): TeachersListPageFragmentViewModel, BasePageFragmentViewModelImpl() {
-    private val dataLiveData = MutableLiveDataWithState(
+    private val dataLiveData = NullableMutableLiveDataWithState(
         initialValue = getInitialData()
     )
 

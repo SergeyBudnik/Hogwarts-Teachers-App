@@ -8,9 +8,10 @@ import com.bdev.hengschoolteacher.ui.views.app.AppHeaderIconHandler
 import com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
 import com.bdev.hengschoolteacher.ui.views.app.header.data.AppHeaderButton
 import com.bdev.hengschoolteacher.ui.views.app.header.data.AppHeaderButtonType
+import com.bdev.hengschoolteacher.ui.views.app.header.data.AppHeaderButtons
 import com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
 
-abstract class BaseContentPageFragment<ViewModelType : BaseContentPageFragmentViewModel<*>>(
+abstract class BaseContentPageFragment<ViewModelType : BaseContentPageFragmentViewModel<*, *>>(
     private val menuItem: AppMenuItem
 ) : BasePageFragment<ViewModelType>() {
     abstract fun getRootView(): HtPageRootView
@@ -19,33 +20,33 @@ abstract class BaseContentPageFragment<ViewModelType : BaseContentPageFragmentVi
     override fun doOnViewCreated() {
         super.doOnViewCreated()
 
-        fragmentViewModel.getDataLiveData().observe(this) { data ->
-            updateHeaderView(data = data)
+        fragmentViewModel.getHeaderButtonsLiveData().observe(this) { headerButtons ->
+            updateHeaderView(headerButtons = headerButtons)
         }
 
         getMenu().setCurrentItem(item = menuItem)
     }
 
-    private fun updateHeaderView(data: BaseContentPageFragmentData<*>) {
+    private fun updateHeaderView(headerButtons: AppHeaderButtons) {
         getPrimaryHeaderView().setLeftButtonAction {
             getRootView().openMenu()
         }
 
         updateHeaderButtonView(
             viewHandler = getPrimaryHeaderView().getFirstButtonHandler(),
-            data = data.headerButtons.button1,
+            data = headerButtons.button1,
             type = AppHeaderButtonType.FIRST
         )
 
         updateHeaderButtonView(
             viewHandler = getPrimaryHeaderView().getSecondButtonHandler(),
-            data = data.headerButtons.button2,
+            data = headerButtons.button2,
             type = AppHeaderButtonType.SECOND
         )
 
         updateHeaderButtonView(
             viewHandler = getPrimaryHeaderView().getThirdButtonHandler(),
-            data = data.headerButtons.button3,
+            data = headerButtons.button3,
             type = AppHeaderButtonType.THIRD
         )
     }

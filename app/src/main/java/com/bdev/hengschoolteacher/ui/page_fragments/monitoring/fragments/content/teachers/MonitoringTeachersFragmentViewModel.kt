@@ -1,6 +1,6 @@
 package com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content.teachers
 
-import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
+import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.interactors.alerts.monitoring.AlertsMonitoringTeachersInteractor
 import com.bdev.hengschoolteacher.interactors.staff_members.StaffMembersStorageInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.data.MonitoringPageFragmentTab
@@ -19,7 +19,7 @@ class MonitoringTeachersPageFragmentViewModelImpl @Inject constructor(
 ): MonitoringTeachersPageFragmentViewModel, MonitoringContentFragmentViewModelImpl<MonitoringTeachersFragmentData>() {
     private val initialData = getInitialData()
 
-    private val dataLiveData = MutableLiveDataWithState(
+    private val dataLiveData = NullableMutableLiveDataWithState(
         initialValue = initialData
     )
 

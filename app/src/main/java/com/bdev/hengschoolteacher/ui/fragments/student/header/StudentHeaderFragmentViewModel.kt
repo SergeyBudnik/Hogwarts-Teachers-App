@@ -1,7 +1,7 @@
 package com.bdev.hengschoolteacher.ui.fragments.student.header
 
 import androidx.lifecycle.LiveData
-import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
+import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.ui.fragments.BaseFragmentViewModel
 import com.bdev.hengschoolteacher.ui.fragments.BaseFragmentViewModelImpl
 import com.bdev.hengschoolteacher.ui.fragments.student.header.data.StudentHeaderFragmentItem
@@ -17,7 +17,7 @@ interface StudentHeaderFragmentViewModel : BaseFragmentViewModel {
 @HiltViewModel
 class StudentHeaderFragmentViewModelImpl @Inject constructor(
 ): StudentHeaderFragmentViewModel, BaseFragmentViewModelImpl() {
-    private val dataLiveData = MutableLiveDataWithState<StudentHeaderFragmentData>(
+    private val dataLiveData = NullableMutableLiveDataWithState<StudentHeaderFragmentData>(
         initialValue = null
     )
 

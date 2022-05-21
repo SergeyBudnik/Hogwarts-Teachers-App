@@ -6,8 +6,12 @@ import com.bdev.hengschoolteacher.ui.page_fragments.common.content.BaseContentPa
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import com.bdev.hengschoolteacher.ui.views.app.header.data.AppHeaderButtonType
 
-abstract class BaseContentFragment<TabType, ViewModelType : BaseContentFragmentViewModel<TabType, *>> : BaseFragment<ViewModelType>() {
-    abstract fun providePageViewModel(): BaseContentPageFragmentViewModel<TabType>
+abstract class BaseContentFragment<
+    TabType,
+    ArgsType,
+    ViewModelType : BaseContentFragmentViewModel<TabType, ArgsType, *>
+> : BaseFragment<ViewModelType>() {
+    abstract fun providePageViewModel(): BaseContentPageFragmentViewModel<TabType, ArgsType>
 
     abstract fun getRootView(): View
 
@@ -16,8 +20,12 @@ abstract class BaseContentFragment<TabType, ViewModelType : BaseContentFragmentV
 
         val pageViewModel = providePageViewModel()
 
-        pageViewModel.getDataLiveData().observe(this) { data ->
-            fragmentViewModel.setCurrentTab(tab = data.tab)
+        pageViewModel.getArgsLiveData().observe(this) { args ->
+            fragmentViewModel.setArgs(args = args)
+        }
+
+        pageViewModel.getTabLiveData().observe(this) { tab ->
+            fragmentViewModel.setCurrentTab(tab = tab)
         }
 
         pageViewModel.getHeaderClickEventLiveData().observe(this) { data ->

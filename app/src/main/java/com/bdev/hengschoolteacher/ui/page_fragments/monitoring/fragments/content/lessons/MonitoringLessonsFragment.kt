@@ -13,9 +13,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_monitoring_lessons.*
 
 @AndroidEntryPoint
-class MonitoringLessonsFragment : MonitoringContentFragment<MonitoringLessonsPageFragmentViewModel>() {
+class MonitoringLessonsFragment : MonitoringContentFragment<MonitoringLessonsFragmentViewModel>() {
     override fun provideViewModel() =
-        ViewModelProvider(this).get(MonitoringLessonsPageFragmentViewModelImpl::class.java)
+        ViewModelProvider(this).get(MonitoringLessonsFragmentViewModelImpl::class.java)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_monitoring_lessons, container, false)

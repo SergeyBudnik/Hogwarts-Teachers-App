@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/monitoringTeacherRootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
+            android:id="@+id/monitoringTeacherPrimaryHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Профиль"
+            app:leftIcon="@drawable/ic_menu"/>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/monitoringTeacherSecondaryHeaderView"
+            android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring_teacher.fragments.header.MonitoringTeacherHeaderFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_monitoring_teacher_header"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/monitoringTeacherLessonsView"
+                android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring_teacher.fragments.content.lessons.MonitoringTeacherLessonsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_monitoring_teacher_lessons"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/monitoringTeacherSalaryView"
+                android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring_teacher.fragments.content.salary.MonitoringTeacherSalaryFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_monitoring_teacher_salary"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView>

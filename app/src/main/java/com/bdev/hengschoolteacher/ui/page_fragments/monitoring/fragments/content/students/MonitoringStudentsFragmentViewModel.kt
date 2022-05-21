@@ -1,6 +1,6 @@
 package com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content.students
 
-import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
+import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.data.MonitoringPageFragmentTab
 import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content.MonitoringContentFragmentViewModel
 import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content.MonitoringContentFragmentViewModelImpl
@@ -16,7 +16,7 @@ class MonitoringStudentsPageFragmentViewModelImpl @Inject constructor(
         visible = false
     )
 
-    private val dataLiveData = MutableLiveDataWithState(
+    private val dataLiveData = NullableMutableLiveDataWithState(
         initialValue = initialData
     )
 

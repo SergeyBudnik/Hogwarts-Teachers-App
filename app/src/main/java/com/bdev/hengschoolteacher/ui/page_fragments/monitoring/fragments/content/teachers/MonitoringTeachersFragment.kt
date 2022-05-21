@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.bdev.hengschoolteacher.NavGraphDirections
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.ui.navigation.NavCommand
 import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content.MonitoringContentFragment
 import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content.teachers.adapters.MonitoringTeachersListAdapter
+import com.bdev.hengschoolteacher.ui.page_fragments.monitoring_teacher.MonitoringTeacherPageFragmentArguments
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_monitoring_teachers.*
 
@@ -39,10 +42,15 @@ class MonitoringTeachersFragment : MonitoringContentFragment<MonitoringTeachersP
         monitoringTeachersListView.setOnItemClickListener { _, _, position, _ ->
             val teacher = adapter.getItem(position)
 
-//            MonitoringTeacherLessonsPageFragment.redirectToChild(
-//                    current = this,
-//                    teacherLogin = teacher.staffMember.login
-//            )
+            fragmentViewModel.navigate(
+                navCommand = NavCommand.forward(
+                    navDir = NavGraphDirections.toMonitoringTeacherAction(
+                        args = MonitoringTeacherPageFragmentArguments(
+                            teacherLogin = teacher.staffMember.login
+                        )
+                    )
+                )
+            )
         }
 
         return adapter
@@ -53,5 +61,6 @@ class MonitoringTeachersFragment : MonitoringContentFragment<MonitoringTeachersP
         data: MonitoringTeachersFragmentData
     ) {
         adapter.setItems(data.teachers)
+        adapter.notifyDataSetChanged()
     }
 }

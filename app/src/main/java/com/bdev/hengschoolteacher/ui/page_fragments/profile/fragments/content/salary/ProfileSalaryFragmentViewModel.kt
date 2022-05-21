@@ -1,6 +1,6 @@
 package com.bdev.hengschoolteacher.ui.page_fragments.profile.fragments.content.salary
 
-import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
+import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
 import com.bdev.hengschoolteacher.interactors.teachers.TeacherSalaryInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.profile.data.ProfilePageFragmentTab
@@ -18,7 +18,7 @@ class ProfileSalaryFragmentViewModelImpl @Inject constructor(
     private val profileInteractor: ProfileInteractor,
     private val teacherSalaryInteractor: TeacherSalaryInteractor,
 ): ProfileSalaryFragmentViewModel, ProfileContentFragmentViewModelImpl<ProfileSalaryFragmentData>() {
-    private val dataLiveData = MutableLiveDataWithState(
+    private val dataLiveData = NullableMutableLiveDataWithState(
         initialValue = getInitialData()
     )
 

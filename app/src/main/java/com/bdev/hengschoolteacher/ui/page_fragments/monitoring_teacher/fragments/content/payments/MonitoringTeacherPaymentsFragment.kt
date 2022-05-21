@@ -1,4 +1,4 @@
-package com.bdev.hengschoolteacher.ui.page_fragments.monitoring_teacher.payments
+package com.bdev.hengschoolteacher.ui.page_fragments.monitoring_teacher.fragments.content.payments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,6 @@ import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPayments
 import com.bdev.hengschoolteacher.interactors.students_payments.StudentsPaymentsProviderInteractor
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
-import com.bdev.hengschoolteacher.ui.views.app.monitoring.teacher.MonitoringTeacherHeaderView
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsItemViewData
 import com.bdev.hengschoolteacher.ui.views.app.payments.PaymentsViewData
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_monitoring_teacher_payments.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MonitoringTeacherPaymentsPageFragment : BasePageFragment<MonitoringTeacherPaymentsPageFragmentViewModel>() {
+class MonitoringTeacherPaymentsFragment : BasePageFragment<MonitoringTeacherPaymentsFragmentViewModel>() {
     companion object {
         const val EXTRA_TEACHER_LOGIN = "EXTRA_TEACHER_LOGIN"
     }
@@ -36,8 +35,8 @@ class MonitoringTeacherPaymentsPageFragment : BasePageFragment<MonitoringTeacher
 
     private var filterEnabled: Boolean = true
 
-    override fun provideViewModel(): MonitoringTeacherPaymentsPageFragmentViewModel =
-        ViewModelProvider(this).get(MonitoringTeacherPaymentsPageFragmentViewModelImpl::class.java)
+    override fun provideViewModel(): MonitoringTeacherPaymentsFragmentViewModel =
+        ViewModelProvider(this).get(MonitoringTeacherPaymentsFragmentViewModelImpl::class.java)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.activity_monitoring_teacher_payments, container, false)
@@ -49,13 +48,13 @@ class MonitoringTeacherPaymentsPageFragment : BasePageFragment<MonitoringTeacher
 
         initHeader()
 
-        monitoringTeacherPaymentsSecondaryHeaderView.bind(
-                currentItem = MonitoringTeacherHeaderView.Item.PAYMENTS,
-                teacherLogin = teacherLogin,
-                hasLessonsAlert = alertsMonitoringTeachersService.haveLessonsAlerts(teacherLogin = teacherLogin),
-                hasPaymentsAlert = alertsMonitoringTeachersService.havePaymentsAlerts(teacherLogin = teacherLogin),
-                hasDebtsAlert = alertsMonitoringTeachersService.haveDebtsAlerts(teacherLogin = teacherLogin)
-        )
+//        monitoringTeacherPaymentsSecondaryHeaderView.bind(
+//                currentItem = MonitoringTeacherPageFragmentTab.PAYMENTS,
+//                teacherLogin = teacherLogin,
+//                hasLessonsAlert = alertsMonitoringTeachersService.haveLessonsAlerts(teacherLogin = teacherLogin),
+//                hasPaymentsAlert = alertsMonitoringTeachersService.havePaymentsAlerts(teacherLogin = teacherLogin),
+//                hasDebtsAlert = alertsMonitoringTeachersService.haveDebtsAlerts(teacherLogin = teacherLogin)
+//        )
 
         monitoringTeacherPaymentsEmptyWithFilterView.bind {
             toggleFilter()

@@ -1,6 +1,6 @@
 package com.bdev.hengschoolteacher.ui.page_fragments.profile.fragments.content.debts
 
-import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
+import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.interactors.profile.ProfileInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students_debts.StudentsDebtsInteractor
@@ -20,7 +20,7 @@ class ProfileDebtsFragmentViewModelImpl @Inject constructor(
 ): ProfileDebtsFragmentViewModel, ProfileContentFragmentViewModelImpl<ProfileDebtsFragmentData>() {
     private val initialData = getInitialData()
 
-    private val dataLiveData = MutableLiveDataWithState(
+    private val dataLiveData = NullableMutableLiveDataWithState(
         initialValue = initialData
     )
 

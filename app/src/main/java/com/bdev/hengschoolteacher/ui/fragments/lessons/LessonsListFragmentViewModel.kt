@@ -2,7 +2,7 @@ package com.bdev.hengschoolteacher.ui.fragments.lessons
 
 import androidx.lifecycle.LiveData
 import com.bdev.hengschoolteacher.NavGraphDirections
-import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
+import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.interactors.LessonStateService
 import com.bdev.hengschoolteacher.interactors.LessonsAttendancesService
@@ -34,7 +34,7 @@ class LessonsListFragmentViewModelImpl @Inject constructor(
     private val lessonsAttendancesService: LessonsAttendancesService,
     private val lessonsStatusService: LessonsStatusStorageInteractor
 ): LessonsListFragmentViewModel, BaseFragmentViewModelImpl() {
-    private val dataLiveData = MutableLiveDataWithState<LessonsFragmentData>(
+    private val dataLiveData = NullableMutableLiveDataWithState<LessonsFragmentData>(
         initialValue = null
     )
 

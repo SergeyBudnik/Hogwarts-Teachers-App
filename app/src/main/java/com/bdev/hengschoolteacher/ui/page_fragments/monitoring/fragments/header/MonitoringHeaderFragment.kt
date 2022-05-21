@@ -7,43 +7,27 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.ui.fragments.BaseFragment
+import com.bdev.hengschoolteacher.ui.fragments.common.content_header.CommonContentHeaderFragment
+import com.bdev.hengschoolteacher.ui.fragments.common.content_header.views.CommonContentHeaderView
 import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.MonitoringPageFragmentViewModel
 import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.MonitoringPageFragmentViewModelImpl
+import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.data.MonitoringPageFragmentTab
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_monitoring_header.*
 
 @AndroidEntryPoint
-class MonitoringHeaderFragment : BaseFragment<MonitoringHeaderFragmentViewModel>() {
-    override fun provideViewModel() =
-        ViewModelProvider(this).get(MonitoringHeaderFragmentViewModelImpl::class.java)
-
+class MonitoringHeaderFragment : CommonContentHeaderFragment<
+    MonitoringPageFragmentTab,
+    MonitoringHeaderFragmentViewModel
+>() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_monitoring_header, container, false)
 
-    override fun doOnViewCreated() {
-        super.doOnViewCreated()
+    override fun provideViewModel() =
+        ViewModelProvider(this).get(MonitoringHeaderFragmentViewModelImpl::class.java)
 
-        providePageViewModel().getDataLiveData().observe(this) { data ->
-            fragmentViewModel.setCurrentItem(tab = data.tab)
-        }
-
-        fragmentViewModel.getDataLiveData().observe(this) { data ->
-            updateView(data = data)
-        }
-    }
-
-    private fun updateView(data: MonitoringHeaderFragmentData) {
-        monitoringHeaderView.bind(
-            currentTab = data.tab,
-            hasLessonsAlert = data.hasLessonsAlert,
-            hasTeachersAlert = data.hasTeachersAlert,
-            hasStudentsAlert = data.hasStudentsAlert,
-            tabClickAction = { tab ->
-                providePageViewModel().setTab(tab = tab)
-            }
-        )
-    }
-
-    private fun providePageViewModel(): MonitoringPageFragmentViewModel =
+    override fun providePageViewModel() =
         ViewModelProvider(requireParentFragment()).get(MonitoringPageFragmentViewModelImpl::class.java)
+
+    override fun getHeaderView(): CommonContentHeaderView<MonitoringPageFragmentTab> = monitoringHeaderView
 }

@@ -5,38 +5,34 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.bdev.hengschoolteacher.R
+import com.bdev.hengschoolteacher.ui.fragments.common.content_header.CommonContentHeaderFragmentData
+import com.bdev.hengschoolteacher.ui.fragments.common.content_header.views.CommonContentHeaderView
 import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.data.MonitoringPageFragmentTab
 import kotlinx.android.synthetic.main.view_header_monitoring.view.*
 
-class MonitoringHeaderView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class MonitoringHeaderView(
+    context: Context,
+    attrs: AttributeSet
+): LinearLayout(context, attrs), CommonContentHeaderView<MonitoringPageFragmentTab> {
     init {
         View.inflate(context, R.layout.view_header_monitoring, this)
     }
 
-    fun bind(
-        currentTab: MonitoringPageFragmentTab,
-        hasLessonsAlert: Boolean,
-        hasTeachersAlert: Boolean,
-        hasStudentsAlert: Boolean,
-        tabClickAction: (MonitoringPageFragmentTab) -> Unit
+    override fun bind(
+        data: CommonContentHeaderFragmentData<MonitoringPageFragmentTab>,
+        tabClickedAction: (MonitoringPageFragmentTab) -> Unit
     ) {
-        monitoringHeaderLessonsView.bind(
-            active = currentTab == MonitoringPageFragmentTab.LESSONS,
-            hasAlert = hasLessonsAlert,
-            clickAction = { tabClickAction(MonitoringPageFragmentTab.LESSONS) }
-        )
-
-        monitoringHeaderTeachersView.bind(
-            active = currentTab == MonitoringPageFragmentTab.TEACHERS,
-            hasAlert = hasTeachersAlert,
-            clickAction = { tabClickAction(MonitoringPageFragmentTab.TEACHERS) }
-        )
-
-        monitoringHeaderStudentsView.bind(
-            active = currentTab == MonitoringPageFragmentTab.STUDENTS,
-            hasAlert = hasStudentsAlert,
-            clickAction = { tabClickAction(MonitoringPageFragmentTab.STUDENTS) }
-        )
+        listOf(
+            Pair(monitoringHeaderLessonsView, MonitoringPageFragmentTab.LESSONS),
+            Pair(monitoringHeaderTeachersView, MonitoringPageFragmentTab.TEACHERS),
+            Pair(monitoringHeaderStudentsView, MonitoringPageFragmentTab.STUDENTS),
+        ).forEach { (view, tab) ->
+            view.bind(
+                active = data.tab == tab,
+                hasAlert = data.tabAlerts[tab] ?: false,
+                clickAction = { tabClickedAction(tab) }
+            )
+        }
     }
 }
 

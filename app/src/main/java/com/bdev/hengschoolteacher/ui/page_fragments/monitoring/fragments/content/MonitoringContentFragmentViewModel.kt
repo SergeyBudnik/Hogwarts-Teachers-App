@@ -7,7 +7,10 @@ import com.bdev.hengschoolteacher.ui.page_fragments.monitoring.data.MonitoringPa
 import com.bdev.hengschoolteacher.ui.page_fragments.profile.data.ProfilePageFragmentTab
 
 interface MonitoringContentFragmentViewModel<DataType : BaseContentFragmentData> :
-    BaseContentFragmentViewModel<MonitoringPageFragmentTab, DataType>
+    BaseContentFragmentViewModel<MonitoringPageFragmentTab, Any, DataType>
 
 abstract class MonitoringContentFragmentViewModelImpl<DataType : BaseContentFragmentData> :
-    BaseContentFragmentViewModelImpl<MonitoringPageFragmentTab, DataType>()
+    BaseContentFragmentViewModelImpl<MonitoringPageFragmentTab, Any, DataType>()
+{
+    final override fun setArgs(args: Any) { /* Do nothing */ }
+}
