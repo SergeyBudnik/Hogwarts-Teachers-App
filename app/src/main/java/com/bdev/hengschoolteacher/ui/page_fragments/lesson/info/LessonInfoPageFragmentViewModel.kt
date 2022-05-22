@@ -16,6 +16,7 @@ import com.bdev.hengschoolteacher.ui.navigation.NavCommand
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragmentViewModel
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragmentViewModelImpl
 import com.bdev.hengschoolteacher.ui.page_fragments.lesson.attendance.LessonAttendancePageFragmentArguments
+import com.bdev.hengschoolteacher.ui.page_fragments.lesson.info.data.LessonInfoStudent
 import com.bdev.hengschoolteacher.ui.page_fragments.lesson.status.LessonStatusPageFragmentArguments
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -61,16 +62,13 @@ class LessonInfoPageFragmentViewModelImpl @Inject constructor(
                     group = group,
                     lesson = lesson,
                     lessonStartTime = lessonsService.getLessonStartTime(lesson.id, args.weekIndex),
-                    students = students.map {
-                        Pair(
-                            Pair(
-                                it,
-                                studentsAttendanceProviderInteractor.getAttendance(lesson.id, it.login, args.weekIndex)
-                            ),
-                            Pair(
-                                studentsDebtsInteractor.getDebt(it.login),
-                                studentsDebtsInteractor.getExpectedDebt(it.login)
-                            )
+                    students = students.map { student ->
+                        LessonInfoStudent(
+                            login = student.login,
+                            name = student.person.name,
+                            attendanceType = studentsAttendanceProviderInteractor.getAttendance(lesson.id, student.login, args.weekIndex),
+                            currentDebt = studentsDebtsInteractor.getDebt(student.login),
+                            expectedDebt = studentsDebtsInteractor.getExpectedDebt(student.login)
                         )
                     },
                     lessonStatus = lessonStatus,
@@ -137,16 +135,13 @@ class LessonInfoPageFragmentViewModelImpl @Inject constructor(
             )
 
             oldValue.copy(
-                students = students.map {
-                    Pair(
-                        Pair(
-                            it,
-                            studentsAttendanceProviderInteractor.getAttendance(oldValue.lesson.id, it.login, oldValue.weekIndex)
-                        ),
-                        Pair(
-                            studentsDebtsInteractor.getDebt(it.login),
-                            studentsDebtsInteractor.getExpectedDebt(it.login)
-                        )
+                students = students.map { student ->
+                    LessonInfoStudent(
+                        login = student.login,
+                        name = student.person.name,
+                        attendanceType = studentsAttendanceProviderInteractor.getAttendance(oldValue.lesson.id, student.login, oldValue.weekIndex),
+                        currentDebt = studentsDebtsInteractor.getDebt(student.login),
+                        expectedDebt = studentsDebtsInteractor.getExpectedDebt(student.login)
                     )
                 },
                 lessonStatus = lessonStatus,

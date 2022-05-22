@@ -5,6 +5,7 @@ import com.bdev.hengschoolteacher.data.school.group.Lesson
 import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
+import com.bdev.hengschoolteacher.ui.page_fragments.lesson.info.data.LessonInfoStudent
 
 data class LessonInfoPageFragmentData(
     val group: Group,
@@ -14,5 +15,5 @@ data class LessonInfoPageFragmentData(
     val teacherName: String,
     val teacherSurname: String,
     val weekIndex: Int,
-    val students: List<Pair<Pair<Student, StudentAttendanceType?>, Pair<Int, Int>>>
+    val students: List<LessonInfoStudent>
 )
