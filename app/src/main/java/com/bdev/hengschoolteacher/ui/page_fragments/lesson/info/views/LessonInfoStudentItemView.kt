@@ -6,10 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.data.school.group.Lesson
-import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
-import com.bdev.hengschoolteacher.ui.page_fragments.lesson.attendance.LessonAttendanceActivityData
 import com.bdev.hengschoolteacher.ui.resources.AppResources
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_item_lesson_info_student.view.*
@@ -23,53 +20,53 @@ class LessonInfoStudentItemView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     fun bind(
-            student: Student, lesson: Lesson, weekIndex: Int,
-            currentDebt: Int, expectedDebt: Int,
-            attendanceType: StudentAttendanceType?,
-            goToStudentInformationAction: (Student) -> Unit,
-            goToStudentPaymentAction: (Student) -> Unit,
-            goToLessonAttendanceAction: (LessonAttendanceActivityData) -> Unit
+        name: String,
+        login: String,
+        attendanceType: StudentAttendanceType?,
+        currentDebt: Int,
+        expectedDebt: Int,
+        goToStudentInformationAction: (String) -> Unit,
+        goToStudentPaymentAction: (String) -> Unit,
+        goToLessonAttendanceAction: (String) -> Unit
     ): LessonInfoStudentItemView {
-        lessonStudentItemNameView.text = student.person.name
+        lessonStudentItemNameView.text = name
 
         bindAttendance(
-                student = student,
-                lesson = lesson,
-                weekIndex = weekIndex,
-                attendanceType = attendanceType,
-                goToLessonAttendanceAction = goToLessonAttendanceAction
+            login = login,
+            attendanceType = attendanceType,
+            goToLessonAttendanceAction = goToLessonAttendanceAction
         )
 
         bindPayment(
-                student = student,
-                goToStudentPaymentAction = goToStudentPaymentAction
+            login = login,
+            goToStudentPaymentAction = goToStudentPaymentAction
         )
 
         bindDept(
-                currentDebt = currentDebt,
-                expectedDebt = expectedDebt
+            currentDebt = currentDebt,
+            expectedDebt = expectedDebt
         )
 
         setOnClickListener {
-            goToStudentInformationAction(student)
+            goToStudentInformationAction(login)
         }
 
         return this
     }
 
     private fun bindPayment(
-            student: Student,
-            goToStudentPaymentAction: (Student) -> Unit
+        login: String,
+        goToStudentPaymentAction: (String) -> Unit
     ) {
         lessonStudentItemPaymentView.setOnClickListener {
-            goToStudentPaymentAction(student)
+            goToStudentPaymentAction(login)
         }
     }
 
     private fun bindAttendance(
-            student: Student, lesson: Lesson, weekIndex: Int,
-            attendanceType: StudentAttendanceType?,
-            goToLessonAttendanceAction: (LessonAttendanceActivityData) -> Unit
+        login: String,
+        attendanceType: StudentAttendanceType?,
+        goToLessonAttendanceAction: (String) -> Unit
     ) {
         val colorId = when (attendanceType) {
             null -> R.color.fill_text_basic
@@ -80,21 +77,15 @@ class LessonInfoStudentItemView : RelativeLayout {
         }
 
         lessonStudentItemAttendanceView.setColorFilter(
-                AppResources.getColor(
-                        context = context,
-                        colorId = colorId
-                ),
-                PorterDuff.Mode.SRC_IN
+            AppResources.getColor(
+                context = context,
+                colorId = colorId
+            ),
+            PorterDuff.Mode.SRC_IN
         )
 
         lessonStudentItemAttendanceView.setOnClickListener {
-            goToLessonAttendanceAction(
-                    LessonAttendanceActivityData(
-                            lessonId = lesson.id,
-                            studentLogin = student.login,
-                            weekIndex = weekIndex
-                    )
-            )
+            goToLessonAttendanceAction(login)
         }
     }
 

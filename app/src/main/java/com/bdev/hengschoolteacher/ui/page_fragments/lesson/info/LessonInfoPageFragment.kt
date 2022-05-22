@@ -48,16 +48,14 @@ class LessonInfoPageFragment : BasePageFragment<LessonInfoPageFragmentViewModel>
     private fun fillLessons(data: LessonInfoPageFragmentData) {
         val adapter = LessonInfoStudentsListAdapter(
             context = requireContext(),
-            lesson = data.lesson,
-            weekIndex = data.weekIndex,
-            goToStudentInformationAction = { student ->
-                fragmentViewModel.goToStudentInformation(studentLogin = student.login)
+            goToStudentInformationAction = { studentLogin ->
+                fragmentViewModel.goToStudentInformation(studentLogin = studentLogin)
             },
-            goToStudentPaymentAction = { student ->
-                fragmentViewModel.goToStudentPayments(studentLogin = student.login)
+            goToStudentPaymentAction = { studentLogin ->
+                fragmentViewModel.goToStudentPayments(studentLogin = studentLogin)
             },
-            goToLessonAttendanceAction = { a ->
-                fragmentViewModel.goToLessonAttendance(studentLogin = a.studentLogin)
+            goToLessonAttendanceAction = { studentLogin ->
+                fragmentViewModel.goToLessonAttendance(studentLogin = studentLogin)
             }
         )
 
