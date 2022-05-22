@@ -20,7 +20,6 @@ import com.bdev.hengschoolteacher.ui.fragments.student.header.StudentHeaderFragm
 import com.bdev.hengschoolteacher.ui.fragments.student.header.data.StudentHeaderFragmentItem
 import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.views.branded.BrandedPhoneView
-import com.bdev.hengschoolteacher.utils.CalendarUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_student_information.*
 import kotlinx.android.synthetic.main.view_list_item_student_information_timetable.view.*
@@ -59,7 +58,7 @@ class StudentInformationTimetableListAdapter(context: Context) : BaseWeekItemsLi
     }
 
     override fun getElementComparator(): Comparator<GroupAndLesson> {
-        return GroupAndLesson.getComparator(CalendarUtils.getInstance())
+        return GroupAndLesson.getComparator()
     }
 }
 

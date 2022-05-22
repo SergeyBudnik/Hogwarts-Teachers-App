@@ -8,7 +8,6 @@ enum class GroupType {
 
 class Group constructor(
     @SerializedName("id") val id: Long,
-    @SerializedName("cabinetId") val cabinetId: Long,
     @SerializedName("type") val type: GroupType,
     @SerializedName("lessons") val lessons: List<Lesson>,
     @SerializedName("color") val color: String
