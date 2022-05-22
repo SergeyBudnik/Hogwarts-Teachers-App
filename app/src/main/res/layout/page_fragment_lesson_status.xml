@@ -42,7 +42,7 @@
 
         </LinearLayout>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
+        <com.bdev.hengschoolteacher.ui.page_fragments.lesson.status.views.LessonStatusButtonView
             android:id="@+id/lessonStatusPassedView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:layout_marginStart="@dimen/app_size_1"
             android:layout_marginEnd="@dimen/app_size_1"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
+        <com.bdev.hengschoolteacher.ui.page_fragments.lesson.status.views.LessonStatusButtonView
             android:id="@+id/lessonStatusCanceledView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

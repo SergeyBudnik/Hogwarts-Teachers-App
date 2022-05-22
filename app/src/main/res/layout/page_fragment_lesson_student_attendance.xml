@@ -42,32 +42,32 @@
 
         </LinearLayout>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
-            android:id="@+id/studentAttendanceVisitButtonView"
+        <com.bdev.hengschoolteacher.ui.page_fragments.lesson.attendance.views.LessonAttendanceButtonView
+            android:id="@+id/lessonAttendanceVisitButtonView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_size_1"
             android:layout_marginStart="@dimen/app_size_1"
             android:layout_marginEnd="@dimen/app_size_1"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
-            android:id="@+id/studentAttendanceValidSkipButtonView"
+        <com.bdev.hengschoolteacher.ui.page_fragments.lesson.attendance.views.LessonAttendanceButtonView
+            android:id="@+id/lessonAttendanceValidSkipButtonView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_size_0_5"
             android:layout_marginStart="@dimen/app_size_1"
             android:layout_marginEnd="@dimen/app_size_1"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
-            android:id="@+id/studentAttendanceInvalidSkipButtonView"
+        <com.bdev.hengschoolteacher.ui.page_fragments.lesson.attendance.views.LessonAttendanceButtonView
+            android:id="@+id/lessonAttendanceInvalidSkipButtonView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_size_0_5"
             android:layout_marginStart="@dimen/app_size_1"
             android:layout_marginEnd="@dimen/app_size_1"/>
 
-        <com.bdev.hengschoolteacher.ui.views.branded.BrandedActionButtonView
-            android:id="@+id/studentAttendanceFreeLessonButtonView"
+        <com.bdev.hengschoolteacher.ui.page_fragments.lesson.attendance.views.LessonAttendanceButtonView
+            android:id="@+id/lessonAttendanceFreeLessonButtonView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_size_0_5"

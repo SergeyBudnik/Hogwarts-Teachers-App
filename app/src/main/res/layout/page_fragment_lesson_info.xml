@@ -41,23 +41,12 @@
                 android:layout_marginEnd="@dimen/app_size_1"
                 android:weightSum="2">
 
-                <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
+                <com.bdev.hengschoolteacher.ui.page_fragments.lesson.info.views.LessonInfoStatusView
                     android:id="@+id/lessonMarkStatusView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginEnd="@dimen/app_size_0_5"
-                    app:button_text="Отметить статус"
-                    app:button_style="primary_style"/>
-
-                <com.bdev.hengschoolteacher.ui.views.branded.BrandedButtonView
-                    android:id="@+id/lessonAddTransferView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="@dimen/app_size_0_5"
-                    app:button_text="Перенести"
-                    app:button_style="default_style"/>
+                    android:layout_marginEnd="@dimen/app_size_0_5"/>
 
             </LinearLayout>
 

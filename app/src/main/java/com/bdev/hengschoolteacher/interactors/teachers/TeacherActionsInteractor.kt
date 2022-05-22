@@ -3,7 +3,7 @@ package com.bdev.hengschoolteacher.interactors.teachers
 import com.bdev.hengschoolteacher.data.school.DayOfWeek
 import com.bdev.hengschoolteacher.data.school.Time
 import com.bdev.hengschoolteacher.data.school.group.Lesson
-import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
+import com.bdev.hengschoolteacher.data.school.lesson.LessonStatusType
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherAction
 import com.bdev.hengschoolteacher.data.school.teacher.TeacherActionType
 import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
@@ -64,7 +64,7 @@ class TeacherActionsInteractorImpl @Inject constructor(
                     val lessonStartTime = lessonsService.getLessonStartTime(it.id, weekIndex)
                     val lessonStatus = lessonsStatusService.getLessonStatus(it.id, lessonStartTime)
 
-                    lessonStatus?.type == LessonStatus.Type.FINISHED
+                    lessonStatus?.type == LessonStatusType.FINISHED
                 }
                 .sortedBy { it.startTime }
                 .sortedBy { it.day }
