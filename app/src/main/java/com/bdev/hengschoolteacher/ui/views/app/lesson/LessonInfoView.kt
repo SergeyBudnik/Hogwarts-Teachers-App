@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.group.Lesson
-import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.teacher.TeacherActivity
+import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
+import com.bdev.hengschoolteacher.ui.page_fragments.teacher.TeacherPageFragment
 import com.bdev.hengschoolteacher.ui.utils.TimeFormatUtils
 import kotlinx.android.synthetic.main.view_lesson_info.view.*
 
@@ -26,10 +26,10 @@ class LessonInfoView : RelativeLayout {
         lessonInfoFinishTimeView.text = context.getString(lesson.finishTime.translationId)
 
         lessonInfoTeacherView.setOnClickListener {
-            TeacherActivity.redirectToChild(
-                    current = context as BaseActivity,
-                    teacherLogin = lesson.teacherLogin
-            )
+//            TeacherPageFragment.redirectToChild(
+//                    current = context as BasePageFragment,
+//                    teacherLogin = lesson.teacherLogin
+//            )
         }
 
         lessonInfoTeacherNameView.text = teacherName

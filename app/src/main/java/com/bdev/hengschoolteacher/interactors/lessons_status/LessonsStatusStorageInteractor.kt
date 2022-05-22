@@ -36,7 +36,7 @@ class LessonsStatusStorageInteractorImpl @Inject constructor(
             .lessonsStatuses
             .filter { it.lessonId == lessonId }
             .filter { it.actionTime == lessonTime }
-            .maxBy { it.id ?: -1 }
+            .maxByOrNull { it.id ?: -1 }
     }
 }
 

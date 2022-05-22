@@ -44,7 +44,7 @@
         android:padding="@dimen/app_size_1">
 
         <com.bdev.hengschoolteacher.ui.views.branded.BrandedEditTextView
-            android:id="@+id/loginLoginView"
+            android:id="@+id/loginUsernameView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:branded_edit_text_label="Логин:"

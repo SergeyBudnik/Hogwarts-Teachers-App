@@ -2,14 +2,13 @@ package com.bdev.hengschoolteacher.data.school.student
 
 import com.bdev.hengschoolteacher.data.school.education_info.EducationInfo
 import com.bdev.hengschoolteacher.data.school.person.Person
-import org.codehaus.jackson.annotate.JsonCreator
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 
-class Student @JsonCreator constructor(
-        @JsonProperty("login") val login: String,
-        @JsonProperty("person") val person: Person,
-        @JsonProperty("managerLogin") val managerLogin: String,
-        @JsonProperty("educationInfo") val educationInfo: EducationInfo,
-        @JsonProperty("statusType") val statusType: StudentStatusType,
-        @JsonProperty("studentGroups") val studentGroups: List<StudentGroup>
+class Student constructor(
+    @SerializedName("login") val login: String,
+    @SerializedName("person") val person: Person,
+    @SerializedName("managerLogin") val managerLogin: String,
+    @SerializedName("educationInfo") val educationInfo: EducationInfo,
+    @SerializedName("statusType") val statusType: StudentStatusType,
+    @SerializedName("studentGroups") val studentGroups: List<StudentGroup>
 )

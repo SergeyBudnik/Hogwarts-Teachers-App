@@ -1,8 +1,7 @@
 package com.bdev.hengschoolteacher.data.auth
 
-import org.codehaus.jackson.annotate.JsonCreator
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 
-class AuthInfo @JsonCreator constructor(
-        @JsonProperty("token") val token: String
+class AuthInfo constructor(
+    @SerializedName("token") val token: String
 )

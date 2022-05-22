@@ -1,15 +1,14 @@
 package com.bdev.hengschoolteacher.data.school.student
 
 import com.bdev.hengschoolteacher.data.school.group.GroupType
-import org.codehaus.jackson.annotate.JsonCreator
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 
-class StudentAttendance @JsonCreator constructor(
-        @JsonProperty("studentLogin") val studentLogin: String,
-        @JsonProperty("groupType") val groupType: GroupType,
-        @JsonProperty("studentsInGroup") val studentsInGroup: Int,
-        @JsonProperty("startTime") val startTime: Long,
-        @JsonProperty("finishTime") val finishTime: Long,
-        @JsonProperty("type") val type: StudentAttendanceType,
-        @JsonProperty("ignoreSingleStudentPricing") val ignoreSingleStudentPricing: Boolean
+class StudentAttendance constructor(
+    @SerializedName("studentLogin") val studentLogin: String,
+    @SerializedName("groupType") val groupType: GroupType,
+    @SerializedName("studentsInGroup") val studentsInGroup: Int,
+    @SerializedName("startTime") val startTime: Long,
+    @SerializedName("finishTime") val finishTime: Long,
+    @SerializedName("type") val type: StudentAttendanceType,
+    @SerializedName("ignoreSingleStudentPricing") val ignoreSingleStudentPricing: Boolean
 )

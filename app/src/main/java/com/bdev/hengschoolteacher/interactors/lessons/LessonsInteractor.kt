@@ -9,6 +9,7 @@ import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentGroup
 import com.bdev.hengschoolteacher.interactors.groups.GroupsStorageInteractor
 import com.bdev.hengschoolteacher.interactors.students.StudentsStorageInteractor
+import com.bdev.hengschoolteacher.utils.CalendarUtils
 import com.bdev.hengschoolteacher.utils.TimeUtils
 import java.util.*
 import javax.inject.Inject
@@ -99,7 +100,7 @@ class LessonsInteractorImpl @Inject constructor(
 
                 val dayOfWeek = TimeUtils().getDayOfWeek(c)
 
-                val lessonCalendar = Calendar.getInstance()
+                val lessonCalendar = CalendarUtils.getInstance()
 
                 lessonCalendar.set(Calendar.MONTH, month)
                 lessonCalendar.set(Calendar.DAY_OF_MONTH, day)
@@ -254,7 +255,7 @@ class LessonsInteractorImpl @Inject constructor(
     }
 
     private fun getLessonTime(day: DayOfWeek, time: Time, weekIndex: Int): Long {
-        val calendar = Calendar.getInstance()
+        val calendar = CalendarUtils.getInstance()
 
         calendar.set(Calendar.WEEK_OF_YEAR, calendar.get(Calendar.WEEK_OF_YEAR) + weekIndex)
         calendar.set(Calendar.DAY_OF_WEEK, TimeUtils().getCalendayDayOfWeek(day))
@@ -267,7 +268,7 @@ class LessonsInteractorImpl @Inject constructor(
     }
 
     private fun getCalendarSinceCurrentMonthStart(): Calendar {
-        val calendar = Calendar.getInstance()
+        val calendar = CalendarUtils.getInstance()
 
         calendar.set(Calendar.DAY_OF_MONTH, 1)
         calendar.set(Calendar.HOUR_OF_DAY, 0)
@@ -279,7 +280,7 @@ class LessonsInteractorImpl @Inject constructor(
     }
 
     private fun getCalendarSinceMonthStart(month: Int): Calendar {
-        val calendar = Calendar.getInstance()
+        val calendar = CalendarUtils.getInstance()
 
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, 1)
@@ -292,7 +293,7 @@ class LessonsInteractorImpl @Inject constructor(
     }
 
     private fun getCalendarSinceTime(time: Long): Calendar {
-        val calendar = Calendar.getInstance()
+        val calendar = CalendarUtils.getInstance()
 
         calendar.time = Date(time)
 

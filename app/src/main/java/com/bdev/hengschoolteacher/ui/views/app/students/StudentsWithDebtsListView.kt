@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
 import com.bdev.hengschoolteacher.data.school.student.Student
-import com.bdev.hengschoolteacher.ui.activities.BaseActivity
-import com.bdev.hengschoolteacher.ui.activities.student.StudentInformationActivity
+import com.bdev.hengschoolteacher.ui.page_fragments.BasePageFragment
 import com.bdev.hengschoolteacher.ui.adapters.BaseItemsListAdapter
 import com.bdev.hengschoolteacher.ui.utils.ViewVisibilityUtils.visibleElseGone
 import kotlinx.android.synthetic.main.view_students_with_debts.view.*
@@ -54,10 +53,10 @@ class StudentsWithDebtsListView : RelativeLayout {
         studentsWithDebtsListView.adapter = adapter
 
         studentsWithDebtsListView.setOnItemClickListener { _, _, position, _ ->
-            StudentInformationActivity.redirectToChild(
-                    current = context as BaseActivity,
-                    studentLogin = adapter.getItem(position).student.login
-            )
+//            StudentInformationPageFragment.redirectToChild(
+//                    current = context as BasePageFragment,
+//                    studentLogin = adapter.getItem(position).student.login
+//            )
         }
     }
 }

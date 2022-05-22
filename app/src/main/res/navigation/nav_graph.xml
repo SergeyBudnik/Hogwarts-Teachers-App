@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/startPage">
+
+    <fragment
+        android:id="@+id/startPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.start.StartPageFragment"/>
+
+    <fragment
+        android:id="@+id/loginPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.login.LoginPageFragment"/>
+
+    <fragment
+        android:id="@+id/loadingPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.loading.LoadingPageFragment"/>
+
+    <fragment
+        android:id="@+id/reloginPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.relogin.ReloginPageFragment"/>
+
+    <fragment
+        android:id="@+id/profilePage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.profile.ProfilePageFragment"/>
+
+    <fragment
+        android:id="@+id/monitoringPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.MonitoringPageFragment"/>
+
+    <fragment
+        android:id="@+id/monitoringTeacherPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring_teacher.MonitoringTeacherPageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.monitoring_teacher.MonitoringTeacherPageFragmentArguments"
+            app:nullable="false"/>
+
+    </fragment>
+
+    <!-- Teachers -->
+
+    <fragment
+        android:id="@+id/teachersListPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.teachers.TeachersListPageFragment"/>
+
+    <!-- Teacher -->
+
+    <fragment
+        android:id="@+id/teacherPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.teacher.TeacherPageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.teacher.TeacherPageFragmentArguments"
+            app:nullable="false"/>
+
+    </fragment>
+
+    <!-- Students -->
+
+    <fragment
+        android:id="@+id/studentsListPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.students.StudentsListPageFragment"/>
+
+    <!-- Student -->
+
+    <fragment
+        android:id="@+id/studentInformationPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.student.information.StudentInformationPageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.student.information.StudentInformationPageFragmentArguments"
+            app:nullable="false"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/studentStatisticsPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.student.statistics.StudentStatisticsPageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.student.statistics.StudentStatisticsPageFragmentArguments"
+            app:nullable="false"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/studentPaymentsPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.student.payments.StudentPaymentsPageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.student.payments.StudentPaymentsPageFragmentArguments"
+            app:nullable="false"/>
+
+    </fragment>
+
+    <!-- Lesson -->
+
+    <fragment
+        android:id="@+id/lessonInfoPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.info.LessonInfoPageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.lesson.info.LessonInfoPageFragmentArguments"
+            app:nullable="false"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/lessonAttendancePage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.attendance.LessonAttendancePageFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/lessonStatusPage"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.status.LessonStatusPageFragment">
+
+    </fragment>
+
+    <!-- Monitoring -->
+
+
+    <!-- Settings -->
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.bdev.hengschoolteacher.ui.page_fragments.settings.SettingsPageFragment"/>
+
+    <!--
+     - Global Actions - Start
+     -->
+
+    <action
+        android:id="@+id/startWithLoginGlobalNavAction"
+        app:destination="@id/loginPage"/>
+
+    <action
+        android:id="@+id/startWithLoadingGlobalNavAction"
+        app:destination="@id/loadingPage"/>
+
+    <!--
+     - Global Actions - Login
+     -->
+
+    <action
+        android:id="@+id/loginToLoading"
+        app:destination="@id/loadingPage"/>
+
+    <action
+        android:id="@+id/loadingToProfileLessons"
+        app:destination="@id/profilePage"/>
+
+
+    <!--
+     - Global Actions - Menu
+     -->
+
+    <action
+        android:id="@+id/menuToProfileGlobalNavAction"
+        app:destination="@id/profilePage"/>
+
+    <action
+        android:id="@+id/menuToStudentsGlobalNavAction"
+        app:destination="@id/studentsListPage"/>
+
+    <action
+        android:id="@+id/menuToStaffMembersGlobalNavAction"
+        app:destination="@id/teachersListPage"/>
+
+    <action
+        android:id="@+id/menuToMonitoringGlobalNavAction"
+        app:destination="@id/monitoringPage"/>
+
+    <action
+        android:id="@+id/menuToSettingsGlobalNavAction"
+        app:destination="@id/settings"/>
+
+    <!--
+     - Profile
+     -->
+
+    <!-- Teachers -->
+
+    <action
+        android:id="@+id/teachersListToProfile"
+        app:destination="@id/profilePage"/>
+
+    <action
+        android:id="@+id/teachersListToTeacherAction"
+        app:destination="@id/teacherPage"/>
+
+    <!-- Students -->
+
+    <action
+        android:id="@+id/studentsListToProfileAction"
+        app:destination="@id/profilePage"/>
+
+    <action
+        android:id="@+id/studentsListToStudentAction"
+        app:destination="@id/studentInformationPage"/>
+
+    <!-- Student -->
+
+    <action
+        android:id="@+id/studentHeaderToStudentInformationAction"
+        app:destination="@id/studentInformationPage"/>
+
+    <action
+        android:id="@+id/studentHeaderToStudentStatisticsAction"
+        app:destination="@id/studentStatisticsPage"/>
+
+    <action
+        android:id="@+id/studentHeaderToStudentPaymentsAction"
+        app:destination="@id/studentPaymentsPage"/>
+
+    <!-- Monitoring -->
+
+    <!-- Settings -->
+
+    <action
+        android:id="@+id/settingsToProfile"
+        app:destination="@id/profilePage"/>
+
+    <action
+        android:id="@+id/settingsToLogin"
+        app:destination="@id/loginPage"/>
+
+    <!-- Teacher -->
+
+    <!-- Lesson -->
+
+    <action
+        android:id="@+id/toLessonInfoAction"
+        app:destination="@id/lessonInfoPage"/>
+
+    <action
+        android:id="@+id/toMonitoringTeacherAction"
+        app:destination="@id/monitoringTeacherPage"/>
+
+</navigation>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/profileDebtsRootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.bdev.hengschoolteacher.ui.views.app.students.StudentsWithDebtsListView
+        android:id="@+id/profileDebtsListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

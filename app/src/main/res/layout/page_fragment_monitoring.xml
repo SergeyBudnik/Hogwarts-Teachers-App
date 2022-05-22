@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/monitoringRootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.bdev.hengschoolteacher.ui.views.app.AppHeaderView
+            android:id="@+id/monitoringPrimaryHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Мониторинг"
+            app:leftIcon="@drawable/ic_menu"/>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/monitoringSecondaryHeaderView"
+            android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.header.MonitoringHeaderFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_monitoring_header"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/monitoringLessonsView"
+                android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content.lessons.MonitoringLessonsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_monitoring_lessons"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/monitoringTeachersView"
+                android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content.teachers.MonitoringTeachersFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_monitoring_students"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/monitoringStudentsView"
+                android:name="com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content.students.MonitoringStudentsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_monitoring_students"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</com.bdev.hengschoolteacher.ui.views.app.root.HtPageRootView>

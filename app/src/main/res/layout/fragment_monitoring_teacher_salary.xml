@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/monitoringTeacherSalaryRootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.bdev.hengschoolteacher.ui.views.app.date.WeekSelectionBarView
+        android:id="@+id/monitoringTeacherSalaryWeekSelectionBarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
+
+    <com.bdev.hengschoolteacher.ui.views.app.teacher_salary.TeacherSalaryView
+        android:id="@+id/monitoringTeacherSalaryContentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/monitoringTeacherSalaryWeekSelectionBarView"/>
+
+</RelativeLayout>

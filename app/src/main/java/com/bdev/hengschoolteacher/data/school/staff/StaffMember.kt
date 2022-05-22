@@ -1,11 +1,10 @@
 package com.bdev.hengschoolteacher.data.school.staff
 
 import com.bdev.hengschoolteacher.data.school.person.Person
-import org.codehaus.jackson.annotate.JsonCreator
-import org.codehaus.jackson.annotate.JsonProperty
+import com.google.gson.annotations.SerializedName
 
-data class StaffMember @JsonCreator constructor(
-        @JsonProperty("login") val login: String,
-        @JsonProperty("person") val person: Person,
-        @JsonProperty("salaryIn30m") val salaryIn30m: Int
+data class StaffMember constructor(
+    @SerializedName("login") val login: String,
+    @SerializedName("person") val person: Person,
+    @SerializedName("salaryIn30m") val salaryIn30m: Int
 )
