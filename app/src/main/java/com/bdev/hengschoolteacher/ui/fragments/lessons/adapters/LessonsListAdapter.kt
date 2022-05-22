@@ -31,7 +31,7 @@ class LessonsListAdapter(context: Context) : BaseWeekItemsListAdapter<LessonsFra
 
     override fun getElementComparator(): Comparator<LessonsFragmentItemData> {
         return Comparator { o1, o2 ->
-            GroupAndLesson.getComparator(CalendarUtils.getInstance()).compare(
+            GroupAndLesson.getComparator().compare(
                     GroupAndLesson(group = o1.group, lesson = o1.lesson),
                     GroupAndLesson(group = o2.group, lesson = o2.lesson)
             )

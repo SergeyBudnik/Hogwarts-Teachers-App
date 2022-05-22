@@ -7,37 +7,6 @@
     <string name="login_password_placeholder">Введите пароль</string>
     <string name="login_do_login">Войти</string>
 
-    <string name="student_status_studying">Занимается</string>
-    <string name="student_status_stopped">Приостановил</string>
-    <string name="student_status_left">Покинул</string>
-
-    <string name="student_age_unknown">Не известно</string>
-    <string name="student_age_pre_school">Дошкольный</string>
-    <string name="student_age_school_1_3">1–3 класс</string>
-    <string name="student_age_school_5_7">5–7 класс</string>
-    <string name="student_age_school_8_9">8–9 класс</string>
-    <string name="student_age_school_10_11">10–11 класс</string>
-    <string name="student_age_adult">Взрослый</string>
-    <string name="student_age_senior">Пожилой</string>
-
-    <string name="student_education_unknown">Не известно</string>
-    <string name="student_education_beginner">Beginner</string>
-    <string name="student_education_elementary">Elementary</string>
-    <string name="student_education_pre_intermediate">Pre-Intermediate</string>
-    <string name="student_education_intermediate">Intermediate</string>
-    <string name="student_education_upper_intermediate">Upper-Intermediate</string>
-    <string name="student_education_pre_advanced">Pre-Advanced</string>
-    <string name="student_education_advanced">Advanced</string>
-
-    <string name="student_referral_source_unknown">Не известно</string>
-    <string name="student_referral_source_leaflet">Листовки</string>
-    <string name="student_referral_source_avito">Avito</string>
-    <string name="student_referral_source_repetitors_site">Сайт репетиторов</string>
-    <string name="student_referral_source_vk_search">VK поиск</string>
-    <string name="student_referral_source_vk_ads">VK реклама</string>
-    <string name="student_referral_source_search_engine">Поисковые системы</string>
-    <string name="student_referral_source_friend_recommendation">Рекомендации</string>
-
     <string name="teacher_payments_no_payments_filter_enabled_title">Вся оплата обработана.</string>
     <string name="teacher_payments_no_payments_filter_enabled_warning">Отключите фильтр, чтобы посмотреть всю сданную оплату</string>
 
