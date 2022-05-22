@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.bdev.hengschoolteacher.R
-import com.bdev.hengschoolteacher.data.school.lesson.LessonStatus
+import com.bdev.hengschoolteacher.data.school.lesson.LessonStatusType
 import com.bdev.hengschoolteacher.data.school.student.Student
 import com.bdev.hengschoolteacher.data.school.student.StudentAttendanceType
 import com.bdev.hengschoolteacher.ui.fragments.lessons.LessonsFragmentItemData
@@ -126,9 +126,9 @@ class LessonsItemView : RelativeLayout {
 
         if (data.lessonStatus != null) {
             lessonRowLessonStatusView.text = when (data.lessonStatus.type) {
-                LessonStatus.Type.FINISHED -> "Проведено"
-                LessonStatus.Type.CANCELED -> "Отменено"
-                LessonStatus.Type.MOVED -> "Перенесено"
+                LessonStatusType.FINISHED -> "Проведено"
+                LessonStatusType.CANCELED -> "Отменено"
+                LessonStatusType.MOVED -> "Перенесено"
             }
         }
     }

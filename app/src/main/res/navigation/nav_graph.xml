@@ -116,11 +116,22 @@
     <fragment
         android:id="@+id/lessonAttendancePage"
         android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.attendance.LessonAttendancePageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.lesson.attendance.LessonAttendancePageFragmentArguments"
+            app:nullable="false"/>
+
     </fragment>
 
     <fragment
         android:id="@+id/lessonStatusPage"
         android:name="com.bdev.hengschoolteacher.ui.page_fragments.lesson.status.LessonStatusPageFragment">
+
+        <argument
+            android:name="args"
+            app:argType=".ui.page_fragments.lesson.status.LessonStatusPageFragmentArguments"
+            app:nullable="false"/>
 
     </fragment>
 
@@ -239,6 +250,14 @@
     <action
         android:id="@+id/toLessonInfoAction"
         app:destination="@id/lessonInfoPage"/>
+
+    <action
+        android:id="@+id/toLessonAttendanceAction"
+        app:destination="@id/lessonAttendancePage"/>
+
+    <action
+        android:id="@+id/toLessonStatusAction"
+        app:destination="@id/lessonStatusPage"/>
 
     <action
         android:id="@+id/toMonitoringTeacherAction"
