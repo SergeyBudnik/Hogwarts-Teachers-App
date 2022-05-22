@@ -6,11 +6,11 @@ import java.util.*
 
 class TimeUtils {
     fun getCurrentMonth(): Int {
-        return Calendar.getInstance().get(Calendar.MONTH)
+        return CalendarUtils.getInstance().get(Calendar.MONTH)
     }
 
     fun getMonthStart(month: Int): Long {
-        val calendar = Calendar.getInstance()
+        val calendar = CalendarUtils.getInstance()
 
         with (calendar) {
             set(Calendar.MONTH, month)
@@ -25,7 +25,7 @@ class TimeUtils {
     }
 
     fun getMonthFinish(month: Int): Long {
-        val calendar = Calendar.getInstance()
+        val calendar = CalendarUtils.getInstance()
 
         with (calendar) {
             set(Calendar.MONTH, month)
@@ -40,7 +40,7 @@ class TimeUtils {
     }
 
     fun getWeekStart(weekFromCurrent: Int): Long {
-        val calendar = Calendar.getInstance()
+        val calendar = CalendarUtils.getInstance()
 
         val currentWeekYear = calendar.get(Calendar.WEEK_OF_YEAR)
 
@@ -57,7 +57,7 @@ class TimeUtils {
     }
 
     fun getWeekFinish(weekFromCurrent: Int): Long {
-        val calendar = Calendar.getInstance()
+        val calendar = CalendarUtils.getInstance()
 
         val currentWeekYear = calendar.get(Calendar.WEEK_OF_YEAR)
 

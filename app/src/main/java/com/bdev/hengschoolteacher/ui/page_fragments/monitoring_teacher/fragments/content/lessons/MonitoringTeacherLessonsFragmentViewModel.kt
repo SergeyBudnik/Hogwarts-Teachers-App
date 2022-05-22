@@ -1,5 +1,6 @@
 package com.bdev.hengschoolteacher.ui.page_fragments.monitoring_teacher.fragments.content.lessons
 
+import androidx.lifecycle.SavedStateHandle
 import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
@@ -15,6 +16,7 @@ interface MonitoringTeacherLessonsFragmentViewModel :
 
 @HiltViewModel
 class MonitoringTeacherLessonsFragmentViewModelImpl @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val lessonsInteractor: LessonsInteractor
 ):
     MonitoringTeacherLessonsFragmentViewModel,

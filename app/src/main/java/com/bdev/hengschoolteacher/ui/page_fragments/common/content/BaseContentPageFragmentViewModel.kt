@@ -44,11 +44,11 @@ abstract class BaseContentPageFragmentViewModelImpl<TabType : Any, ArgsType : An
     }
 
     override fun setTab(tab: TabType) {
-        tabLiveData.postValue(tab)
+        tabLiveData.value = tab
     }
 
     override fun setHeaderButtons(headerButtons: AppHeaderButtons) {
-        headerButtonsLiveData.postValue(headerButtons)
+        headerButtonsLiveData.value = headerButtons
     }
 
     override fun notifyHeaderButtonClicked(type: AppHeaderButtonType) {

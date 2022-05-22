@@ -22,7 +22,7 @@ class MonitoringTeacherHeaderFragmentViewModelImpl @Inject constructor(
     )
 ) {
     override fun bind(teacherLogin: String) {
-        dataLiveData.updateValue(defaultValue = initialData) { oldValue ->
+        dataLiveData.setValue(mutator = { oldValue ->
             oldValue.copy(
                 tabAlerts = mapOf(
                     Pair(
@@ -39,6 +39,6 @@ class MonitoringTeacherHeaderFragmentViewModelImpl @Inject constructor(
                     )
                 )
             )
-        }
+        })
     }
 }

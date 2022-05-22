@@ -1,5 +1,6 @@
 package com.bdev.hengschoolteacher.ui.page_fragments.monitoring.fragments.content.lessons
 
+import com.bdev.hengschoolteacher.data.common.MutableLiveDataWithState
 import com.bdev.hengschoolteacher.data.common.NullableMutableLiveDataWithState
 import com.bdev.hengschoolteacher.data.school.group.GroupAndLesson
 import com.bdev.hengschoolteacher.interactors.lessons.LessonsInteractor
@@ -19,69 +20,67 @@ interface MonitoringLessonsFragmentViewModel : MonitoringContentFragmentViewMode
 class MonitoringLessonsFragmentViewModelImpl @Inject constructor(
     private val lessonsInteractor: LessonsInteractor
 ): MonitoringLessonsFragmentViewModel, MonitoringContentFragmentViewModelImpl<MonitoringLessonsFragmentData>() {
-    private val initialData = MonitoringLessonsFragmentData(
-        visible = false,
+    private val dataLiveData = MutableLiveDataWithState(initialValue = MonitoringLessonsFragmentData(
+        visible = true,
         filterEnabled = false,
         calendarEnabled = false,
         weekIndex = 0,
         lessons = getLessons(weekIndex = 0)
-    )
-
-    private val dataLiveData = NullableMutableLiveDataWithState(initialValue = initialData)
+    ))
 
     override fun getDataLiveData() = dataLiveData.getLiveData()
 
-    override fun isVisible() = dataLiveData.getValue()?.visible ?: false
+    override fun isVisible() = dataLiveData.getValue().visible
 
     override fun setCurrentTab(tab: MonitoringPageFragmentTab) {
-        dataLiveData.updateValue(defaultValue = initialData) { oldValue ->
+        dataLiveData.setValue(mutator = { oldValue ->
             oldValue.copy(visible = (tab == MonitoringPageFragmentTab.LESSONS))
-        }
+        })
     }
 
     override fun onHeaderButton1Clicked() {
         super.onHeaderButton1Clicked()
 
-        dataLiveData.updateValue(defaultValue = initialData) { oldValue ->
+        dataLiveData.setValue(mutator = { oldValue ->
             oldValue.copy(
                 filterEnabled = !oldValue.filterEnabled,
                 lessons = getLessons(
                     weekIndex = oldValue.weekIndex
                 )
             )
-        }
+        })
     }
 
     override fun onHeaderButton2Clicked() {
         super.onHeaderButton2Clicked()
 
-        dataLiveData.updateValue(defaultValue = initialData) { oldValue ->
+        dataLiveData.setValue(mutator = { oldValue ->
             oldValue.copy(
                 calendarEnabled = !oldValue.calendarEnabled
             )
-        }
+        })
     }
 
     override fun setWeekIndex(weekIndex: Int) {
-        dataLiveData.updateValue(defaultValue = initialData) { oldValue ->
+        dataLiveData.setValue(mutator = { oldValue ->
             oldValue.copy(
                 weekIndex = weekIndex,
                 lessons = getLessons(
                     weekIndex = weekIndex
                 )
             )
-        }
+        })
     }
 
     override fun disableFilter() {
-        dataLiveData.updateValue(defaultValue = initialData) { oldValue ->
+        dataLiveData.setValue(mutator = { oldValue ->
             oldValue.copy(
                 filterEnabled = false,
                 lessons = getLessons(
                     weekIndex = oldValue.weekIndex
                 )
             )
-        }
+        })
     }
 
     private fun getLessons(weekIndex: Int): List<GroupAndLesson> =

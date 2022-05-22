@@ -7,6 +7,4 @@ interface BasePageFragmentViewModel : BaseFragmentViewModel {
     fun goBack()
 }
 
-abstract class BasePageFragmentViewModelImpl : BasePageFragmentViewModel, BaseFragmentViewModelImpl() {
-
-}
+abstract class BasePageFragmentViewModelImpl : BasePageFragmentViewModel, BaseFragmentViewModelImpl()

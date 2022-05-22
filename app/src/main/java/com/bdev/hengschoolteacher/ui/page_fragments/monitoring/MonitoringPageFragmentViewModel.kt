@@ -15,12 +15,8 @@ interface MonitoringPageFragmentViewModel : BaseContentPageFragmentViewModel<
 @HiltViewModel
 class MonitoringPageFragmentViewModelImpl @Inject constructor():
     MonitoringPageFragmentViewModel,
-    BaseContentPageFragmentViewModelImpl<
-        MonitoringPageFragmentTab,
-        Any
-    >(
-    defaultTab = MonitoringPageFragmentTab.LESSONS
-) {
+    BaseContentPageFragmentViewModelImpl<MonitoringPageFragmentTab, Any>
+(defaultTab = MonitoringPageFragmentTab.LESSONS) {
     override fun goBack() {
         navigate(navCommand = NavCommand.quit()) // todo
     }
